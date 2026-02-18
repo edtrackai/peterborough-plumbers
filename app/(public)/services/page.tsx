@@ -1,0 +1,35 @@
+import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo/metadata";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import ServiceGrid from "@/components/blocks/ServiceGrid";
+import CTASection from "@/components/blocks/CTASection";
+import { services } from "@/content/services";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Plumbing Services in Peterborough",
+  description:
+    "Full range of plumbing and heating services in Peterborough. Boilers, heating, bathrooms, emergency plumbing, drain clearance, and more.",
+  path: "/services",
+});
+
+export default function ServicesPage() {
+  return (
+    <>
+      <section className="bg-pp-dark pt-28 pb-16">
+        <div className="mx-auto max-w-7xl px-4">
+          <Breadcrumbs items={[{ name: "Services", href: "/services" }]} />
+          <h1 className="text-4xl lg:text-5xl font-bold text-white">
+            Our <span className="text-pp-yellow">Services</span>
+          </h1>
+          <p className="mt-4 text-white/70 text-lg max-w-2xl">
+            From boiler servicing to emergency repairs, we provide comprehensive plumbing and heating services across Peterborough.
+          </p>
+        </div>
+      </section>
+
+      <ServiceGrid services={services} heading="All Services" />
+
+      <CTASection />
+    </>
+  );
+}
