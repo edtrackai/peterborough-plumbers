@@ -1,6 +1,7 @@
 export const siteSettings = {
   companyName: "Peterborough Plumbers",
   phone: "01234 567890",
+  phoneHref: "+441234567890",
   whatsappNumber: "441234567890",
   email: "info@peterboroughplumbers.com",
   address: "Peterborough, Cambridgeshire",

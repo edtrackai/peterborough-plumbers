@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
 import CTASection from "@/components/blocks/CTASection";
@@ -44,6 +45,37 @@ export default async function AreaPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: "Home", href: "/" },
+            { name: "Areas", href: "/areas" },
+            { name: area.name, href: `/areas/${area.slug}` },
+          ])),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Plumber",
+            name: siteSettings.companyName,
+            telephone: siteSettings.phone,
+            areaServed: {
+              "@type": "City",
+              name: area.name,
+              containedInPlace: {
+                "@type": "City",
+                name: "Peterborough",
+              },
+            },
+            url: `${siteSettings.siteUrl}/areas/${area.slug}`,
+          }),
+        }}
+      />
+
       {/* Hero */}
       <section className="bg-pp-dark pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">

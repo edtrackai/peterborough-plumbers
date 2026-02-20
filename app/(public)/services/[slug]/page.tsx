@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { serviceSchema, faqSchema } from "@/lib/seo/schema";
+import { serviceSchema, faqSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import { getRelatedServices } from "@/lib/seo/internalLinks";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import FaqAccordion from "@/components/blocks/FaqAccordion";
@@ -28,6 +28,7 @@ export async function generateMetadata({
     title: service.seoTitle,
     description: service.seoDescription,
     path: `/services/${service.slug}`,
+    image: service.heroImage,
   });
 }
 
@@ -64,6 +65,18 @@ export default async function ServicePage({
           }}
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Home", href: "/" },
+              { name: "Services", href: "/services" },
+              { name: service.name, href: `/services/${service.slug}` },
+            ])
+          ),
+        }}
+      />
 
       {/* Hero */}
       <section className="relative bg-pp-dark pt-28 pb-16">
@@ -71,7 +84,7 @@ export default async function ServicePage({
           <div className="absolute inset-0 z-0">
             <Image
               src={service.heroImage}
-              alt={`${service.name} — professional ${service.name.toLowerCase()} service in Peterborough by Gas Safe registered engineers`}
+              alt={`${service.name} in Peterborough — professional Gas Safe registered engineers`}
               fill
               className="object-cover"
               priority
@@ -98,7 +111,7 @@ export default async function ServicePage({
               Book {service.name}
             </Link>
             <a
-              href={`tel:${siteSettings.phone}`}
+              href={`tel:${siteSettings.phoneHref}`}
               className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors"
             >
               Call {siteSettings.phone}

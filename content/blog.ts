@@ -185,6 +185,149 @@ export const blogPosts: BlogPost[] = [
     status: "Published",
     publishedAt: "2025-08-15",
   },
+  {
+    title: "What Is a Power Flush and Does Your Heating Need One?",
+    slug: "what-is-power-flush",
+    category: "Boiler & Heating",
+    excerpt:
+      "Cold radiators, noisy pipes, and sluggish heating are often signs of sludge build-up. Here's everything you need to know about power flushing.",
+    content: `<h2>What Is a Power Flush?</h2>
+<p>A power flush is a deep clean for your central heating system. Over time, sludge, rust, and limescale build up inside your radiators, pipework, and boiler. This debris restricts water flow, reduces efficiency, and can eventually cause components to fail. A power flush forces clean water through the entire system at high velocity, removing that build-up and restoring proper circulation.</p>
+<p>It's one of the most effective forms of <a href="/services/central-heating-services">central heating maintenance</a> — and in many cases, it noticeably improves heating performance within hours of completion.</p>
+
+<h3>Signs Your System Needs a Power Flush</h3>
+<p>Your heating system is telling you it needs attention if you notice:</p>
+<ul>
+<li>Radiators cold at the bottom but warm at the top — classic sludge build-up</li>
+<li>Some radiators heating up much slower than others</li>
+<li>Banging, gurgling, or kettling noises from the boiler or pipes</li>
+<li>The boiler cutting out more often than it used to</li>
+<li>Higher gas bills without any obvious change in usage</li>
+<li>Discoloured (dark or rusty) water when you bleed a radiator</li>
+</ul>
+<p>If you're ticking more than two of these boxes, a power flush is likely to make a real difference.</p>
+
+<h3>What Happens During a Power Flush?</h3>
+<p>Our engineer connects a specialist pump to your system — usually at the pump head or a convenient connection point. A powerful flow of clean water mixed with chemical cleaner is pushed through every radiator and section of pipework in turn. The debris is flushed out and collected in a filter. Fresh inhibitor is then added to protect the system going forward.</p>
+<p>The process takes between 4 and 8 hours depending on the size of your system and the severity of the build-up. Your home stays warm throughout — we keep disruption to an absolute minimum.</p>
+
+<h3>Does a New Boiler Need One?</h3>
+<p>Yes — almost always. If you're having a new boiler installed onto an existing system, a power flush beforehand is strongly recommended. Most boiler manufacturers, including Worcester Bosch and Vaillant, require a clean system to validate their warranty. Fitting a new boiler onto a dirty system introduces sludge into the new heat exchanger from day one, which can cause faults within months and void your warranty entirely.</p>
+<p>We include a power flush recommendation with every <a href="/services/boiler-service">boiler service</a> assessment where the system shows signs of contamination.</p>
+
+<h3>Power Flush vs Magnetic Filter</h3>
+<p>A magnetic filter (such as a Magna Clean) is fitted to your system to capture iron oxide particles before they reach the boiler. It's an excellent preventative measure — but it won't clear a system that's already heavily contaminated. Think of it this way: a power flush clears the existing problem, and a magnetic filter prevents it coming back. We recommend fitting one after every power flush as standard.</p>
+
+<h3>How Much Does a Power Flush Cost in Peterborough?</h3>
+<p>Pricing depends on the number of radiators and the condition of the system. Most domestic properties in Peterborough fall within a predictable range. We'll always give you a clear, fixed price before we start — no hourly rates, no hidden charges. <a href="/book">Book a heating assessment</a> and we'll advise whether a power flush is the right solution for your system.</p>
+
+<h3>Get Your Heating Working Properly Again</h3>
+<p>If your heating has felt sluggish or inefficient this winter, don't just put up with it. A power flush can restore performance you may not have had in years. Call us on 01234 567890 or <a href="/book">book online</a> — our <a href="/services/central-heating-services">central heating team</a> covers the whole of Peterborough and surrounding areas.</p>`,
+    seoTitle: "What Is a Power Flush? | Peterborough Heating Guide",
+    seoDescription:
+      "Find out if your central heating needs a power flush. Signs, process, costs, and when it's essential. Expert advice from Peterborough heating engineers.",
+    status: "Published",
+    publishedAt: "2025-10-14",
+  },
+  {
+    title: "How to Prepare Your Plumbing for Winter in Peterborough",
+    slug: "prepare-plumbing-for-winter",
+    category: "Emergency & Repairs",
+    excerpt:
+      "Frozen pipes are one of the most common and costly plumbing emergencies in winter. Here's how to protect your home before the cold hits.",
+    content: `<h2>Winter Plumbing — Don't Wait for a Burst Pipe</h2>
+<p>Every winter, Peterborough plumbers deal with a surge of emergency call-outs for frozen and burst pipes. Most of them are entirely preventable. Spending an hour preparing your home in autumn can save you hundreds — or thousands — in damage and repair costs when temperatures drop.</p>
+<p>Here's what to do before winter arrives.</p>
+
+<h3>1. Know Where Your Stopcock Is</h3>
+<p>Your main stopcock is the single most important thing to locate before a pipe bursts. It's usually found under the kitchen sink, in the downstairs toilet, or where the water main enters the property near the front door. Turn it off and on now to make sure it moves — a seized stopcock is useless in an emergency. If yours is seized or difficult to operate, <a href="/services/plumbing-repairs">get it replaced</a> before winter.</p>
+
+<h3>2. Insulate Exposed Pipes</h3>
+<p>Any pipes in unheated spaces — loft spaces, garages, outbuildings, or along external walls — are at risk of freezing when temperatures drop below zero. Foam lagging (pipe insulation) is inexpensive and available at any DIY store. Pay particular attention to the pipe leading to an outdoor tap, pipes in the loft near the cold water tank, and any pipework running through a garage or extension without heating.</p>
+
+<h3>3. Service Your Boiler Before You Need It</h3>
+<p>The worst time to discover your boiler isn't working is on the coldest day of the year, when every engineer in the area is fully booked. Book your <a href="/services/boiler-service">annual boiler service</a> in September or October — before the rush starts. A service will catch any issues before they become breakdowns, and our Gas Safe registered engineers will check the boiler is running safely and efficiently for the season ahead.</p>
+
+<h3>4. Check Your Heating Controls</h3>
+<p>Test your thermostat and programmer now rather than in December. Set the heating to come on and check every radiator gets warm. If any are slow to heat or have cold spots, they may need bleeding or the system may need a <a href="/blog/what-is-power-flush">power flush</a>. Smart thermostats like Nest or Hive make it easy to set a frost protection temperature that keeps the pipes safe even when you're away.</p>
+
+<h3>5. Protect Outdoor Taps</h3>
+<p>Outdoor tap pipes are particularly vulnerable to freezing. Fit an insulating cover over the tap, and turn off the outdoor supply using the isolation valve inside the house before the first frost. If you don't have an indoor isolation valve for your outdoor tap, it's a simple job — ask us to add one during your next visit.</p>
+
+<h3>6. Keep Some Heat On If You Go Away</h3>
+<p>If you're leaving the property for more than a few days during the winter — even overnight during a cold snap — keep the heating set to a minimum of 12–15°C. This is enough to prevent pipes from freezing without costing much to run. Turning the heating off completely when it's below zero is the single most common cause of burst pipes in empty properties.</p>
+
+<h3>7. Check Your Loft</h3>
+<p>Cold water storage tanks in loft spaces are particularly vulnerable. Make sure the tank has a properly fitting lid and that the loft hatch is insulated. Leaving the loft hatch slightly open in very cold weather allows warm air from the house to rise into the loft, which helps prevent freezing — though this isn't a substitute for properly insulated pipework.</p>
+
+<h3>What to Do If a Pipe Freezes</h3>
+<p>If you find a frozen pipe, turn off the water at the stopcock immediately. Gently warm the pipe using a hairdryer or hot water bottle — never an open flame. Work from the tap end back towards the frozen section. If the pipe has already cracked, you'll need an <a href="/services/emergency-plumber">emergency plumber</a> to repair it before you restore the water supply.</p>
+
+<h3>Need Help Getting Ready for Winter?</h3>
+<p>Our engineers carry out winter plumbing checks across Peterborough, covering boiler servicing, pipe insulation advice, and system testing. <a href="/book">Book online</a> or call us on 01234 567890 — and sort it before the cold weather catches you out.</p>`,
+    seoTitle: "How to Prepare Your Plumbing for Winter | Peterborough Guide",
+    seoDescription:
+      "Prevent frozen pipes and winter plumbing emergencies in Peterborough. Practical steps to protect your home before temperatures drop.",
+    status: "Published",
+    publishedAt: "2025-11-03",
+  },
+  {
+    title: "Buying a New Build in Peterborough? Here's What to Check First",
+    slug: "new-build-peterborough-plumbing-guide",
+    category: "Local Guides",
+    excerpt:
+      "New builds aren't always problem-free. Here's what Peterborough buyers should check about their plumbing and heating before completion.",
+    content: `<h2>New Build Plumbing — Don't Assume It's All Fine</h2>
+<p>Peterborough has seen substantial new build development over the past decade — Hampton, Cardea, Stanground South, and the newer phases of Orton are all well-established communities with thousands of relatively new homes. But "new build" doesn't always mean "no problems". Plumbing and heating defects are among the most common snagging issues, and many aren't picked up in the standard handover process.</p>
+<p>Here's what to check — and what to do if something isn't right.</p>
+
+<h3>Get a Full Snagging Inspection</h3>
+<p>A snagging inspection is a detailed check of a new build property before or shortly after you complete. For plumbing and heating, a proper inspection should cover:</p>
+<ul>
+<li>All taps, toilets, and showers — testing flow, temperature, and drainage</li>
+<li>The boiler — make, model, age, and a functional test of heating and hot water</li>
+<li>Radiator balance and heat output across every room</li>
+<li>Water pressure at multiple points</li>
+<li>Visible pipework — are joints properly made and supported?</li>
+<li>Waste connections — are they sealed, correctly fall-graded, and odour-free?</li>
+<li>The external drainage — manholes, connections, and soakaways</li>
+</ul>
+<p>Our <a href="/services/pre-purchase-plumbing-survey">pre-purchase plumbing survey</a> can be adapted for new builds and carried out before you complete — giving you a written record of any issues to raise with the developer under the NHBC warranty.</p>
+
+<h3>Understand Your Warranty Cover</h3>
+<p>Most new builds in Peterborough come with an NHBC Buildmark warranty (or similar). In the first two years, the developer is responsible for fixing defects reported to them. From years 3–10, structural defects are covered by the insurer. Plumbing and heating defects in the first two years should be reported directly to the developer in writing — keep copies of everything.</p>
+<p>It's worth noting that the warranty doesn't cover fair wear and tear, cosmetic issues, or anything caused by the homeowner. This is why it matters to get defects documented promptly, before the property has been lived in.</p>
+
+<h3>Common New Build Plumbing Issues</h3>
+<p>Based on our work across Peterborough's newer developments, the plumbing issues we see most often in new builds include:</p>
+<ul>
+<li><strong>Unbalanced heating systems</strong> — some radiators get much hotter than others, making the heating uncomfortable and inefficient. The system needs balancing by a heating engineer.</li>
+<li><strong>Low water pressure</strong> — particularly in homes at the end of a supply run. If pressure is consistently low, it's worth having it measured and reported.</li>
+<li><strong>Shower temperature fluctuations</strong> — often caused by thermostatic valves that haven't been properly set, or pressure issues in the hot water supply.</li>
+<li><strong>Slow waste drainage</strong> — poor gradient on waste pipes causes slow drainage in sinks and showers. This becomes worse over time as debris accumulates.</li>
+<li><strong>Boiler pressure dropping</strong> — new systems sometimes need the inhibitor topped up and the pressure re-set after the first few months of use.</li>
+</ul>
+
+<h3>The Boiler: What to Check</h3>
+<p>Most new build developers in Peterborough fit Worcester Bosch or Baxi boilers as standard. Before you complete, make sure you receive:</p>
+<ul>
+<li>The boiler manual and warranty documentation</li>
+<li>A demonstration of how to operate the controls, re-pressurise, and reset the boiler</li>
+<li>The first service date — most manufacturers require an annual service to maintain the warranty</li>
+</ul>
+<p>Book your first <a href="/services/boiler-service">boiler service</a> within 12 months of completion. This is required to maintain the manufacturer's warranty and ensures the engineer can spot any installation issues early.</p>
+
+<h3>Adding Plumbing to Your New Build</h3>
+<p>Many new build buyers want to add outdoor taps, appliance connections, or additional heating controls shortly after moving in. We carry out all types of <a href="/services/plumbing-installation">plumbing installations</a> in new build properties across Peterborough — and we know the common builders' configurations well, which makes the work faster and tidier.</p>
+
+<h3>Based in Peterborough — We Know the New Developments</h3>
+<p>We've worked on new build properties across Hampton, Cardea, Orton, and the newer Stanground developments. If you've recently moved in or you're about to complete, <a href="/book">book a plumbing check</a> or call us on 01234 567890. It's the best way to start your time in a new home with complete confidence in your plumbing and heating.</p>`,
+    seoTitle: "New Build Plumbing Peterborough | What to Check Before Completion",
+    seoDescription:
+      "Buying a new build in Peterborough? Here's what to check about plumbing and heating before completion. Snagging advice from local Gas Safe engineers.",
+    status: "Published",
+    publishedAt: "2026-01-20",
+  },
 ];
 
 export function getPublishedPosts(): BlogPost[] {

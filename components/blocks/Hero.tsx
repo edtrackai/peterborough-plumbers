@@ -46,7 +46,7 @@ export default function Hero() {
               {siteSettings.primaryCtaLabel}
             </Link>
             <a
-              href={`tel:${siteSettings.phone}`}
+              href={`tel:${siteSettings.phoneHref}`}
               className="bg-pp-yellow text-pp-dark px-8 py-4 rounded-lg font-bold text-lg hover:bg-pp-yellow/90 transition-colors shadow-lg"
             >
               Call {siteSettings.phone}

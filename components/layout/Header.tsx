@@ -101,6 +101,15 @@ export default function Header() {
           <Link href="/about" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
             About
           </Link>
+          <Link href="/areas" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
+            Areas
+          </Link>
+          <Link href="/reviews" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
+            Reviews
+          </Link>
+          <Link href="/blog" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
+            Blog
+          </Link>
           <Link href="/contact" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
             Contact
           </Link>

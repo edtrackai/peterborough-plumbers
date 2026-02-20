@@ -30,7 +30,7 @@ export default function ReviewsPage() {
             <Link href="/book" className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors">
               Book Now
             </Link>
-            <a href={`tel:${siteSettings.phone}`} className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors">
+            <a href={`tel:${siteSettings.phoneHref}`} className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors">
               Call {siteSettings.phone}
             </a>
           </div>

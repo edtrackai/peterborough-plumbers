@@ -31,7 +31,7 @@ export default function ContactPage() {
               <div className="bg-white rounded-xl p-6 border border-pp-dark/5">
                 <h2 className="text-xl font-bold text-pp-dark mb-3">Call Us</h2>
                 <a
-                  href={`tel:${siteSettings.phone}`}
+                  href={`tel:${siteSettings.phoneHref}`}
                   className="text-2xl font-bold text-pp-accent hover:text-pp-accent/80 transition-colors"
                 >
                   {siteSettings.phone}

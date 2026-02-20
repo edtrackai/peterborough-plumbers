@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import AreaGrid from "@/components/blocks/AreaGrid";
 import CTASection from "@/components/blocks/CTASection";
 import { areas } from "@/content/areas";
+import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
   title: "Areas We Cover in Peterborough",
@@ -29,8 +30,8 @@ export default function AreasPage() {
             <Link href="/book" className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors">
               Book Now
             </Link>
-            <a href="tel:01234 567890" className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors">
-              Call 01234 567890
+            <a href={`tel:${siteSettings.phoneHref}`} className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors">
+              Call {siteSettings.phone}
             </a>
           </div>
         </div>

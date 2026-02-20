@@ -11,12 +11,43 @@ export function localBusinessSchema() {
     email: siteSettings.email,
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Peterborough",
       addressLocality: "Peterborough",
       addressRegion: "Cambridgeshire",
+      postalCode: "PE1",
       addressCountry: "GB",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 52.5735,
+      longitude: -0.2404,
     },
     image: `${siteUrl}/images/homepage/hero.png`,
     url: siteUrl,
+    priceRange: "££",
+    description: siteSettings.seoDescription,
+    areaServed: [
+      "Peterborough", "Orton", "Werrington", "Hampton", "Bretton",
+      "Market Deeping", "Yaxley", "Whittlesey", "Stamford",
+    ],
+    openingHours: [
+      "Mo-Fr 08:00-18:00",
+      "Sa 08:00-17:00",
+    ],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "18:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Saturday",
+        opens: "08:00",
+        closes: "17:00",
+      },
+    ],
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: siteSettings.googleRating,
@@ -26,7 +57,14 @@ export function localBusinessSchema() {
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Plumbing Services",
+      name: "Plumbing & Heating Services",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Boiler Service" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Emergency Plumber" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gas Safety Certificates" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Central Heating Services" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Bathroom Installations" } },
+      ],
     },
   };
 }

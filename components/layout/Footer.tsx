@@ -18,7 +18,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm text-white/70">
               <p>Gas Safe Reg: {siteSettings.gasSafeNumber}</p>
               <p>
-                <a href={`tel:${siteSettings.phone}`} className="hover:text-pp-yellow transition-colors">
+                <a href={`tel:${siteSettings.phoneHref}`} className="hover:text-pp-yellow transition-colors">
                   {siteSettings.phone}
                 </a>
               </p>

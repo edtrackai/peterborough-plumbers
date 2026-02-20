@@ -271,7 +271,7 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
 
       <p className="text-center text-sm text-pp-dark/50">
         Or call us directly:{" "}
-        <a href={`tel:${siteSettings.phone}`} className="text-pp-accent font-semibold">
+        <a href={`tel:${siteSettings.phoneHref}`} className="text-pp-accent font-semibold">
           {siteSettings.phone}
         </a>
       </p>

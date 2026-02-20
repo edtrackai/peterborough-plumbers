@@ -18,107 +18,125 @@ export const services: Service[] = [
   {
     name: "Boiler Service",
     slug: "boiler-service",
-    image: "/images/homepage/Boiler service.png",
-    heroImage: "/images/services/boiler service.png",
+    image: "/images/homepage/boiler-service.png",
+    heroImage: "/images/services/boiler-service-peterborough-gas-safe.webp",
     shortDescription:
       "Annual boiler servicing by Gas Safe registered engineers to keep your heating running safely and efficiently.",
-    heroHeading: "Expert Boiler Servicing in Peterborough",
+    heroHeading: "Boiler Service in Peterborough — Gas Safe Engineers",
     heroSubheading:
-      "Keep your boiler running safely and efficiently with our comprehensive annual service, carried out by Gas Safe registered engineers.",
+      "Keep your boiler running safely and efficiently with a thorough annual service by our Gas Safe registered engineers. Fixed pricing from £79, no hidden costs.",
     content: `<h2>Professional Boiler Servicing in Peterborough</h2>
-<p>Regular boiler servicing is essential for safety, efficiency, and maintaining your manufacturer's warranty. Our Gas Safe registered engineers (Reg: 123456) carry out thorough inspections covering all critical components — giving you peace of mind that your boiler is running safely and economically.</p>
-<p>We service all major boiler brands across Peterborough, including Worcester Bosch, Vaillant, Baxi, Ideal, and Viessmann. Whether you have a combi, system, or conventional boiler, our experienced engineers have the training and tools to carry out a complete service.</p>
+<p>Regular boiler servicing is essential for safety, efficiency, and protecting your manufacturer's warranty. Our Gas Safe registered engineers (Reg: 123456) carry out comprehensive inspections covering all critical components — giving you complete peace of mind that your boiler is running safely and economically all year round.</p>
+<p>We service all major boiler brands across Peterborough, including Worcester Bosch, Vaillant, Baxi, Ideal, and Viessmann. Whether you have a combi, system, or conventional boiler, our experienced engineers have the training and equipment to carry out a full, certified service.</p>
 
-<h3>What's Included in Our Boiler Service</h3>
+<h2>What's Included in Our Annual Boiler Service</h2>
+<p>Our service covers every critical component — not just a visual check and a tick in a box. Here's exactly what our Gas Safe engineers carry out during each visit:</p>
 <ul>
 <li>Full visual inspection of the boiler, flue, and surrounding pipework</li>
-<li>Gas pressure and flow rate checks</li>
+<li>Gas pressure and flow rate checks to manufacturer's specifications</li>
 <li>Combustion analysis and emissions testing</li>
 <li>Controls, safety devices, and thermostat testing</li>
 <li>Cleaning of key internal components including the burner and heat exchanger</li>
 <li>Condensate trap and drainage check</li>
 <li>Flue integrity and ventilation assessment</li>
-<li>Written report with findings and any recommendations</li>
+<li>Written service record with findings and any recommendations</li>
 </ul>
+<p>If we find anything of concern, we'll explain it in plain English and provide an honest quote for any repairs needed — with no pressure to proceed on the day.</p>
 
-<h3>Why Service Your Boiler Annually?</h3>
-<p>An annual boiler service ensures your heating system operates at peak efficiency, reducing energy bills by up to 10%. It also catches potential issues early, preventing costly breakdowns during the colder months when you need your heating most. Most importantly, it ensures your boiler is burning gas safely, protecting your family from the risk of carbon monoxide — a colourless, odourless gas that can be fatal.</p>
-<p>Regular servicing also maintains your manufacturer's warranty. Most boiler brands, including Worcester Bosch and Vaillant, require an annual service carried out by a Gas Safe registered engineer. Skipping a service could void your warranty and leave you facing the full cost of any repairs.</p>
-
-<h3>Boiler Service from Just £79</h3>
-<p>Our standard boiler service starts from just £79 — one of the most competitive rates in Peterborough. There are no hidden fees or call-out charges. We'll confirm the price before we start, and you'll receive a full written report once the service is complete.</p>
-<p>We also offer combined packages for landlords and homeowners who need a boiler service alongside a gas safety certificate (CP12). Ask us about our bundle pricing when you book.</p>
-
-<h3>Areas We Cover for Boiler Servicing</h3>
-<p>We carry out boiler servicing across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Market Deeping, Yaxley, Whittlesey, and Stamford. As a local business, we're typically able to offer same-week appointments — and emergency visits when needed.</p>
+<h2>Why Annual Boiler Servicing Matters</h2>
+<p>An annual boiler service isn't just about ticking a box — it's genuinely important for your safety. Your boiler burns gas, and any fault in the combustion process can produce carbon monoxide — a colourless, odourless gas responsible for around 40 deaths a year in the UK. A properly serviced boiler is a safe boiler.</p>
+<p>Beyond safety, a well-maintained boiler runs significantly more efficiently. Studies show a serviced boiler can use up to 10% less gas than a neglected one — a real difference to your energy bills during the winter months when your heating runs for hours at a time.</p>
+<p>Most boiler manufacturers — including Worcester Bosch, Vaillant, and Baxi — also require annual servicing by a Gas Safe registered engineer as a condition of their warranty. Miss a service and you risk voiding that warranty, leaving you to cover the full cost of any future repairs.</p>
 
 <h3>Signs Your Boiler Needs Servicing</h3>
+<p>If your annual service is overdue or you notice any of the following warning signs, contact us for an inspection rather than waiting until your next scheduled visit:</p>
 <ul>
-<li>Strange banging, whistling, or gurgling noises from the boiler</li>
-<li>Yellow or orange flame instead of a steady blue flame</li>
-<li>Radiators taking longer to heat up than usual</li>
-<li>A rise in your gas bills without increased usage</li>
-<li>The boiler frequently losing pressure or locking out</li>
-<li>A faint smell near the boiler or dark staining around it</li>
+<li>Strange banging, whistling, or gurgling noises coming from the boiler</li>
+<li>Yellow or orange flame instead of a clean, steady blue flame</li>
+<li>Radiators taking longer than usual to heat up</li>
+<li>A rise in your gas bills without any increase in usage</li>
+<li>The boiler frequently losing pressure or going into lockout</li>
+<li>A faint smell near the boiler, or dark staining and soot around it</li>
 </ul>
-<p>If you notice any of these signs, don't wait for your next scheduled service. Contact us for an inspection as soon as possible to rule out any safety concerns.</p>
+<p>A yellow flame in particular can indicate incomplete combustion and a potential carbon monoxide risk — don't ignore it. If you're unsure, call us or the National Gas Emergency line on 0800 111 999 immediately.</p>
 
-<h3>Our Boiler Service Process</h3>
-<p>When you book a boiler service with Peterborough Plumbers, here's what to expect:</p>
+<h2>Boiler Service Cost in Peterborough</h2>
+<p>Our standard boiler service starts from just £79 — one of the most competitive prices in Peterborough. There are no hidden fees, no call-out charges, and no unexpected extras. We confirm the price before we start, and you'll receive a full written service record on completion.</p>
+<p>We also offer combined packages for homeowners and landlords who need a boiler service alongside a <a href="/services/gas-safety-certificates">gas safety certificate (CP12)</a>. Combining both in a single visit saves time and reduces the overall cost. Ask about our bundle pricing when you book.</p>
+<p>If you manage multiple rental properties, ask about our <a href="/services/landlord-services">landlord maintenance contracts</a> — tailored annual packages covering your CP12, boiler service, and priority emergency cover at a predictable cost.</p>
+
+<h2>Our Boiler Service Process</h2>
+<p>We keep the process straightforward from first call to completion:</p>
 <ul>
-<li><strong>1. Book online or by phone</strong> — choose a date and time that suits you</li>
-<li><strong>2. Engineer visit</strong> — our Gas Safe registered engineer arrives on time with all necessary equipment</li>
-<li><strong>3. Thorough inspection</strong> — a comprehensive 30–60 minute check of all boiler components</li>
-<li><strong>4. Written report</strong> — you receive a clear summary of findings, including any advisory notices</li>
-<li><strong>5. Ongoing support</strong> — if we find any issues, we'll provide an honest quote for repair work with no pressure</li>
+<li><strong>1. Book online or by phone</strong> — choose a date and time to suit you, with same-week appointments typically available</li>
+<li><strong>2. Engineer arrives on time</strong> — our Gas Safe registered engineer arrives with all necessary equipment and identification</li>
+<li><strong>3. Thorough inspection</strong> — a comprehensive 30–60 minute service covering all critical boiler components</li>
+<li><strong>4. Written service record</strong> — you receive a clear report with our findings and any advisory notes</li>
+<li><strong>5. Honest advice</strong> — if we find any issues, we'll explain them plainly and provide a no-pressure quote for any repair work</li>
 </ul>
 
-<h3>Why Choose Peterborough Plumbers for Your Boiler Service?</h3>
+<h2>Areas We Cover for Boiler Servicing</h2>
+<p>We carry out boiler servicing across Peterborough and the surrounding areas, with same-week appointments typically available. Our service area covers <a href="/areas/werrington">Werrington</a>, <a href="/areas/orton">Orton</a>, <a href="/areas/hampton">Hampton</a>, <a href="/areas/bretton">Bretton</a>, <a href="/areas/market-deeping">Market Deeping</a>, <a href="/areas/yaxley">Yaxley</a>, <a href="/areas/whittlesey">Whittlesey</a>, <a href="/areas/stamford">Stamford</a>, and the Peterborough city centre (PE1). Not sure if we cover your postcode? Just give us a call.</p>
+
+<h2>What Our Customers Say</h2>
+<blockquote>
+<p>&ldquo;Really pleased with the service. The engineer arrived on time, explained everything he was checking, and had the whole job done in under an hour. Very professional — will definitely be booking again next year.&rdquo;</p>
+<p><strong>— David M., Peterborough ★★★★★</strong></p>
+</blockquote>
+<p>We're proud of our 4.6-star Google rating, earned from over 120 honest reviews from Peterborough homeowners and landlords. <a href="/reviews">Read more customer reviews</a> from across Peterborough and the surrounding areas.</p>
+
+<h2>Why Choose Peterborough Plumbers for Your Boiler Service?</h2>
 <ul>
-<li>Gas Safe registered engineers (Reg: 123456)</li>
-<li>30+ years of experience serving Peterborough homes</li>
-<li>Competitive fixed pricing from £79 — no hidden costs</li>
-<li>All major boiler brands serviced</li>
-<li>4.6-star Google rating from over 120 reviews</li>
-<li>Same-week appointments available</li>
+<li>Gas Safe registered engineers (Reg: 123456) — fully qualified, checked, and insured</li>
+<li>30+ years of experience serving Peterborough homes and landlords</li>
+<li>Fixed pricing from £79 — no hidden costs, no call-out charges</li>
+<li>All major brands serviced: Worcester Bosch, Vaillant, Baxi, Ideal, Viessmann</li>
+<li>4.6-star Google rating from over 120 verified reviews</li>
+<li>Same-week appointments available across Peterborough</li>
 <li>Friendly, local team — not a national call centre</li>
-</ul>`,
+<li>Bundle discounts when combined with a <a href="/services/gas-safety-certificates">gas safety certificate</a></li>
+</ul>
+<p>If your boiler has broken down and needs urgent attention, our <a href="/services/emergency-plumber">24/7 emergency plumber service</a> is available around the clock across Peterborough — call us any time on 01234 567890.</p>`,
     faqs: [
       {
         q: "How often should I service my boiler?",
-        a: "We recommend an annual boiler service to maintain safety, efficiency, and your warranty. Most boiler manufacturers require an annual service carried out by a Gas Safe registered engineer to keep the warranty valid.",
+        a: "We recommend servicing your boiler every 12 months without fail. Most boiler manufacturers — including Worcester Bosch, Vaillant, Baxi, and Ideal — require an annual service carried out by a Gas Safe registered engineer to keep the warranty valid. Beyond the warranty requirement, an annual service is the single most effective way to catch faults early before they develop into costly breakdowns. If you've missed a service, don't wait until something goes wrong — book as soon as possible, especially ahead of the winter months when your boiler is working hardest.",
       },
       {
         q: "How long does a boiler service take?",
-        a: "A standard boiler service typically takes between 30 to 60 minutes, depending on the boiler type, age, and condition. We'll let you know if we find anything that requires additional time.",
+        a: "A standard boiler service typically takes between 30 and 60 minutes, depending on the type, age, and overall condition of the boiler. Combi boilers are usually quicker to service than older conventional or system boilers. If our engineer finds anything that needs additional attention — such as a component requiring a deeper clean or a minor adjustment — the visit may run slightly longer. We'll always let you know immediately if that's the case. Most services are completed within the hour, so you won't need to clear your whole day.",
       },
       {
         q: "Do I need a boiler service if my boiler is working fine?",
-        a: "Yes. Many issues are not visible to homeowners. Regular servicing catches problems early — including dangerous carbon monoxide leaks — and ensures safe operation, even if the boiler appears to be working normally.",
+        a: "Yes, absolutely. Many boiler faults — including dangerous ones — develop invisibly and produce no noticeable symptoms until they're serious. A boiler that appears to be working perfectly can still have combustion issues, a cracked heat exchanger, or deteriorating seals that present a carbon monoxide risk. Carbon monoxide is colourless and odourless, so you won't detect it without a professional test or a working CO alarm. Regular servicing catches these issues before they become safety hazards or expensive repairs. Think of it like an annual car service — you don't wait for the engine to fail before booking it in.",
       },
       {
         q: "How much does a boiler service cost in Peterborough?",
-        a: "Our standard boiler service starts from just £79 with no hidden fees. We also offer discounted bundle rates when combined with a gas safety certificate (CP12). Contact us for a quote.",
+        a: "Our standard boiler service starts from just £79 with no hidden fees, no call-out charges, and no unexpected extras. The price is confirmed before we start, and you'll receive a full written service record on completion. We also offer discounted bundle rates when you combine a boiler service with a gas safety certificate (CP12) — popular with landlords who need both in a single visit. For landlords managing multiple properties, ask about our portfolio pricing and annual maintenance contracts, which cover all compliance requirements at a predictable annual cost.",
       },
       {
         q: "What brands of boiler do you service?",
-        a: "We service all major brands including Worcester Bosch, Vaillant, Baxi, Ideal, Viessmann, Glow-worm, and more. Our engineers are trained to work on combi, system, and conventional boilers.",
+        a: "We service all major domestic boiler brands, including Worcester Bosch, Vaillant, Baxi, Ideal, Viessmann, Glow-worm, Potterton, Ariston, and Ferroli. Our engineers are trained to work on combi, system, and conventional (heat-only) boilers of all ages — from modern high-efficiency condensing boilers to older units that have been running for many years. If your boiler is an unusual or older make and model, give us a call before booking and we'll confirm we can cover it. In most cases, we can.",
       },
       {
         q: "Will a boiler service reduce my energy bills?",
-        a: "Yes. A well-maintained boiler runs more efficiently, which can reduce your gas bills by up to 10%. Servicing also prevents breakdowns that lead to expensive emergency repairs.",
+        a: "Yes. Regular servicing can reduce your gas consumption by up to 10% by ensuring the boiler burns fuel as efficiently as possible. Over time, components like the burner and heat exchanger accumulate deposits that reduce combustion efficiency — meaning the boiler burns more gas to produce the same heat. When our engineer cleans these components and checks the combustion settings, the boiler runs more cleanly. Over a full winter, those savings add up and can go a long way towards covering the cost of the service itself. A well-serviced boiler also produces fewer carbon emissions per unit of heat.",
+      },
+      {
+        q: "Can I combine a boiler service with a gas safety certificate?",
+        a: "Yes, and we'd recommend it. Having both done in a single visit is more cost-effective than booking separately, since the engineer is already on site and much of the safety checking overlaps with the service. This is particularly useful for landlords, who are legally required to hold a valid gas safety certificate (CP12) for every rental property with gas appliances. Certificates are issued on the day of the inspection — both digital and physical copies provided. Ask about our bundle pricing when you book, or visit our gas safety certificates page for full pricing details.",
       },
     ],
     seoTitle: "Boiler Service Peterborough | From £79 | Gas Safe",
     seoDescription:
-      "Professional boiler servicing in Peterborough from £79. Gas Safe registered engineers, all major brands, same-week appointments. Book your annual service today.",
+      "Annual boiler service in Peterborough from £79. Gas Safe registered engineers, all major brands, no hidden fees. Same-week appointments — book today.",
     featured: true,
     sortOrder: 1,
   },
   {
     name: "Gas Safety Certificates",
     slug: "gas-safety-certificates",
-    image: "/images/homepage/Gas safety certificate.png",
+    image: "/images/homepage/gas-safety-certificate.png",
     shortDescription:
       "Landlord gas safety certificates (CP12) and domestic gas safety checks by qualified Gas Safe engineers.",
     heroHeading: "Gas Safety Certificates in Peterborough",
@@ -223,7 +241,7 @@ export const services: Service[] = [
   {
     name: "Central Heating Services",
     slug: "central-heating-services",
-    image: "/images/homepage/Central heatinf service.png",
+    image: "/images/homepage/central-heating-service.png",
     shortDescription:
       "Full central heating installation, repair, and maintenance including radiators, thermostats, and pipework.",
     heroHeading: "Central Heating Services in Peterborough",
@@ -326,7 +344,7 @@ export const services: Service[] = [
   {
     name: "Bathroom Installations",
     slug: "bathroom-installations",
-    image: "/images/homepage/Bathroom installation service.png",
+    image: "/images/homepage/bathroom-installation-service.png",
     shortDescription:
       "Complete bathroom design and installation including suites, showers, tiling, and plumbing work.",
     heroHeading: "Bathroom Installations in Peterborough",
@@ -537,7 +555,7 @@ export const services: Service[] = [
   {
     name: "Emergency Plumber Service",
     slug: "emergency-plumber",
-    image: "/images/homepage/emergency plumbing.png",
+    image: "/images/homepage/emergency-plumbing.png",
     shortDescription:
       "24/7 emergency plumbing service for burst pipes, leaks, boiler breakdowns, and blocked drains in Peterborough.",
     heroHeading: "Emergency Plumber in Peterborough",
@@ -736,7 +754,7 @@ export const services: Service[] = [
   {
     name: "Plumbing Repairs",
     slug: "plumbing-repairs",
-    image: "/images/homepage/plumbing repairs.png",
+    image: "/images/homepage/plumbing-repairs.png",
     shortDescription:
       "Fast, reliable plumbing repairs for leaks, dripping taps, faulty toilets, and pipework issues.",
     heroHeading: "Plumbing Repairs in Peterborough",

@@ -31,7 +31,7 @@ export default function CTASection({
         </div>
         <p className="mt-8 text-white/50 text-sm">
           Or call us directly:{" "}
-          <a href={`tel:${siteSettings.phone}`} className="text-pp-yellow hover:text-pp-yellow/80 transition-colors">
+          <a href={`tel:${siteSettings.phoneHref}`} className="text-pp-yellow hover:text-pp-yellow/80 transition-colors">
             {siteSettings.phone}
           </a>
         </p>

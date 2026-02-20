@@ -4,10 +4,22 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
-import { getBlogBySlug, getAllBlogSlugs } from "@/content/blog";
+import { getBlogBySlug, getAllBlogSlugs, type BlogPost } from "@/content/blog";
 import { services } from "@/content/services";
 import { siteSettings } from "@/content/settings";
 import { articleSchema } from "@/lib/seo/schema";
+
+const categoryServiceMap: Record<BlogPost["category"], string[]> = {
+  "Boiler & Heating": ["boiler-service", "central-heating-services", "gas-safety-certificates"],
+  "Landlord & Legal": ["landlord-services", "gas-safety-certificates", "boiler-service"],
+  "Emergency & Repairs": ["emergency-plumber", "plumbing-repairs", "damp-leak-detection"],
+  "Local Guides": ["plumbing-installation", "bathroom-installations", "plumbing-repairs"],
+};
+
+function getRelatedServicesByCategory(category: BlogPost["category"]) {
+  const slugs = categoryServiceMap[category] ?? [];
+  return services.filter((s) => slugs.includes(s.slug));
+}
 
 export function generateStaticParams() {
   return getAllBlogSlugs().map((slug) => ({ slug }));
@@ -85,7 +97,7 @@ export default async function BlogPostPage({
           <div className="mt-12 pt-8 border-t border-pp-dark/10">
             <h3 className="text-lg font-bold text-pp-dark mb-4">Related Services</h3>
             <div className="flex flex-wrap gap-2">
-              {services.slice(0, 4).map((s) => (
+              {getRelatedServicesByCategory(post.category).map((s) => (
                 <Link
                   key={s.slug}
                   href={`/services/${s.slug}`}
