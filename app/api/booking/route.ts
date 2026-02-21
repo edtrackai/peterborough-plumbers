@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { bookingSchema } from "@/lib/validations/booking";
+import { sql } from "@/lib/db";
 
 // In-memory rate limiter: 5 submissions per IP per 10 minutes
 // Resets on server restart — acceptable for a low-traffic local business site
@@ -59,15 +60,35 @@ export async function POST(request: NextRequest) {
 
   const data = result.data;
 
-  // Log metadata only — never log PII (name, phone, email, postcode)
-  console.log("[Booking] New request received:", {
+  try {
+    await sql`
+      INSERT INTO bookings (name, phone, email, postcode, service, date, time_window, details, ip_address)
+      VALUES (
+        ${data.name},
+        ${data.phone},
+        ${data.email},
+        ${data.postcode},
+        ${data.service},
+        ${data.date},
+        ${data.timeWindow},
+        ${data.details},
+        ${ip}
+      )
+    `;
+  } catch (err) {
+    console.error("[Booking] DB insert failed:", err instanceof Error ? err.message : err);
+    return NextResponse.json(
+      { error: "Failed to save booking. Please call us directly." },
+      { status: 500 }
+    );
+  }
+
+  console.log("[Booking] Saved to DB:", {
     service: data.service,
     date: data.date,
     timeWindow: data.timeWindow,
     receivedAt: new Date().toISOString(),
   });
-
-  // TODO: integrate email delivery (e.g. Resend) or CRM webhook here
 
   return NextResponse.json({ success: true }, { status: 200 });
 }
