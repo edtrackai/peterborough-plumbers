@@ -27,6 +27,7 @@ export async function generateMetadata({
     title: area.seoTitle,
     description: area.seoDescription,
     path: `/areas/${area.slug}`,
+    image: "/images/homepage/hero.png",
   });
 }
 
@@ -77,22 +78,23 @@ export default async function AreaPage({
       />
 
       {/* Hero */}
-      <section className="bg-pp-dark pt-28 pb-16">
+      <section className="bg-pp-navy pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
           <Breadcrumbs
             items={[
               { name: "Areas", href: "/areas" },
               { name: area.name, href: `/areas/${area.slug}` },
             ]}
+            inverted
           />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
-            Plumber in <span className="text-pp-yellow">{area.name}</span>
+            Plumber in <span className="text-pp-teal">{area.name}</span>
           </h1>
-          <p className="mt-4 text-white/70 text-lg max-w-2xl">{area.intro}</p>
+          <p className="mt-4 text-white/90 text-lg max-w-2xl">{area.intro}</p>
           <div className="mt-8">
             <Link
               href="/book"
-              className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors"
+              className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors"
             >
               Book Now
             </Link>
@@ -105,12 +107,12 @@ export default async function AreaPage({
         <div className="mx-auto max-w-4xl px-4 space-y-10">
           {/* Landmarks */}
           <div>
-            <h2 className="text-2xl font-bold text-pp-dark mb-4">Local Landmarks</h2>
+            <h2 className="text-2xl font-bold text-pp-heading mb-4">Local Landmarks</h2>
             <div className="flex flex-wrap gap-2">
               {area.landmarks.map((l) => (
                 <span
                   key={l}
-                  className="bg-pp-yellow/10 text-pp-dark px-4 py-2 rounded-full text-sm font-medium"
+                  className="bg-pp-teal/10 text-pp-heading px-4 py-2 rounded-full text-sm font-medium"
                 >
                   {l}
                 </span>
@@ -120,12 +122,12 @@ export default async function AreaPage({
 
           {/* Postcodes */}
           <div>
-            <h2 className="text-2xl font-bold text-pp-dark mb-4">Postcodes Covered</h2>
+            <h2 className="text-2xl font-bold text-pp-heading mb-4">Postcodes Covered</h2>
             <div className="flex flex-wrap gap-2">
               {area.postcodes.map((p) => (
                 <span
                   key={p}
-                  className="bg-pp-dark text-white px-4 py-2 rounded-full text-sm font-medium"
+                  className="bg-pp-navy text-white px-4 py-2 rounded-full text-sm font-medium"
                 >
                   {p}
                 </span>
@@ -136,14 +138,14 @@ export default async function AreaPage({
           {/* Reviews for this area */}
           {areaReviews.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-pp-dark mb-4">
+              <h2 className="text-2xl font-bold text-pp-heading mb-4">
                 Reviews from {area.name}
               </h2>
               <div className="space-y-4">
                 {areaReviews.map((r, i) => (
-                  <div key={i} className="bg-white rounded-xl p-6 border border-pp-dark/5">
-                    <p className="text-pp-dark/80 mb-3">&ldquo;{r.body}&rdquo;</p>
-                    <p className="text-sm font-semibold text-pp-dark">{r.customerName}</p>
+                  <div key={i} className="bg-white rounded-xl p-6 border border-gray-100">
+                    <p className="text-pp-body mb-3">&ldquo;{r.body}&rdquo;</p>
+                    <p className="text-sm font-semibold text-pp-heading">{r.customerName}</p>
                   </div>
                 ))}
               </div>

@@ -79,7 +79,7 @@ export default async function ServicePage({
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-dark pt-28 pb-16">
+      <section className="relative bg-pp-navy pt-28 pb-16">
         {service.heroImage && (
           <div className="absolute inset-0 z-0">
             <Image
@@ -91,7 +91,8 @@ export default async function ServicePage({
               quality={85}
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-pp-dark/90 via-pp-dark/70 to-pp-dark/40" />
+            {/* hero-overlay: left-to-right dark gradient; uniform on mobile */}
+            <div className="absolute inset-0 hero-overlay" />
           </div>
         )}
         <div className="relative z-10 mx-auto max-w-7xl px-4">
@@ -100,19 +101,20 @@ export default async function ServicePage({
               { name: "Services", href: "/services" },
               { name: service.name, href: `/services/${service.slug}` },
             ]}
+            inverted
           />
-          <h1 className="text-4xl lg:text-5xl font-bold text-white">{service.heroHeading}</h1>
-          <p className="mt-4 text-white/70 text-lg max-w-2xl">{service.heroSubheading}</p>
+          <h1 className="text-4xl lg:text-5xl font-bold text-white hero-text">{service.heroHeading}</h1>
+          <p className="mt-4 text-white/90 text-lg max-w-2xl hero-text">{service.heroSubheading}</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href={`/book?service=${service.slug}`}
-              className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors"
+              className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors shadow-[0_4px_14px_rgba(14,143,139,0.35)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-pp-navy"
             >
               Book {service.name}
             </Link>
             <a
               href={`tel:${siteSettings.phoneHref}`}
-              className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors"
+              className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white/70 hover:bg-white hover:text-pp-navy transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pp-navy"
             >
               Call {siteSettings.phone}
             </a>
@@ -124,7 +126,7 @@ export default async function ServicePage({
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-4xl px-4">
           <div
-            className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-dark [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-dark [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-dark/80 [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-dark/80 [&_li]:mb-1"
+            className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-heading [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-heading [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-body [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-body [&_li]:mb-1"
             dangerouslySetInnerHTML={{ __html: service.content }}
           />
         </div>
@@ -132,7 +134,7 @@ export default async function ServicePage({
 
       {/* FAQs */}
       {service.faqs.length > 0 && (
-        <div className="bg-pp-offwhite">
+        <div className="bg-pp-grey">
           <FaqAccordion faqs={service.faqs} />
         </div>
       )}
