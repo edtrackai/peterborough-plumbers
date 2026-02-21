@@ -15,13 +15,13 @@ export const metadata: Metadata = buildMetadata({
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-pp-dark pt-28 pb-16">
+      <section className="bg-pp-navy pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
-          <Breadcrumbs items={[{ name: "Services", href: "/services" }]} />
+          <Breadcrumbs items={[{ name: "Services", href: "/services" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
-            Our <span className="text-pp-yellow">Services</span>
+            Our <span className="text-pp-teal">Services</span>
           </h1>
-          <p className="mt-4 text-white/70 text-lg max-w-2xl">
+          <p className="mt-4 text-lg max-w-2xl hero-body">
             From boiler servicing to emergency repairs, we provide comprehensive plumbing and heating services across Peterborough.
           </p>
         </div>

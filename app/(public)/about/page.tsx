@@ -16,20 +16,20 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero section */}
-      <section className="bg-pp-dark pt-28 pb-16">
+      <section className="bg-pp-navy pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
-          <Breadcrumbs items={[{ name: "About", href: "/about" }]} />
+          <Breadcrumbs items={[{ name: "About", href: "/about" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
-            About <span className="text-pp-yellow">{siteSettings.companyName}</span>
+            About <span className="text-pp-teal">{siteSettings.companyName}</span>
           </h1>
-          <p className="mt-4 text-white/70 text-lg max-w-2xl">
+          <p className="mt-4 text-lg max-w-2xl hero-body">
             Over {siteSettings.yearsExperience} years of trusted plumbing and heating service in Peterborough.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-            <Link href={siteSettings.primaryCtaHref} className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors">
+            <Link href={siteSettings.primaryCtaHref} className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors">
               {siteSettings.primaryCtaLabel}
             </Link>
-            <a href={`tel:${siteSettings.phoneHref}`} className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors">
+            <a href={`tel:${siteSettings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">
               Call {siteSettings.phone}
             </a>
           </div>
@@ -39,8 +39,8 @@ export default function AboutPage() {
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-4xl px-4 space-y-8">
           <div className="prose prose-lg max-w-none">
-            <h2 className="text-2xl font-bold text-pp-dark">Our Story</h2>
-            <p className="text-pp-dark/80 leading-relaxed">
+            <h2 className="text-2xl font-bold text-pp-heading">Our Story</h2>
+            <p className="text-pp-body leading-relaxed">
               With over {siteSettings.yearsExperience} years of experience,{" "}
               {siteSettings.companyName} has grown from a small family operation into one of
               Peterborough&apos;s most trusted plumbing and heating companies. Our team of{" "}
@@ -48,24 +48,24 @@ export default function AboutPage() {
               homes and businesses across Peterborough and surrounding areas each year.
             </p>
 
-            <h2 className="text-2xl font-bold text-pp-dark mt-10">What Sets Us Apart</h2>
-            <p className="text-pp-dark/80 leading-relaxed">
+            <h2 className="text-2xl font-bold text-pp-heading mt-10">What Sets Us Apart</h2>
+            <p className="text-pp-body leading-relaxed">
               We believe in doing things properly. Every job, whether it&apos;s a simple tap
               repair or a full central heating installation, receives the same level of care
               and professionalism. Our {siteSettings.googleRating}-star Google rating reflects
               our commitment to quality workmanship and customer service.
             </p>
 
-            <h2 className="text-2xl font-bold text-pp-dark mt-10">Gas Safe Registered</h2>
-            <p className="text-pp-dark/80 leading-relaxed">
+            <h2 className="text-2xl font-bold text-pp-heading mt-10">Gas Safe Registered</h2>
+            <p className="text-pp-body leading-relaxed">
               Safety is our top priority. All our engineers are Gas Safe registered
               (Reg: {siteSettings.gasSafeNumber}) and undergo regular training to stay current
               with the latest regulations and best practices. You can verify our registration
               on the Gas Safe Register website.
             </p>
 
-            <h2 className="text-2xl font-bold text-pp-dark mt-10">Local &amp; Reliable</h2>
-            <p className="text-pp-dark/80 leading-relaxed">
+            <h2 className="text-2xl font-bold text-pp-heading mt-10">Local &amp; Reliable</h2>
+            <p className="text-pp-body leading-relaxed">
               Based in Peterborough, we serve the city and surrounding areas including Orton,
               Werrington, Hampton, Bretton, Market Deeping, Yaxley, Whittlesey, and Stamford.
               Being local means faster response times and a genuine understanding of the

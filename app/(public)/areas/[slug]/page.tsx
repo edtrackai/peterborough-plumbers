@@ -90,7 +90,7 @@ export default async function AreaPage({
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
             Plumber in <span className="text-pp-teal">{area.name}</span>
           </h1>
-          <p className="mt-4 text-white/90 text-lg max-w-2xl">{area.intro}</p>
+          <p className="mt-4 text-lg max-w-2xl hero-body">{area.intro}</p>
           <div className="mt-8">
             <Link
               href="/book"

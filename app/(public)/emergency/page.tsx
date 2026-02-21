@@ -101,7 +101,7 @@ export default function EmergencyPage() {
           <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Emergency Plumber in Peterborough
           </h1>
-          <p className="text-xl text-white/80 max-w-2xl mx-auto mb-10">
+          <p className="text-xl max-w-2xl mx-auto mb-10 hero-body">
             Burst pipes, no heating, flooding, boiler breakdowns. Our Gas Safe registered engineers
             are on call around the clock — call us now for a fast response.
           </p>
@@ -120,7 +120,7 @@ export default function EmergencyPage() {
             </Link>
           </div>
           {/* Trust strip */}
-          <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-white/70">
+          <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm hero-label">
             <span className="flex items-center gap-2">
               <svg className="h-4 w-4 text-[var(--brand)]" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

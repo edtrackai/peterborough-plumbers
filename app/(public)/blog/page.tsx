@@ -17,17 +17,17 @@ export default function BlogPage() {
 
   return (
     <>
-      <section className="bg-pp-dark pt-28 pb-16">
+      <section className="bg-pp-navy pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
-          <Breadcrumbs items={[{ name: "Blog", href: "/blog" }]} />
+          <Breadcrumbs items={[{ name: "Blog", href: "/blog" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
-            Our <span className="text-pp-yellow">Blog</span>
+            Our <span className="text-pp-teal">Blog</span>
           </h1>
-          <p className="mt-4 text-white/70 text-lg max-w-2xl">
+          <p className="mt-4 text-lg max-w-2xl hero-body">
             Expert advice, tips, and local guides from our experienced plumbing team.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-            <Link href="/book" className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors">
+            <Link href="/book" className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors">
               Book Now
             </Link>
           </div>
@@ -41,22 +41,22 @@ export default function BlogPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-pp-dark/5"
+                className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
               >
                 <div className="p-6">
-                  <span className="text-xs font-semibold text-pp-accent uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-pp-teal uppercase tracking-wider">
                     {post.category}
                   </span>
-                  <h2 className="text-xl font-bold text-pp-dark mt-2 mb-3 group-hover:text-pp-accent transition-colors">
+                  <h2 className="text-xl font-bold text-pp-heading mt-2 mb-3 group-hover:text-pp-teal transition-colors">
                     {post.title}
                   </h2>
-                  <p className="text-pp-dark/70 text-sm leading-relaxed mb-4">
+                  <p className="text-pp-body/80 text-sm leading-relaxed mb-4">
                     {post.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-pp-accent font-semibold text-sm">Read More</span>
+                    <span className="text-pp-teal font-semibold text-sm">Read More</span>
                     {post.publishedAt && (
-                      <span className="text-xs text-pp-dark/40">
+                      <span className="text-xs text-pp-body/50">
                         {new Date(post.publishedAt).toLocaleDateString("en-GB", {
                           day: "numeric",
                           month: "short",

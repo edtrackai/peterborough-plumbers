@@ -17,20 +17,20 @@ export const metadata: Metadata = buildMetadata({
 export default function ReviewsPage() {
   return (
     <>
-      <section className="bg-pp-dark pt-28 pb-16">
+      <section className="bg-pp-navy pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
-          <Breadcrumbs items={[{ name: "Reviews", href: "/reviews" }]} />
+          <Breadcrumbs items={[{ name: "Reviews", href: "/reviews" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
-            Customer <span className="text-pp-yellow">Reviews</span>
+            Customer <span className="text-pp-teal">Reviews</span>
           </h1>
-          <p className="mt-4 text-white/70 text-lg max-w-2xl">
+          <p className="mt-4 text-lg max-w-2xl hero-body">
             Don&apos;t just take our word for it. Here&apos;s what our customers have to say.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-            <Link href="/book" className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors">
+            <Link href="/book" className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors">
               Book Now
             </Link>
-            <a href={`tel:${siteSettings.phoneHref}`} className="bg-pp-yellow text-pp-dark px-6 py-3 rounded-lg font-bold hover:bg-pp-yellow/90 transition-colors">
+            <a href={`tel:${siteSettings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">
               Call {siteSettings.phone}
             </a>
           </div>

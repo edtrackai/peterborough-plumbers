@@ -104,7 +104,7 @@ export default async function ServicePage({
             inverted
           />
           <h1 className="text-4xl lg:text-5xl font-bold text-white hero-text">{service.heroHeading}</h1>
-          <p className="mt-4 text-white/90 text-lg max-w-2xl hero-text">{service.heroSubheading}</p>
+          <p className="mt-4 text-lg max-w-2xl hero-body hero-text">{service.heroSubheading}</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href={`/book?service=${service.slug}`}

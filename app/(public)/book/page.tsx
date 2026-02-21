@@ -14,13 +14,13 @@ export const metadata: Metadata = buildMetadata({
 export default function BookPage() {
   return (
     <>
-      <section className="bg-pp-dark pt-28 pb-16">
+      <section className="bg-pp-navy pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
-          <Breadcrumbs items={[{ name: "Book Now", href: "/book" }]} />
+          <Breadcrumbs items={[{ name: "Book Now", href: "/book" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
-            Book a <span className="text-pp-yellow">Plumber</span>
+            Book a <span className="text-pp-teal">Plumber</span>
           </h1>
-          <p className="mt-4 text-white/70 text-lg max-w-2xl">
+          <p className="mt-4 text-lg max-w-2xl hero-body">
             Fill in the form below and we&apos;ll confirm your booking as soon as possible.
           </p>
         </div>

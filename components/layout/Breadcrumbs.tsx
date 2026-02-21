@@ -24,7 +24,7 @@ export default function Breadcrumbs({
       />
       <nav
         aria-label="Breadcrumb"
-        className={`py-3 text-sm ${inverted ? "text-white/60 hero-text" : "text-pp-body/60"}`}
+        className={`py-3 text-sm ${inverted ? "hero-label hero-text" : "text-pp-body/60"}`}
       >
         <ol className="flex flex-wrap items-center gap-1">
           {allItems.map((item, i) => (
@@ -37,8 +37,10 @@ export default function Breadcrumbs({
               ) : (
                 <Link
                   href={item.href}
-                  className={`transition-colors duration-200 hover:text-pp-teal ${
-                    inverted ? "text-white/70 hover:text-white" : ""
+                  className={`transition-colors duration-200 ${
+                    inverted
+                      ? "hover:text-white"
+                      : "hover:text-pp-teal"
                   }`}
                 >
                   {item.name}
