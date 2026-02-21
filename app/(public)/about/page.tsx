@@ -1,23 +1,68 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 import { siteSettings } from "@/content/settings";
 import Link from "next/link";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About Us | Peterborough Plumbers",
+  title: "About Peterborough Plumbers | Gas Safe, 30+ Years",
   description:
-    "Learn about Peterborough Plumbers — over 30 years of trusted plumbing and heating service. Gas Safe registered, family-run, and locally based.",
+    "Peterborough Plumbers — Gas Safe registered with 30+ years experience. Family-run, locally based, and trusted by thousands of homeowners. Call for a free quote today.",
   path: "/about",
+  absoluteTitle: true,
+  image: "/images/homepage/hero.png",
 });
 
 export default function AboutPage() {
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+  ]);
+
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteSettings.companyName,
+    url: siteSettings.siteUrl,
+    telephone: siteSettings.phoneHref,
+    email: siteSettings.email,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Peterborough",
+      addressRegion: "Cambridgeshire",
+      addressCountry: "GB",
+    },
+    description: `Gas Safe registered plumbing and heating company serving Peterborough for ${siteSettings.yearsExperience} years.`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+      />
       {/* Hero section */}
-      <section className="bg-pp-navy pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative bg-pp-navy pt-28 pb-16">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/homepage/hero.png"
+            alt="Expert plumbers in Peterborough — Gas Safe registered engineers"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 hero-overlay" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
           <Breadcrumbs items={[{ name: "About", href: "/about" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
             About <span className="text-pp-teal">{siteSettings.companyName}</span>
@@ -26,7 +71,7 @@ export default function AboutPage() {
             Over {siteSettings.yearsExperience} years of trusted plumbing and heating service in Peterborough.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-            <Link href={siteSettings.primaryCtaHref} className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors">
+            <Link href={siteSettings.primaryCtaHref} className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               {siteSettings.primaryCtaLabel}
             </Link>
             <a href={`tel:${siteSettings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">

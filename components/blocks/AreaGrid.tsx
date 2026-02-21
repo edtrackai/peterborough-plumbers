@@ -12,7 +12,10 @@ export default function AreaGrid({
   backgroundImage?: string;
 }) {
   return (
-    <section className="relative py-16 lg:py-24">
+    <section
+      className="relative py-16 lg:py-24"
+      style={!backgroundImage ? { backgroundColor: "#F5F5F5" } : undefined}
+    >
       {backgroundImage && (
         <div className="absolute inset-0 z-0">
           <Image
@@ -24,24 +27,44 @@ export default function AreaGrid({
             quality={85}
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-pp-dark/80" />
+          <div className="absolute inset-0 bg-pp-navy/80" />
         </div>
       )}
       <div className="relative z-10 mx-auto max-w-7xl px-4">
-        <h2 className={`text-3xl lg:text-4xl font-bold text-center mb-12 ${backgroundImage ? "text-white" : "text-pp-dark"}`}>
-          {heading}
-        </h2>
+        <div className={`text-center mb-12 ${backgroundImage ? "" : ""}`}>
+          <h2
+            className={`text-3xl lg:text-4xl font-bold ${
+              backgroundImage ? "text-white" : "text-pp-heading section-heading-underline"
+            }`}
+          >
+            {heading}
+          </h2>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {areas.map((area) => (
             <Link
               key={area.slug}
               href={`/areas/${area.slug}`}
-              className={`group rounded-xl p-6 text-center shadow-sm hover:shadow-lg transition-all duration-300 border ${backgroundImage ? "bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20" : "bg-white border-pp-dark/5"}`}
+              className={`group rounded-xl p-5 text-center shadow-sm transition-all duration-200 border ${
+                backgroundImage
+                  ? "bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20"
+                  : "bg-white border-gray-100 hover:border-pp-teal hover:shadow-[0_4px_16px_rgba(0,168,156,0.15)]"
+              }`}
             >
-              <h3 className={`text-lg font-bold transition-colors ${backgroundImage ? "text-white group-hover:text-pp-yellow" : "text-pp-dark group-hover:text-pp-accent"}`}>
+              <h3
+                className={`text-base font-bold transition-colors duration-200 ${
+                  backgroundImage
+                    ? "text-white group-hover:text-pp-teal"
+                    : "text-pp-heading group-hover:text-pp-teal"
+                }`}
+              >
                 {area.name}
               </h3>
-              <p className={`text-xs mt-1 ${backgroundImage ? "text-white/60" : "text-pp-dark/50"}`}>
+              <p
+                className={`text-xs mt-1 ${
+                  backgroundImage ? "text-white/60" : "text-pp-body/50"
+                }`}
+              >
                 {area.postcodes.join(", ")}
               </p>
             </Link>

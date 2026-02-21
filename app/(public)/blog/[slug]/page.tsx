@@ -7,7 +7,7 @@ import CTASection from "@/components/blocks/CTASection";
 import { getBlogBySlug, getAllBlogSlugs, type BlogPost } from "@/content/blog";
 import { services } from "@/content/services";
 import { siteSettings } from "@/content/settings";
-import { articleSchema } from "@/lib/seo/schema";
+import { articleSchema, breadcrumbSchema } from "@/lib/seo/schema";
 
 const categoryServiceMap: Record<BlogPost["category"], string[]> = {
   "Boiler & Heating": ["boiler-service", "central-heating-services", "gas-safety-certificates"],
@@ -37,6 +37,7 @@ export async function generateMetadata({
     title: post.seoTitle,
     description: post.seoDescription,
     path: `/blog/${post.slug}`,
+    image: "/images/homepage/hero.png",
   });
 }
 
@@ -57,7 +58,19 @@ export default async function BlogPostPage({
           __html: JSON.stringify(articleSchema(post)),
         }}
       />
-      <section className="bg-pp-dark pt-28 pb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Home", href: "/" },
+              { name: "Blog", href: "/blog" },
+              { name: post.title, href: `/blog/${post.slug}` },
+            ])
+          ),
+        }}
+      />
+      <section className="bg-pp-navy pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
           <Breadcrumbs
             items={[
@@ -65,7 +78,7 @@ export default async function BlogPostPage({
               { name: post.title, href: `/blog/${post.slug}` },
             ]}
           />
-          <span className="text-xs font-semibold text-pp-accent uppercase tracking-wider">
+          <span className="text-xs font-semibold text-pp-teal uppercase tracking-wider">
             {post.category}
           </span>
           <h1 className="text-3xl lg:text-5xl font-bold text-white mt-2">{post.title}</h1>
@@ -79,7 +92,7 @@ export default async function BlogPostPage({
             </p>
           )}
           <div className="mt-6">
-            <Link href={siteSettings.primaryCtaHref} className="bg-[#2563EB] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#1D4ED8] transition-colors">
+            <Link href={siteSettings.primaryCtaHref} className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               {siteSettings.primaryCtaLabel}
             </Link>
           </div>
@@ -89,19 +102,19 @@ export default async function BlogPostPage({
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-3xl px-4">
           <div
-            className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-dark [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-dark [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-dark/80 [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-dark/80 [&_li]:mb-1"
+            className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-heading [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-heading [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-body [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-body [&_li]:mb-1"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 
           {/* Related services */}
-          <div className="mt-12 pt-8 border-t border-pp-dark/10">
-            <h3 className="text-lg font-bold text-pp-dark mb-4">Related Services</h3>
+          <div className="mt-12 pt-8 border-t border-gray-100">
+            <h3 className="text-lg font-bold text-pp-heading mb-4">Related Services</h3>
             <div className="flex flex-wrap gap-2">
               {getRelatedServicesByCategory(post.category).map((s) => (
                 <Link
                   key={s.slug}
                   href={`/services/${s.slug}`}
-                  className="bg-pp-yellow/10 text-pp-dark px-4 py-2 rounded-full text-sm font-medium hover:bg-pp-yellow/20 transition-colors"
+                  className="bg-pp-teal/10 text-pp-heading px-4 py-2 rounded-full text-sm font-medium hover:bg-pp-teal/20 transition-colors"
                 >
                   {s.name}
                 </Link>

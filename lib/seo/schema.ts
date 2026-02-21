@@ -7,7 +7,7 @@ export function localBusinessSchema() {
     "@context": "https://schema.org",
     "@type": "Plumber",
     name: siteSettings.companyName,
-    telephone: siteSettings.phone,
+    telephone: siteSettings.phoneHref, // E.164 format: +441234567890
     email: siteSettings.email,
     address: {
       "@type": "PostalAddress",

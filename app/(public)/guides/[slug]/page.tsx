@@ -90,7 +90,7 @@ export default async function GuideDetailPage({ params }: Props) {
         <div className="mx-auto max-w-3xl px-4">
           {/* Meta */}
           <div className="mb-6 flex items-center gap-3 flex-wrap">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brand)] bg-teal-50 px-3 py-1 rounded-full">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--pp-navy)] bg-amber-50 px-3 py-1 rounded-full">
               {guideCategories[guide.category]}
             </span>
             <span className="text-sm text-[var(--muted)]">{guide.readTime} min read</span>
@@ -113,7 +113,7 @@ export default async function GuideDetailPage({ params }: Props) {
           </p>
 
           {/* Inline CTA box */}
-          <div className="my-10 rounded-xl border border-[var(--brand)] bg-teal-50 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="my-10 rounded-xl border border-[var(--brand)] bg-amber-50 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
               <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
               <p className="text-sm text-[var(--muted)] mt-1">

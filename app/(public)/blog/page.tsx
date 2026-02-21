@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -6,10 +7,11 @@ import CTASection from "@/components/blocks/CTASection";
 import { getPublishedPosts } from "@/content/blog";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing Tips & Advice | Our Blog",
+  title: "Plumbing Tips & Guides for Peterborough Homeowners",
   description:
-    "Expert plumbing tips, advice, and local guides from Peterborough Plumbers. Boiler care, landlord guides, emergency tips, and more.",
+    "Expert plumbing tips, guides and local advice from Peterborough Plumbers. Boiler care, landlord guides, emergency tips and more. Book a plumber today.",
   path: "/blog",
+  image: "/images/homepage/plumbing-repairs.png",
 });
 
 export default function BlogPage() {
@@ -17,8 +19,20 @@ export default function BlogPage() {
 
   return (
     <>
-      <section className="bg-pp-navy pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative bg-pp-navy pt-28 pb-16">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/homepage/plumbing-repairs.png"
+            alt="Plumbing tips and advice from Peterborough Plumbers"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 hero-overlay" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
           <Breadcrumbs items={[{ name: "Blog", href: "/blog" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
             Our <span className="text-pp-teal">Blog</span>
@@ -27,7 +41,7 @@ export default function BlogPage() {
             Expert advice, tips, and local guides from our experienced plumbing team.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-            <Link href="/book" className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors">
+            <Link href="/book" className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               Book Now
             </Link>
           </div>

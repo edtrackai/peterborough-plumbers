@@ -6,9 +6,9 @@ import { siteSettings } from "@/content/settings";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Prices in Peterborough",
+  title: "Plumbing Prices Peterborough | From £65 | No Hidden Fees",
   description:
-    "Transparent plumbing and heating prices in Peterborough. Boiler service from £79, new boiler from £1,800, emergency call-out from £99. No hidden fees. Get a free quote today.",
+    "Transparent plumbing prices in Peterborough. Boiler service from £79, emergency from £99, new boiler from £1,800. No hidden fees. Get a free quote today.",
   path: "/pricing",
   image: "/images/homepage/hero.png",
 });

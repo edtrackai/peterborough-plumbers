@@ -42,6 +42,7 @@ export default async function ServicePage({
   if (!service) notFound();
 
   const related = getRelatedServices(service.slug, 3);
+  const heroImage = service.heroImage || service.image;
 
   return (
     <>
@@ -80,10 +81,10 @@ export default async function ServicePage({
 
       {/* Hero */}
       <section className="relative bg-pp-navy pt-28 pb-16">
-        {service.heroImage && (
+        {heroImage && (
           <div className="absolute inset-0 z-0">
             <Image
-              src={service.heroImage}
+              src={heroImage}
               alt={`${service.name} in Peterborough — professional Gas Safe registered engineers`}
               fill
               className="object-cover"
@@ -108,7 +109,7 @@ export default async function ServicePage({
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href={`/book?service=${service.slug}`}
-              className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors shadow-[0_4px_14px_rgba(14,143,139,0.35)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-pp-navy"
+              className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors shadow-[0_4px_14px_rgba(201,168,76,0.35)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-pp-navy"
             >
               Book {service.name}
             </Link>

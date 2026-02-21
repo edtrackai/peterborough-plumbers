@@ -440,7 +440,7 @@ Run before every PR or sprint completion.
 - [ ] All lowercase
 - [ ] All hyphenated (no spaces, no underscores)
 - [ ] No typos in filenames
-- [ ] All .webp format (except OG images which are .jpg)
+- [ ] All .webp format (except OG images which are .jpg, logos which are .svg)
 - [ ] Names are descriptive and include service + location
 
 ### Alt text
@@ -458,6 +458,7 @@ Run before every PR or sprint completion.
 - [ ] No priority prop on any other image
 - [ ] No loading="eager" used anywhere
 - [ ] quality={85} set on photo images
+- [ ] blurDataURL + placeholder="blur" set on all hero images
 
 ### Schema
 - [ ] ImageObject added to Service schema on service pages
@@ -476,3 +477,178 @@ Run before every PR or sprint completion.
 - [ ] Card images under 50KB post-optimisation
 - [ ] Hero images under 150KB post-optimisation
 - [ ] No CLS — width/height always set
+- [ ] Lighthouse Performance score 90+
+- [ ] PageSpeed Insights mobile score 80+
+
+---
+
+## RULE 8 — HERO IMAGE BLUR PLACEHOLDER
+
+Add `placeholder="blur"` + `blurDataURL` to all hero images to prevent layout flash and improve perceived load speed:
+
+```tsx
+// Generate blurDataURL using plaiceholder or similar:
+// npm install plaiceholder sharp
+
+import { getPlaiceholder } from 'plaiceholder'
+
+// In your page component or getStaticProps:
+const { base64 } = await getPlaiceholder('/images/services/boiler-service-peterborough.webp')
+
+// Then in JSX:
+<Image
+  src="/images/services/boiler-service-peterborough.webp"
+  alt="Gas Safe engineer carrying out an annual boiler service in Peterborough"
+  width={1200}
+  height={675}
+  sizes="100vw"
+  priority={true}
+  quality={85}
+  placeholder="blur"
+  blurDataURL={base64}  // ← shows blurred preview while image loads
+/>
+```
+
+For static sites, generate base64 at build time. This directly improves LCP score and perceived performance — critical for mobile users on slower connections.
+
+---
+
+## RULE 9 — IMAGE SITEMAP
+
+Google can discover and index images via an image sitemap, making your service photos eligible to appear in Google Image Search — a secondary traffic source.
+
+Add image entries to `app/sitemap.ts`:
+
+```typescript
+// Extended sitemap with image data
+// Note: Next.js MetadataRoute.Sitemap doesn't natively support images yet
+// Use a custom XML sitemap at public/image-sitemap.xml instead:
+```
+
+Create `public/image-sitemap.xml`:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://[domain]/services/boiler-service</loc>
+    <image:image>
+      <image:loc>https://[domain]/images/services/boiler-service-peterborough.webp</image:loc>
+      <image:title>Boiler Service Peterborough — Gas Safe Engineers</image:title>
+      <image:caption>Gas Safe registered engineer servicing a boiler in Peterborough</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://[domain]/services/emergency-plumber</loc>
+    <image:image>
+      <image:loc>https://[domain]/images/services/emergency-plumber-peterborough-24hr.webp</image:loc>
+      <image:title>Emergency Plumber Peterborough — 24/7</image:title>
+      <image:caption>Emergency plumber responding to a burst pipe in Peterborough</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Add one <url> block per service and area page -->
+
+</urlset>
+```
+
+Add to `public/robots.txt`:
+```
+Sitemap: https://[domain]/sitemap.xml
+Sitemap: https://[domain]/image-sitemap.xml
+```
+
+Submit both sitemaps in Google Search Console.
+
+---
+
+## RULE 10 — LOGO & FAVICON STANDARDS
+
+### Logo
+- Primary format: **SVG** — scales perfectly at any size, tiny file
+- Fallback: PNG at 2x resolution (e.g. 400×120px for a horizontal logo)
+- Never use JPG for logos — no transparency support
+- Usage in Next.js:
+```tsx
+import Image from 'next/image'
+
+// SVG logo (preferred)
+<Image src="/images/logo.svg" alt="Peterborough Plumbers logo" width={200} height={60} priority />
+
+// Or use next/image with SVG via unoptimized prop (if SVG optimization causes issues)
+<Image src="/images/logo.svg" alt="Peterborough Plumbers logo" width={200} height={60} unoptimized />
+```
+
+### Favicon — All required sizes
+Place in `/public/`:
+```
+/public/favicon.ico              ← 32×32, legacy browser support
+/public/favicon-16x16.png        ← 16×16
+/public/favicon-32x32.png        ← 32×32
+/public/apple-touch-icon.png     ← 180×180, iOS home screen
+/public/android-chrome-192x192.png ← 192×192, Android
+/public/android-chrome-512x512.png ← 512×512, Android splash
+/public/site.webmanifest         ← PWA manifest
+```
+
+Add to `app/layout.tsx`:
+```typescript
+export const metadata: Metadata = {
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+    other: [
+      { rel: 'manifest', url: '/site.webmanifest' },
+    ],
+  },
+}
+```
+
+Generate all favicon sizes free at: **https://realfavicongenerator.net/**
+
+---
+
+## RULE 11 — AVIF & FORMAT NOTES
+
+Next.js automatically serves AVIF to browsers that support it when the source is WebP.
+No extra configuration needed — this is handled by `next/image` by default.
+
+```javascript
+// next.config.js — verify these are set (Next.js defaults)
+module.exports = {
+  images: {
+    formats: ['image/avif', 'image/webp'],  // AVIF first, WebP fallback
+    // This is already the Next.js default — no change needed unless overridden
+  },
+}
+```
+
+AVIF delivers 20–50% better compression than WebP with equivalent quality.
+Since Next.js handles this automatically, your only job is ensuring source files are WebP.
+
+---
+
+## RULE 12 — PERFORMANCE SCORE TARGETS
+
+Run Lighthouse after every major image change.
+
+| Score | Target | Tool |
+|-------|--------|------|
+| Lighthouse Performance | 90+ desktop / 80+ mobile | Chrome DevTools |
+| PageSpeed Insights | 90+ desktop / 75+ mobile | pagespeed.web.dev |
+| LCP | < 2.5s | Both |
+| CLS | < 0.1 | Both |
+| Hero image size (post-optimisation) | < 150KB | Network tab |
+| Card image size (post-optimisation) | < 50KB | Network tab |
+
+**If performance score is below target, check in this order:**
+1. Is hero image using `priority={true}`?
+2. Is hero image WebP and under 150KB?
+3. Are card images using correct `sizes` prop?
+4. Are any non-hero images incorrectly using `priority={true}`?
+5. Are `width` and `height` set on every image (prevents CLS)?

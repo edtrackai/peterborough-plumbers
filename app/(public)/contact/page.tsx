@@ -1,22 +1,51 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { breadcrumbSchema, localBusinessSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact Us | Peterborough Plumbers",
+  title: "Contact Peterborough Plumbers | Call or Book Online",
   description:
-    "Get in touch with Peterborough Plumbers. Call, email, WhatsApp, or book online. Fast response guaranteed.",
+    "Get in touch with Peterborough Plumbers — Gas Safe registered engineers available 24/7. Call, WhatsApp, email or book online for a guaranteed fast response.",
   path: "/contact",
+  absoluteTitle: true,
+  image: "/images/homepage/hero.png",
 });
 
 export default function ContactPage() {
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", href: "/" },
+    { name: "Contact", href: "/contact" },
+  ]);
+
   return (
     <>
-      <section className="bg-pp-navy pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema()) }}
+      />
+      <section className="relative bg-pp-navy pt-28 pb-16">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/homepage/hero.png"
+            alt="Contact Peterborough Plumbers — call, email or book online"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 hero-overlay" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
           <Breadcrumbs items={[{ name: "Contact", href: "/contact" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
             Contact <span className="text-pp-teal">Us</span>

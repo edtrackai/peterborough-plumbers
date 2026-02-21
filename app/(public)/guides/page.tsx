@@ -6,9 +6,9 @@ import { breadcrumbSchema } from "@/lib/seo/schema";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Guides",
+  title: "Free Plumbing Guides | Peterborough Homeowner Advice",
   description:
-    "Free plumbing and heating guides for Peterborough homeowners. Cost breakdowns, DIY how-to guides, boiler help, and emergency advice from Gas Safe registered engineers.",
+    "Free plumbing and heating guides for Peterborough homeowners — cost guides, boiler help, DIY tips and emergency advice from Gas Safe registered engineers.",
   path: "/guides",
   image: "/images/homepage/hero.png",
 });
@@ -93,7 +93,7 @@ export default function GuidesPage() {
                     <Link
                       key={guide.slug}
                       href={`/guides/${guide.slug}`}
-                      className="group block rounded-xl border border-[var(--border)] bg-white p-6 hover:border-[var(--brand)] hover:shadow-[0_4px_20px_rgba(14,143,139,0.10)] transition-all duration-200"
+                      className="group block rounded-xl border border-[var(--border)] bg-white p-6 hover:border-[var(--brand)] hover:shadow-[0_4px_20px_rgba(201,168,76,0.15)] transition-all duration-200"
                     >
                       <span
                         className={`inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-4 ${categoryColors[guide.category]}`}

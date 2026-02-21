@@ -123,7 +123,7 @@ export default function HomePage() {
               <div className="mb-6">
                 <Link
                   href="/emergency"
-                  className="inline-flex items-center gap-2 bg-teal-50 border border-[var(--brand)] text-[var(--brand)] px-4 py-2 rounded-full text-sm font-bold hover:bg-teal-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
+                  className="inline-flex items-center gap-2 bg-amber-50 border border-[var(--brand)] text-[var(--pp-navy)] px-4 py-2 rounded-full text-sm font-bold hover:bg-amber-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
                 >
                   <span className="h-2 w-2 rounded-full bg-[var(--brand)] animate-pulse" />
                   24/7 Emergency Call-Out Available
@@ -145,7 +145,7 @@ export default function HomePage() {
               <div className="flex flex-wrap gap-3 mb-10">
                 <Link
                   href="/book"
-                  className="btn-book-now inline-flex items-center gap-2 bg-pp-teal text-white px-7 py-3.5 rounded-full font-bold text-base hover:bg-pp-teal-dark transition-colors duration-200 shadow-[0_4px_16px_rgba(14,143,139,0.35)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
+                  className="btn-book-now inline-flex items-center gap-2 bg-pp-teal text-white px-7 py-3.5 rounded-full font-bold text-base hover:bg-pp-teal-dark transition-colors duration-200 shadow-[0_4px_16px_rgba(201,168,76,0.28)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
                 >
                   Book Online
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -458,9 +458,9 @@ export default function HomePage() {
               <Link
                 key={guide.slug}
                 href={`/guides/${guide.slug}`}
-                className="group block bg-[var(--surface-alt)] rounded-xl border border-[var(--border)] p-5 hover:border-pp-teal hover:shadow-[0_4px_16px_rgba(14,143,139,0.10)] transition-all duration-200"
+                className="group block bg-[var(--surface-alt)] rounded-xl border border-[var(--border)] p-5 hover:border-[var(--brand)] hover:shadow-[0_4px_16px_rgba(201,168,76,0.15)] transition-all duration-200"
               >
-                <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-50 text-[var(--brand)] mb-4">
+                <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-[var(--pp-navy)] mb-4">
                   {guide.category === "costs" ? "Cost Guide" :
                    guide.category === "diy" ? "DIY" :
                    guide.category === "boilers" ? "Boilers" :

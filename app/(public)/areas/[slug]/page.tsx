@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -78,8 +79,20 @@ export default async function AreaPage({
       />
 
       {/* Hero */}
-      <section className="bg-pp-navy pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative bg-pp-navy pt-28 pb-16">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/homepage/hero.png"
+            alt={`Plumber in ${area.name} — Peterborough Plumbers`}
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 hero-overlay" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
           <Breadcrumbs
             items={[
               { name: "Areas", href: "/areas" },
@@ -94,7 +107,7 @@ export default async function AreaPage({
           <div className="mt-8">
             <Link
               href="/book"
-              className="bg-pp-teal text-white px-6 py-3 rounded-lg font-bold hover:bg-pp-teal-dark transition-colors"
+              className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors"
             >
               Book Now
             </Link>

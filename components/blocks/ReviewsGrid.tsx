@@ -9,7 +9,7 @@ function Stars({ rating }: { rating: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           key={i}
-          className={`h-5 w-5 ${i < rating ? "text-pp-yellow" : "text-pp-dark/20"}`}
+          className={`h-5 w-5 ${i < rating ? "text-pp-teal" : "text-gray-200"}`}
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -87,9 +87,11 @@ export default function ReviewsGrid({
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="mx-auto max-w-7xl px-4">
-        <h2 className="text-3xl lg:text-4xl font-bold text-pp-dark text-center mb-12">
-          {heading}
-        </h2>
+        <div className="text-center mb-14">
+          <h2 className="text-3xl lg:text-4xl font-bold text-pp-heading section-heading-underline">
+            {heading}
+          </h2>
+        </div>
 
         <div
           className="relative"
@@ -103,9 +105,9 @@ export default function ReviewsGrid({
           <button
             onClick={prev}
             aria-label="Previous reviews"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 bg-white shadow-lg rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-yellow transition-colors border border-pp-dark/10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
           >
-            <svg className="h-5 w-5 text-pp-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -124,14 +126,14 @@ export default function ReviewsGrid({
                   className="flex-shrink-0 px-3"
                   style={{ width: `${100 / visible}%` }}
                 >
-                  <div className="bg-pp-offwhite rounded-xl p-6 border border-pp-dark/5 h-full flex flex-col">
+                  <div className="bg-white rounded-xl p-6 border border-gray-150 shadow-[0_2px_12px_rgba(0,0,0,0.08)] h-full flex flex-col">
                     <Stars rating={review.rating} />
-                    <p className="text-pp-dark/80 text-sm leading-relaxed mt-4 mb-4 flex-1">
+                    <p className="text-pp-body text-sm leading-relaxed mt-4 mb-4 flex-1">
                       &ldquo;{review.body}&rdquo;
                     </p>
-                    <div className="flex items-center justify-between">
-                      <p className="font-semibold text-pp-dark text-sm">{review.customerName}</p>
-                      <p className="text-xs text-pp-dark/50">{review.areaName}</p>
+                    <div className="pt-4 border-t border-gray-100">
+                      <p className="font-semibold text-pp-teal text-sm">{review.customerName}</p>
+                      <p className="text-xs text-pp-body/60 mt-0.5">{review.areaName}</p>
                     </div>
                   </div>
                 </div>
@@ -143,9 +145,9 @@ export default function ReviewsGrid({
           <button
             onClick={next}
             aria-label="Next reviews"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 bg-white shadow-lg rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-yellow transition-colors border border-pp-dark/10"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
           >
-            <svg className="h-5 w-5 text-pp-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -158,7 +160,7 @@ export default function ReviewsGrid({
                 onClick={() => setCurrent(i)}
                 aria-label={`Go to slide ${i + 1}`}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
-                  i === current ? "w-8 bg-pp-accent" : "w-2.5 bg-pp-dark/20 hover:bg-pp-dark/40"
+                  i === current ? "w-8 bg-pp-teal" : "w-2.5 bg-gray-200 hover:bg-gray-300"
                 }`}
               />
             ))}

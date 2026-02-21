@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Premium palette — deep navy + refined teal ── */
-  --brand:        #0E8F8B;
-  --brand-hover:  #0B7B78;
+  /* ── Premium palette — deep navy + champagne gold ── */
+  --brand:        #C9A84C;   /* champagne gold — accent, badges, icons on dark */
+  --brand-hover:  #B8943A;   /* deeper gold for hover states */
   --bg:           #ffffff;
   --surface:      #ffffff;
-  --surface-alt:  #F7FAFC;
-  --text:         #0B1B2B;
-  --muted:        #4B5B6B;
-  --border:       #E6EEF5;
-  --focus:        rgba(14, 143, 139, 0.35);
+  --surface-alt:  #F9F6F0;   /* warm white — card backgrounds */
+  --text:         #1A2332;   /* warm ink — body text */
+  --muted:        #6B7A8D;   /* muted slate */
+  --border:       #E8E0D0;   /* warm border */
+  --focus:        rgba(201, 168, 76, 0.40);
 
-  /* ── Legacy aliases (preserve existing component class names) ── */
-  --pp-teal:      var(--brand);
-  --pp-teal-dark: var(--brand-hover);
+  /* ── Legacy aliases ── */
+  /* pp-teal remapped to navy so existing bg-pp-teal buttons stay readable on light bg */
+  --pp-teal:      #0B1B2B;
+  --pp-teal-dark: #07121D;
   --pp-navy:      #0B1B2B;
   --pp-navy-dark: #07121D;
   --pp-grey:      var(--surface-alt);

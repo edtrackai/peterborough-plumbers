@@ -16,7 +16,7 @@ export default function CTASection({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href={siteSettings.primaryCtaHref}
-            className="btn-book-now bg-[var(--brand)] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-pp-navy"
+            className="btn-book-now bg-[var(--brand)] text-[var(--pp-navy)] px-8 py-4 rounded-full font-bold text-lg hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-pp-navy"
           >
             {siteSettings.primaryCtaLabel}
           </Link>

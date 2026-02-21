@@ -6,9 +6,9 @@ import { siteSettings } from "@/content/settings";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing FAQs — Common Questions Answered",
+  title: "Plumbing FAQs Peterborough | Gas Safe Engineers Answer",
   description:
-    "Answers to the most common questions about plumbing, boilers, heating, and emergency call-outs in Peterborough. From Gas Safe registered engineers with 30+ years experience.",
+    "Common plumbing questions answered by Gas Safe engineers in Peterborough. Boilers, heating, emergency call-outs, pricing and landlord FAQs covered.",
   path: "/faqs",
   image: "/images/homepage/hero.png",
 });
@@ -187,7 +187,7 @@ export default function FaqsPage() {
                     key={faq.q}
                     className="group rounded-xl border border-[var(--border)] overflow-hidden"
                   >
-                    <summary className="flex items-center justify-between px-5 py-4 cursor-pointer font-semibold text-pp-heading text-sm leading-snug select-none bg-[var(--surface-alt)] hover:bg-teal-50 transition-colors duration-200">
+                    <summary className="flex items-center justify-between px-5 py-4 cursor-pointer font-semibold text-pp-heading text-sm leading-snug select-none bg-[var(--surface-alt)] hover:bg-amber-50 transition-colors duration-200">
                       <span className="pr-4">{faq.q}</span>
                       <svg
                         className="h-5 w-5 text-[var(--brand)] shrink-0 group-open:rotate-180 transition-transform duration-200"
@@ -209,7 +209,7 @@ export default function FaqsPage() {
           ))}
 
           {/* Still have questions */}
-          <div className="rounded-xl border border-[var(--brand)] bg-teal-50 p-8 text-center">
+          <div className="rounded-xl border border-[var(--brand)] bg-amber-50 p-8 text-center">
             <h2 className="text-xl font-bold text-pp-heading mb-3">Still Have a Question?</h2>
             <p className="text-[var(--muted)] mb-6 text-sm">
               If your question isn&apos;t answered above, call us or use our online booking form and

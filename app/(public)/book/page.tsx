@@ -1,21 +1,36 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Suspense } from "react";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import BookingFormWrapper from "./BookingFormWrapper";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Book a Plumber in Peterborough | Free Quote",
+  title: "Book a Plumber in Peterborough | Same-Day Available",
   description:
-    "Book a plumber in Peterborough online. Fill in our simple booking form and we'll confirm your appointment quickly.",
+    "Book a Gas Safe plumber in Peterborough online. Fill in our simple form and we'll confirm your appointment quickly. Same-week availability in most cases.",
   path: "/book",
+  noIndex: true,
+  image: "/images/homepage/boiler-service.png",
 });
 
 export default function BookPage() {
   return (
     <>
-      <section className="bg-pp-navy pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative bg-pp-navy pt-28 pb-16">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/homepage/boiler-service.png"
+            alt="Book a plumber in Peterborough — fast, reliable service"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 hero-overlay" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
           <Breadcrumbs items={[{ name: "Book Now", href: "/book" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
             Book a <span className="text-pp-teal">Plumber</span>

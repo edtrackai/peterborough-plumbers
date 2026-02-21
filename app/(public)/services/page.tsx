@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
@@ -6,17 +7,30 @@ import CTASection from "@/components/blocks/CTASection";
 import { services } from "@/content/services";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing Services in Peterborough",
+  title: "Plumbing & Heating Services Peterborough | Gas Safe",
   description:
-    "Full range of plumbing and heating services in Peterborough. Boilers, heating, bathrooms, emergency plumbing, drain clearance, and more.",
+    "Gas Safe plumbing and heating services in Peterborough — boilers, bathrooms, emergency repairs, drain clearance. 30+ years experience. Book online today.",
   path: "/services",
+  image: "/images/homepage/hero.png",
 });
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-pp-navy pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative bg-pp-navy pt-28 pb-16">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/homepage/hero.png"
+            alt="Professional plumbing and heating services in Peterborough"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 hero-overlay" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4">
           <Breadcrumbs items={[{ name: "Services", href: "/services" }]} inverted />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
             Our <span className="text-pp-teal">Services</span>

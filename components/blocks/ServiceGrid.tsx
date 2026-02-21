@@ -16,7 +16,6 @@ export default function ServiceGrid({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const total = services.length;
 
-  // How many cards are visible at each breakpoint
   const getVisible = () => {
     if (typeof window === "undefined") return 3;
     if (window.innerWidth < 768) return 1;
@@ -73,11 +72,13 @@ export default function ServiceGrid({
   }, [current, paused, next]);
 
   return (
-    <section className="py-16 lg:py-24">
+    <section className="py-16 lg:py-24 bg-white">
       <div className="mx-auto max-w-7xl px-4">
-        <h2 className="text-3xl lg:text-4xl font-bold text-pp-dark text-center mb-12">
-          {heading}
-        </h2>
+        <div className="text-center mb-14">
+          <h2 className="text-3xl lg:text-4xl font-bold text-pp-heading section-heading-underline">
+            {heading}
+          </h2>
+        </div>
 
         <div
           ref={containerRef}
@@ -92,9 +93,9 @@ export default function ServiceGrid({
           <button
             onClick={prev}
             aria-label="Previous services"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 bg-white shadow-lg rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-yellow transition-colors border border-pp-dark/10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
           >
-            <svg className="h-5 w-5 text-pp-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -115,7 +116,7 @@ export default function ServiceGrid({
                 >
                   <Link
                     href={`/services/${service.slug}`}
-                    className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-pp-dark/5 block h-full"
+                    className="group bg-white rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.14)] hover:-translate-y-1 transition-all duration-200 border border-gray-100 border-t-4 border-t-pp-teal block h-full"
                   >
                     {service.image && (
                       <div className="relative h-48 w-full">
@@ -130,15 +131,15 @@ export default function ServiceGrid({
                       </div>
                     )}
                     <div className="p-6">
-                      <h3 className="text-xl font-bold text-pp-dark mb-3 group-hover:text-pp-accent transition-colors">
+                      <h3 className="text-xl font-bold text-pp-heading mb-3 group-hover:text-pp-teal transition-colors duration-200">
                         {service.name}
                       </h3>
-                      <p className="text-pp-dark/70 text-sm leading-relaxed mb-4">
+                      <p className="text-pp-body text-sm leading-relaxed mb-4">
                         {service.shortDescription}
                       </p>
-                      <span className="text-pp-accent font-semibold text-sm inline-flex items-center gap-1">
+                      <span className="text-pp-teal font-semibold text-sm inline-flex items-center gap-1">
                         Learn More
-                        <svg className="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <svg className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                       </span>
@@ -153,9 +154,9 @@ export default function ServiceGrid({
           <button
             onClick={next}
             aria-label="Next services"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 bg-white shadow-lg rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-yellow transition-colors border border-pp-dark/10"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
           >
-            <svg className="h-5 w-5 text-pp-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -168,7 +169,7 @@ export default function ServiceGrid({
                 onClick={() => setCurrent(i)}
                 aria-label={`Go to slide ${i + 1}`}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
-                  i === current ? "w-8 bg-pp-accent" : "w-2.5 bg-pp-dark/20 hover:bg-pp-dark/40"
+                  i === current ? "w-8 bg-pp-teal" : "w-2.5 bg-gray-200 hover:bg-gray-300"
                 }`}
               />
             ))}

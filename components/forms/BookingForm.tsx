@@ -89,9 +89,9 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
     return (
       <div className="text-center py-12">
         <div className="bg-green-50 rounded-xl p-8 max-w-md mx-auto border border-green-200">
-          <div className="text-4xl mb-4">&#10003;</div>
-          <h2 className="text-2xl font-bold text-pp-dark mb-3">Booking Request Sent!</h2>
-          <p className="text-pp-dark/70 mb-6">
+          <div className="text-4xl mb-4 text-green-600">&#10003;</div>
+          <h2 className="text-2xl font-bold text-pp-heading mb-3">Booking Request Sent!</h2>
+          <p className="text-pp-body mb-6">
             Thank you for your booking request. We&apos;ll confirm your appointment as soon as possible.
           </p>
           <div className="space-y-3">
@@ -99,13 +99,13 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
               href={getWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="block bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-colors"
+              className="block bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-colors duration-200"
             >
               Chat on WhatsApp for Faster Response
             </a>
             <Link
               href="/"
-              className="block text-pp-accent font-semibold hover:text-pp-accent/80 transition-colors"
+              className="block text-pp-teal font-semibold hover:text-pp-teal-dark transition-colors duration-200"
             >
               Back to Home
             </Link>
@@ -115,28 +115,31 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
     );
   }
 
+  const inputClass =
+    "w-full border border-gray-200 rounded-lg px-4 py-3 text-pp-heading bg-white focus:border-pp-teal focus:ring-1 focus:ring-pp-teal transition-colors duration-200 outline-none";
+
   return (
     <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl mx-auto" noValidate>
       {/* Name */}
       <div>
-        <label htmlFor="name" className="block text-sm font-semibold text-pp-dark mb-1">
-          Name <span className="text-pp-accent">*</span>
+        <label htmlFor="name" className="block text-sm font-semibold text-pp-heading mb-1">
+          Name <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
           id="name"
           name="name"
           required
-          className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors"
+          className={inputClass}
           placeholder="Your full name"
         />
-        {errors.name && <p className="text-pp-accent text-sm mt-1">{errors.name}</p>}
+        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
       </div>
 
       {/* Phone */}
       <div>
-        <label htmlFor="phone" className="block text-sm font-semibold text-pp-dark mb-1">
-          Contact Number <span className="text-pp-accent">*</span>
+        <label htmlFor="phone" className="block text-sm font-semibold text-pp-heading mb-1">
+          Contact Number <span className="text-red-500">*</span>
         </label>
         <input
           type="tel"
@@ -144,54 +147,54 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
           name="phone"
           required
           defaultValue="+44 "
-          className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors"
+          className={inputClass}
         />
-        {errors.phone && <p className="text-pp-accent text-sm mt-1">{errors.phone}</p>}
+        {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
       </div>
 
       {/* Email */}
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold text-pp-dark mb-1">
-          Email Address <span className="text-pp-accent">*</span>
+        <label htmlFor="email" className="block text-sm font-semibold text-pp-heading mb-1">
+          Email Address <span className="text-red-500">*</span>
         </label>
         <input
           type="email"
           id="email"
           name="email"
           required
-          className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors"
+          className={inputClass}
           placeholder="your@email.com"
         />
-        {errors.email && <p className="text-pp-accent text-sm mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
       </div>
 
       {/* Postcode */}
       <div>
-        <label htmlFor="postcode" className="block text-sm font-semibold text-pp-dark mb-1">
-          Post Code <span className="text-pp-accent">*</span>
+        <label htmlFor="postcode" className="block text-sm font-semibold text-pp-heading mb-1">
+          Post Code <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
           id="postcode"
           name="postcode"
           required
-          className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors"
+          className={inputClass}
           placeholder="PE1 1AA"
         />
-        {errors.postcode && <p className="text-pp-accent text-sm mt-1">{errors.postcode}</p>}
+        {errors.postcode && <p className="text-red-500 text-sm mt-1">{errors.postcode}</p>}
       </div>
 
       {/* Service */}
       <div>
-        <label htmlFor="service" className="block text-sm font-semibold text-pp-dark mb-1">
-          Service <span className="text-pp-accent">*</span>
+        <label htmlFor="service" className="block text-sm font-semibold text-pp-heading mb-1">
+          Service <span className="text-red-500">*</span>
         </label>
         <select
           id="service"
           name="service"
           required
           defaultValue={preselectedService || ""}
-          className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors"
+          className={inputClass}
         >
           <option value="">Select a service</option>
           {services.map((s) => (
@@ -200,14 +203,14 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
             </option>
           ))}
         </select>
-        {errors.service && <p className="text-pp-accent text-sm mt-1">{errors.service}</p>}
+        {errors.service && <p className="text-red-500 text-sm mt-1">{errors.service}</p>}
       </div>
 
       {/* Date + Time */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="date" className="block text-sm font-semibold text-pp-dark mb-1">
-            Preferred Date <span className="text-pp-accent">*</span>
+          <label htmlFor="date" className="block text-sm font-semibold text-pp-heading mb-1">
+            Preferred Date <span className="text-red-500">*</span>
           </label>
           <input
             type="date"
@@ -215,19 +218,19 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
             name="date"
             required
             min={new Date().toISOString().split("T")[0]}
-            className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors"
+            className={inputClass}
           />
-          {errors.date && <p className="text-pp-accent text-sm mt-1">{errors.date}</p>}
+          {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date}</p>}
         </div>
         <div>
-          <label htmlFor="timeWindow" className="block text-sm font-semibold text-pp-dark mb-1">
-            Time Window <span className="text-pp-accent">*</span>
+          <label htmlFor="timeWindow" className="block text-sm font-semibold text-pp-heading mb-1">
+            Time Window <span className="text-red-500">*</span>
           </label>
           <select
             id="timeWindow"
             name="timeWindow"
             required
-            className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors"
+            className={inputClass}
           >
             <option value="">Select a time</option>
             <option value="Morning (8am-12pm)">Morning (8am-12pm)</option>
@@ -235,28 +238,28 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
             <option value="Evening (5pm-8pm)">Evening (5pm-8pm)</option>
             <option value="ASAP">ASAP</option>
           </select>
-          {errors.timeWindow && <p className="text-pp-accent text-sm mt-1">{errors.timeWindow}</p>}
+          {errors.timeWindow && <p className="text-red-500 text-sm mt-1">{errors.timeWindow}</p>}
         </div>
       </div>
 
       {/* Details */}
       <div>
-        <label htmlFor="details" className="block text-sm font-semibold text-pp-dark mb-1">
-          Details About the Issue <span className="text-pp-accent">*</span>
+        <label htmlFor="details" className="block text-sm font-semibold text-pp-heading mb-1">
+          Details About the Issue <span className="text-red-500">*</span>
         </label>
         <textarea
           id="details"
           name="details"
           required
           rows={4}
-          className="w-full border border-pp-dark/20 rounded-lg px-4 py-3 text-pp-dark bg-white focus:border-pp-accent focus:ring-1 focus:ring-pp-accent transition-colors resize-y"
+          className={`${inputClass} resize-y`}
           placeholder="Please describe the issue or service you need..."
         />
-        {errors.details && <p className="text-pp-accent text-sm mt-1">{errors.details}</p>}
+        {errors.details && <p className="text-red-500 text-sm mt-1">{errors.details}</p>}
       </div>
 
       {serverError && (
-        <p className="text-pp-accent text-sm text-center bg-red-50 border border-red-200 rounded-lg p-3">
+        <p className="text-red-600 text-sm text-center bg-red-50 border border-red-200 rounded-lg p-3">
           {serverError}
         </p>
       )}
@@ -264,14 +267,14 @@ export default function BookingForm({ preselectedService }: BookingFormProps) {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-[#2563EB] text-white py-4 rounded-lg font-bold text-lg hover:bg-[#1D4ED8] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn-book-now w-full bg-pp-teal text-white py-4 rounded-lg font-bold text-lg hover:bg-pp-teal-dark transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {submitting ? "Sending…" : "Submit Booking Request"}
       </button>
 
-      <p className="text-center text-sm text-pp-dark/50">
+      <p className="text-center text-sm text-pp-body/60">
         Or call us directly:{" "}
-        <a href={`tel:${siteSettings.phoneHref}`} className="text-pp-accent font-semibold">
+        <a href={`tel:${siteSettings.phoneHref}`} className="text-pp-teal font-semibold hover:text-pp-teal-dark transition-colors duration-200">
           {siteSettings.phone}
         </a>
       </p>

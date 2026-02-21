@@ -17,7 +17,7 @@ export default function GoogleReviewBadge({
   reviewCount?: number;
 }) {
   return (
-    <div className="inline-flex items-center gap-2.5 bg-black/80 backdrop-blur-md rounded-full px-4 py-2 shadow-md border border-white/10">
+    <div className="inline-flex items-center gap-2.5 bg-pp-navy/80 backdrop-blur-md rounded-full px-4 py-2 shadow-md border border-white/10">
       {/* Google colored letters */}
       <span className="text-sm font-semibold leading-none" aria-label="Google">
         {"Google".split("").map((letter, i) => (
@@ -37,7 +37,7 @@ export default function GoogleReviewBadge({
         {Array.from({ length: 5 }).map((_, i) => (
           <svg
             key={i}
-            className="h-4 w-4 text-pp-yellow"
+            className="h-4 w-4 text-yellow-400"
             fill="currentColor"
             viewBox="0 0 20 20"
           >

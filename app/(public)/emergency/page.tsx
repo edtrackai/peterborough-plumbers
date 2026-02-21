@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
@@ -93,9 +94,21 @@ export default function EmergencyPage() {
       />
 
       {/* Emergency hero */}
-      <section className="bg-[var(--pp-navy)] text-white py-16 lg:py-24">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <p className="inline-block bg-[var(--brand)] text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-6">
+      <section className="relative bg-[var(--pp-navy)] text-white py-16 lg:py-24">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/homepage/emergency-plumbing.png"
+            alt="Emergency plumber Peterborough — 24/7 fast response"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 hero-overlay" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
+          <p className="inline-block bg-[var(--brand)] text-[var(--pp-navy)] text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-6">
             24/7 Emergency Cover
           </p>
           <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
@@ -108,7 +121,7 @@ export default function EmergencyPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href={`tel:${siteSettings.phoneHref}`}
-              className="btn-book-now bg-[var(--brand)] text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-lg w-full sm:w-auto text-center"
+              className="btn-book-now bg-[var(--brand)] text-[var(--pp-navy)] px-10 py-5 rounded-full font-bold text-xl hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-lg w-full sm:w-auto text-center"
             >
               Call {siteSettings.phone}
             </a>
