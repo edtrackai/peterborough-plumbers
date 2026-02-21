@@ -1,0 +1,188 @@
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import type { Metadata } from "next";
+import { guides, getGuideBySlug, getAllGuideSlugs, guideCategories } from "@/content/guides";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
+import { siteSettings } from "@/content/settings";
+import CTASection from "@/components/blocks/CTASection";
+
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  return getAllGuideSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const guide = getGuideBySlug(slug);
+  if (!guide) return {};
+  return buildMetadata({
+    title: guide.name,
+    description: guide.excerpt,
+    path: `/guides/${guide.slug}`,
+    image: "/images/homepage/hero.png",
+  });
+}
+
+export default async function GuideDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const guide = getGuideBySlug(slug);
+  if (!guide) notFound();
+
+  const relatedGuides = guides
+    .filter((g) => g.category === guide.category && g.slug !== guide.slug)
+    .slice(0, 3);
+
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", href: "/" },
+    { name: "Guides", href: "/guides" },
+    { name: guide.name, href: `/guides/${guide.slug}` },
+  ]);
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.name,
+    description: guide.excerpt,
+    author: {
+      "@type": "Organization",
+      name: siteSettings.companyName,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteSettings.companyName,
+    },
+    datePublished: guide.publishedAt,
+    mainEntityOfPage: `${siteSettings.siteUrl}/guides/${guide.slug}`,
+    articleSection: guideCategories[guide.category],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+
+      {/* Breadcrumb */}
+      <nav
+        aria-label="Breadcrumb"
+        className="bg-[var(--surface-alt)] border-b border-[var(--border)] py-3"
+      >
+        <div className="mx-auto max-w-3xl px-4 flex items-center gap-2 text-sm text-[var(--muted)]">
+          <Link href="/" className="hover:text-[var(--brand)] transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/guides" className="hover:text-[var(--brand)] transition-colors">Guides</Link>
+          <span>/</span>
+          <span className="text-pp-heading font-medium truncate">{guide.name}</span>
+        </div>
+      </nav>
+
+      {/* Article */}
+      <div className="bg-white py-12 lg:py-16">
+        <div className="mx-auto max-w-3xl px-4">
+          {/* Meta */}
+          <div className="mb-6 flex items-center gap-3 flex-wrap">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brand)] bg-red-50 px-3 py-1 rounded-full">
+              {guideCategories[guide.category]}
+            </span>
+            <span className="text-sm text-[var(--muted)]">{guide.readTime} min read</span>
+            <span className="text-sm text-[var(--muted)]">
+              Updated:{" "}
+              {new Date(guide.publishedAt).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-3xl lg:text-4xl font-bold text-pp-heading leading-tight mb-4">
+            {guide.name}
+          </h1>
+          <p className="text-lg text-[var(--muted)] leading-relaxed mb-10 border-b border-[var(--border)] pb-10">
+            {guide.excerpt}
+          </p>
+
+          {/* Inline CTA box */}
+          <div className="my-10 rounded-xl border border-[var(--brand)] bg-red-50 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex-1">
+              <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
+              <p className="text-sm text-[var(--muted)] mt-1">
+                Gas Safe registered engineers — fast response across Peterborough and surrounding areas.
+              </p>
+            </div>
+            <div className="flex gap-3 shrink-0">
+              <Link
+                href="/book"
+                className="btn-book-now bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
+              >
+                Book Now
+              </Link>
+              <a
+                href={`tel:${siteSettings.phoneHref}`}
+                className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] transition-colors duration-200"
+              >
+                {siteSettings.phone}
+              </a>
+            </div>
+          </div>
+
+          {/* Guide content */}
+          <div
+            className="prose prose-lg max-w-none prose-headings:text-pp-heading prose-headings:font-bold prose-a:text-[var(--brand)] prose-a:no-underline hover:prose-a:underline prose-ul:my-4 prose-li:my-1"
+            dangerouslySetInnerHTML={{ __html: guide.content }}
+          />
+
+          {/* Related guides */}
+          {relatedGuides.length > 0 && (
+            <div className="mt-14 pt-10 border-t border-[var(--border)]">
+              <h2 className="text-xl font-bold text-pp-heading mb-6">Related Guides</h2>
+              <div className="grid gap-4">
+                {relatedGuides.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/guides/${related.slug}`}
+                    className="flex items-start gap-3 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--brand)] transition-colors duration-200 group"
+                  >
+                    <svg
+                      className="h-5 w-5 text-[var(--brand)] shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-pp-heading text-sm group-hover:text-[var(--brand)] transition-colors duration-200">
+                        {related.name}
+                      </p>
+                      <p className="text-xs text-[var(--muted)] mt-0.5">{related.readTime} min read</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                href="/guides"
+                className="mt-6 inline-block text-sm text-[var(--brand)] font-semibold hover:underline"
+              >
+                ← View all guides
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <CTASection />
+    </>
+  );
+}

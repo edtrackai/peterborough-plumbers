@@ -1,25 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --pp-yellow: #ffd800;
-  --pp-dark: #242424;
-  --pp-offwhite: #fbfff4;
-  --pp-accent: #f81b50;
+  /* ── HomeServe-aligned semantic tokens ── */
+  --brand:        #e62419;
+  --brand-hover:  #a2241f;
+  --bg:           #ffffff;
+  --surface:      #ffffff;
+  --surface-alt:  #f4f5f7;
+  --text:         #3a3a3a;
+  --muted:        #6b7280;
+  --border:       #e5e7eb;
+  --focus:        rgba(230, 36, 25, 0.4);
+
+  /* ── Legacy aliases (preserve existing component class names) ── */
+  --pp-teal:      var(--brand);
+  --pp-teal-dark: var(--brand-hover);
+  --pp-navy:      #1a2744;
+  --pp-navy-dark: #111b30;
+  --pp-grey:      var(--surface-alt);
+  --pp-body:      var(--text);
+  --pp-heading:   #1a2744;
+  --pp-white:     var(--bg);
 }
 
 @theme inline {
-  --color-pp-yellow: var(--pp-yellow);
-  --color-pp-dark: var(--pp-dark);
-  --color-pp-offwhite: var(--pp-offwhite);
-  --color-pp-accent: var(--pp-accent);
-  --color-background: var(--pp-offwhite);
-  --color-foreground: var(--pp-dark);
+  /* Semantic */
+  --color-brand:        var(--brand);
+  --color-brand-hover:  var(--brand-hover);
+  --color-bg:           var(--bg);
+  --color-surface:      var(--surface);
+  --color-surface-alt:  var(--surface-alt);
+  --color-text:         var(--text);
+  --color-muted:        var(--muted);
+  --color-border:       var(--border);
+  /* Legacy */
+  --color-pp-teal:      var(--pp-teal);
+  --color-pp-teal-dark: var(--pp-teal-dark);
+  --color-pp-navy:      var(--pp-navy);
+  --color-pp-navy-dark: var(--pp-navy-dark);
+  --color-pp-grey:      var(--pp-grey);
+  --color-pp-body:      var(--pp-body);
+  --color-pp-heading:   var(--pp-heading);
+  --color-background:   var(--bg);
+  --color-foreground:   var(--pp-heading);
 }
 
 body {
-  background: var(--pp-offwhite);
-  color: var(--pp-dark);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Smooth scroll for anchor links */
@@ -27,10 +59,16 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Focus ring using brand accent */
+/* Focus ring using brand colour */
 *:focus-visible {
-  outline: 2px solid var(--pp-accent);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
+}
+
+/* Global heading styles */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--pp-heading);
+  line-height: 1.25;
 }
 
 /* Book Now ripple effect */
@@ -45,7 +83,7 @@ html {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
     opacity: 0;
     pointer-events: none;
     animation: ripple-pulse 3s ease-in-out infinite;
@@ -53,6 +91,24 @@ html {
 
   @keyframes ripple-pulse {
     0%, 100% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 1; transform: scale(1.2); }
+    50%       { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* Brand underline accent for section headings */
+  .section-heading-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-heading-underline::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 48px;
+    height: 3px;
+    background: var(--brand);
+    border-radius: 2px;
   }
 }

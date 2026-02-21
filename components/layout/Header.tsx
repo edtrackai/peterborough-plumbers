@@ -6,6 +6,15 @@ import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils/cn";
 
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Areas", href: "/areas" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Guides", href: "/guides" },
+  { label: "Reviews", href: "/reviews" },
+  { label: "Contact", href: "/contact" },
+];
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,18 +40,36 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300",
         scrolled
-          ? "bg-black/95 backdrop-blur-lg shadow-[0_1px_8px_rgba(0,0,0,0.25)] border-b border-white/10"
-          : "bg-transparent border-b border-transparent"
+          ? "shadow-[0_2px_16px_rgba(0,0,0,0.10)] border-b border-gray-100"
+          : "border-b border-gray-100"
       )}
     >
-      <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
+      {/* Emergency top bar */}
+      <div className="bg-[var(--pp-navy)] text-white text-xs py-1.5 text-center hidden sm:block">
+        <span className="text-white/70">24/7 Emergency Plumber — </span>
+        <a
+          href={`tel:${siteSettings.phoneHref}`}
+          className="font-semibold text-white hover:text-[var(--brand)] transition-colors duration-200"
+        >
+          Call {siteSettings.phone}
+        </a>
+        <span className="mx-3 text-white/30">|</span>
+        <Link
+          href="/emergency"
+          className="text-[var(--brand)] font-semibold hover:underline"
+        >
+          Emergency Service →
+        </Link>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
         {/* Mobile: burger + logo */}
         <div className="flex items-center gap-2 lg:hidden min-w-0">
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="text-white -ml-1 p-1.5 flex items-center justify-center"
+            className="text-pp-navy -ml-1 p-1.5 flex items-center justify-center"
             aria-label="Toggle menu"
           >
             <svg
@@ -59,25 +86,37 @@ export default function Header() {
               )}
             </svg>
           </button>
-          <Link href="/" className="text-lg font-bold text-pp-yellow leading-none" onClick={() => setMobileOpen(false)}>
+          <Link
+            href="/"
+            className="text-lg font-bold text-pp-navy leading-none"
+            onClick={() => setMobileOpen(false)}
+          >
             {siteSettings.companyName}
           </Link>
         </div>
 
-        {/* Desktop: left logo — equal-width column */}
-        <Link href="/" className="hidden lg:flex items-center flex-1 text-xl font-bold text-pp-yellow leading-none">
+        {/* Desktop: left logo */}
+        <Link
+          href="/"
+          className="hidden lg:flex items-center shrink-0 text-xl font-bold text-pp-navy leading-none"
+        >
           {siteSettings.companyName}
         </Link>
 
         {/* Desktop: centered nav */}
-        <nav className="hidden lg:flex items-center gap-8 shrink-0">
-          <Link href="/" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
+        <nav className="hidden lg:flex items-center gap-6 flex-1 justify-center">
+          <Link
+            href="/"
+            className="whitespace-nowrap text-pp-navy hover:text-pp-teal transition-colors duration-200 font-medium text-sm leading-none"
+          >
             Home
           </Link>
+
+          {/* Services dropdown */}
           <div className="relative group">
             <Link
               href="/services"
-              className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none inline-flex items-center gap-1"
+              className="whitespace-nowrap text-pp-navy hover:text-pp-teal transition-colors duration-200 font-medium text-sm leading-none inline-flex items-center gap-1"
             >
               Services
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -85,12 +124,12 @@ export default function Header() {
               </svg>
             </Link>
             <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-              <div className="bg-white rounded-lg shadow-xl py-2 min-w-[260px]">
+              <div className="bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] py-2 min-w-[260px] border border-gray-100">
                 {services.map((s) => (
                   <Link
                     key={s.slug}
                     href={`/services/${s.slug}`}
-                    className="block px-4 py-2 text-pp-dark hover:bg-pp-yellow/10 hover:text-pp-accent transition-colors text-sm"
+                    className="block px-4 py-2.5 text-pp-navy hover:bg-pp-grey hover:text-pp-teal transition-colors text-sm"
                   >
                     {s.name}
                   </Link>
@@ -98,57 +137,67 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <Link href="/about" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
-            About
+
+          {/* Emergency — highlighted */}
+          <Link
+            href="/emergency"
+            className="whitespace-nowrap text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors duration-200 font-semibold text-sm leading-none"
+          >
+            Emergency
           </Link>
-          <Link href="/areas" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
-            Areas
-          </Link>
-          <Link href="/reviews" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
-            Reviews
-          </Link>
-          <Link href="/blog" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
-            Blog
-          </Link>
-          <Link href="/contact" className="whitespace-nowrap text-white hover:text-pp-yellow transition-colors font-medium text-sm leading-none">
-            Contact
-          </Link>
+
+          {navLinks.slice(1).map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="whitespace-nowrap text-pp-navy hover:text-pp-teal transition-colors duration-200 font-medium text-sm leading-none"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* CTAs — equal-width column, right-aligned */}
-        <div className="flex items-center justify-end gap-2 lg:flex-1">
+        {/* Desktop: right CTAs */}
+        <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <a
+            href={`tel:${siteSettings.phoneHref}`}
+            className="text-pp-navy font-semibold text-sm hover:text-pp-teal transition-colors duration-200"
+          >
+            {siteSettings.phone}
+          </a>
           <Link
             href={siteSettings.primaryCtaHref}
-            className="btn-book-now bg-[#2563EB] text-white px-4 py-2 rounded-lg font-semibold text-sm leading-none hover:bg-[#1D4ED8] transition-colors inline-flex items-center h-9"
+            className="btn-book-now bg-pp-teal text-white px-5 py-2.5 rounded-full font-semibold text-sm leading-none hover:bg-pp-teal-dark transition-colors duration-200 inline-flex items-center"
           >
             {siteSettings.primaryCtaLabel}
           </Link>
-          <a
-            href={getWhatsAppUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold text-sm leading-none hover:bg-green-700 transition-colors hidden sm:inline-flex items-center h-9"
-          >
-            {siteSettings.secondaryCtaLabel}
-          </a>
         </div>
+
+        {/* Mobile: Book Now pill */}
+        <Link
+          href={siteSettings.primaryCtaHref}
+          className="lg:hidden btn-book-now bg-pp-teal text-white px-4 py-2 rounded-full font-semibold text-sm leading-none hover:bg-pp-teal-dark transition-colors duration-200"
+        >
+          {siteSettings.primaryCtaLabel}
+        </Link>
       </div>
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="lg:hidden bg-black/98 backdrop-blur-md border-t border-white/10">
+        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
           <nav className="px-4 py-4 space-y-1">
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}
-              className="block py-3 text-white hover:text-pp-yellow transition-colors font-medium"
+              className="block py-3 text-pp-navy hover:text-pp-teal transition-colors font-medium border-b border-gray-50"
             >
               Home
             </Link>
+
             <div>
               <button
                 onClick={() => setServicesOpen(!servicesOpen)}
-                className="flex items-center justify-between w-full py-3 text-white hover:text-pp-yellow transition-colors font-medium"
+                className="flex items-center justify-between w-full py-3 text-pp-navy hover:text-pp-teal transition-colors font-medium border-b border-gray-50"
               >
                 Services
                 <svg
@@ -162,11 +211,11 @@ export default function Header() {
                 </svg>
               </button>
               {servicesOpen && (
-                <div className="pl-4 space-y-1">
+                <div className="pl-4 space-y-1 pb-2">
                   <Link
                     href="/services"
                     onClick={() => setMobileOpen(false)}
-                    className="block py-2 text-white/70 hover:text-pp-yellow transition-colors text-sm"
+                    className="block py-2 text-pp-navy/70 hover:text-pp-teal transition-colors text-sm"
                   >
                     All Services
                   </Link>
@@ -175,7 +224,7 @@ export default function Header() {
                       key={s.slug}
                       href={`/services/${s.slug}`}
                       onClick={() => setMobileOpen(false)}
-                      className="block py-2 text-white/70 hover:text-pp-yellow transition-colors text-sm"
+                      className="block py-2 text-pp-navy/70 hover:text-pp-teal transition-colors text-sm"
                     >
                       {s.name}
                     </Link>
@@ -183,40 +232,48 @@ export default function Header() {
                 </div>
               )}
             </div>
+
+            {/* Emergency — highlighted in mobile too */}
             <Link
-              href="/about"
+              href="/emergency"
               onClick={() => setMobileOpen(false)}
-              className="block py-3 text-white hover:text-pp-yellow transition-colors font-medium"
+              className="block py-3 text-[var(--brand)] font-semibold border-b border-gray-50"
             >
-              About
+              🚨 Emergency Plumber
             </Link>
+
+            {navLinks.slice(1).map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="block py-3 text-pp-navy hover:text-pp-teal transition-colors font-medium border-b border-gray-50"
+              >
+                {link.label}
+              </Link>
+            ))}
+
             <Link
-              href="/reviews"
+              href="/faqs"
               onClick={() => setMobileOpen(false)}
-              className="block py-3 text-white hover:text-pp-yellow transition-colors font-medium"
+              className="block py-3 text-pp-navy hover:text-pp-teal transition-colors font-medium border-b border-gray-50"
             >
-              Reviews
+              FAQs
             </Link>
-            <Link
-              href="/blog"
+
+            <a
+              href={`tel:${siteSettings.phoneHref}`}
               onClick={() => setMobileOpen(false)}
-              className="block py-3 text-white hover:text-pp-yellow transition-colors font-medium"
+              className="block py-3 text-pp-teal font-semibold transition-colors"
             >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="block py-3 text-white hover:text-pp-yellow transition-colors font-medium"
-            >
-              Contact
-            </Link>
+              Call {siteSettings.phone}
+            </a>
             <a
               href={getWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileOpen(false)}
-              className="block py-3 text-green-400 hover:text-green-300 transition-colors font-medium"
+              className="block py-3 text-green-600 hover:text-green-700 transition-colors font-medium"
             >
               WhatsApp Chat
             </a>
