@@ -117,33 +117,35 @@ export default function HomePage() {
       <section className="bg-white overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[560px] lg:min-h-[640px]">
-            {/* Left: text */}
-            <div className="flex flex-col justify-center py-14 lg:py-20 pr-0 lg:pr-12">
-              {/* Emergency badge */}
+            {/* Left: text — Step 1: subtle white-to-transparent gradient blends into image side */}
+            <div className="flex flex-col justify-center py-14 lg:py-20 pr-0 lg:pr-12 relative bg-gradient-to-r from-white via-white/[0.98] to-white/0">
+              {/* Step 3 — Emergency badge: stronger teal border + font-bold + more padding */}
               <div className="mb-6">
                 <Link
                   href="/emergency"
-                  className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 text-[var(--brand)] px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-teal-100 transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-teal-50 border border-[var(--brand)] text-[var(--brand)] px-4 py-2 rounded-full text-sm font-bold hover:bg-teal-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
                 >
                   <span className="h-2 w-2 rounded-full bg-[var(--brand)] animate-pulse" />
                   24/7 Emergency Call-Out Available
                 </Link>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-pp-heading leading-tight mb-5">
+              {/* Step 2 + 5 — H1: deep navy + subtle text shadow for definition */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-pp-heading leading-tight mb-5 [text-shadow:0_1px_3px_rgba(11,27,43,0.06)]">
                 Peterborough&apos;s Trusted Plumber &amp; Heating Engineers
               </h1>
 
-              <p className="text-lg text-[var(--muted)] leading-relaxed mb-8 max-w-lg">
+              {/* Step 2 + 5 — Subtext: stronger muted navy, increased line-height */}
+              <p className="text-lg text-[#2C3E50] leading-[1.75] mb-8 max-w-lg">
                 Gas Safe registered engineers delivering expert plumbing, boiler servicing, and
                 heating solutions across Peterborough and surrounding areas for over 30 years.
               </p>
 
-              {/* CTAs */}
+              {/* Step 4 — CTAs: branded teal shadow on primary; navy border/text on secondary */}
               <div className="flex flex-wrap gap-3 mb-10">
                 <Link
                   href="/book"
-                  className="btn-book-now inline-flex items-center gap-2 bg-pp-teal text-white px-7 py-3.5 rounded-full font-bold text-base hover:bg-pp-teal-dark transition-colors duration-200 shadow-md"
+                  className="btn-book-now inline-flex items-center gap-2 bg-pp-teal text-white px-7 py-3.5 rounded-full font-bold text-base hover:bg-pp-teal-dark transition-colors duration-200 shadow-[0_4px_16px_rgba(14,143,139,0.35)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
                 >
                   Book Online
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -152,7 +154,7 @@ export default function HomePage() {
                 </Link>
                 <a
                   href={`tel:${siteSettings.phoneHref}`}
-                  className="inline-flex items-center gap-2 bg-white border-2 border-pp-heading text-pp-heading px-7 py-3.5 rounded-full font-bold text-base hover:bg-pp-heading hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-white border-2 border-pp-heading text-pp-heading px-7 py-3.5 rounded-full font-bold text-base hover:bg-pp-heading hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pp-heading focus:ring-offset-2"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -161,7 +163,7 @@ export default function HomePage() {
                 </a>
               </div>
 
-              {/* Trust badges */}
+              {/* Step 2 — Trust badges: pp-heading = #0B1B2B — maximum contrast on white */}
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2">
                   <svg className="h-5 w-5 text-pp-teal shrink-0" fill="currentColor" viewBox="0 0 20 20">
