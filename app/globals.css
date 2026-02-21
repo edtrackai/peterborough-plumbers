@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  /* ── HomeServe-aligned semantic tokens ── */
-  --brand:        #e62419;
-  --brand-hover:  #a2241f;
+  /* ── Premium palette — deep navy + refined teal ── */
+  --brand:        #0E8F8B;
+  --brand-hover:  #0B7B78;
   --bg:           #ffffff;
   --surface:      #ffffff;
-  --surface-alt:  #f4f5f7;
-  --text:         #3a3a3a;
-  --muted:        #6b7280;
-  --border:       #e5e7eb;
-  --focus:        rgba(230, 36, 25, 0.4);
+  --surface-alt:  #F7FAFC;
+  --text:         #0B1B2B;
+  --muted:        #4B5B6B;
+  --border:       #E6EEF5;
+  --focus:        rgba(14, 143, 139, 0.35);
 
   /* ── Legacy aliases (preserve existing component class names) ── */
   --pp-teal:      var(--brand);
   --pp-teal-dark: var(--brand-hover);
-  --pp-navy:      #1a2744;
-  --pp-navy-dark: #111b30;
+  --pp-navy:      #0B1B2B;
+  --pp-navy-dark: #07121D;
   --pp-grey:      var(--surface-alt);
   --pp-body:      var(--text);
-  --pp-heading:   #1a2744;
+  --pp-heading:   #0B1B2B;
   --pp-white:     var(--bg);
 }
 

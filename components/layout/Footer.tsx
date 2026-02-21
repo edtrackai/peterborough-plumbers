@@ -5,7 +5,7 @@ import { areas } from "@/content/areas";
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "#1a2744" }} className="text-white">
+    <footer className="bg-pp-navy text-white">
       <div className="mx-auto max-w-7xl px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Company info */}

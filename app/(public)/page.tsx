@@ -123,7 +123,7 @@ export default function HomePage() {
               <div className="mb-6">
                 <Link
                   href="/emergency"
-                  className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-[var(--brand)] px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-red-100 transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200 text-[var(--brand)] px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-teal-100 transition-colors duration-200"
                 >
                   <span className="h-2 w-2 rounded-full bg-[var(--brand)] animate-pulse" />
                   24/7 Emergency Call-Out Available
@@ -456,9 +456,9 @@ export default function HomePage() {
               <Link
                 key={guide.slug}
                 href={`/guides/${guide.slug}`}
-                className="group block bg-[var(--surface-alt)] rounded-xl border border-[var(--border)] p-5 hover:border-pp-teal hover:shadow-[0_4px_16px_rgba(230,36,25,0.08)] transition-all duration-200"
+                className="group block bg-[var(--surface-alt)] rounded-xl border border-[var(--border)] p-5 hover:border-pp-teal hover:shadow-[0_4px_16px_rgba(14,143,139,0.10)] transition-all duration-200"
               >
-                <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-red-100 text-[var(--brand)] mb-4">
+                <span className="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-50 text-[var(--brand)] mb-4">
                   {guide.category === "costs" ? "Cost Guide" :
                    guide.category === "diy" ? "DIY" :
                    guide.category === "boilers" ? "Boilers" :
@@ -514,30 +514,30 @@ export default function HomePage() {
       </section>
 
       {/* ── H) BOTTOM CTA ────────────────────────────────────────────────────── */}
-      <section className="bg-pp-teal py-16">
+      <section className="bg-pp-navy py-16">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
             Ready to book your plumber?
           </h2>
-          <p className="text-white/85 text-lg leading-relaxed mb-10">
+          <p className="text-white/70 text-lg leading-relaxed mb-10">
             Get in touch today for a free, no-obligation quote from our Gas Safe registered
             engineers. We cover the whole Peterborough area.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/book"
-              className="btn-book-now bg-white text-pp-navy px-9 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-colors duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pp-teal"
+              className="btn-book-now inline-flex items-center gap-2 bg-[var(--brand)] text-white px-9 py-4 rounded-full font-bold text-lg hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-pp-navy"
             >
               Book Online
             </Link>
             <a
               href={`tel:${siteSettings.phoneHref}`}
-              className="bg-transparent text-white px-9 py-4 rounded-full font-bold text-lg border-2 border-white/70 hover:bg-white hover:text-pp-navy transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pp-teal"
+              className="inline-flex items-center gap-2 bg-transparent text-white px-9 py-4 rounded-full font-bold text-lg border-2 border-white/40 hover:bg-white hover:text-pp-navy transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pp-navy"
             >
               Call {siteSettings.phone}
             </a>
           </div>
-          <p className="mt-8 text-white/70 text-sm">
+          <p className="mt-8 text-white/40 text-sm">
             30+ years established · Gas Safe Reg. {siteSettings.gasSafeNumber} · {siteSettings.engineersCount} qualified engineers
           </p>
         </div>

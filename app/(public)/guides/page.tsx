@@ -25,7 +25,7 @@ const categoryColors: Record<keyof typeof guideCategories, string> = {
   costs:       "bg-blue-100 text-blue-800",
   diy:         "bg-green-100 text-green-800",
   boilers:     "bg-orange-100 text-orange-800",
-  heating:     "bg-red-100 text-red-800",
+  heating:     "bg-amber-100 text-amber-800",
   emergencies: "bg-rose-100 text-rose-800",
 };
 
@@ -93,7 +93,7 @@ export default function GuidesPage() {
                     <Link
                       key={guide.slug}
                       href={`/guides/${guide.slug}`}
-                      className="group block rounded-xl border border-[var(--border)] bg-white p-6 hover:border-[var(--brand)] hover:shadow-[0_4px_20px_rgba(230,36,25,0.08)] transition-all duration-200"
+                      className="group block rounded-xl border border-[var(--border)] bg-white p-6 hover:border-[var(--brand)] hover:shadow-[0_4px_20px_rgba(14,143,139,0.10)] transition-all duration-200"
                     >
                       <span
                         className={`inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-4 ${categoryColors[guide.category]}`}
