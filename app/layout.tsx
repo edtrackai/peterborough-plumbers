@@ -46,8 +46,10 @@ export default function RootLayout({
           }}
         />
         <Header />
-        <main id="main-content" className="flex-1 pt-16 pb-20 lg:pb-0">
-          {children}
+        <main id="main-content" className="flex-1 pt-20 lg:pt-[136px] pb-20 lg:pb-0 bg-white">
+          <div className="mx-auto max-w-[1280px] bg-[#F0F2F5] min-h-full">
+            {children}
+          </div>
         </main>
         <Footer />
         <StickyCtaBar />

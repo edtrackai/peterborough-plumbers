@@ -1,27 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Premium palette — deep navy + champagne gold ── */
-  --brand:        #C9A84C;   /* champagne gold — accent, badges, icons on dark */
-  --brand-hover:  #B8943A;   /* deeper gold for hover states */
+  /* ── Brand Palette — Premium UK Plumbing ── */
+  --brand:        #C8102E;   /* Deep Plumbing Red — primary CTAs, buttons, accents */
+  --brand-hover:  #a50d26;   /* Darker red — hover states */
   --bg:           #ffffff;
   --surface:      #ffffff;
-  --surface-alt:  #F9F6F0;   /* warm white — card backgrounds */
-  --text:         #1A2332;   /* warm ink — body text */
-  --muted:        #6B7A8D;   /* muted slate */
-  --border:       #E8E0D0;   /* warm border */
-  --focus:        rgba(201, 168, 76, 0.40);
+  --surface-alt:  #ffffff;   /* White — section backgrounds */
+  --text:         #242424;   /* Charcoal Black — body text */
+  --muted:        #6b7280;   /* Medium grey — captions, secondary text */
+  --border:       #E5E7EB;   /* Soft border grey */
+  --focus:        rgba(200, 16, 46, 0.30);
 
-  /* ── Legacy aliases ── */
-  /* pp-teal remapped to navy so existing bg-pp-teal buttons stay readable on light bg */
-  --pp-teal:      #0B1B2B;
-  --pp-teal-dark: #07121D;
-  --pp-navy:      #0B1B2B;
-  --pp-navy-dark: #07121D;
+  /* ── Muted Teal — accent, secondary buttons, info cards ── */
+  --hs-teal:      #0F6E6E;   /* Muted Teal — use sparingly */
+  --hs-teal-dark: #0d5f5f;   /* Darker teal — hover */
+
+  /* ── Token aliases used by existing components ── */
+  --pp-teal:      #C8102E;   /* maps to primary brand */
+  --pp-teal-dark: #a50d26;
+  --pp-navy:      #242424;   /* dark sections, footer */
+  --pp-navy-dark: #1a1a1a;
   --pp-grey:      var(--surface-alt);
   --pp-body:      var(--text);
-  --pp-heading:   #0B1B2B;
+  --pp-heading:   #242424;   /* heading colour — charcoal */
   --pp-white:     var(--bg);
+
+  /* ── Card shadow ── */
+  --shadow-card:  0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.10);
 }
 
 @theme inline {
@@ -35,6 +42,8 @@
   --color-muted:        var(--muted);
   --color-border:       var(--border);
   /* Legacy */
+  --color-hs-teal:      var(--hs-teal);
+  --color-hs-teal-dark: var(--hs-teal-dark);
   --color-pp-teal:      var(--pp-teal);
   --color-pp-teal-dark: var(--pp-teal-dark);
   --color-pp-navy:      var(--pp-navy);
@@ -49,18 +58,18 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-nunito), "Trebuchet MS", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Smooth scroll for anchor links */
+/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Focus ring using brand colour */
+/* Focus ring — brand red */
 *:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
@@ -73,62 +82,42 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Hero overlay system ──────────────────────────────────────────────────── */
-/*
- * .hero-overlay
- * Apply to the `absolute inset-0` overlay div inside any image-backed hero.
- * Left side darkest (text lives here) → transparent right edge on desktop.
- * Collapses to a uniform dark wash on mobile for full-width readability.
- * pointer-events:none so buttons behind it remain clickable.
- */
 .hero-overlay {
   background: linear-gradient(
     90deg,
-    rgba(11, 27, 43, 0.82) 0%,
-    rgba(11, 27, 43, 0.55) 45%,
-    rgba(11, 27, 43, 0.15) 100%
+    rgba(36, 36, 36, 0.85) 0%,
+    rgba(36, 36, 36, 0.58) 45%,
+    rgba(36, 36, 36, 0.18) 100%
   );
   pointer-events: none;
 }
 
 @media (max-width: 639px) {
-  /* On mobile the text spans full width — use uniform overlay instead */
   .hero-overlay {
-    background: rgba(11, 27, 43, 0.72);
+    background: rgba(36, 36, 36, 0.78);
   }
 }
 
-/*
- * .hero-text
- * Subtle text-shadow for crisp legibility of light text on image backgrounds.
- * Apply to h1, h2, p inside hero content layers.
- */
 .hero-text {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
-/*
- * .hero-body
- * Standard body/paragraph colour on all dark hero sections (navy bg or image overlay).
- * #E6EEF5 on #0B1B2B → 16:1 contrast ratio (WCAG AAA).
- */
+/* body/paragraph text on dark hero sections */
 .hero-body {
-  color: #E6EEF5;
+  color: #f0f0f0;
 }
 
-/*
- * .hero-label
- * Breadcrumb, label, and secondary text on dark hero sections.
- * #CFE0EE on #0B1B2B → 13:1 contrast ratio (WCAG AAA).
- */
+/* breadcrumb, label, secondary text on dark hero sections */
 .hero-label {
-  color: #CFE0EE;
+  color: #d4d4d4;
 }
 
-/* Book Now ripple effect */
+/* ── Premium button spec — 8px radius, not pill ────────────────────────── */
 @layer base {
   .btn-book-now {
     position: relative;
     overflow: hidden;
+    border-radius: 8px !important;
   }
 
   .btn-book-now::after {
@@ -136,7 +125,7 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.30) 0%, transparent 70%);
     opacity: 0;
     pointer-events: none;
     animation: ripple-pulse 3s ease-in-out infinite;
@@ -145,6 +134,17 @@ h1, h2, h3, h4, h5, h6 {
   @keyframes ripple-pulse {
     0%, 100% { opacity: 0; transform: scale(0.5); }
     50%       { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* CTA links that use rounded-full but should be 8px per brand spec */
+  .btn-cta {
+    border-radius: 8px !important;
+  }
+
+  /* Bootstrap-style row — negative margins offset column gutters */
+  .row {
+    margin-left:  -15px;
+    margin-right: -15px;
   }
 
   /* Brand underline accent for section headings */

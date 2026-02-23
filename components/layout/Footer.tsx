@@ -1,173 +1,181 @@
 import Link from "next/link";
-import { siteSettings, getWhatsAppUrl } from "@/content/settings";
+import Image from "next/image";
+import { siteSettings } from "@/content/settings";
 import { services } from "@/content/services";
-import { areas } from "@/content/areas";
 
 export default function Footer() {
   return (
-    <footer className="bg-pp-navy text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Company info */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">{siteSettings.companyName}</h3>
-            <p className="text-white/60 text-sm leading-relaxed mb-4">
-              {siteSettings.yearsExperience} years of trusted plumbing and heating service across
-              Peterborough and surrounding areas. Gas Safe registered engineers.
-            </p>
-            <div className="space-y-2 text-sm text-white/60">
-              <p className="text-white/70">
-                Gas Safe Reg:{" "}
-                <span className="text-white font-medium">{siteSettings.gasSafeNumber}</span>
-              </p>
-              <p>
-                <a
-                  href={`tel:${siteSettings.phoneHref}`}
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  {siteSettings.phone}
-                </a>
-              </p>
-              <p>
-                <a
-                  href={`mailto:${siteSettings.email}`}
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  {siteSettings.email}
-                </a>
-              </p>
-            </div>
-          </div>
+    <footer style={{ background: "#3a3a3a" }}>
 
-          {/* Services */}
+      {/* ── Main content ─────────────────────────────────────────────────────── */}
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+
+        {/* Logo */}
+        <div className="mb-8">
+          <Image
+            src="/logos/logo-mark.png"
+            alt="Peterborough Plumbers"
+            width={52}
+            height={52}
+            className="h-[52px] w-[52px] object-contain"
+          />
+        </div>
+
+        {/* 3 columns + social icons */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+
+          {/* Column 1: Our Services */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-4">Services</h3>
-            <ul className="space-y-2">
-              {services.slice(0, 8).map((s) => (
+            <h3 className="text-white font-bold text-sm mb-4">Our Services</h3>
+            <ul className="space-y-2.5">
+              {services.slice(0, 6).map((s) => (
                 <li key={s.slug}>
                   <Link
                     href={`/services/${s.slug}`}
-                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                    className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200"
                   >
                     {s.name}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/services"
-                  className="text-sm text-[var(--brand)] hover:text-white transition-colors duration-200 font-medium"
-                >
-                  View All Services →
-                </Link>
-              </li>
             </ul>
           </div>
 
-          {/* Areas */}
+          {/* Column 2: About Us */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-4">Areas We Cover</h3>
-            <ul className="space-y-2">
-              {areas.map((a) => (
-                <li key={a.slug}>
-                  <Link
-                    href={`/areas/${a.slug}`}
-                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
-                  >
-                    {a.name}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="text-white font-bold text-sm mb-4">About Us</h3>
+            <ul className="space-y-2.5">
               <li>
-                <Link
-                  href="/areas"
-                  className="text-sm text-[var(--brand)] hover:text-white transition-colors duration-200 font-medium"
-                >
-                  All Areas →
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Quick links */}
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/emergency" className="text-sm text-[var(--brand)] hover:text-white transition-colors duration-200 font-semibold">
-                  Emergency Plumber
-                </Link>
-              </li>
-              <li>
-                <Link href="/pricing" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
-                  Pricing & Costs
-                </Link>
-              </li>
-              <li>
-                <Link href="/guides" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
-                  Plumbing Guides
-                </Link>
-              </li>
-              <li>
-                <Link href="/faqs" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link href="/reviews" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
-                  Reviews
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                <Link href="/about" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/book" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
+                <Link href="/contact" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/areas" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Areas We Cover
+                </Link>
+              </li>
+              <li>
+                <Link href="/book" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
                   Book Online
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-sm text-white/60 hover:text-white transition-colors duration-200">
-                  Contact
+                <Link href="/reviews" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Customer Reviews
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Help & Support */}
+          <div>
+            <h3 className="text-white font-bold text-sm mb-4">Help &amp; Support</h3>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/faqs" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Frequently Asked Questions
                 </Link>
               </li>
               <li>
-                <a
-                  href={getWhatsAppUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-green-400 hover:text-green-300 transition-colors duration-200"
-                >
-                  WhatsApp Chat
-                </a>
+                <Link href="/guides" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Guides Hub
+                </Link>
+              </li>
+              <li>
+                <Link href="/emergency" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Emergency Plumber
+                </Link>
+              </li>
+              <li>
+                <Link href="/pricing" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Pricing &amp; Costs
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                  Get a Free Quote
+                </Link>
               </li>
             </ul>
-            <div className="mt-6 space-y-2">
-              <Link href="/privacy" className="block text-xs text-white/40 hover:text-white/70 transition-colors duration-200">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="block text-xs text-white/40 hover:text-white/70 transition-colors duration-200">
-                Terms &amp; Conditions
-              </Link>
-              <Link href="/cookies" className="block text-xs text-white/40 hover:text-white/70 transition-colors duration-200">
-                Cookie Policy
-              </Link>
+          </div>
+
+          {/* Social icons */}
+          <div>
+            <div className="flex flex-wrap gap-2">
+              {/* Facebook */}
+              <a href="#" aria-label="Facebook" className="h-9 w-9 rounded-full bg-[#555555] hover:bg-[#666666] flex items-center justify-center transition-colors duration-200">
+                <svg className="h-[18px] w-[18px] text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                </svg>
+              </a>
+              {/* Twitter / X */}
+              <a href="#" aria-label="Twitter" className="h-9 w-9 rounded-full bg-[#555555] hover:bg-[#666666] flex items-center justify-center transition-colors duration-200">
+                <svg className="h-[18px] w-[18px] text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                </svg>
+              </a>
+              {/* YouTube */}
+              <a href="#" aria-label="YouTube" className="h-9 w-9 rounded-full bg-[#555555] hover:bg-[#666666] flex items-center justify-center transition-colors duration-200">
+                <svg className="h-[18px] w-[18px] text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
+                </svg>
+              </a>
+              {/* Instagram */}
+              <a href="#" aria-label="Instagram" className="h-9 w-9 rounded-full bg-[#555555] hover:bg-[#666666] flex items-center justify-center transition-colors duration-200">
+                <svg className="h-[18px] w-[18px] text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              </a>
+              {/* LinkedIn */}
+              <a href="#" aria-label="LinkedIn" className="h-9 w-9 rounded-full bg-[#555555] hover:bg-[#666666] flex items-center justify-center transition-colors duration-200">
+                <svg className="h-[18px] w-[18px] text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </a>
             </div>
           </div>
+
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40">
-          <p>&copy; {new Date().getFullYear()} {siteSettings.companyName}. All rights reserved.</p>
-          <p>Gas Safe Registered No. {siteSettings.gasSafeNumber}</p>
+        {/* Legal links row */}
+        <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2">
+          <Link href="/privacy" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+            Privacy Policy
+          </Link>
+          <Link href="/cookies" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+            Cookies Policy
+          </Link>
+          <Link href="/terms" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+            Terms of Use
+          </Link>
+          <Link href="/faqs" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+            Accessibility
+          </Link>
+        </div>
+
+      </div>
+
+      {/* ── Red divider ──────────────────────────────────────────────────────── */}
+      <div className="border-t border-[#C8102E]" />
+
+      {/* ── Copyright bar ────────────────────────────────────────────────────── */}
+      <div style={{ background: "#2e2e2e" }}>
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-4">
+          <p className="text-[#aaaaaa] text-sm">
+            &copy; {siteSettings.companyName} {new Date().getFullYear()}. Gas Safe Registered No.&nbsp;{siteSettings.gasSafeNumber}.
+          </p>
         </div>
       </div>
+
     </footer>
   );
 }
