@@ -23,45 +23,69 @@ export async function POST(req: NextRequest) {
       email,
       address,
       accessNotes,
+      photoUrls,
+      photoPublicIds,
     } = parsed.data;
 
-    const booking = await prisma.booking.findUnique({
-      where: { bookingRef },
-    });
+    const booking = await prisma.booking.findUnique({ where: { bookingRef } });
 
     if (!booking) {
       return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
-
     if (booking.status !== "reserved") {
       return NextResponse.json(
         { error: "Booking is no longer in reserved state", status: booking.status },
         { status: 409 }
       );
     }
-
-    // Check reservation hasn't expired
     if (booking.expiresAt && booking.expiresAt < new Date()) {
       return NextResponse.json({ error: "Reservation has expired" }, { status: 410 });
     }
 
-    const updated = await prisma.booking.update({
-      where: { bookingRef },
-      data: {
-        status: "new",
-        serviceType,
-        description,
-        customerName,
-        phone,
-        email,
-        address,
-        accessNotes,
-        confirmedAt: new Date(),
-      },
-      include: {
-        slot: { select: { date: true, startTime: true, endTime: true } },
-      },
+    // Find on-duty plumbers to create offers for
+    const onDutyPlumbers = await prisma.plumber.findMany({
+      where: { isOnDuty: true, isActive: true },
+      select: { id: true },
     });
+
+    // Atomic: update booking + create images + create offers + create event
+    const [updated] = await prisma.$transaction([
+      prisma.booking.update({
+        where: { bookingRef },
+        data: {
+          status: "pending_assignment",
+          serviceType,
+          description,
+          customerName,
+          phone,
+          email,
+          address,
+          accessNotes,
+          confirmedAt: new Date(),
+        },
+        include: {
+          slot: { select: { date: true, startTime: true, endTime: true } },
+        },
+      }),
+      // Images
+      ...(photoUrls && photoUrls.length > 0
+        ? photoUrls.map((url, i) =>
+            prisma.bookingImage.create({
+              data: { bookingId: booking.id, url, publicId: photoPublicIds?.[i] ?? null },
+            })
+          )
+        : []),
+      // Offers for on-duty plumbers
+      ...onDutyPlumbers.map((p) =>
+        prisma.bookingOffer.create({
+          data: { bookingId: booking.id, plumberId: p.id, status: "offered" },
+        })
+      ),
+      // Timeline event
+      prisma.bookingEvent.create({
+        data: { bookingId: booking.id, eventType: "pending_assignment" },
+      }),
+    ]);
 
     return NextResponse.json({
       bookingRef: updated.bookingRef,
@@ -73,6 +97,7 @@ export async function POST(req: NextRequest) {
       },
       customerName: updated.customerName,
       email: updated.email,
+      photoCount: photoUrls?.length ?? 0,
     });
   } catch (err) {
     console.error("[bookings/confirm]", err);

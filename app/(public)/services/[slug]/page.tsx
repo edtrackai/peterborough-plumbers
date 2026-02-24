@@ -108,7 +108,7 @@ export default async function ServicePage({
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-navy pt-28 pb-16">
+      <section className="relative bg-pp-navy pt-28 pb-16 hero-white-text">
         {heroImage && (
           <div className="absolute inset-0 z-0">
             <Image

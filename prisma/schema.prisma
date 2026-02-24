@@ -44,35 +44,150 @@ model TimeSlot {
   @@map("pb_time_slots")
 }
 
+// ── Plumber ───────────────────────────────────────────────────────────────────
+
+model Plumber {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  phone        String?
+  passwordHash String
+  isActive     Boolean   @default(true)
+  isOnDuty     Boolean   @default(false)
+  lastSeenAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  bookings  Booking[]        @relation("AssignedPlumber")
+  offers    BookingOffer[]
+  events    BookingEvent[]
+  locations BookingLocation[]
+
+  @@map("pb_plumbers")
+}
+
 // ── Booking ───────────────────────────────────────────────────────────────────
 
 model Booking {
-  id           String    @id @default(cuid())
-  bookingRef   String    @unique // "PB-260224-0042"
-  // status: reserved | new | confirmed | completed | cancelled | expired
-  status       String    @default("reserved")
-  postcode     String
-  zonePrefix   String
-  slotId       String
-  slot         TimeSlot  @relation(fields: [slotId], references: [id])
-  serviceType  String?
-  description  String?
-  customerName String?
-  phone        String?
-  email        String?
-  address      String?
-  accessNotes  String?
-  reservedAt   DateTime  @default(now())
-  expiresAt    DateTime?
-  confirmedAt  DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id                String    @id @default(cuid())
+  bookingRef        String    @unique // "PB-260224-0042"
+  // status: reserved | pending_assignment | accepted | en_route | arrived | in_progress | completed | cancelled | expired | new | confirmed
+  status            String    @default("reserved")
+  postcode          String
+  zonePrefix        String
+  slotId            String
+  slot              TimeSlot  @relation(fields: [slotId], references: [id])
+  serviceType       String?
+  description       String?
+  customerName      String?
+  phone             String?
+  email             String?
+  address           String?
+  accessNotes       String?
+  assignedPlumberId String?
+  assignedPlumber   Plumber?  @relation("AssignedPlumber", fields: [assignedPlumberId], references: [id])
+  reservedAt        DateTime  @default(now())
+  expiresAt         DateTime?
+  confirmedAt       DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  images    BookingImage[]
+  offers    BookingOffer[]
+  events    BookingEvent[]
+  locations BookingLocation[]
+  rating    BookingRating?
 
   @@index([bookingRef])
   @@index([status])
   @@index([createdAt(sort: Desc)])
   @@index([zonePrefix])
+  @@index([assignedPlumberId])
   @@map("pb_bookings")
+}
+
+// ── BookingImage ──────────────────────────────────────────────────────────────
+
+model BookingImage {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  url       String
+  publicId  String?
+  createdAt DateTime @default(now())
+
+  @@index([bookingId])
+  @@map("pb_booking_images")
+}
+
+// ── BookingOffer ──────────────────────────────────────────────────────────────
+
+model BookingOffer {
+  id           String    @id @default(cuid())
+  bookingId    String
+  booking      Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  plumberId    String
+  plumber      Plumber   @relation(fields: [plumberId], references: [id])
+  // status: offered | accepted | rejected | expired
+  status       String    @default("offered")
+  rejectReason String?
+  rejectNote   String?
+  offeredAt    DateTime  @default(now())
+  respondedAt  DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([bookingId])
+  @@index([plumberId])
+  @@index([status])
+  @@map("pb_booking_offers")
+}
+
+// ── BookingEvent ──────────────────────────────────────────────────────────────
+
+model BookingEvent {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  plumberId String?
+  plumber   Plumber? @relation(fields: [plumberId], references: [id])
+  // eventType: offered | accepted | rejected | en_route | arrived | in_progress | completed | note | cancelled | pending_assignment
+  eventType String
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([bookingId])
+  @@map("pb_booking_events")
+}
+
+// ── BookingLocation ───────────────────────────────────────────────────────────
+
+model BookingLocation {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  plumberId String
+  plumber   Plumber  @relation(fields: [plumberId], references: [id])
+  lat       Float
+  lng       Float
+  accuracy  Float?
+  createdAt DateTime @default(now())
+
+  @@index([bookingId])
+  @@map("pb_booking_locations")
+}
+
+// ── BookingRating ─────────────────────────────────────────────────────────────
+
+model BookingRating {
+  id        String   @id @default(cuid())
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  stars     Int
+  comment   String?
+  createdAt DateTime @default(now())
+
+  @@map("pb_booking_ratings")
 }
 
 // ── Service ───────────────────────────────────────────────────────────────────
@@ -85,7 +200,7 @@ model Service {
   heroHeading      String
   heroSubheading   String
   content          String   @db.Text
-  faqs             Json     // [{ q: string; a: string }]
+  faqs             Json
   seoTitle         String
   seoDescription   String
   featured         Boolean  @default(false)
@@ -147,8 +262,8 @@ model Area {
   name           String
   slug           String   @unique
   intro          String   @db.Text
-  landmarks      Json     // string[]
-  postcodes      Json     // string[]
+  landmarks      Json
+  postcodes      Json
   seoTitle       String
   seoDescription String
   createdAt      DateTime @default(now())

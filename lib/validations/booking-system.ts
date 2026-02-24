@@ -46,6 +46,11 @@ export const confirmBookingSchema = z.object({
     .min(5, "Enter your full address")
     .max(250),
   accessNotes: z.string().max(500).optional(),
+  photoUrls: z
+    .array(z.string().url())
+    .max(3, "Maximum 3 photos allowed")
+    .optional(),
+  photoPublicIds: z.array(z.string()).max(3).optional(),
 });
 
 export type ConfirmBookingInput = z.infer<typeof confirmBookingSchema>;
@@ -53,33 +58,35 @@ export type ConfirmBookingInput = z.infer<typeof confirmBookingSchema>;
 // ── Update Status (Admin) ─────────────────────────────────────────────────
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
-  reserved: ["new", "expired", "cancelled"],
-  new: ["confirmed", "cancelled"],
-  confirmed: ["completed", "cancelled"],
-  completed: [],
-  cancelled: [],
-  expired: [],
+  reserved:           ["pending_assignment", "new", "expired", "cancelled"],
+  pending_assignment: ["accepted", "cancelled"],
+  new:                ["pending_assignment", "confirmed", "cancelled"],
+  confirmed:          ["completed", "cancelled"],
+  accepted:           ["en_route", "cancelled"],
+  en_route:           ["arrived", "cancelled"],
+  arrived:            ["in_progress", "cancelled"],
+  in_progress:        ["completed", "cancelled"],
+  completed:          [],
+  cancelled:          [],
+  expired:            [],
 };
 
+const ALL_STATUSES = z.enum([
+  "reserved",
+  "pending_assignment",
+  "new",
+  "confirmed",
+  "accepted",
+  "en_route",
+  "arrived",
+  "in_progress",
+  "completed",
+  "cancelled",
+  "expired",
+]);
+
 export const updateStatusSchema = z
-  .object({
-    status: z.enum([
-      "reserved",
-      "new",
-      "confirmed",
-      "completed",
-      "cancelled",
-      "expired",
-    ]),
-    currentStatus: z.enum([
-      "reserved",
-      "new",
-      "confirmed",
-      "completed",
-      "cancelled",
-      "expired",
-    ]),
-  })
+  .object({ status: ALL_STATUSES, currentStatus: ALL_STATUSES })
   .superRefine((data, ctx) => {
     if (!VALID_TRANSITIONS[data.currentStatus]?.includes(data.status)) {
       ctx.addIssue({

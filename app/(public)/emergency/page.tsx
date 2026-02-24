@@ -94,7 +94,7 @@ export default function EmergencyPage() {
       />
 
       {/* Emergency hero */}
-      <section className="relative bg-[var(--pp-navy)] text-white py-16 lg:py-24">
+      <section className="relative bg-[var(--pp-navy)] text-white py-16 lg:py-24 hero-white-text">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/homepage/emergency-plumbing.png"

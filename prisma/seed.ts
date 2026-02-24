@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { hash } from "bcryptjs";
 import { services } from "../content/services";
 import { blogPosts as posts } from "../content/blog";
 import { guides } from "../content/guides";
@@ -246,6 +247,22 @@ async function main() {
     }
   }
   console.log(`  ✓ ${slotsCreated} time slots`);
+
+  // ── 9. Plumbers ──────────────────────────────────────────────────────────
+  console.log("Seeding plumbers...");
+  const PLUMBERS = [
+    { name: "Dave Wilson", email: "plumber1@local.test", phone: "07700 900001", password: "Plumber123!", isOnDuty: true },
+    { name: "Sam Carter",  email: "plumber2@local.test", phone: "07700 900002", password: "Plumber123!", isOnDuty: false },
+  ];
+  for (const p of PLUMBERS) {
+    const passwordHash = await hash(p.password, 10);
+    await prisma.plumber.upsert({
+      where: { email: p.email },
+      create: { name: p.name, email: p.email, phone: p.phone, passwordHash, isActive: true, isOnDuty: p.isOnDuty },
+      update: { name: p.name, phone: p.phone, passwordHash, isOnDuty: p.isOnDuty },
+    });
+  }
+  console.log(`  ✓ ${PLUMBERS.length} plumbers`);
 
   console.log("\nSeed complete!");
 }

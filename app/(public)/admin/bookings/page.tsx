@@ -37,6 +37,7 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
       take: PAGE_SIZE,
       include: {
         slot: { select: { date: true, startTime: true, endTime: true } },
+        images: { select: { url: true }, orderBy: { createdAt: "asc" } },
       },
     }),
   ]);
@@ -52,15 +53,19 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
     phone: b.phone,
     email: b.email,
     serviceType: b.serviceType,
+    description: b.description,
+    address: b.address,
+    accessNotes: b.accessNotes,
     slot: {
       date: b.slot.date.toISOString().split("T")[0],
       startTime: b.slot.startTime,
       endTime: b.slot.endTime,
     },
     createdAt: b.createdAt.toISOString(),
+    images: b.images.map((img) => ({ url: img.url })),
   }));
 
-  const STATUSES = ["", "reserved", "new", "confirmed", "completed", "cancelled", "expired"];
+  const STATUSES = ["", "reserved", "pending_assignment", "new", "accepted", "en_route", "arrived", "in_progress", "completed", "cancelled", "expired"];
 
   return (
     <div className="min-h-screen py-10 px-4">

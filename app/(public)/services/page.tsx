@@ -22,7 +22,7 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <section className="relative bg-pp-navy pt-28 pb-16">
+      <section className="relative bg-pp-navy pt-28 pb-16 hero-white-text">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/homepage/hero.png"
