@@ -1,12 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { getFeaturedReviews } from "@/content/reviews";
-import { siteSettings } from "@/content/settings";
-import { areas } from "@/content/areas";
 import { buildMetadata } from "@/lib/seo/metadata";
 import HeroSection from "@/components/home/HeroSection";
 import HelpTodaySection from "@/components/home/HelpTodaySection";
+import { prisma } from "@/lib/prisma";
+import { getSiteSettings } from "@/lib/db/content";
 
 export const metadata: Metadata = buildMetadata({
   title: "Peterborough Plumbers | Local Gas Safe Plumbing & Heating",
@@ -43,8 +42,14 @@ const onlineFeatures = [
   "Receive confirmation and engineer updates by text",
 ];
 
-export default function HomePage() {
-  const featuredReviews = getFeaturedReviews().slice(0, 4);
+export default async function HomePage() {
+  const [featuredReviewsRaw, siteSettings, areasRaw] = await Promise.all([
+    prisma.review.findMany({ where: { featured: true }, take: 4 }),
+    getSiteSettings(),
+    prisma.area.findMany({ take: 6, orderBy: { name: "asc" } }),
+  ]);
+  const featuredReviews = featuredReviewsRaw;
+  const areas = areasRaw;
 
   return (
     <>
@@ -106,7 +111,7 @@ export default function HomePage() {
       <HelpTodaySection />
 
       {/* ── D) BOOK & MANAGE ONLINE 24/7 — HomeServe-style two-column ──────── */}
-      <section className="bg-white py-16 lg:py-24">
+      <section className="bg-white py-10 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
@@ -122,7 +127,7 @@ export default function HomePage() {
                 No waiting on hold. Request a visit, choose your preferred time slot, and track
                 your engineer — all from your phone or laptop, any time of day.
               </p>
-              <ul className="space-y-4 mb-10">
+              <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-10">
                 {onlineFeatures.map((feature) => (
                   <li key={feature} className="flex items-center gap-3">
                     <span className="shrink-0 h-6 w-6 rounded-full bg-[#0F6E6E] text-white flex items-center justify-center">
@@ -260,7 +265,7 @@ export default function HomePage() {
       </section>
 
       {/* ── E) REVIEWS — Trustpilot-style carousel ───────────────────────────── */}
-      <section className="bg-white pt-16 lg:pt-20 pb-10">
+      <section className="bg-white pt-10 sm:pt-16 lg:pt-20 pb-10">
         <div className="mx-auto max-w-7xl px-4">
 
           {/* Heading */}
@@ -381,7 +386,7 @@ export default function HomePage() {
       </section>
 
       {/* ── F) DIY GUIDES — HomeServe-style card + wave + circular thumbnails ── */}
-      <section className="pt-10 pb-0 overflow-hidden">
+      <section className="pt-8 sm:pt-10 pb-0 overflow-hidden">
 
         {/* White rounded card centred on grey background */}
         <div className="px-4 sm:px-6 lg:px-8">
@@ -404,7 +409,7 @@ export default function HomePage() {
         </div>
 
         {/* Grey → white wave transition */}
-        <div className="relative h-16 mt-6">
+        <div className="relative h-12 sm:h-16 mt-4 sm:mt-6">
           <svg
             viewBox="0 0 1280 64"
             fill="none"
@@ -418,9 +423,9 @@ export default function HomePage() {
         </div>
 
         {/* Circular guide thumbnails on white */}
-        <div className="bg-white px-4 sm:px-6 lg:px-8 pb-14">
+        <div className="bg-white px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
           <div className="mx-auto max-w-[1280px]">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 text-center">
 
               <Link href="/guides/how-to-bleed-a-radiator" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
@@ -489,9 +494,9 @@ export default function HomePage() {
       </section>
 
       {/* ── G) AREAS WE COVER ─────────────────────────────────────────────────── */}
-      <section className="bg-white py-14 border-t border-[var(--border)]">
+      <section className="bg-white py-8 sm:py-14 border-t border-[var(--border)]">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="text-center mb-10">
+          <div className="text-center mb-6 sm:mb-10">
             <h2 className="text-2xl lg:text-3xl font-bold text-pp-heading mb-2">Areas We Cover</h2>
             <p className="text-[var(--muted)] text-sm">
               Covering Peterborough and surrounding areas across Cambridgeshire.
@@ -520,7 +525,7 @@ export default function HomePage() {
       </section>
 
       {/* ── H) BOTTOM CTA ────────────────────────────────────────────────────── */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-10 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-[#242424] mb-4">
             Ready to book your plumber?

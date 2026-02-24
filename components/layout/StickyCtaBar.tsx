@@ -4,8 +4,8 @@ import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 export default function StickyCtaBar() {
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 lg:hidden backdrop-blur-md border-t border-white/10 px-4 py-3"
-      style={{ backgroundColor: "rgba(26, 39, 68, 0.97)" }}
+      className="fixed bottom-0 left-0 right-0 z-50 lg:hidden backdrop-blur-md border-t border-white/10 px-4 pt-3"
+      style={{ backgroundColor: "transparent", paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}
     >
       <div className="flex gap-3">
         <Link

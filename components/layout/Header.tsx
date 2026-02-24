@@ -22,7 +22,7 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50">
 
       {/* ── ROW 1: White top bar ─────────────────────────────────────────── */}
-      <div className="bg-white overflow-visible">
+      <div className="bg-[#EDEDED] lg:bg-white overflow-visible border-b border-black/[0.06] lg:border-0">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 h-20 lg:h-24 flex items-center justify-between gap-4 overflow-visible">
 
           {/* Mobile: burger + logo */}

@@ -1,0 +1,68 @@
+---
+name: peterborough-seniority-standards
+description: Shared seniority and quality standards that apply to ALL Peterborough Plumbers agents. Sets the baseline for code quality, delivery format, performance targets, and professional behaviour. Every other skill inherits from these standards. Use when onboarding a new agent or reviewing quality expectations across the project.
+---
+
+# Seniority Standards — 5–7 Years Experience
+
+These standards apply to ALL agents working on Peterborough Plumbers. Every agent must operate as a senior professional with 5–7 years of hands-on production experience.
+
+## Critical — Mindset Rules
+
+- **Think before you type.** Understand the full impact before writing a single line.
+- **Minimal surface area.** Surgical diffs over sweeping rewrites.
+- **No cargo-culting.** Every decision needs a clear reason.
+- **Production-first.** Every change must be safe to deploy immediately.
+- **Defend the codebase.** Push back on vague requests. Ask before guessing.
+
+## Behaviour Standards
+
+- Read and understand existing patterns before adding anything new
+- Follow established architecture — no new patterns without documented justification
+- Never introduce a dependency unless it solves a problem that cannot be solved without it
+- Anticipate edge cases: empty states, network failures, invalid inputs, mobile viewports
+- Write code a junior developer can read and maintain
+- No hacks, no magic numbers, no commented-out code
+- State assumptions explicitly before proceeding on ambiguous tasks
+
+## Quality Gates (All Agents)
+
+| Area | Standard |
+|---|---|
+| Code | Clean, typed, consistent style. ESLint/TS errors = blockers |
+| Performance | LCP/CLS/INP neutral or better. Measure, don't assume |
+| Accessibility | WCAG 2.1 AA minimum. Keyboard navigable. Screen reader friendly |
+| SEO | UK English. Human tone. Zero keyword stuffing. No duplicate content |
+| Security | No secrets on client. Validate server-side. Never trust user data |
+| Resilience | Forms handle errors gracefully. APIs return meaningful error states |
+
+## Delivery Format (Every Task)
+
+### 1. Pre-flight Check
+- Files affected and why
+- Assumptions being made
+- Risks and mitigations
+
+### 2. Implementation
+- Safe, incremental steps
+- One concern per change
+- Comments only where genuinely non-obvious
+
+### 3. QA Self-Check
+- Review against QA agent checklist
+- Flag anything needing human review
+
+### 4. Owner Report
+- What changed (plain English, by file)
+- What was NOT changed (scope protection)
+- Follow-up items for next sprint
+
+## Hard Rules (Never Break)
+
+- No redesign of colours, fonts, or layout unless owner explicitly requests it
+- No new npm packages without documented justification
+- No breaking changes to existing APIs or component interfaces
+- No fake data, fake reviews, or fabricated business information
+- No `any` types in TypeScript without suppression comment explaining why
+- No `console.log` left in production code
+- UK English everywhere — "colour" not "color", "recognised" not "recognized"

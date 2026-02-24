@@ -1,23 +1,25 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { guides, getGuideBySlug, getAllGuideSlugs, guideCategories } from "@/content/guides";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
-import { siteSettings } from "@/content/settings";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import CTASection from "@/components/blocks/CTASection";
+import { prisma } from "@/lib/prisma";
+import { getSiteSettings } from "@/lib/db/content";
+import { guideCategories } from "@/content/guides";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return getAllGuideSlugs().map((slug) => ({ slug }));
+  const guides = await prisma.guide.findMany({ select: { slug: true } });
+  return guides.map((g) => ({ slug: g.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const guide = getGuideBySlug(slug);
+  const guide = await prisma.guide.findUnique({ where: { slug } });
   if (!guide) return {};
   return buildMetadata({
     title: guide.name,
@@ -29,12 +31,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuideDetailPage({ params }: Props) {
   const { slug } = await params;
-  const guide = getGuideBySlug(slug);
+
+  const [guide, settings] = await Promise.all([
+    prisma.guide.findUnique({ where: { slug } }),
+    getSiteSettings(),
+  ]);
+
   if (!guide) notFound();
 
-  const relatedGuides = guides
-    .filter((g) => g.category === guide.category && g.slug !== guide.slug)
-    .slice(0, 3);
+  const relatedGuides = await prisma.guide.findMany({
+    where: { category: guide.category, slug: { not: guide.slug } },
+    take: 3,
+  });
 
   const breadcrumb = breadcrumbSchema([
     { name: "Home", href: "/" },
@@ -49,15 +57,15 @@ export default async function GuideDetailPage({ params }: Props) {
     description: guide.excerpt,
     author: {
       "@type": "Organization",
-      name: siteSettings.companyName,
+      name: settings.companyName,
     },
     publisher: {
       "@type": "Organization",
-      name: siteSettings.companyName,
+      name: settings.companyName,
     },
-    datePublished: guide.publishedAt,
-    mainEntityOfPage: `${siteSettings.siteUrl}/guides/${guide.slug}`,
-    articleSection: guideCategories[guide.category],
+    datePublished: guide.publishedAt.toISOString(),
+    mainEntityOfPage: `${settings.siteUrl}/guides/${guide.slug}`,
+    articleSection: guideCategories[guide.category as keyof typeof guideCategories],
   };
 
   return (
@@ -90,8 +98,8 @@ export default async function GuideDetailPage({ params }: Props) {
         <div className="mx-auto max-w-3xl px-4">
           {/* Meta */}
           <div className="mb-6 flex items-center gap-3 flex-wrap">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--pp-navy)] bg-amber-50 px-3 py-1 rounded-full">
-              {guideCategories[guide.category]}
+            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brand)] bg-[rgba(200,16,46,0.08)] px-3 py-1 rounded-full">
+              {guideCategories[guide.category as keyof typeof guideCategories]}
             </span>
             <span className="text-sm text-[var(--muted)]">{guide.readTime} min read</span>
             <span className="text-sm text-[var(--muted)]">
@@ -113,7 +121,7 @@ export default async function GuideDetailPage({ params }: Props) {
           </p>
 
           {/* Inline CTA box */}
-          <div className="my-10 rounded-xl border border-[var(--brand)] bg-amber-50 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="my-10 rounded-xl border border-[var(--brand)] bg-[rgba(200,16,46,0.06)] p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
               <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
               <p className="text-sm text-[var(--muted)] mt-1">
@@ -128,10 +136,10 @@ export default async function GuideDetailPage({ params }: Props) {
                 Book Now
               </Link>
               <a
-                href={`tel:${siteSettings.phoneHref}`}
+                href={`tel:${settings.phoneHref}`}
                 className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] transition-colors duration-200"
               >
-                {siteSettings.phone}
+                {settings.phone}
               </a>
             </div>
           </div>

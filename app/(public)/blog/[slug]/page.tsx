@@ -4,25 +4,26 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
-import { getBlogBySlug, getAllBlogSlugs, type BlogPost } from "@/content/blog";
-import { services } from "@/content/services";
-import { siteSettings } from "@/content/settings";
 import { articleSchema, breadcrumbSchema } from "@/lib/seo/schema";
+import { prisma } from "@/lib/prisma";
+import { getSiteSettings } from "@/lib/db/content";
+import type { Service } from "@/content/services";
 
-const categoryServiceMap: Record<BlogPost["category"], string[]> = {
+type BlogCategory = "Boiler & Heating" | "Landlord & Legal" | "Emergency & Repairs" | "Local Guides";
+
+const categoryServiceMap: Record<BlogCategory, string[]> = {
   "Boiler & Heating": ["boiler-service", "central-heating-services", "gas-safety-certificates"],
   "Landlord & Legal": ["landlord-services", "gas-safety-certificates", "boiler-service"],
   "Emergency & Repairs": ["emergency-plumber", "plumbing-repairs", "damp-leak-detection"],
   "Local Guides": ["plumbing-installation", "bathroom-installations", "plumbing-repairs"],
 };
 
-function getRelatedServicesByCategory(category: BlogPost["category"]) {
-  const slugs = categoryServiceMap[category] ?? [];
-  return services.filter((s) => slugs.includes(s.slug));
-}
-
-export function generateStaticParams() {
-  return getAllBlogSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const posts = await prisma.blogPost.findMany({
+    where: { status: "Published" },
+    select: { slug: true },
+  });
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -31,7 +32,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogBySlug(slug);
+  const post = await prisma.blogPost.findUnique({ where: { slug } });
   if (!post) return {};
   return buildMetadata({
     title: post.seoTitle,
@@ -47,15 +48,27 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getBlogBySlug(slug);
+
+  const [post, settings] = await Promise.all([
+    prisma.blogPost.findUnique({ where: { slug } }),
+    getSiteSettings(),
+  ]);
+
   if (!post || post.status !== "Published") notFound();
+
+  // Fetch related services for this category
+  const category = post.category as BlogCategory;
+  const relatedSlugs = categoryServiceMap[category] ?? [];
+  const relatedServices = relatedSlugs.length
+    ? ((await prisma.service.findMany({ where: { slug: { in: relatedSlugs } } })) as unknown as Service[])
+    : [];
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleSchema(post)),
+          __html: JSON.stringify(articleSchema(post as Parameters<typeof articleSchema>[0])),
         }}
       />
       <script
@@ -92,8 +105,8 @@ export default async function BlogPostPage({
             </p>
           )}
           <div className="mt-6">
-            <Link href={siteSettings.primaryCtaHref} className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
-              {siteSettings.primaryCtaLabel}
+            <Link href={settings.primaryCtaHref} className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
+              {settings.primaryCtaLabel}
             </Link>
           </div>
         </div>
@@ -107,20 +120,22 @@ export default async function BlogPostPage({
           />
 
           {/* Related services */}
-          <div className="mt-12 pt-8 border-t border-gray-100">
-            <h3 className="text-lg font-bold text-pp-heading mb-4">Related Services</h3>
-            <div className="flex flex-wrap gap-2">
-              {getRelatedServicesByCategory(post.category).map((s) => (
-                <Link
-                  key={s.slug}
-                  href={`/services/${s.slug}`}
-                  className="bg-pp-teal/10 text-pp-heading px-4 py-2 rounded-full text-sm font-medium hover:bg-pp-teal/20 transition-colors"
-                >
-                  {s.name}
-                </Link>
-              ))}
+          {relatedServices.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-gray-100">
+              <h3 className="text-lg font-bold text-pp-heading mb-4">Related Services</h3>
+              <div className="flex flex-wrap gap-2">
+                {relatedServices.map((s) => (
+                  <Link
+                    key={s.slug}
+                    href={`/services/${s.slug}`}
+                    className="bg-pp-teal/10 text-pp-heading px-4 py-2 rounded-full text-sm font-medium hover:bg-pp-teal/20 transition-colors"
+                  >
+                    {s.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 

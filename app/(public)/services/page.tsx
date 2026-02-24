@@ -4,7 +4,8 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
 import CTASection from "@/components/blocks/CTASection";
-import { services } from "@/content/services";
+import { prisma } from "@/lib/prisma";
+import type { Service } from "@/content/services";
 
 export const metadata: Metadata = buildMetadata({
   title: "Plumbing & Heating Services Peterborough | Gas Safe",
@@ -14,7 +15,11 @@ export const metadata: Metadata = buildMetadata({
   image: "/images/homepage/hero.png",
 });
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = (await prisma.service.findMany({
+    orderBy: { sortOrder: "asc" },
+  })) as unknown as Service[];
+
   return (
     <>
       <section className="relative bg-pp-navy pt-28 pb-16">

@@ -6,8 +6,9 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ReviewsGrid from "@/components/blocks/ReviewsGrid";
 import CTASection from "@/components/blocks/CTASection";
-import { reviews } from "@/content/reviews";
-import { siteSettings } from "@/content/settings";
+import { prisma } from "@/lib/prisma";
+import { getSiteSettings } from "@/lib/db/content";
+import type { Review } from "@/content/reviews";
 
 export const metadata: Metadata = buildMetadata({
   title: "Peterborough Plumber Reviews | 4.6★ | 120+ Customers",
@@ -17,7 +18,12 @@ export const metadata: Metadata = buildMetadata({
   image: "/images/homepage/hero.png",
 });
 
-export default function ReviewsPage() {
+export default async function ReviewsPage() {
+  const [reviews, settings] = await Promise.all([
+    prisma.review.findMany({ orderBy: { createdAt: "asc" } }),
+    getSiteSettings(),
+  ]);
+
   const breadcrumb = breadcrumbSchema([
     { name: "Home", href: "/" },
     { name: "Reviews", href: "/reviews" },
@@ -26,11 +32,11 @@ export default function ReviewsPage() {
   const reviewsSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: siteSettings.companyName,
+    name: settings.companyName,
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: siteSettings.googleRating,
-      reviewCount: siteSettings.reviewCount,
+      ratingValue: settings.googleRating,
+      reviewCount: settings.reviewCount,
       bestRating: "5",
       worstRating: "1",
     },
@@ -81,14 +87,14 @@ export default function ReviewsPage() {
             <Link href="/book" className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               Book Now
             </Link>
-            <a href={`tel:${siteSettings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">
-              Call {siteSettings.phone}
+            <a href={`tel:${settings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">
+              Call {settings.phone}
             </a>
           </div>
         </div>
       </section>
 
-      <ReviewsGrid reviews={reviews} heading="All Reviews" />
+      <ReviewsGrid reviews={reviews as unknown as Review[]} heading="All Reviews" />
 
       <CTASection />
     </>

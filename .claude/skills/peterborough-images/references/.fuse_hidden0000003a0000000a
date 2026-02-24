@@ -1,0 +1,46 @@
+# Image QA Checklist
+
+Run before every PR or sprint completion.
+
+## Filenames
+- [ ] All lowercase
+- [ ] All hyphenated (no spaces, underscores)
+- [ ] No typos in filenames
+- [ ] All .webp format (except OG = .jpg, logos = .svg)
+- [ ] Names are descriptive with service + location
+
+## Alt Text
+- [ ] Every meaningful image has alt text
+- [ ] No duplicated words in any alt text
+- [ ] No generic or empty alt on meaningful images
+- [ ] No alt text exceeds 125 characters
+- [ ] No alt text truncated mid-sentence
+- [ ] Decorative images have alt="" (empty string)
+
+## Next.js Image Props
+- [ ] Every image has width and height set
+- [ ] Every image has sizes prop for its layout position
+- [ ] priority={true} on first hero image only
+- [ ] No priority prop on any other image
+- [ ] No loading="eager" anywhere
+- [ ] quality={85} on photo images
+- [ ] blurDataURL + placeholder="blur" on hero images
+
+## Schema
+- [ ] ImageObject added to Service schema on service pages
+- [ ] ImageObject added to Article schema on blog posts
+- [ ] OG image referenced in page metadata export
+
+## OG Images
+- [ ] Every page has unique OG image
+- [ ] All OG images 1200×630px JPG
+- [ ] Stored at /public/images/og/[page-slug].jpg
+- [ ] og:image meta tag references absolute URL
+
+## Performance
+- [ ] Hero image = LCP element with priority={true}
+- [ ] No other image has priority={true}
+- [ ] Card images under 50KB
+- [ ] Hero images under 150KB
+- [ ] No CLS — width/height always set
+- [ ] Lighthouse Performance 90+

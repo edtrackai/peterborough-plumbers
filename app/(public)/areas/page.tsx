@@ -5,8 +5,9 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import AreaGrid from "@/components/blocks/AreaGrid";
 import CTASection from "@/components/blocks/CTASection";
-import { areas } from "@/content/areas";
-import { siteSettings } from "@/content/settings";
+import { prisma } from "@/lib/prisma";
+import { getSiteSettings } from "@/lib/db/content";
+import type { Area } from "@/content/areas";
 
 export const metadata: Metadata = buildMetadata({
   title: "Plumbers Across Peterborough & Surrounding Areas",
@@ -16,7 +17,12 @@ export const metadata: Metadata = buildMetadata({
   image: "/images/homepage/hero.png",
 });
 
-export default function AreasPage() {
+export default async function AreasPage() {
+  const [areas, settings] = await Promise.all([
+    prisma.area.findMany({ orderBy: { name: "asc" } }),
+    getSiteSettings(),
+  ]);
+
   return (
     <>
       <section className="relative bg-pp-navy pt-28 pb-16">
@@ -44,14 +50,14 @@ export default function AreasPage() {
             <Link href="/book" className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               Book Now
             </Link>
-            <a href={`tel:${siteSettings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">
-              Call {siteSettings.phone}
+            <a href={`tel:${settings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">
+              Call {settings.phone}
             </a>
           </div>
         </div>
       </section>
 
-      <AreaGrid areas={areas} />
+      <AreaGrid areas={areas as unknown as Area[]} />
 
       <CTASection />
     </>

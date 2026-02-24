@@ -2,18 +2,34 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { serviceSchema, faqSchema, breadcrumbSchema } from "@/lib/seo/schema";
-import { getRelatedServices } from "@/lib/seo/internalLinks";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import FaqAccordion from "@/components/blocks/FaqAccordion";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
 import CTASection from "@/components/blocks/CTASection";
-import { services, getServiceBySlug, getAllServiceSlugs } from "@/content/services";
 import Image from "next/image";
 import Link from "next/link";
-import { siteSettings } from "@/content/settings";
+import { prisma } from "@/lib/prisma";
+import { getSiteSettings } from "@/lib/db/content";
+import type { Service } from "@/content/services";
 
-export function generateStaticParams() {
-  return getAllServiceSlugs().map((slug) => ({ slug }));
+// Semantic related-service map (slug → related slugs)
+const relatedServiceMap: Record<string, string[]> = {
+  "boiler-service": ["central-heating-services", "gas-safety-certificates", "emergency-plumber"],
+  "gas-safety-certificates": ["boiler-service", "landlord-services", "central-heating-services"],
+  "central-heating-services": ["boiler-service", "plumbing-installation", "plumbing-repairs"],
+  "bathroom-installations": ["plumbing-installation", "plumbing-repairs", "damp-leak-detection"],
+  "landlord-services": ["gas-safety-certificates", "boiler-service", "plumbing-repairs"],
+  "emergency-plumber": ["plumbing-repairs", "drain-blockages", "damp-leak-detection"],
+  "plumbing-installation": ["bathroom-installations", "central-heating-services", "plumbing-repairs"],
+  "plumbing-repairs": ["emergency-plumber", "damp-leak-detection", "plumbing-installation"],
+  "damp-leak-detection": ["plumbing-repairs", "emergency-plumber", "drain-blockages"],
+  "drain-blockages": ["emergency-plumber", "damp-leak-detection", "plumbing-repairs"],
+  "pre-purchase-plumbing-survey": ["boiler-service", "damp-leak-detection", "central-heating-services"],
+};
+
+export async function generateStaticParams() {
+  const services = await prisma.service.findMany({ select: { slug: true } });
+  return services.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -22,13 +38,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await prisma.service.findUnique({ where: { slug } });
   if (!service) return {};
   return buildMetadata({
     title: service.seoTitle,
     description: service.seoDescription,
     path: `/services/${service.slug}`,
-    image: service.heroImage,
+    image: service.heroImage ?? undefined,
   });
 }
 
@@ -38,11 +54,23 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+
+  const [service, settings] = await Promise.all([
+    prisma.service.findUnique({ where: { slug } }),
+    getSiteSettings(),
+  ]);
+
   if (!service) notFound();
 
-  const related = getRelatedServices(service.slug, 3);
+  const faqs = service.faqs as { q: string; a: string }[];
   const heroImage = service.heroImage || service.image;
+
+  // Fetch related services from DB
+  const relatedSlugs = relatedServiceMap[slug] ?? [];
+  const relatedRaw = relatedSlugs.length
+    ? await prisma.service.findMany({ where: { slug: { in: relatedSlugs } } })
+    : await prisma.service.findMany({ where: { slug: { not: slug } }, take: 3 });
+  const related = relatedRaw as unknown as Service[];
 
   return (
     <>
@@ -58,11 +86,11 @@ export default async function ServicePage({
           ),
         }}
       />
-      {service.faqs.length > 0 && (
+      {faqs.length > 0 && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqSchema(service.faqs)),
+            __html: JSON.stringify(faqSchema(faqs)),
           }}
         />
       )}
@@ -92,7 +120,6 @@ export default async function ServicePage({
               quality={85}
               sizes="100vw"
             />
-            {/* hero-overlay: left-to-right dark gradient; uniform on mobile */}
             <div className="absolute inset-0 hero-overlay" />
           </div>
         )}
@@ -114,10 +141,10 @@ export default async function ServicePage({
               Book {service.name}
             </Link>
             <a
-              href={`tel:${siteSettings.phoneHref}`}
+              href={`tel:${settings.phoneHref}`}
               className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white/70 hover:bg-white hover:text-pp-navy transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pp-navy"
             >
-              Call {siteSettings.phone}
+              Call {settings.phone}
             </a>
           </div>
         </div>
@@ -134,9 +161,9 @@ export default async function ServicePage({
       </section>
 
       {/* FAQs */}
-      {service.faqs.length > 0 && (
+      {faqs.length > 0 && (
         <div className="bg-pp-grey">
-          <FaqAccordion faqs={service.faqs} />
+          <FaqAccordion faqs={faqs} />
         </div>
       )}
 

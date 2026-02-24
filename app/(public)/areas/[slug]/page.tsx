@@ -7,13 +7,13 @@ import { breadcrumbSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
 import CTASection from "@/components/blocks/CTASection";
-import { getAreaBySlug, getAllAreaSlugs } from "@/content/areas";
-import { services } from "@/content/services";
-import { reviews } from "@/content/reviews";
-import { siteSettings } from "@/content/settings";
+import { prisma } from "@/lib/prisma";
+import { getSiteSettings } from "@/lib/db/content";
+import type { Service } from "@/content/services";
 
-export function generateStaticParams() {
-  return getAllAreaSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const areas = await prisma.area.findMany({ select: { slug: true } });
+  return areas.map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const area = getAreaBySlug(slug);
+  const area = await prisma.area.findUnique({ where: { slug } });
   if (!area) return {};
   return buildMetadata({
     title: area.seoTitle,
@@ -38,12 +38,25 @@ export default async function AreaPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const area = getAreaBySlug(slug);
+
+  const [area, settings] = await Promise.all([
+    prisma.area.findUnique({ where: { slug } }),
+    getSiteSettings(),
+  ]);
+
   if (!area) notFound();
 
-  const areaReviews = reviews.filter(
-    (r) => r.areaName.toLowerCase() === area.name.toLowerCase()
-  );
+  const landmarks = area.landmarks as string[];
+  const postcodes = area.postcodes as string[];
+
+  const [areaReviews, servicesRaw] = await Promise.all([
+    prisma.review.findMany({
+      where: { areaName: { equals: area.name, mode: "insensitive" } },
+    }),
+    prisma.service.findMany({ take: 6, orderBy: { sortOrder: "asc" } }),
+  ]);
+
+  const services = servicesRaw as unknown as Service[];
 
   return (
     <>
@@ -63,17 +76,14 @@ export default async function AreaPage({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Plumber",
-            name: siteSettings.companyName,
-            telephone: siteSettings.phone,
+            name: settings.companyName,
+            telephone: settings.phone,
             areaServed: {
               "@type": "City",
               name: area.name,
-              containedInPlace: {
-                "@type": "City",
-                name: "Peterborough",
-              },
+              containedInPlace: { "@type": "City", name: "Peterborough" },
             },
-            url: `${siteSettings.siteUrl}/areas/${area.slug}`,
+            url: `${settings.siteUrl}/areas/${area.slug}`,
           }),
         }}
       />
@@ -122,7 +132,7 @@ export default async function AreaPage({
           <div>
             <h2 className="text-2xl font-bold text-pp-heading mb-4">Local Landmarks</h2>
             <div className="flex flex-wrap gap-2">
-              {area.landmarks.map((l) => (
+              {landmarks.map((l) => (
                 <span
                   key={l}
                   className="bg-pp-teal/10 text-pp-heading px-4 py-2 rounded-full text-sm font-medium"
@@ -137,7 +147,7 @@ export default async function AreaPage({
           <div>
             <h2 className="text-2xl font-bold text-pp-heading mb-4">Postcodes Covered</h2>
             <div className="flex flex-wrap gap-2">
-              {area.postcodes.map((p) => (
+              {postcodes.map((p) => (
                 <span
                   key={p}
                   className="bg-pp-navy text-white px-4 py-2 rounded-full text-sm font-medium"
@@ -155,8 +165,8 @@ export default async function AreaPage({
                 Reviews from {area.name}
               </h2>
               <div className="space-y-4">
-                {areaReviews.map((r, i) => (
-                  <div key={i} className="bg-white rounded-xl p-6 border border-gray-100">
+                {areaReviews.map((r) => (
+                  <div key={r.id} className="bg-white rounded-xl p-6 border border-gray-100">
                     <p className="text-pp-body mb-3">&ldquo;{r.body}&rdquo;</p>
                     <p className="text-sm font-semibold text-pp-heading">{r.customerName}</p>
                   </div>
@@ -167,14 +177,11 @@ export default async function AreaPage({
         </div>
       </section>
 
-      <ServiceGrid
-        services={services.slice(0, 6)}
-        heading={`Services in ${area.name}`}
-      />
+      <ServiceGrid services={services} heading={`Services in ${area.name}`} />
 
       <CTASection
         heading={`Need a Plumber in ${area.name}?`}
-        subheading={`Call ${siteSettings.phone} or book online for fast, reliable service.`}
+        subheading={`Call ${settings.phone} or book online for fast, reliable service.`}
       />
     </>
   );

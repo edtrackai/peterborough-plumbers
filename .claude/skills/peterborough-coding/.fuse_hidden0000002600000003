@@ -1,0 +1,147 @@
+---
+name: peterborough-coding
+description: Core coding standards agent for Peterborough Plumbers. Enforces Next.js App Router best practices, Tailwind design tokens, page metadata templates, image optimisation, accessibility, URL structure, JSON-LD schema components, and placeholder detection. Use when writing any code, creating pages, reviewing components, or checking coding standards. Triggers on coding standards, Next.js, Tailwind, metadata, accessibility, page speed, URL structure, or placeholder detection.
+---
+
+# Coding Standards — Peterborough Plumbers
+
+Read `references/seniority-standards.md` before starting any task.
+
+## Critical — Core Rules
+
+- Next.js App Router best practices (Server Components, ISR)
+- 90+ Lighthouse performance score target
+- Clean Tailwind with consistent design tokens
+- Mobile-first responsive design
+- WCAG AA accessibility standards
+- Never break existing UI without explicit instruction
+
+## Critical — Page Metadata (MANDATORY on Every page.tsx)
+
+```typescript
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '[50-60 chars] [Keyword] in Peterborough | Brand — [Modifier]',
+  description: '[140-160 chars] [Keyword + Location + CTA + Trust Signal]',
+  alternates: { canonical: 'https://[domain]/[path]' },
+  openGraph: {
+    title: '[same as title]',
+    description: '[same as description]',
+    url: 'https://[domain]/[path]',
+    siteName: 'Peterborough Plumbers',
+    type: 'website',
+    locale: 'en_GB',
+    images: [{ url: 'https://[domain]/images/og/[page].jpg', width: 1200, height: 630 }],
+  },
+  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true },
+  other: { 'geo.region': 'GB-CAM', 'geo.placename': 'Peterborough' },
+};
+```
+
+## Critical — robots.txt (app/robots.ts)
+
+```typescript
+import { MetadataRoute } from 'next';
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: { userAgent: '*', allow: '/', disallow: ['/api/', '/_next/'] },
+    sitemap: 'https://[domain]/sitemap.xml',
+  };
+}
+```
+
+## Critical — XML Sitemap (app/sitemap.ts)
+
+Must include all service pages (11), area pages (9), plus homepage, about, contact, blog, reviews, book. See the SEO skill for the full sitemap template.
+
+## Critical — Canonical Tags
+
+- EVERY page: self-referencing canonical via `alternates.canonical`
+- MUST use custom domain — NEVER vercel.app
+- NO trailing slashes (enforce consistently)
+
+## Critical — Image Optimisation
+
+- ALL images: Next.js `<Image>` with explicit `width` and `height`
+- ALL images: descriptive alt text (5–15 words, keyword + location)
+- ALL filenames: descriptive kebab-case, no typos, no spaces
+- Hero/above-fold: `priority={true}`, `loading="eager"`
+- Below-fold: lazy loading (default)
+- WebP/AVIF preferred — max 200KB regular, 500KB hero
+
+**Alt text formula:** `"[Action/subject] in [Location] — [Business]"`
+
+## Critical — Page Speed Targets
+
+| Metric | Target |
+|---|---|
+| Lighthouse Performance | 90+ |
+| LCP | < 2.5s |
+| CLS | < 0.1 |
+| INP | < 200ms |
+
+- Use `next/font` for all fonts (no external font loading)
+- Minimize third-party scripts
+- `<link rel="preconnect">` for external domains
+- Dynamic imports for heavy components: `dynamic(() => import('./Map'), { ssr: false })`
+
+## Important — URL Structure
+
+- ALL lowercase kebab-case, descriptive with target keyword
+- MAX 3 levels: `/services/boiler-service` ✅
+- NO trailing slashes, NO URL params on public pages
+- NO dates in service/area URLs
+
+## Important — Accessibility (MANDATORY)
+
+- `<html lang="en-GB">` in root layout
+- ALL images: descriptive alt text
+- ALL form inputs: `<label>` elements
+- ALL links: descriptive text — NEVER "click here" or "learn more"
+- Color contrast: 4.5:1 minimum (WCAG AA)
+- Full keyboard navigation
+- Skip-to-content link
+- ARIA labels on interactive elements
+- Phone: `<a href="tel:+44XXXXXXXXXX">` format
+- Email: `<a href="mailto:email@domain.co.uk">` format
+
+## Important — JSON-LD Schema Component
+
+```tsx
+function JsonLd({ data }: { data: object | object[] }) {
+  const schemas = Array.isArray(data) ? data : [data];
+  return (
+    <>
+      {schemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+    </>
+  );
+}
+```
+
+## Critical — Placeholder Detection (ZERO TOLERANCE)
+
+NEVER allow these in code or content. STOP and ask for real values:
+
+| Placeholder | Replace with |
+|---|---|
+| `01234 567890` | Real phone number |
+| `441234567890` | Real WhatsApp number |
+| `123456` | Real Gas Safe number |
+| `example.com` | Real domain |
+| `lorem ipsum` | Real content |
+| `TODO / FIXME` | Resolve before deploy |
+| `[REAL ...]` | Fill with actual values |
+
+## Error Recovery
+
+- If a build fails after changes, revert and fix incrementally
+- If Lighthouse drops below 90, identify the regression before proceeding
+- If TypeScript errors appear, resolve before any other work

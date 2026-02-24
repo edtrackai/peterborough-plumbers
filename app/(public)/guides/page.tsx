@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { guides, guideCategories } from "@/content/guides";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 import CTASection from "@/components/blocks/CTASection";
+import { prisma } from "@/lib/prisma";
+import { guideCategories } from "@/content/guides";
 
 export const metadata: Metadata = buildMetadata({
   title: "Free Plumbing Guides | Peterborough Homeowner Advice",
@@ -22,14 +23,16 @@ const categoryOrder: (keyof typeof guideCategories)[] = [
 ];
 
 const categoryColors: Record<keyof typeof guideCategories, string> = {
-  costs:       "bg-blue-100 text-blue-800",
-  diy:         "bg-green-100 text-green-800",
-  boilers:     "bg-orange-100 text-orange-800",
-  heating:     "bg-amber-100 text-amber-800",
-  emergencies: "bg-rose-100 text-rose-800",
+  costs:       "bg-[rgba(200,16,46,0.08)] text-[#C8102E]",
+  diy:         "bg-[rgba(15,110,110,0.1)] text-[#0F6E6E]",
+  boilers:     "bg-gray-100 text-gray-700",
+  heating:     "bg-[rgba(200,16,46,0.06)] text-[#a50d26]",
+  emergencies: "bg-[rgba(200,16,46,0.14)] text-[#C8102E]",
 };
 
-export default function GuidesPage() {
+export default async function GuidesPage() {
+  const guides = await prisma.guide.findMany({ orderBy: { publishedAt: "desc" } });
+
   const breadcrumb = breadcrumbSchema([
     { name: "Home", href: "/" },
     { name: "Guides", href: "/guides" },
@@ -96,9 +99,9 @@ export default function GuidesPage() {
                       className="group block rounded-xl border border-[var(--border)] bg-white p-6 hover:border-[var(--brand)] hover:shadow-[0_4px_20px_rgba(201,168,76,0.15)] transition-all duration-200"
                     >
                       <span
-                        className={`inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-4 ${categoryColors[guide.category]}`}
+                        className={`inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-4 ${categoryColors[guide.category as keyof typeof guideCategories]}`}
                       >
-                        {guideCategories[guide.category]}
+                        {guideCategories[guide.category as keyof typeof guideCategories]}
                       </span>
                       <h3 className="text-base font-semibold text-pp-heading group-hover:text-[var(--brand)] transition-colors duration-200 leading-snug mb-3">
                         {guide.name}

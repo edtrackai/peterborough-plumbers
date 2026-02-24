@@ -1,0 +1,47 @@
+---
+name: peterborough-multi-agent-runner
+description: Lightweight multi-agent runner for Peterborough Plumbers. Loads all skills and executes agents in dependency order without full PM ceremony. Produces a concise summary of changes and QA checklist. Use for quick multi-agent tasks that don't need full PM planning overhead. Triggers on run all agents, quick agent run, multi-agent, or execute all skills.
+---
+
+# Multi-Agent Runner — Peterborough Plumbers
+
+Quick-fire agent orchestration. Loads all skills, runs in order, outputs results. No full PM planning ceremony — for when you need fast execution.
+
+## Critical — Load First
+
+Read `CLAUDE.md` if it exists, then read ALL SKILL.md files in `.claude/skills/`.
+
+## Execution Order
+
+| Step | Agents | Skills |
+|---|---|---|
+| 1 | SEO + Content | `peterborough-seo/SKILL.md`, `peterborough-content/SKILL.md` |
+| 2 | Schema + Internal Linking | `peterborough-schema/SKILL.md`, `peterborough-internal-linking/SKILL.md` |
+| 3 | Images + Performance | `peterborough-images/SKILL.md`, `peterborough-performance/SKILL.md` |
+| 4 | Frontend + Backend | `peterborough-frontend/SKILL.md`, `peterborough-backend/SKILL.md` |
+| 5 | Analytics + Security | `peterborough-analytics/SKILL.md`, `peterborough-security/SKILL.md` |
+| 6 | **QA Gate** | `peterborough-qa/SKILL.md` |
+
+Each step must complete successfully before the next begins.
+
+## Rules (Always Enforced)
+
+- No redesign (colours, spacing, animations unchanged)
+- Minimal diffs — surgical changes only
+- No fake info in schema or content
+- Performance must not degrade
+- Plan first, then implement
+- UK English throughout
+
+## Output (After All Agents Complete)
+
+1. **Files touched** — list every changed file
+2. **What each agent changed** — one sentence per agent
+3. **QA checklist** — PASS/FAIL for each category
+4. **Next steps** — top 3 follow-up items
+
+## Error Recovery
+
+- If any agent introduces a regression, revert and fix before continuing
+- QA failures must be fixed inline — never defer
+- If agent output conflicts with another agent's work, apply the PM conflict priority: stability > performance > SEO > conversion > nice-to-haves

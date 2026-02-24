@@ -2,19 +2,19 @@ import Link from "next/link";
 
 export default function HelpTodaySection() {
   return (
-    <section className="bg-white py-14 lg:py-20">
+    <section className="bg-white py-8 sm:py-14 lg:py-20">
       <div className="mx-auto max-w-[1060px] px-4 sm:px-6 lg:px-8">
 
         {/* ── Section heading ── */}
-        <h2 className="text-[1.85rem] lg:text-[2.2rem] font-bold text-[#1a1a1a] text-center mb-12 tracking-tight">
+        <h2 className="text-[1.85rem] lg:text-[2.2rem] font-bold text-[#1a1a1a] text-center mb-8 sm:mb-12 tracking-tight">
           How can we help you today?
         </h2>
 
         {/* ── 2 × 2 grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
 
           {/* ─── CARD 1: Emergency Plumbing ─────────────────────────────── */}
-          <div className="relative bg-white rounded-2xl shadow-[0_1px_12px_rgba(0,0,0,0.07)] overflow-visible flex flex-col">
+          <div className="relative bg-white rounded-2xl shadow-[0_1px_12px_rgba(0,0,0,0.07)] overflow-visible flex flex-col mt-7 sm:mt-0">
 
             {/* Floating "Available 24/7 | Fast Response" badge */}
             <div className="absolute -top-5 right-6 flex z-10 rounded-t-xl overflow-hidden shadow-md">

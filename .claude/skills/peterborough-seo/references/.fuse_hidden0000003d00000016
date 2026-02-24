@@ -1,0 +1,601 @@
+# JSON-LD Schema Templates
+
+Complete, production-ready schema blocks for every page type. Copy-paste and replace placeholder values in UPPERCASE [BRACKETS].
+
+---
+
+## 1. Homepage — LocalBusiness + WebSite + AggregateRating
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://[DOMAIN]/#business",
+      "name": "Peterborough Plumbers",
+      "url": "https://[DOMAIN]",
+      "telephone": "[REAL-NUMBER]",
+      "email": "[EMAIL]",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "[STREET]",
+        "addressLocality": "Peterborough",
+        "addressRegion": "Cambridgeshire",
+        "postalCode": "[POSTCODE]",
+        "addressCountry": "GB"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Peterborough"
+        },
+        {
+          "@type": "City",
+          "name": "Bretton"
+        },
+        {
+          "@type": "City",
+          "name": "Hampton"
+        },
+        {
+          "@type": "City",
+          "name": "Millfield"
+        },
+        {
+          "@type": "City",
+          "name": "Werrington"
+        },
+        {
+          "@type": "City",
+          "name": "Woodston"
+        },
+        {
+          "@type": "City",
+          "name": "Stanground"
+        },
+        {
+          "@type": "City",
+          "name": "Paston"
+        },
+        {
+          "@type": "City",
+          "name": "Gunthorpe"
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "[REVIEW-COUNT]",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "sameAs": [
+        "https://www.google.com/maps/place/[BUSINESS-NAME]",
+        "https://www.facebook.com/[PAGE]"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://[DOMAIN]/#website",
+      "url": "https://[DOMAIN]",
+      "name": "Peterborough Plumbers",
+      "description": "Gas Safe registered plumbers in Peterborough",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://[DOMAIN]?s={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+```
+
+---
+
+## 2. Service Page — Service + FAQPage + BreadcrumbList
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://[DOMAIN]/[SERVICE-SLUG]#service",
+      "name": "[SERVICE-NAME]",
+      "description": "[SERVICE-DESCRIPTION]",
+      "url": "https://[DOMAIN]/[SERVICE-SLUG]",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Peterborough Plumbers",
+        "url": "https://[DOMAIN]",
+        "telephone": "[REAL-NUMBER]",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "[STREET]",
+          "addressLocality": "Peterborough",
+          "addressRegion": "Cambridgeshire",
+          "postalCode": "[POSTCODE]",
+          "addressCountry": "GB"
+        }
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Peterborough"
+        }
+      ],
+      "priceRange": "[PRICE-RANGE]",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "[REVIEW-COUNT]",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://[DOMAIN]/[SERVICE-SLUG]#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "[FAQ-QUESTION-1]",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[FAQ-ANSWER-1]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "[FAQ-QUESTION-2]",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[FAQ-ANSWER-2]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "[FAQ-QUESTION-3]",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[FAQ-ANSWER-3]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "[FAQ-QUESTION-4]",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[FAQ-ANSWER-4]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "[FAQ-QUESTION-5]",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[FAQ-ANSWER-5]"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://[DOMAIN]/[SERVICE-SLUG]#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://[DOMAIN]"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "[SERVICE-NAME]",
+          "item": "https://[DOMAIN]/[SERVICE-SLUG]"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 3. Area Page — Service (area-specific) + FAQPage + BreadcrumbList
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://[DOMAIN]/areas/[AREA-SLUG]#service",
+      "name": "Plumber in [AREA] Peterborough",
+      "description": "Emergency plumbing services in [AREA], Peterborough [POSTCODE]. Gas Safe certified. Call [REAL-NUMBER] for same-day repairs.",
+      "url": "https://[DOMAIN]/areas/[AREA-SLUG]",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Peterborough Plumbers",
+        "url": "https://[DOMAIN]",
+        "telephone": "[REAL-NUMBER]",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "[STREET]",
+          "addressLocality": "Peterborough",
+          "addressRegion": "Cambridgeshire",
+          "postalCode": "[POSTCODE]",
+          "addressCountry": "GB"
+        }
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "[AREA]"
+      },
+      "priceRange": "from £49",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "[REVIEW-COUNT]"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://[DOMAIN]/areas/[AREA-SLUG]#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do you cover [AREA]?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we're based in Peterborough and cover [AREA] and all surrounding areas. Our team is usually available same-day."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's your call-out fee in [AREA]?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From £49. This is waived if you proceed with repairs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you Gas Safe registered?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Gas Safe registered with 30+ years experience."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://[DOMAIN]/areas/[AREA-SLUG]#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://[DOMAIN]"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Areas",
+          "item": "https://[DOMAIN]/areas"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "[AREA]",
+          "item": "https://[DOMAIN]/areas/[AREA-SLUG]"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 4. Blog Post — Article + BreadcrumbList
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://[DOMAIN]/blog/[POST-SLUG]#article",
+      "url": "https://[DOMAIN]/blog/[POST-SLUG]",
+      "headline": "[POST-TITLE]",
+      "description": "[POST-META-DESCRIPTION]",
+      "articleBody": "[FIRST-500-WORDS-OF-CONTENT]",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://[DOMAIN]/images/og/[POST-SLUG]-og.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "[PUBLISHED-DATE-ISO]",
+      "dateModified": "[LAST-MODIFIED-DATE-ISO]",
+      "author": {
+        "@type": "Organization",
+        "name": "Peterborough Plumbers"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Peterborough Plumbers",
+        "url": "https://[DOMAIN]",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://[DOMAIN]/images/logo.png"
+        }
+      },
+      "mainEntityOfPage": "https://[DOMAIN]/blog/[POST-SLUG]"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://[DOMAIN]/blog/[POST-SLUG]#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://[DOMAIN]"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://[DOMAIN]/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "[POST-TITLE]",
+          "item": "https://[DOMAIN]/blog/[POST-SLUG]"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 5. About Page — Organization + BreadcrumbList
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://[DOMAIN]/about#organization",
+      "name": "Peterborough Plumbers",
+      "url": "https://[DOMAIN]",
+      "telephone": "[REAL-NUMBER]",
+      "email": "[EMAIL]",
+      "description": "Gas Safe registered plumbers in Peterborough with 30+ years experience.",
+      "foundingDate": "[FOUNDING-YEAR]",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "[STREET]",
+        "addressLocality": "Peterborough",
+        "addressRegion": "Cambridgeshire",
+        "postalCode": "[POSTCODE]",
+        "addressCountry": "GB"
+      },
+      "sameAs": [
+        "https://www.google.com/maps/place/[BUSINESS-NAME]",
+        "https://www.facebook.com/[PAGE]"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "[REVIEW-COUNT]"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://[DOMAIN]/about#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://[DOMAIN]"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About",
+          "item": "https://[DOMAIN]/about"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 6. Contact Page — LocalBusiness + BreadcrumbList
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://[DOMAIN]/contact#business",
+      "name": "Peterborough Plumbers",
+      "url": "https://[DOMAIN]",
+      "telephone": "[REAL-NUMBER]",
+      "email": "[EMAIL]",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "[STREET]",
+        "addressLocality": "Peterborough",
+        "addressRegion": "Cambridgeshire",
+        "postalCode": "[POSTCODE]",
+        "addressCountry": "GB"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "[REAL-NUMBER]",
+        "contactType": "Customer Service",
+        "email": "[EMAIL]"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "[REVIEW-COUNT]"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://[DOMAIN]/contact#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://[DOMAIN]"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contact",
+          "item": "https://[DOMAIN]/contact"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 7. Reviews Page — AggregateRating + Review + BreadcrumbList
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AggregateRating",
+      "@id": "https://[DOMAIN]/reviews#aggregate-rating",
+      "ratingValue": "4.6",
+      "ratingCount": "[REVIEW-COUNT]",
+      "bestRating": "5",
+      "worstRating": "1",
+      "ratedEntity": {
+        "@type": "LocalBusiness",
+        "name": "Peterborough Plumbers"
+      }
+    },
+    {
+      "@type": "Review",
+      "@id": "https://[DOMAIN]/reviews#review-1",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "[REVIEWER-1-NAME]"
+      },
+      "reviewBody": "[REVIEWER-1-TESTIMONIAL]",
+      "datePublished": "[REVIEW-1-DATE]"
+    },
+    {
+      "@type": "Review",
+      "@id": "https://[DOMAIN]/reviews#review-2",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "[REVIEWER-2-NAME]"
+      },
+      "reviewBody": "[REVIEWER-2-TESTIMONIAL]",
+      "datePublished": "[REVIEW-2-DATE]"
+    },
+    {
+      "@type": "Review",
+      "@id": "https://[DOMAIN]/reviews#review-3",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "[REVIEWER-3-NAME]"
+      },
+      "reviewBody": "[REVIEWER-3-TESTIMONIAL]",
+      "datePublished": "[REVIEW-3-DATE]"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://[DOMAIN]/reviews#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://[DOMAIN]"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Reviews",
+          "item": "https://[DOMAIN]/reviews"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## Implementation Notes
+
+1. **Copy the entire @graph block** for your page type into a `<script type="application/ld+json">` tag in your page's `<head>`.
+2. **Replace all [UPPERCASE-BRACKETS]** with real values from the business or page content.
+3. **FAQPage answers must match page FAQ content exactly** — if FAQ text changes, update the schema.
+4. **Breadcrumb paths must be correct** — verify each URL exists before shipping.
+5. **Test all schema** with Google's Rich Results Test before deploying: https://search.google.com/test/rich-results
+6. **LocalBusiness and Service blocks** must use the same phone number and address as the footer and Google Business Profile.
+
+---
+
+## Placeholder Key
+
+| Placeholder | Example | Notes |
+|---|---|---|
+| `[DOMAIN]` | peterboroughplumbers.co.uk | Production domain only, no www |
+| `[REAL-NUMBER]` | 01733456789 | Real, dialable UK number |
+| `[EMAIL]` | hello@peterboroughplumbers.co.uk | Real contact email |
+| `[STREET]` | 123 Main Street | Full street address from footer |
+| `[POSTCODE]` | PE1 1XX | Business postcode |
+| `[AREA-SLUG]` | bretton | Kebab-case area name |
+| `[SERVICE-SLUG]` | boiler-repair | Kebab-case service name |
+| `[REVIEW-COUNT]` | 47 | Actual review count on Google |
+| `[FAQ-QUESTION-N]` | "What's your call-out fee?" | Exact question from page FAQ |
+| `[FAQ-ANSWER-N]` | "From £49, waived if you book." | Exact answer from page FAQ |
+| `[POST-SLUG]` | how-to-fix-leaky-tap | Kebab-case blog post slug |
+| `[PUBLISHED-DATE-ISO]` | 2026-02-24T09:00:00Z | ISO 8601 format |
+| `[LAST-MODIFIED-DATE-ISO]` | 2026-02-24T14:30:00Z | ISO 8601 format |
+| `[FOUNDING-YEAR]` | 1993 | Year business started |
+| `[PAGE]` | peterboroughplumbers | Facebook page slug |
+

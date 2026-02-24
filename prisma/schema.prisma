@@ -1,0 +1,202 @@
+// Prisma schema — Peterborough Plumbers
+// Run: npx prisma db push
+// Seed: npx prisma db seed
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── ServiceZone ───────────────────────────────────────────────────────────────
+
+model ServiceZone {
+  id               String   @id @default(cuid())
+  prefix           String   @unique // "PE1", "PE2", etc.
+  zoneName         String           // "City Centre", "Werrington"
+  isActive         Boolean  @default(true)
+  travelBufferMins Int      @default(15)
+  createdAt        DateTime @default(now())
+
+  @@index([prefix, isActive])
+  @@map("pb_service_zones")
+}
+
+// ── TimeSlot ──────────────────────────────────────────────────────────────────
+
+model TimeSlot {
+  id          String    @id @default(cuid())
+  date        DateTime  @db.Date // 2026-02-24
+  startTime   String              // "09:00"
+  endTime     String              // "11:00"
+  capacity    Int       @default(2)
+  bookedCount Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  bookings    Booking[]
+
+  @@unique([date, startTime])
+  @@index([date, isActive])
+  @@index([bookedCount])
+  @@map("pb_time_slots")
+}
+
+// ── Booking ───────────────────────────────────────────────────────────────────
+
+model Booking {
+  id           String    @id @default(cuid())
+  bookingRef   String    @unique // "PB-260224-0042"
+  // status: reserved | new | confirmed | completed | cancelled | expired
+  status       String    @default("reserved")
+  postcode     String
+  zonePrefix   String
+  slotId       String
+  slot         TimeSlot  @relation(fields: [slotId], references: [id])
+  serviceType  String?
+  description  String?
+  customerName String?
+  phone        String?
+  email        String?
+  address      String?
+  accessNotes  String?
+  reservedAt   DateTime  @default(now())
+  expiresAt    DateTime?
+  confirmedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([bookingRef])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@index([zonePrefix])
+  @@map("pb_bookings")
+}
+
+// ── Service ───────────────────────────────────────────────────────────────────
+
+model Service {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  shortDescription String
+  heroHeading      String
+  heroSubheading   String
+  content          String   @db.Text
+  faqs             Json     // [{ q: string; a: string }]
+  seoTitle         String
+  seoDescription   String
+  featured         Boolean  @default(false)
+  sortOrder        Int      @default(0)
+  image            String?
+  heroImage        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([slug])
+  @@index([featured])
+  @@map("pb_services")
+}
+
+// ── BlogPost ──────────────────────────────────────────────────────────────────
+
+model BlogPost {
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  category       String
+  excerpt        String    @db.Text
+  content        String    @db.Text
+  seoTitle       String
+  seoDescription String
+  status         String    @default("Draft")
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([status, publishedAt])
+  @@map("pb_blog_posts")
+}
+
+// ── Guide ─────────────────────────────────────────────────────────────────────
+
+model Guide {
+  id             String   @id @default(cuid())
+  name           String
+  slug           String   @unique
+  excerpt        String   @db.Text
+  category       String
+  readTime       Int
+  publishedAt    DateTime
+  content        String   @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@map("pb_guides")
+}
+
+// ── Area ──────────────────────────────────────────────────────────────────────
+
+model Area {
+  id             String   @id @default(cuid())
+  name           String
+  slug           String   @unique
+  intro          String   @db.Text
+  landmarks      Json     // string[]
+  postcodes      Json     // string[]
+  seoTitle       String
+  seoDescription String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([slug])
+  @@map("pb_areas")
+}
+
+// ── Review ────────────────────────────────────────────────────────────────────
+
+model Review {
+  id           String   @id @default(cuid())
+  customerName String
+  areaName     String
+  rating       Int
+  body         String   @db.Text
+  source       String   @default("Google")
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([featured])
+  @@map("pb_reviews")
+}
+
+// ── SiteSettings ──────────────────────────────────────────────────────────────
+
+model SiteSettings {
+  id                     String @id @default("singleton")
+  companyName            String
+  phone                  String
+  phoneHref              String
+  whatsappNumber         String
+  email                  String
+  address                String
+  gasSafeNumber          String
+  googleRating           String
+  reviewCount            String
+  yearsExperience        String
+  engineersCount         String
+  primaryCtaLabel        String
+  primaryCtaHref         String
+  secondaryCtaLabel      String
+  whatsappPrefillMessage String
+  siteUrl                String
+  seoTitle               String
+  seoDescription         String
+
+  @@map("pb_site_settings")
+}

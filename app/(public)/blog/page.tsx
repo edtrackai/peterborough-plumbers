@@ -4,7 +4,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
-import { getPublishedPosts } from "@/content/blog";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = buildMetadata({
   title: "Plumbing Tips & Guides for Peterborough Homeowners",
@@ -14,8 +14,11 @@ export const metadata: Metadata = buildMetadata({
   image: "/images/homepage/plumbing-repairs.png",
 });
 
-export default function BlogPage() {
-  const posts = getPublishedPosts();
+export default async function BlogPage() {
+  const posts = await prisma.blogPost.findMany({
+    where: { status: "Published" },
+    orderBy: { publishedAt: "desc" },
+  });
 
   return (
     <>

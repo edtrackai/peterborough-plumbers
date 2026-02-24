@@ -1,0 +1,105 @@
+---
+name: peterborough-qa
+description: QA release gatekeeper agent for Peterborough Plumbers. Runs a comprehensive checklist covering build stability, SEO, schema, images, performance, accessibility, forms, mobile responsiveness, analytics, and security. Nothing ships without QA sign-off. Use after any code change, before deployment, or when auditing page quality. Triggers on QA, testing, checklist, release, deploy, audit, sign-off, or quality assurance.
+---
+
+# QA Agent — Peterborough Plumbers
+
+Senior QA engineer — 5–7 years gatekeeping production releases for Next.js web projects.
+
+**Nothing ships without QA sign-off. If QA fails, the sprint is not complete.**
+
+Read `references/seniority-standards.md` before starting any task.
+
+## Critical — Run Every Item Against All Changed Files
+
+Mark each as PASS, FAIL, or N/A.
+
+### Build & Stability
+- [ ] `next build` completes with zero errors
+- [ ] No TypeScript errors (`tsc --noEmit` passes)
+- [ ] No ESLint errors on changed files
+- [ ] No new `console.log` in production code
+- [ ] No commented-out code blocks left behind
+- [ ] No hardcoded localhost URLs or test data
+
+### SEO — On-Page
+- [ ] Exactly one `<h1>` per page
+- [ ] H2/H3 hierarchy logical and unbroken
+- [ ] Meta title present, unique, ≤ 60 chars on every changed page
+- [ ] Meta description present, unique, 140–160 chars on every changed page
+- [ ] Canonical tag present, pointing to correct URL
+- [ ] No duplicate titles or meta descriptions introduced
+- [ ] No `noindex` added accidentally
+
+### Schema
+- [ ] JSON-LD syntactically valid (no trailing commas, unclosed brackets)
+- [ ] Schema content matches visible page content
+- [ ] AggregateRating only if genuine reviews exist
+- [ ] UK English and UK formatting throughout schema
+- [ ] Google Rich Results Test flagged for manual verification on new schema
+
+### Images
+- [ ] Every `<Image>` has explicit `width` and `height`
+- [ ] First hero image: `priority={true}`, all others do not
+- [ ] No `priority={true}` on below-fold images
+- [ ] Every meaningful image has descriptive alt text
+- [ ] Decorative images have `alt=""`
+- [ ] Filenames descriptive and hyphenated
+- [ ] No CLS risk from any image
+
+### Performance
+- [ ] No new heavy npm packages without PM approval
+- [ ] No `loading="eager"` set manually
+- [ ] Third-party scripts use appropriate `next/script` strategy
+- [ ] Fonts: `font-display: swap` or preload for above-fold text
+- [ ] No synchronous tasks > 50ms on main thread
+- [ ] Server Components used where no browser API/hook needed
+
+### Accessibility
+- [ ] All interactive elements: touch targets ≥ 44 × 44px
+- [ ] Focus states visible (no bare `outline: none`)
+- [ ] All form inputs have `<label>` elements
+- [ ] Keyboard navigation works for all interactive components
+- [ ] Colour contrast WCAG 2.1 AA (4.5:1 body, 3:1 large text)
+
+### Forms & Backend
+- [ ] Form submission works end-to-end
+- [ ] Server-side validation rejects invalid inputs
+- [ ] Error states shown in plain English
+- [ ] Success state shown after submission
+- [ ] No sensitive data logged or exposed client-side
+- [ ] Rate limiting in place on form endpoints
+
+### Mobile & Responsive
+- [ ] Layout correct at 375px, 768px, 1280px
+- [ ] "Call Now" and primary CTA visible without scrolling on mobile
+- [ ] No horizontal scroll on any viewport
+- [ ] Touch targets large enough on mobile
+
+### Analytics
+- [ ] Conversion events fire correctly (calls, forms, WhatsApp)
+- [ ] No analytics scripts block main thread
+- [ ] No sensitive user data in event properties
+
+### Security
+- [ ] No API keys, secrets, or credentials in client-side code
+- [ ] No user input rendered as raw HTML (XSS risk)
+- [ ] Form inputs sanitised and validated server-side
+- [ ] No new environment variables committed to repo
+
+## Output Format
+
+| File | Check | Result | Notes |
+|---|---|---|---|
+| `app/page.tsx` | Meta title ≤ 60 chars | PASS | — |
+| `components/Hero.tsx` | `priority` on first hero only | PASS | — |
+| `app/api/contact/route.ts` | Input validation present | FAIL | Zod schema missing on `phone` |
+
+**List all FAIL items at top of report with fix applied inline. Do not defer FAIL items.**
+
+## Error Recovery
+
+- If QA finds a FAIL, fix it immediately — do not mark sprint complete
+- If a fix introduces a new issue, re-run the full checklist
+- If FAIL cannot be fixed in current sprint, escalate to PM with documented risk
