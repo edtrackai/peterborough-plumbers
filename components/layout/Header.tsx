@@ -1,31 +1,45 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils/cn";
 
+// ── Desktop nav link ───────────────────────────────────────────────────────────
+const NAV_LINK =
+  "relative flex items-center px-4 h-full " +
+  "text-white text-[12.5px] font-bold uppercase tracking-wide whitespace-nowrap " +
+  "after:content-[''] after:absolute after:bottom-[6px] after:left-4 after:right-4 " +
+  "after:h-[2px] after:bg-white after:rounded-full " +
+  "after:origin-center after:scale-x-0 " +
+  "after:transition-transform after:duration-200 after:ease-out " +
+  "hover:after:scale-x-100 " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-inset";
+
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [mobileOpen, setMobileOpen]     = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
 
-      {/* ── ROW 1: White top bar ─────────────────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════════
+          ROW 1 — Logo LEFT · Phone + CTAs RIGHT
+      ═══════════════════════════════════════════════════════════════════ */}
       <div className="bg-[#EDEDED] lg:bg-white overflow-visible border-b border-black/[0.06] lg:border-0">
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 h-20 lg:h-24 flex items-center justify-between gap-4 overflow-visible">
+        <div className={`mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-6 overflow-visible ${isHome ? "h-20 lg:h-36" : "h-20"}`}>
 
-          {/* Mobile: burger + logo */}
+          {/* ── Mobile: burger + logo ── */}
           <div className="flex items-center gap-3 lg:hidden min-w-0">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -42,72 +56,84 @@ export default function Header() {
               </svg>
             </button>
             <Link href="/" onClick={() => setMobileOpen(false)} className="shrink-0 flex items-center">
-              <Image
-                src="/logos/logo-mark.png"
-                alt=""
-                width={56}
-                height={56}
-                className="h-[56px] w-[56px] object-contain shrink-0"
-                priority
-                aria-hidden
-              />
-              <Image
-                src="/logos/logo-text.png"
-                alt="Peterborough Plumbers"
-                width={140}
-                height={56}
-                className="h-[56px] w-auto object-contain shrink-0 -ml-[14px]"
-                priority
-              />
+              <Image src="/logos/logo-mark.png" alt="" width={56} height={56}
+                className="h-[56px] w-[56px] object-contain shrink-0" priority aria-hidden />
+              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={140} height={56}
+                className="h-[56px] w-auto object-contain shrink-0 -ml-[14px]" priority />
             </Link>
           </div>
 
-          {/* Desktop: logo — shield mark + text side by side */}
-          <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
-            <Image
-              src="/logos/logo-mark.png"
-              alt=""
-              width={116}
-              height={116}
-              className="h-[116px] w-[116px] object-contain shrink-0"
-              priority
-              aria-hidden
-            />
-            <Image
-              src="/logos/logo-text.png"
-              alt="Peterborough Plumbers"
-              width={290}
-              height={116}
-              className="h-[116px] w-auto object-contain shrink-0 -ml-[28px]"
-              priority
-            />
-          </Link>
-
-          {/* Desktop: right CTAs */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <a
-              href={`tel:${siteSettings.phoneHref}`}
-              className="text-[#242424] font-semibold text-sm hover:text-[#C8102E] transition-colors duration-200 whitespace-nowrap"
-            >
-              {siteSettings.phone}
-            </a>
-            <Link
-              href="/emergency"
-              className="inline-flex items-center bg-[#C8102E] text-white px-5 py-2.5 rounded-full font-bold text-sm hover:bg-[#a50d26] transition-colors duration-200 whitespace-nowrap"
-            >
-              Emergency Call-Out
+          {/* ── Desktop: logo — LEFT ── */}
+          {isHome ? (
+            <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
+              <Image src="/logos/logo-mark.png" alt="" width={136} height={136}
+                className="h-[136px] w-[136px] object-contain shrink-0" priority aria-hidden />
+              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={340} height={136}
+                className="h-[136px] w-auto object-contain shrink-0 -ml-[32px]" priority />
             </Link>
-            <Link
-              href={siteSettings.primaryCtaHref}
-              className="inline-flex items-center border-2 border-[#C8102E] text-[#C8102E] px-5 py-[9px] rounded-full font-bold text-sm hover:bg-[#C8102E] hover:text-white transition-colors duration-200 whitespace-nowrap"
-            >
-              {siteSettings.primaryCtaLabel}
+          ) : (
+            <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
+              <Image src="/logos/logo-mark.png" alt="" width={64} height={64}
+                className="h-[64px] w-[64px] object-contain shrink-0" priority aria-hidden />
+              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={180} height={64}
+                className="h-[64px] w-auto object-contain shrink-0 -ml-[16px]" priority />
             </Link>
-          </div>
+          )}
 
-          {/* Mobile: Book Now pill */}
+          {/* ── Desktop: CTAs — RIGHT ── */}
+          {isHome ? (
+            <div className="hidden lg:flex items-center gap-4 shrink-0">
+              {/* Phone with icon */}
+              <a href={`tel:${siteSettings.phoneHref}`} className="flex items-center gap-2.5 group">
+                <span className="h-10 w-10 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200" style={{ background: "#FEE2E2" }}>
+                  <svg className="h-5 w-5" style={{ color: "#C8102E" }} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z" />
+                  </svg>
+                </span>
+                <div>
+                  <p className="text-[0.65rem] font-semibold text-[#9CA3AF] uppercase tracking-wider leading-none mb-0.5">Call Us Now</p>
+                  <p className="font-black text-[1.1rem] leading-none whitespace-nowrap transition-colors duration-200 group-hover:text-[#C8102E]" style={{ color: "#242424" }}>
+                    {siteSettings.phone}
+                  </p>
+                </div>
+              </a>
+              <div className="h-10 w-px bg-gray-200 shrink-0" />
+              <Link href="/emergency" className="inline-flex items-center justify-center gap-2 bg-gradient-to-br from-[#C8102E] to-[#9a0c22] text-white px-6 h-[50px] rounded-full font-bold text-[0.88rem] hover:from-[#a50d26] hover:to-[#7d0919] hover:-translate-y-px active:translate-y-0 transition-all duration-150 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-2"
+                style={{ boxShadow: "0 4px 14px rgba(200,16,46,0.35), 0 1px 3px rgba(0,0,0,0.14)", border: "1px solid #8a0b1e" }}>
+                <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Emergency Call-Out
+              </Link>
+              <Link href="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-[#C8102E] px-6 h-[50px] rounded-full font-bold text-[0.88rem] hover:bg-[#C8102E] hover:text-white hover:-translate-y-px active:translate-y-0 transition-all duration-150 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-2"
+                style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.08)", border: "2px solid #C8102E" }}>
+                <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Book Now
+              </Link>
+            </div>
+          ) : (
+            <div className="hidden lg:flex items-center gap-3 shrink-0">
+              <a href={`tel:${siteSettings.phoneHref}`}
+                className="font-bold text-[0.95rem] text-[#242424] hover:text-[#C8102E] transition-colors duration-150 whitespace-nowrap">
+                {siteSettings.phone}
+              </a>
+              <div className="h-6 w-px bg-gray-200 shrink-0" />
+              <Link href="/emergency" className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#C8102E] to-[#9a0c22] text-white px-5 h-[42px] rounded-full font-bold text-[0.85rem] hover:from-[#a50d26] hover:to-[#7d0919] transition-all duration-150 whitespace-nowrap"
+                style={{ boxShadow: "0 3px 10px rgba(200,16,46,0.30)", border: "1px solid #8a0b1e" }}>
+                Emergency
+              </Link>
+              <Link href="/contact" className="inline-flex items-center justify-center bg-white text-[#C8102E] px-5 h-[42px] rounded-full font-bold text-[0.85rem] hover:bg-[#C8102E] hover:text-white transition-all duration-150 whitespace-nowrap"
+                style={{ border: "2px solid #C8102E" }}>
+                Book Now
+              </Link>
+            </div>
+          )}
+
+          {/* ── Mobile: Book Now pill ── */}
           <Link
-            href={siteSettings.primaryCtaHref}
+            href="/contact"
             className="lg:hidden shrink-0 bg-[#C8102E] text-white px-4 py-2 rounded-full font-bold text-sm"
           >
             Book Now
@@ -116,112 +142,124 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ── ROW 2: Red nav bar (desktop only) ───────────────────────────── */}
-      <div className="hidden lg:block bg-white">
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 flex items-stretch justify-between bg-[#C8102E]">
+      {/* ═══════════════════════════════════════════════════════════════════
+          ROW 2 — full-width red nav bar (desktop only)
+      ═══════════════════════════════════════════════════════════════════ */}
+      <div className="hidden lg:block">
+        <div
+          className="h-12 flex items-stretch"
+          style={{
+            background: "linear-gradient(160deg, #C8102E 0%, #a50d26 100%)",
+            boxShadow: "0 4px 20px rgba(200,16,46,0.28), 0 1px 4px rgba(0,0,0,0.12)",
+          }}
+        >
+          <div className="mx-auto max-w-[1280px] w-full px-4 sm:px-6 lg:px-10 flex items-stretch">
 
-          {/* Nav links */}
-          <nav className="flex items-stretch" aria-label="Main navigation">
+            {/* Nav links */}
+            <nav className="flex items-stretch" aria-label="Main navigation">
 
-            {/* Home icon link */}
-            <Link
-              href="/"
-              className="flex items-center justify-center px-4 h-10 text-white hover:bg-white/10 transition-colors duration-150 border-r border-white/20"
-              aria-label="Home"
-            >
-              <svg className="h-[18px] w-[18px]" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-              </svg>
-            </Link>
-
-            {/* Services dropdown */}
-            <div className="relative group">
+              {/* Home icon */}
               <Link
-                href="/services"
-                className="flex items-center gap-1 px-4 h-10 text-white text-[12px] font-bold uppercase tracking-wide hover:bg-white/10 transition-colors duration-150 whitespace-nowrap"
+                href="/"
+                aria-label="Home"
+                className={
+                  "relative flex items-center justify-center pl-5 pr-4 h-full text-white " +
+                  "after:content-[''] after:absolute after:bottom-[6px] after:left-4 after:right-3 " +
+                  "after:h-[2px] after:bg-white after:rounded-full " +
+                  "after:origin-center after:scale-x-0 " +
+                  "after:transition-transform after:duration-200 after:ease-out " +
+                  "hover:after:scale-x-100 " +
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-inset"
+                }
               >
-                Services
-                <svg className="h-3 w-3 mt-px" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                <svg className="h-[17px] w-[17px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                 </svg>
               </Link>
-              {/* Dropdown panel */}
-              <div className="absolute top-full left-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pt-0">
-                <div className="bg-white rounded-b-xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] py-2 min-w-[260px] border-x border-b border-gray-100">
-                  <Link
-                    href="/services"
-                    className="block px-4 py-2.5 text-[#6b7280] hover:bg-[#F5F7FA] hover:text-[#C8102E] transition-colors text-[13px] font-semibold border-b border-gray-100 mb-1"
-                  >
-                    All Services →
-                  </Link>
-                  {services.map((s) => (
+
+              {/* Services dropdown */}
+              <div className="relative group">
+                <Link href="/services" className={cn(NAV_LINK, "gap-1")}>
+                  Services
+                  <svg className="h-3 w-3 mt-px shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Link>
+                <div className="absolute top-full left-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pt-2">
+                  <div className="bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] py-2 min-w-[260px] border border-gray-100">
                     <Link
-                      key={s.slug}
-                      href={`/services/${s.slug}`}
-                      className="block px-4 py-2.5 text-[#242424] hover:bg-[#F5F7FA] hover:text-[#C8102E] transition-colors text-[13px]"
+                      href="/services"
+                      className="block px-4 py-2.5 text-[#6b7280] hover:bg-[#F5F7FA] hover:text-[#C8102E] transition-colors text-[13px] font-semibold border-b border-gray-100 mb-1"
                     >
-                      {s.name}
+                      All Services →
                     </Link>
-                  ))}
+                    {services.map((s) => (
+                      <Link
+                        key={s.slug}
+                        href={`/services/${s.slug}`}
+                        className="block px-4 py-2.5 text-[#242424] hover:bg-[#F5F7FA] hover:text-[#C8102E] transition-colors text-[13px]"
+                      >
+                        {s.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <Link href="/emergency" className="flex items-center px-4 h-10 text-white text-[12px] font-bold uppercase tracking-wide hover:bg-white/10 transition-colors duration-150 whitespace-nowrap">
-              Emergency
-            </Link>
-            <Link href="/areas" className="flex items-center px-4 h-10 text-white text-[12px] font-bold uppercase tracking-wide hover:bg-white/10 transition-colors duration-150 whitespace-nowrap">
-              Areas
-            </Link>
-            <Link href="/pricing" className="flex items-center px-4 h-10 text-white text-[12px] font-bold uppercase tracking-wide hover:bg-white/10 transition-colors duration-150 whitespace-nowrap">
-              Pricing
-            </Link>
-            <Link href="/guides" className="flex items-center px-4 h-10 text-white text-[12px] font-bold uppercase tracking-wide hover:bg-white/10 transition-colors duration-150 whitespace-nowrap">
-              Guides
-            </Link>
-            <Link href="/faqs" className="flex items-center px-4 h-10 text-white text-[12px] font-bold uppercase tracking-wide hover:bg-white/10 transition-colors duration-150 whitespace-nowrap">
-              FAQs
-            </Link>
-            <Link href="/contact" className="flex items-center px-4 h-10 text-white text-[12px] font-bold uppercase tracking-wide hover:bg-white/10 transition-colors duration-150 whitespace-nowrap">
-              Contact Us
-            </Link>
-          </nav>
+              <Link href="/emergency" className={NAV_LINK}>Emergency</Link>
+              <Link href="/areas"     className={NAV_LINK}>Areas</Link>
+              <Link href="/pricing"   className={NAV_LINK}>Pricing</Link>
+              <Link href="/guides"    className={NAV_LINK}>Guides</Link>
+              <Link href="/faqs"      className={NAV_LINK}>FAQs</Link>
+              <Link href="/contact"   className={NAV_LINK}>Contact Us</Link>
 
-          {/* Right: search bar */}
-          <form role="search" action="/guides" method="get" className="flex items-center">
-            <div className="flex items-center bg-white rounded overflow-hidden h-8">
-              <input
-                type="search"
-                name="q"
-                placeholder="Search"
-                aria-label="Search site"
-                className="h-full px-3 text-[13px] text-[#242424] placeholder-[#9ca3af] bg-transparent outline-none w-36 lg:w-44"
-              />
-              <button
-                type="submit"
-                aria-label="Submit search"
-                className="h-full px-2.5 bg-white text-[#6b7280] hover:text-[#C8102E] transition-colors duration-150 border-l border-gray-200"
+            </nav>
+
+            {/* Search */}
+            <form role="search" action="/guides" method="get" className="flex items-center ml-auto pr-3">
+              <div
+                className={[
+                  "flex items-center h-[30px] rounded-full",
+                  "bg-white/[0.12] border border-white/30",
+                  "hover:bg-white/[0.20]",
+                  "focus-within:bg-white/[0.22] focus-within:border-white/55",
+                  "transition-all duration-200",
+                ].join(" ")}
               >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-                </svg>
-              </button>
-            </div>
-          </form>
+                <input
+                  type="search"
+                  name="q"
+                  placeholder="Search"
+                  aria-label="Search site"
+                  className="h-full pl-3 pr-1 text-[12.5px] text-white placeholder-white/60 bg-transparent outline-none w-28 lg:w-36"
+                />
+                <button
+                  type="submit"
+                  aria-label="Submit search"
+                  className="h-full px-2.5 text-white/70 hover:text-white transition-colors duration-150 border-l border-white/25 rounded-r-full focus-visible:outline-none"
+                >
+                  <svg className="h-[13px] w-[13px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                  </svg>
+                </button>
+              </div>
+            </form>
 
+          </div>
         </div>
       </div>
 
-      {/* ── Mobile drawer ────────────────────────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════════
+          MOBILE DRAWER
+      ═══════════════════════════════════════════════════════════════════ */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-64px)]">
+        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-80px)]">
           <nav className="px-4 py-4 space-y-0.5" aria-label="Mobile navigation">
 
             <Link href="/" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
               Home
             </Link>
 
-            {/* Services accordion */}
             <div>
               <button
                 onClick={() => setServicesOpen(!servicesOpen)}
@@ -250,28 +288,18 @@ export default function Header() {
               <span className="h-2 w-2 rounded-full bg-[#C8102E] animate-pulse shrink-0" aria-hidden />
               Emergency Plumber
             </Link>
-            <Link href="/areas" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
-              Areas
-            </Link>
-            <Link href="/pricing" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
-              Pricing
-            </Link>
-            <Link href="/guides" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
-              Guides
-            </Link>
-            <Link href="/faqs" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
-              FAQs
-            </Link>
-            <Link href="/contact" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
-              Contact Us
-            </Link>
+            <Link href="/areas"    onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">Areas</Link>
+            <Link href="/pricing"  onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">Pricing</Link>
+            <Link href="/guides"   onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">Guides</Link>
+            <Link href="/faqs"     onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">FAQs</Link>
+            <Link href="/contact"  onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">Contact Us</Link>
 
             <div className="pt-3 flex flex-col gap-3">
               <a
                 href={`tel:${siteSettings.phoneHref}`}
                 className="flex items-center justify-center gap-2 bg-[#C8102E] text-white py-3 rounded-full font-bold text-sm"
               >
-                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z" />
                 </svg>
                 Call {siteSettings.phone}
