@@ -86,7 +86,7 @@ export default function HelpTodaySection() {
                 <p className="text-white/75 text-[0.8rem] mt-0.5">A few quick questions is all it takes.</p>
               </div>
               <Link
-                href="/book"
+                href="/contact"
                 className="shrink-0 inline-flex items-center border-2 border-white text-white px-5 py-2 rounded-full text-[0.83rem] font-bold hover:bg-white hover:text-[#0F6E6E] transition-colors duration-200 whitespace-nowrap"
               >
                 Get a quote

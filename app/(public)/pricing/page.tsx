@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -6,9 +7,9 @@ import { siteSettings } from "@/content/settings";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing Prices Peterborough | From £65 | No Hidden Fees",
+  title: "Plumbing & Heating Prices Peterborough 2026 | From £65 | No Hidden Fees",
   description:
-    "Transparent plumbing prices in Peterborough. Boiler service from £79, emergency from £99, new boiler from £1,800. No hidden fees. Get a free quote today.",
+    "Transparent plumbing and heating prices in Peterborough 2026. Boiler service from £79, gas safety certificate from £65, emergency call-out from £99, new boiler from £1,800. No hidden fees — written quote before every job.",
   path: "/pricing",
   image: "/images/homepage/hero.png",
 });
@@ -17,65 +18,119 @@ const priceGroups = [
   {
     heading: "Boiler Services",
     icon: "🔧",
+    slug: "boiler-service",
+    description: "All boiler service and repair work is carried out by Gas Safe registered engineers. Prices confirmed before work starts.",
     items: [
-      { service: "Annual Boiler Service", price: "From £79", note: "Includes written certificate" },
-      { service: "Boiler Repair (diagnostic)", price: "From £95", note: "Parts quoted separately" },
-      { service: "New Combi Boiler (supply & fit)", price: "From £1,800", note: "Worcester Bosch, Vaillant, Baxi" },
-      { service: "New System Boiler (supply & fit)", price: "From £2,400", note: "Includes hot water cylinder" },
-      { service: "Boiler Replacement (like-for-like)", price: "From £1,800", note: "Same-day in most cases" },
+      { service: "Annual Boiler Service", price: "From £79", note: "Includes written service certificate, Gas Safe ID provided" },
+      { service: "Boiler Repair (diagnosis + repair)", price: "From £95", note: "Parts quoted separately, approved before fitting" },
+      { service: "Boiler Repair (complex fault)", price: "From £150", note: "Heat exchanger, PCB, gas valve — parts extra" },
+      { service: "New Combi Boiler (supply & fit)", price: "From £1,800", note: "Worcester Bosch, Vaillant, Baxi — 10-year warranty available" },
+      { service: "New System Boiler (supply & fit)", price: "From £2,400", note: "Includes hot water cylinder, unvented available" },
+      { service: "New Regular/Heat-Only Boiler", price: "From £2,200", note: "Retain existing hot water tank" },
+      { service: "Boiler Replacement (like-for-like)", price: "From £1,800", note: "Same position, same type — typically same-day" },
+      { service: "Boiler Flue Extension", price: "From £120", note: "Per metre, includes fittings" },
     ],
   },
   {
     heading: "Heating & Radiators",
     icon: "🌡️",
+    slug: "central-heating-services",
+    description: "Full central heating installation, upgrades, and maintenance across Peterborough.",
     items: [
-      { service: "Power Flush (up to 5 radiators)", price: "From £299", note: "Includes inhibitor treatment" },
-      { service: "Power Flush (6–10 radiators)", price: "From £399", note: "Includes inhibitor & filter clean" },
-      { service: "Radiator Replacement (supply & fit)", price: "From £150", note: "Per standard radiator" },
-      { service: "Radiator Added to System", price: "From £220", note: "Includes pipework" },
-      { service: "TRV Replacement", price: "From £60", note: "Per valve" },
-      { service: "Underfloor Heating (electric, per room)", price: "From £500", note: "Mat system, tiles" },
+      { service: "Power Flush (up to 5 radiators)", price: "From £299", note: "Includes inhibitor treatment, clears sludge & scale" },
+      { service: "Power Flush (6–10 radiators)", price: "From £399", note: "Includes inhibitor, filter clean, and report" },
+      { service: "Power Flush (11+ radiators)", price: "From £499", note: "Full system with magnetic filter refit" },
+      { service: "Radiator Replacement (supply & fit)", price: "From £150", note: "Per standard single or double panel radiator" },
+      { service: "Radiator Added to Existing System", price: "From £220", note: "Includes all pipework to nearest flow/return" },
+      { service: "TRV Replacement", price: "From £60", note: "Per thermostatic radiator valve" },
+      { service: "Magnetic System Filter (supply & fit)", price: "From £120", note: "Adey MagnaClean or equivalent" },
+      { service: "Underfloor Heating (electric, per room)", price: "From £500", note: "Mat system, suitable for tiles and LVT" },
+      { service: "Zone Valve Replacement", price: "From £110", note: "Mid-position or 2-port" },
     ],
   },
   {
-    heading: "Plumbing",
+    heading: "Plumbing Repairs & Installations",
     icon: "🔩",
+    slug: "plumbing-repairs",
+    description: "From a dripping tap to full plumbing installation — fixed prices where possible, written quotes always.",
     items: [
-      { service: "Dripping Tap Repair", price: "From £65", note: "Washer / cartridge replacement" },
-      { service: "Blocked Drain (internal)", price: "From £75", note: "Jetting or rodding" },
-      { service: "Leak Detection & Repair", price: "From £95", note: "Pipe trace included" },
-      { service: "Stopcock Replacement", price: "From £90", note: "Supply & fit" },
-      { service: "Overflow / Cistern Repair", price: "From £70", note: "Including ballcock" },
-      { service: "Pipe Repair (single joint)", price: "From £85", note: "Soldered or push-fit" },
+      { service: "Dripping Tap Repair", price: "From £65", note: "Washer, cartridge, or ceramic disc replacement" },
+      { service: "Blocked Drain (internal)", price: "From £75", note: "Rodding or jetting, internal pipework" },
+      { service: "Leak Detection & Repair", price: "From £95", note: "Acoustic or thermal trace included" },
+      { service: "Stopcock Replacement", price: "From £90", note: "Supply and fit standard or quarter-turn" },
+      { service: "Overflow / Cistern Repair", price: "From £70", note: "Ballcock, float valve, or fill valve" },
+      { service: "Pipe Repair (single joint / section)", price: "From £85", note: "Soldered, push-fit, or compression" },
+      { service: "Outside Tap Installation", price: "From £150", note: "Supply, fit, and insulate — includes isolation valve" },
+      { service: "Water Softener Installation", price: "From £350", note: "Labour only — unit supplied separately or by us" },
+      { service: "Hot Water Cylinder Replacement", price: "From £600", note: "Vented or unvented, includes commissioning" },
     ],
   },
   {
-    heading: "Bathrooms",
+    heading: "Bathroom Installations",
     icon: "🛁",
+    slug: "bathroom-installations",
+    description: "Full bathroom design, installation and renovation — all plumbing work included. Free design consultation available.",
     items: [
-      { service: "Basic Bathroom Refit", price: "From £2,500", note: "Suite swap, existing layout" },
-      { service: "Full Bathroom Renovation", price: "From £4,000", note: "New layout, new suite" },
-      { service: "En-Suite Installation", price: "From £2,000", note: "Shower, WC, basin" },
-      { service: "Shower Installation", price: "From £350", note: "Electric or mixer" },
-      { service: "Toilet Installation", price: "From £150", note: "Supply & fit, close-coupled" },
+      { service: "Basic Bathroom Refit (suite swap)", price: "From £2,500", note: "Existing layout retained, new suite fitted" },
+      { service: "Full Bathroom Renovation", price: "From £4,000", note: "New layout, new suite, tiling labour included" },
+      { service: "En-Suite Installation", price: "From £2,000", note: "Shower, close-coupled WC, basin — all plumbing" },
+      { service: "Wet Room Conversion", price: "From £3,500", note: "Tanking, tray, waste, screen, plumbing" },
+      { service: "Electric Shower Installation", price: "From £350", note: "Supply and fit, includes new circuit if needed" },
+      { service: "Mixer Shower Installation", price: "From £400", note: "Thermostatic mixer, riser rail, and tray" },
+      { service: "Toilet Installation (close-coupled)", price: "From £150", note: "Supply and fit, wax seal, isolation valve" },
+      { service: "Basin and Pedestal (supply & fit)", price: "From £180", note: "Includes waste, taps, and bottle trap" },
+      { service: "Bath Installation (standard)", price: "From £250", note: "Panel bath, includes waste and taps" },
     ],
   },
   {
-    heading: "Safety & Certification",
+    heading: "Gas Safety & Certification",
     icon: "✅",
+    slug: "gas-safety-certificates",
+    description: "All gas safety work carries a Gas Safe registered engineer's signature. Landlord CP12 certificates issued same-day.",
     items: [
-      { service: "Gas Safety Certificate (CP12)", price: "From £65", note: "Landlord annual requirement" },
-      { service: "Gas Safety Check (additional appliance)", price: "+£15", note: "Per extra appliance" },
-      { service: "Carbon Monoxide Alarm Supply & Fit", price: "From £45", note: "Approved detector" },
+      { service: "Gas Safety Certificate (CP12) — 1 appliance", price: "From £65", note: "Mandatory annual requirement for landlords" },
+      { service: "Gas Safety Certificate — each extra appliance", price: "+£15", note: "Boiler, hob, fire, warm air unit" },
+      { service: "Carbon Monoxide Alarm (supply & fit)", price: "From £45", note: "BS EN 50291 approved detector" },
+      { service: "Gas Pressure Test", price: "From £75", note: "Full pipework test to BS 6891" },
+      { service: "Gas Appliance Service (standalone)", price: "From £79", note: "Hob, gas fire, or warm air heater" },
+    ],
+  },
+  {
+    heading: "Drain Blockages & CCTV",
+    icon: "🚿",
+    slug: "drain-blockages",
+    description: "Professional drain clearance using jetting equipment and CCTV camera survey. No call-out fee for drain bookings.",
+    items: [
+      { service: "Internal Drain Clearance (jetting)", price: "From £75", note: "Kitchen, bathroom, or soil stack" },
+      { service: "External Drain Clearance (jetting)", price: "From £120", note: "Manhole to manhole, includes CCTV scan" },
+      { service: "CCTV Drain Survey", price: "From £150", note: "Full recorded inspection with written report" },
+      { service: "Drain Repair (patch lining)", price: "From £250", note: "No-dig repair for cracks and root ingress" },
+      { service: "Drain Unblocking (emergency, 24hr)", price: "From £149", note: "Out-of-hours response" },
     ],
   },
   {
     heading: "Emergency Call-Out",
     icon: "🚨",
+    slug: "emergency-plumber",
+    description: "24/7 emergency response across Peterborough. All costs confirmed by phone before we attend.",
     items: [
-      { service: "Daytime Emergency (Mon–Fri 8am–6pm)", price: "From £99", note: "Includes first 30 mins" },
-      { service: "Out-of-Hours Emergency", price: "From £149", note: "Evenings, weekends, bank holidays" },
-      { service: "Additional labour (per hour)", price: "£60–£90", note: "After first hour" },
+      { service: "Daytime Emergency (Mon–Fri 8am–6pm)", price: "From £99", note: "Includes call-out + first 30 min labour" },
+      { service: "Evening Emergency (Mon–Fri after 6pm)", price: "From £149", note: "Includes call-out + first 30 min labour" },
+      { service: "Weekend & Bank Holiday Emergency", price: "From £149", note: "Includes call-out + first 30 min labour" },
+      { service: "Additional labour (per hour)", price: "£60–£90", note: "After first included period" },
+      { service: "Parts & materials", price: "Cost + fitting", note: "Quoted separately, your approval required" },
+    ],
+  },
+  {
+    heading: "Landlord Services",
+    icon: "🏠",
+    slug: "landlord-services",
+    description: "Comprehensive landlord compliance and maintenance packages. Certification, repairs, and boiler servicing.",
+    items: [
+      { service: "Annual Gas Safety + Boiler Service (combined)", price: "From £120", note: "CP12 + service certificate, best value" },
+      { service: "Annual Gas Safety Certificate only", price: "From £65", note: "CP12, up to 2 appliances" },
+      { service: "Landlord Annual Maintenance Package", price: "POA", note: "CP12, boiler service, plumbing check — call for quote" },
+      { service: "Emergency Tenanted Property Call-Out", price: "From £99", note: "Priority response, invoice to landlord" },
     ],
   },
 ];
@@ -83,23 +138,43 @@ const priceGroups = [
 const faqs = [
   {
     q: "Do your prices include VAT?",
-    a: "Yes, all prices listed include VAT at the standard rate. No hidden extras will be added to your invoice beyond what is agreed beforehand.",
+    a: "Yes — all prices listed on this page include VAT at the standard rate (20%). No additional charges will appear on your invoice beyond what was agreed before work commenced.",
   },
   {
-    q: "Are your prices fixed, or time-and-materials?",
-    a: "For most standard jobs (boiler service, radiator replacement, safety certificates), we offer fixed prices. For more complex or diagnostic work, we quote a fixed call-out/assessment fee and then provide a firm quote before proceeding.",
+    q: "Are your prices fixed or time-and-materials?",
+    a: "For most standard jobs — boiler service, gas safety certificate, radiator replacement, new toilet — we offer fixed prices. For diagnostic work, complex repairs, or anything requiring investigation first, we charge a fixed call-out/assessment fee and provide a firm written quote before proceeding.",
   },
   {
     q: "Will I get a written quote before you start?",
-    a: "Always. We never start work without your agreement on the price. For emergency call-outs, we'll give you a verbal cost estimate by phone, followed by a written quote when on site.",
+    a: "Always. We never start work without your written or verbal agreement on the price. For emergency call-outs, we confirm costs by phone before attending, then provide a written breakdown on arrival before touching anything.",
   },
   {
-    q: "Can I get finance for a new boiler?",
-    a: "Yes — we offer 0% interest finance on qualifying boiler installations, allowing you to spread the cost over 12 to 48 months. Ask us for details when you call for a quote.",
+    q: "Can I get 0% finance for a new boiler?",
+    a: "Yes — we offer 0% interest finance on qualifying boiler installations, allowing you to spread the cost over 12, 24, or 48 months. Subject to status. Ask us for details when you call for a quote.",
   },
   {
-    q: "Do prices include parts?",
-    a: "Boiler service and diagnostic call-out fees include labour only. Any parts needed are quoted separately and require your approval before fitting. We source parts at trade prices and do not mark them up significantly.",
+    q: "Are parts included in the prices shown?",
+    a: "Boiler service fees, call-out fees, and diagnostic fees include labour only. Any parts required are quoted separately at trade prices and fitted only with your approval. We do not apply large mark-ups on parts — we aim to pass on trade pricing fairly.",
+  },
+  {
+    q: "Why are some prices 'from' rather than fixed?",
+    a: "Prices listed as 'from' reflect the minimum cost for a straightforward job of that type. The actual cost depends on factors such as system complexity, access, parts required, and time taken. We always give you a firm price before starting, so there are no end-of-job surprises.",
+  },
+  {
+    q: "Do you charge for providing a quote?",
+    a: "No — quotes are free, with no obligation to proceed. For work that requires a site visit to assess (e.g. new bathroom design, full system installation), there is no charge for the survey visit.",
+  },
+  {
+    q: "How do your prices compare to national companies?",
+    a: "As an independent local business we do not carry the overhead of national franchise networks or the marketing costs of comparison sites. This typically means our prices are 15–25% lower than national brands for equivalent work quality. We are also transparent about what is included — no upselling on annual care plans.",
+  },
+  {
+    q: "Do you offer discounts for multiple jobs?",
+    a: "Yes — if you need several jobs done at the same visit (e.g. boiler service, gas safety certificate, and a TRV replacement), we apply a combined labour rate that is more cost-effective than booking three separate appointments.",
+  },
+  {
+    q: "What payment methods do you accept?",
+    a: "We accept bank transfer, credit and debit card (via card reader on-site), and cash. Payment is typically due on completion for standard jobs. For large installations (new bathroom, boiler replacement), we take a deposit on order with the balance on completion.",
   },
 ];
 
@@ -121,50 +196,173 @@ export default function PricingPage() {
       />
 
       {/* Hero */}
-      <section className="bg-[var(--surface-alt)] border-b border-[var(--border)] py-14 lg:py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-[var(--brand)] mb-3">
-            No Hidden Fees
-          </p>
-          <h1 className="text-4xl lg:text-5xl font-bold text-pp-heading mb-5">
-            Transparent Pricing — Peterborough
-          </h1>
-          <p className="text-lg text-[var(--muted)] max-w-2xl mx-auto mb-8">
-            We publish our prices because we believe you deserve to know what to expect before
-            you book. All prices include VAT. We quote in writing before starting any work.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/book"
-              className="btn-book-now bg-[var(--brand)] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[var(--brand-hover)] transition-colors duration-200"
+      <section
+        className="relative flex items-center overflow-hidden"
+        style={{ minHeight: "clamp(600px, 75vw, 1000px)" }}
+      >
+        {/* Background image */}
+        <Image
+          src="/images/homepage/boiler-service.png"
+          alt="Gas Safe engineer conducting a boiler service in Peterborough"
+          fill
+          className="object-cover object-center"
+          priority
+          sizes="100vw"
+          quality={85}
+        />
+
+        {/* Dark gradient overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              "linear-gradient(160deg, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.48) 55%, rgba(0,0,0,0.66) 100%)",
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+          <div className="mx-auto max-w-[900px] text-center">
+
+            {/* Eyebrow */}
+            <p className="inline-block bg-[var(--brand)] text-white text-xs font-bold uppercase tracking-[0.18em] px-4 py-1.5 rounded-full mb-5">
+              No Hidden Fees — 2026 Prices
+            </p>
+
+            {/* H1 */}
+            <h1
+              className="text-[clamp(1.9rem,4.5vw,3.25rem)] font-bold text-white leading-[1.08] tracking-[-0.02em] mb-5"
+              style={{ textShadow: "0 2px 8px rgba(0,0,0,0.55)" }}
             >
-              Get a Free Quote
-            </Link>
-            <a
-              href={`tel:${siteSettings.phoneHref}`}
-              className="text-pp-navy font-semibold text-lg hover:text-[var(--brand)] transition-colors duration-200"
+              Transparent Plumbing &amp; Heating Prices<br className="hidden sm:block" /> in Peterborough
+            </h1>
+
+            {/* Description */}
+            <p
+              className="text-white/80 text-lg max-w-2xl mx-auto mb-3 leading-relaxed"
+              style={{ textShadow: "0 1px 4px rgba(0,0,0,0.35)" }}
             >
-              Or call {siteSettings.phone}
-            </a>
+              We publish our prices because we believe you deserve to know what to expect before you
+              pick up the phone. All prices include VAT. We provide a written quote before starting
+              any work — guaranteed.
+            </p>
+
+            {/* Price highlights */}
+            <p className="text-white/70 text-sm mb-8">
+              Boiler service from <strong className="text-white">£79</strong> · Gas safety certificate from{" "}
+              <strong className="text-white">£65</strong> · Emergency call-out from{" "}
+              <strong className="text-white">£99</strong> · New combi boiler from{" "}
+              <strong className="text-white">£1,800</strong>
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
+              <Link
+                href="/contact"
+                className="btn-book-now w-full sm:w-auto bg-[var(--brand)] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[var(--brand-hover)] transition-colors duration-200"
+              >
+                Get a Free Quote
+              </Link>
+              <a
+                href={`tel:${siteSettings.phoneHref}`}
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-white/[0.12] text-white px-8 py-4 rounded-full font-bold text-base border border-white/25 hover:bg-white/[0.22] transition-colors duration-200"
+              >
+                Or call {siteSettings.phone}
+              </a>
+            </div>
+
+            {/* Trust points */}
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+              {[
+                "Written Quote Always",
+                "All Prices Inc. VAT",
+                "Gas Safe Registered",
+                "Fixed Prices Where Possible",
+                "0% Finance Available",
+              ].map((point) => (
+                <div key={point} className="flex items-center gap-2">
+                  <svg
+                    className="h-4 w-4 text-[var(--brand)] shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span className="text-white/80 text-sm font-medium">{point}</span>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Trust bar */}
+      <div className="bg-[var(--brand)] py-4">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="flex flex-wrap justify-center gap-6 text-sm font-semibold text-[var(--pp-navy)]">
+            {[
+              "Written Quote Always",
+              "All Prices Include VAT",
+              "Fixed Prices Where Possible",
+              "0% Finance Available",
+              "No Call-Out Fee on Standard Jobs",
+            ].map((t) => (
+              <span key={t} className="flex items-center gap-2">
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Intro content */}
+      <section className="bg-white py-12 border-b border-[var(--border)]">
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="prose prose-sm max-w-none text-[var(--muted)] leading-relaxed">
+            <p>
+              Peterborough Plumbers is an independent Gas Safe registered company serving all
+              Peterborough postcodes (PE1–PE7) and the surrounding areas including Stamford, Market
+              Deeping, Yaxley, and Whittlesey. Unlike national companies that charge premium rates
+              to cover franchise fees and marketing, we offer directly-employed engineers and
+              straightforward pricing.
+            </p>
+            <p className="mt-3">
+              The prices below are our standard 2026 rates. Every job begins with a written
+              confirmation of cost — we never start work until you have agreed to the price.
+              Parts needed during a repair are quoted and approved separately before fitting.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Price groups */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-8 pb-16">
         <div className="mx-auto max-w-7xl px-4 space-y-14">
           {priceGroups.map((group) => (
-            <div key={group.heading}>
-              <h2 className="text-2xl font-bold text-pp-heading mb-6 flex items-center gap-3">
-                <span>{group.icon}</span>
-                {group.heading}
-              </h2>
+            <div key={group.heading} id={group.slug}>
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold text-pp-heading flex items-center gap-3">
+                  <span>{group.icon}</span>
+                  {group.heading}
+                </h2>
+                <p className="text-sm text-[var(--muted)] mt-1">{group.description}</p>
+              </div>
               <div className="overflow-x-auto rounded-xl border border-[var(--border)]">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-[var(--surface-alt)] text-left">
                       <th className="px-6 py-3 font-semibold text-pp-heading">Service</th>
-                      <th className="px-6 py-3 font-semibold text-pp-heading">Price</th>
+                      <th className="px-6 py-3 font-semibold text-pp-heading whitespace-nowrap">Price (inc. VAT)</th>
                       <th className="px-6 py-3 font-semibold text-pp-heading hidden sm:table-cell">Notes</th>
                     </tr>
                   </thead>
@@ -181,23 +379,109 @@ export default function PricingPage() {
                   </tbody>
                 </table>
               </div>
+              <div className="mt-2 text-right">
+                <Link
+                  href={`/services/${group.slug}`}
+                  className="text-xs text-[var(--brand)] hover:underline font-medium"
+                >
+                  More about {group.heading} →
+                </Link>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Trust bar */}
-      <section className="bg-[var(--surface-alt)] border-y border-[var(--border)] py-10">
-        <div className="mx-auto max-w-4xl px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+      {/* Why our prices are fair */}
+      <section className="bg-[var(--surface-alt)] py-16 border-y border-[var(--border)]">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="text-2xl font-bold text-pp-heading text-center mb-10">
+            Why Our Prices Are Fair
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
-              { title: "Written Quote Always", body: "We quote before we start. No surprise charges on the invoice." },
-              { title: "Fixed Prices Where Possible", body: "Boiler services, safety checks, and standard plumbing jobs are fixed-price." },
-              { title: "Finance Available", body: "0% interest finance on new boiler installations. Spread the cost over up to 48 months." },
+              {
+                title: "No Franchise Fees",
+                body: "We are an independent local business — no franchise fees, no national call centre costs, no comparison-site commissions. Savings passed directly to you.",
+              },
+              {
+                title: "Written Quote Before Every Job",
+                body: "We confirm the price in writing before any work starts. Your invoice will match the quote exactly — no surprise charges, no hidden extras.",
+              },
+              {
+                title: "Trade-Price Parts",
+                body: "We source parts at trade prices through established merchant accounts and do not inflate the mark-up. Genuine manufacturer parts used on boiler repairs.",
+              },
             ].map((item) => (
-              <div key={item.title}>
+              <div key={item.title} className="bg-white p-6 rounded-xl border border-[var(--border)] text-center">
                 <h3 className="font-bold text-pp-heading mb-2">{item.title}</h3>
                 <p className="text-sm text-[var(--muted)]">{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Finance */}
+      <section className="bg-white py-12 border-b border-[var(--border)]">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <h2 className="text-2xl font-bold text-pp-heading mb-3">
+            0% Finance on New Boiler Installations
+          </h2>
+          <p className="text-[var(--muted)] mb-4 max-w-2xl mx-auto">
+            A new boiler is a significant investment. We offer{" "}
+            <strong className="text-pp-heading">0% interest finance</strong> on qualifying
+            installations, letting you spread the cost over 12, 24, or 48 months with no interest
+            charges. Subject to status and approval.
+          </p>
+          <p className="text-sm text-[var(--muted)] mb-6">
+            Example: Worcester Bosch Greenstar 4000 combi boiler, supply and fit — from{" "}
+            <strong className="text-pp-heading">£1,999</strong> total ={" "}
+            <strong className="text-pp-heading">£42/month over 48 months</strong> at 0% APR.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-block bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors"
+          >
+            Ask About Finance →
+          </Link>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="bg-[var(--surface-alt)] py-16 border-b border-[var(--border)]">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="text-2xl font-bold text-pp-heading text-center mb-10">
+            Customers Who Trusted Our Pricing
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                name: "David H.",
+                location: "Hampton, PE7",
+                stars: 5,
+                text: "Got three quotes for a new boiler. Peterborough Plumbers were the most transparent — they gave me a full itemised breakdown before I committed, and the final invoice matched exactly. Not always the cheapest quote but definitely the clearest — and a proper Worcester Bosch, not a cheap alternative.",
+              },
+              {
+                name: "Louise M.",
+                location: "Werrington, PE4",
+                stars: 5,
+                text: "I was dreading being overcharged after a bad experience with a national company. The engineer came, checked the system, told me the stopcock needed replacing and gave me a price on the spot. No pressure, no upsell, and the invoice was exactly what he quoted. I'll use them for everything going forward.",
+              },
+            ].map((review) => (
+              <div key={review.name} className="bg-white p-6 rounded-xl border border-[var(--border)]">
+                <div className="flex gap-1 mb-3">
+                  {Array.from({ length: review.stars }).map((_, i) => (
+                    <svg key={i} className="h-4 w-4 text-[var(--brand)]" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <blockquote className="text-sm text-[var(--muted)] leading-relaxed mb-4 italic">
+                  &ldquo;{review.text}&rdquo;
+                </blockquote>
+                <p className="text-sm font-semibold text-pp-heading">{review.name}</p>
+                <p className="text-xs text-[var(--muted)]">{review.location}</p>
               </div>
             ))}
           </div>
@@ -207,7 +491,10 @@ export default function PricingPage() {
       {/* FAQs */}
       <section className="bg-white py-16 border-b border-[var(--border)]">
         <div className="mx-auto max-w-3xl px-4">
-          <h2 className="text-3xl font-bold text-pp-heading text-center mb-10">Pricing FAQs</h2>
+          <h2 className="text-3xl font-bold text-pp-heading text-center mb-3">Pricing FAQs</h2>
+          <p className="text-center text-[var(--muted)] mb-10 max-w-xl mx-auto">
+            Common questions about our pricing, quotes, and payment options.
+          </p>
           <div className="space-y-4">
             {faqs.map((faq) => (
               <details
@@ -233,47 +520,39 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Cost guides CTA */}
+      {/* Cost guides */}
       <section className="bg-[var(--surface-alt)] py-12 border-b border-[var(--border)]">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h2 className="text-xl font-bold text-pp-heading mb-3">
-            Want More Detail on Specific Costs?
+            Free Cost Guides — What Affects the Price?
           </h2>
-          <p className="text-[var(--muted)] mb-6">
-            Our free cost guides explain exactly what affects pricing and how to get the best value.
+          <p className="text-[var(--muted)] mb-6 text-sm">
+            Our independent cost guides explain every factor that affects pricing so you can make
+            an informed decision and compare quotes effectively.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/guides/how-much-does-a-boiler-service-cost"
-              className="text-sm text-[var(--brand)] hover:underline font-medium border border-[var(--border)] bg-white px-4 py-2 rounded-full"
-            >
-              Boiler Service Cost →
-            </Link>
-            <Link
-              href="/guides/how-much-does-a-new-boiler-cost"
-              className="text-sm text-[var(--brand)] hover:underline font-medium border border-[var(--border)] bg-white px-4 py-2 rounded-full"
-            >
-              New Boiler Cost →
-            </Link>
-            <Link
-              href="/guides/emergency-plumber-call-out-cost"
-              className="text-sm text-[var(--brand)] hover:underline font-medium border border-[var(--border)] bg-white px-4 py-2 rounded-full"
-            >
-              Emergency Call-Out Cost →
-            </Link>
-            <Link
-              href="/guides/central-heating-power-flush-cost"
-              className="text-sm text-[var(--brand)] hover:underline font-medium border border-[var(--border)] bg-white px-4 py-2 rounded-full"
-            >
-              Power Flush Cost →
-            </Link>
+            {[
+              { label: "Boiler Service Cost Guide", href: "/guides/how-much-does-a-boiler-service-cost" },
+              { label: "New Boiler Cost Guide", href: "/guides/how-much-does-a-new-boiler-cost" },
+              { label: "Emergency Call-Out Cost", href: "/guides/emergency-plumber-call-out-cost" },
+              { label: "Power Flush Cost Guide", href: "/guides/central-heating-power-flush-cost" },
+              { label: "Gas Safety Certificate Cost", href: "/guides/how-much-does-a-gas-safety-certificate-cost" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-[var(--brand)] hover:underline font-medium border border-[var(--border)] bg-white px-4 py-2 rounded-full hover:border-[var(--brand)] transition-colors"
+              >
+                {link.label} →
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
       <CTASection
-        heading="Get Your Free Quote Today"
-        subheading="Call or book online. We'll confirm the price before any work begins — guaranteed."
+        heading="Get Your Free Written Quote Today"
+        subheading="Call or book online. We confirm the price before any work begins — guaranteed."
       />
     </>
   );

@@ -62,7 +62,7 @@ export default async function ReviewsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsSchema) }}
       />
-      <section className="relative bg-pp-navy pt-28 pb-16">
+      <section className="relative bg-pp-navy pt-28 pb-16" style={{ minHeight: "clamp(560px, 56vw, 900px)" }}>
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/homepage/hero.png"
@@ -84,7 +84,7 @@ export default async function ReviewsPage() {
             Don&apos;t just take our word for it. Here&apos;s what our customers have to say.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-            <Link href="/book" className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
+            <Link href="/contact" className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               Book Now
             </Link>
             <a href={`tel:${settings.phoneHref}`} className="bg-transparent text-white px-6 py-3 rounded-lg font-bold border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200">

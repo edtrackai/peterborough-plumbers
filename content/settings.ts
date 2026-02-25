@@ -11,7 +11,7 @@ export const siteSettings = {
   yearsExperience: "30+",
   engineersCount: "12+",
   primaryCtaLabel: "Book Now",
-  primaryCtaHref: "/book",
+  primaryCtaHref: "/contact",
   secondaryCtaLabel: "WhatsApp Chat",
   whatsappPrefillMessage: "Hi, I'd like to book a plumbing service.",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",

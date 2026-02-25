@@ -22,7 +22,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <section className="relative bg-pp-navy pt-28 pb-16">
+      <section className="relative bg-pp-navy pt-28 pb-16" style={{ minHeight: "clamp(600px, 75vw, 1000px)" }}>
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/homepage/plumbing-repairs.png"
@@ -44,7 +44,7 @@ export default async function BlogPage() {
             Expert advice, tips, and local guides from our experienced plumbing team.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-            <Link href="/book" className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
+            <Link href="/contact" className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               Book Now
             </Link>
           </div>
@@ -53,7 +53,7 @@ export default async function BlogPage() {
 
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post) => (
               <Link
                 key={post.slug}

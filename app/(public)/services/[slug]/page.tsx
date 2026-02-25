@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { serviceSchema, faqSchema, breadcrumbSchema } from "@/lib/seo/schema";
+import { serviceSchema, faqSchema, breadcrumbSchema, howToSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import FaqAccordion from "@/components/blocks/FaqAccordion";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
@@ -82,6 +82,12 @@ export default async function ServicePage({
               name: service.name,
               description: service.shortDescription,
               slug: service.slug,
+              ...(slug === "boiler-service" && {
+                offers: {
+                  price: "79",
+                  description: "Annual boiler service by Gas Safe registered engineers — from £79, no hidden fees.",
+                },
+              }),
             })
           ),
         }}
@@ -91,6 +97,46 @@ export default async function ServicePage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(faqSchema(faqs)),
+          }}
+        />
+      )}
+      {slug === "boiler-service" && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              howToSchema({
+                name: "How to Book a Boiler Service in Peterborough",
+                description:
+                  "Step-by-step guide to booking a professional annual boiler service with Peterborough Plumbers — Gas Safe registered engineers from £79.",
+                steps: [
+                  {
+                    name: "Book online or by phone",
+                    text: "Choose a convenient date and arrival window using our online booking tool or by calling us directly. Same-week appointments are typically available across all Peterborough postcodes (PE1–PE7).",
+                  },
+                  {
+                    name: "Receive booking confirmation",
+                    text: "You will receive an email confirmation immediately after booking, plus a reminder on the morning of your appointment.",
+                  },
+                  {
+                    name: "Engineer arrives on time",
+                    text: "Our Gas Safe registered engineer arrives within the agreed window carrying all necessary test equipment and Gas Safe photo ID.",
+                  },
+                  {
+                    name: "21-point boiler inspection",
+                    text: "The engineer carries out a comprehensive 30–60 minute service covering every critical component, including gas pressure, burner, heat exchanger, flue, combustion analysis, and safety devices.",
+                  },
+                  {
+                    name: "Combustion analysis",
+                    text: "Flue gas emissions are tested with a calibrated analyser to confirm safe combustion and identify any efficiency issues.",
+                  },
+                  {
+                    name: "Receive written service record",
+                    text: "On completion you receive a written service record signed by the engineer and bearing their Gas Safe registration number — valid for warranty and insurance purposes.",
+                  },
+                ],
+              })
+            ),
           }}
         />
       )}
@@ -108,7 +154,7 @@ export default async function ServicePage({
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-navy pt-28 pb-16 hero-white-text">
+      <section className="relative bg-pp-navy pt-28 pb-16 hero-white-text" style={{ minHeight: "clamp(600px, 75vw, 1000px)" }}>
         {heroImage && (
           <div className="absolute inset-0 z-0">
             <Image
@@ -131,11 +177,15 @@ export default async function ServicePage({
             ]}
             inverted
           />
-          <h1 className="text-4xl lg:text-5xl font-bold text-white hero-text">{service.heroHeading}</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold text-white hero-text">
+            {service.heroHeading.includes("Peterborough")
+              ? service.heroHeading
+              : `${service.heroHeading} in Peterborough`}
+          </h1>
           <p className="mt-4 text-lg max-w-2xl hero-body hero-text">{service.heroSubheading}</p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
-              href={`/book?service=${service.slug}`}
+              href="/contact"
               className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors shadow-[0_4px_14px_rgba(201,168,76,0.35)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-pp-navy"
             >
               Book {service.name}

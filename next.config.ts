@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
   images: {
     qualities: [75, 85],
   },
+  async redirects() {
+    return [
+      { source: "/admin", destination: "/admin/bookings", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

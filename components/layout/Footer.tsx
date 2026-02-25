@@ -22,7 +22,7 @@ export default function Footer() {
         </div>
 
         {/* 3 columns + social icons */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
 
           {/* Column 1: Our Services */}
           <div>
@@ -32,7 +32,7 @@ export default function Footer() {
                 <li key={s.slug}>
                   <Link
                     href={`/services/${s.slug}`}
-                    className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200"
+                    className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200"
                   >
                     {s.name}
                   </Link>
@@ -46,27 +46,27 @@ export default function Footer() {
             <h3 className="text-white font-bold text-sm mb-4">About Us</h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/about" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/about" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/contact" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/areas" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/areas" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Areas We Cover
                 </Link>
               </li>
               <li>
-                <Link href="/book" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/contact" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Book Online
                 </Link>
               </li>
               <li>
-                <Link href="/reviews" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/reviews" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Customer Reviews
                 </Link>
               </li>
@@ -78,27 +78,27 @@ export default function Footer() {
             <h3 className="text-white font-bold text-sm mb-4">Help &amp; Support</h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/faqs" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/faqs" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Frequently Asked Questions
                 </Link>
               </li>
               <li>
-                <Link href="/guides" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/guides" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Guides Hub
                 </Link>
               </li>
               <li>
-                <Link href="/emergency" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/emergency" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Emergency Plumber
                 </Link>
               </li>
               <li>
-                <Link href="/pricing" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/pricing" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Pricing &amp; Costs
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+                <Link href="/contact" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
                   Get a Free Quote
                 </Link>
               </li>
@@ -148,16 +148,16 @@ export default function Footer() {
 
         {/* Legal links row */}
         <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2">
-          <Link href="/privacy" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+          <Link href="/privacy" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
             Privacy Policy
           </Link>
-          <Link href="/cookies" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+          <Link href="/cookies" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
             Cookies Policy
           </Link>
-          <Link href="/terms" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+          <Link href="/terms" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
             Terms of Use
           </Link>
-          <Link href="/faqs" className="text-[#aaaaaa] hover:text-white text-sm transition-colors duration-200">
+          <Link href="/faqs" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
             Accessibility
           </Link>
         </div>
@@ -170,7 +170,7 @@ export default function Footer() {
       {/* ── Copyright bar ────────────────────────────────────────────────────── */}
       <div style={{ background: "#2e2e2e" }}>
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-4">
-          <p className="text-[#aaaaaa] text-sm">
+          <p className="text-[#ffffffbf] text-sm">
             &copy; {siteSettings.companyName} {new Date().getFullYear()}. Gas Safe Registered No.&nbsp;{siteSettings.gasSafeNumber}.
           </p>
         </div>

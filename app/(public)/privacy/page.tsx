@@ -4,9 +4,10 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Privacy Policy | Peterborough Plumbers",
-  description: "Privacy policy for Peterborough Plumbers. How we collect, use, and protect your personal data.",
+  title: "Privacy Policy | Data Protection — Peterborough Plumbers",
+  description: "Read the Peterborough Plumbers privacy policy. We explain how we collect, use, and protect your personal data in line with UK GDPR and data protection law.",
   path: "/privacy",
+  noIndex: true,
 });
 
 export default function PrivacyPage() {

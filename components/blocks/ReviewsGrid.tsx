@@ -105,7 +105,7 @@ export default function ReviewsGrid({
           <button
             onClick={prev}
             aria-label="Previous reviews"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
+            className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -145,7 +145,7 @@ export default function ReviewsGrid({
           <button
             onClick={next}
             aria-label="Next reviews"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
+            className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-20 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.12)] rounded-full w-10 h-10 lg:w-12 lg:h-12 items-center justify-center hover:bg-pp-teal hover:text-white transition-all duration-200 border border-gray-100 text-pp-navy"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />

@@ -4,9 +4,10 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Terms & Conditions | Peterborough Plumbers",
-  description: "Terms and conditions for Peterborough Plumbers services.",
+  title: "Terms & Conditions | Peterborough Plumbers Services",
+  description: "Terms and conditions for Peterborough Plumbers. Gas Safe registered engineers, 12-month workmanship guarantee and transparent pricing across Peterborough.",
   path: "/terms",
+  noIndex: true,
 });
 
 export default function TermsPage() {

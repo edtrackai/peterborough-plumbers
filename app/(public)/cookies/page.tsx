@@ -4,9 +4,10 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Cookie Policy | Peterborough Plumbers",
-  description: "Cookie policy for Peterborough Plumbers website.",
+  title: "Cookie Policy — How We Use Cookies | Peterborough Plumbers",
+  description: "Cookie policy for the Peterborough Plumbers website. We only use essential cookies — no advertising or tracking. Find out how to manage your cookie settings.",
   path: "/cookies",
+  noIndex: true,
 });
 
 export default function CookiesPage() {

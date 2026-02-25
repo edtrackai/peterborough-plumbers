@@ -73,6 +73,7 @@ export function serviceSchema(service: {
   name: string;
   description: string;
   slug: string;
+  offers?: { price: string; priceCurrency?: string; description?: string };
 }) {
   return {
     "@context": "https://schema.org",
@@ -88,6 +89,33 @@ export function serviceSchema(service: {
       name: "Peterborough",
     },
     url: `${siteUrl}/services/${service.slug}`,
+    ...(service.offers && {
+      offers: {
+        "@type": "Offer",
+        price: service.offers.price,
+        priceCurrency: service.offers.priceCurrency ?? "GBP",
+        description: service.offers.description,
+      },
+    }),
+  };
+}
+
+export function howToSchema(how: {
+  name: string;
+  description: string;
+  steps: { name: string; text: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: how.name,
+    description: how.description,
+    step: how.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
   };
 }
 

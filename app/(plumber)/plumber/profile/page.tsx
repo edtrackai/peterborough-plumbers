@@ -14,7 +14,7 @@ export default async function ProfilePage() {
     prisma.plumber.findUnique({ where: { id: session.plumberId } }),
     prisma.bookingOffer.count({ where: { plumberId: session.plumberId, status: "offered" } }),
     prisma.booking.findMany({
-      where: { assignedPlumberId: session.plumberId },
+      where:   { assignedPlumberId: session.plumberId },
       include: { rating: { select: { stars: true } } },
     }),
   ]);
@@ -28,40 +28,50 @@ export default async function ProfilePage() {
     ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1)
     : null;
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <PlumberNav name={plumber.name} offerCount={offerCount} />
-      <main className="mx-auto max-w-2xl px-4 py-6 flex flex-col gap-5">
+  const initials = plumber.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
-        {/* Profile card */}
-        <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-6 py-5">
-          <div className="flex items-center gap-4 mb-5">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-pp-navy text-white text-xl font-bold">
-              {plumber.name.charAt(0)}
+  return (
+    <div className="min-h-screen bg-[#0A0A0A]">
+      <PlumberNav name={plumber.name} offerCount={offerCount} />
+      <main className="mx-auto max-w-2xl px-4 pt-6 pb-24 sm:pb-8 flex flex-col gap-3">
+
+        {/* ── Profile card ── */}
+        <div className="rounded-2xl bg-[#111111] border border-white/[0.07] px-6 py-6">
+          <div className="flex items-center gap-4 mb-6">
+            {/* Avatar */}
+            <div className="relative shrink-0">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand)]/15 border border-[var(--brand)]/20">
+                <span className="text-xl font-bold text-[var(--brand)]">{initials}</span>
+              </div>
+              {plumber.isOnDuty && (
+                <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-[#111111]" />
+              )}
             </div>
-            <div>
-              <h1 className="text-lg font-bold text-pp-navy">{plumber.name}</h1>
-              <p className="text-sm text-gray-500">{plumber.email}</p>
-              {plumber.phone && <p className="text-sm text-gray-500">{plumber.phone}</p>}
+            <div className="min-w-0">
+              <h1 className="text-lg font-bold text-white truncate">{plumber.name}</h1>
+              <p className="text-sm text-zinc-500 truncate">{plumber.email}</p>
+              {plumber.phone && <p className="text-sm text-zinc-500">{plumber.phone}</p>}
             </div>
           </div>
 
+          {/* Duty toggle */}
           <DutyToggle isOnDuty={plumber.isOnDuty} />
-          <p className="mt-2 text-xs text-gray-400">
-            Toggle on-duty to receive new job requests.
-          </p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-3">
+        {/* ── Stats ── */}
+        <div className="grid grid-cols-3 gap-2.5">
           <StatCard label="Total Jobs" value={totalJobs.toString()} />
           <StatCard label="Completed"  value={completedJobs.toString()} />
-          <StatCard label="Avg Rating" value={avgRating ? `★ ${avgRating}` : "—"} highlight={!!avgRating} />
+          <StatCard
+            label="Avg Rating"
+            value={avgRating ?? "—"}
+            highlight={!!avgRating}
+          />
         </div>
 
-        {/* Last seen */}
+        {/* ── Last seen ── */}
         {plumber.lastSeenAt && (
-          <p className="text-xs text-center text-gray-400">
+          <p className="text-center text-[11px] text-zinc-700 pt-1">
             Last active: {plumber.lastSeenAt.toLocaleString("en-GB")}
           </p>
         )}
@@ -71,11 +81,19 @@ export default async function ProfilePage() {
   );
 }
 
-function StatCard({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+function StatCard({
+  label, value, highlight,
+}: {
+  label: string;
+  value: string;
+  highlight?: boolean;
+}) {
   return (
-    <div className="rounded-xl bg-white border border-gray-100 shadow-sm px-4 py-3 text-center">
-      <p className={`text-xl font-bold ${highlight ? "text-yellow-500" : "text-pp-navy"}`}>{value}</p>
-      <p className="text-xs text-gray-400 mt-0.5">{label}</p>
+    <div className="rounded-xl bg-[#111111] border border-white/[0.07] px-4 py-4 text-center">
+      <p className={`text-2xl font-bold tracking-tight ${highlight ? "text-amber-400" : "text-white"}`}>
+        {value}
+      </p>
+      <p className="text-[11px] text-zinc-600 mt-1 uppercase tracking-wider">{label}</p>
     </div>
   );
 }

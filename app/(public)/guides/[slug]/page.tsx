@@ -25,7 +25,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: guide.name,
     description: guide.excerpt,
     path: `/guides/${guide.slug}`,
-    image: "/images/homepage/hero.png",
   });
 }
 
@@ -130,7 +129,7 @@ export default async function GuideDetailPage({ params }: Props) {
             </div>
             <div className="flex gap-3 shrink-0">
               <Link
-                href="/book"
+                href="/contact"
                 className="btn-book-now bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
               >
                 Book Now

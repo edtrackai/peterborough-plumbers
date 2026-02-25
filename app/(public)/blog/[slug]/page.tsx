@@ -38,7 +38,6 @@ export async function generateMetadata({
     title: post.seoTitle,
     description: post.seoDescription,
     path: `/blog/${post.slug}`,
-    image: "/images/homepage/hero.png",
   });
 }
 

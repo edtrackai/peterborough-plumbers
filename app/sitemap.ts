@@ -6,6 +6,9 @@ import { getAllGuideSlugs } from "@/content/guides";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com";
 
+// Last significant site update — update this when content changes substantially
+const LAST_UPDATED = new Date("2026-02-25");
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     { path: "",           priority: 1.0,  freq: "weekly"  as const },
@@ -20,33 +23,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/about",     priority: 0.7,  freq: "monthly" as const },
     { path: "/book",      priority: 0.85, freq: "monthly" as const },
     { path: "/contact",   priority: 0.7,  freq: "monthly" as const },
-    { path: "/privacy",   priority: 0.2,  freq: "yearly"  as const },
-    { path: "/terms",     priority: 0.2,  freq: "yearly"  as const },
-    { path: "/cookies",   priority: 0.2,  freq: "yearly"  as const },
+    // /privacy, /terms, /cookies are noIndex — excluded from sitemap
   ].map(({ path, priority, freq }) => ({
     url: `${siteUrl}${path}`,
-    lastModified: new Date(),
+    lastModified: LAST_UPDATED,
     changeFrequency: freq,
     priority,
   }));
 
   const servicePages = getAllServiceSlugs().map((slug) => ({
     url: `${siteUrl}/services/${slug}`,
-    lastModified: new Date(),
+    lastModified: LAST_UPDATED,
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
 
   const areaPages = getAllAreaSlugs().map((slug) => ({
     url: `${siteUrl}/areas/${slug}`,
-    lastModified: new Date(),
+    lastModified: LAST_UPDATED,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
   const guidePages = getAllGuideSlugs().map((slug) => ({
     url: `${siteUrl}/guides/${slug}`,
-    lastModified: new Date(),
+    lastModified: LAST_UPDATED,
     changeFrequency: "monthly" as const,
     priority: 0.75,
   }));

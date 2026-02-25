@@ -9,17 +9,17 @@ interface Offer {
   bookingId: string;
   offeredAt: string;
   booking: {
-    bookingRef: string;
+    bookingRef:  string;
     serviceType: string | null;
     description: string | null;
-    postcode: string;
+    postcode:    string;
     slot: { date: string; startTime: string; endTime: string };
     images: { url: string }[];
   };
 }
 
 interface OfferCardProps {
-  offer: Offer;
+  offer:     Offer;
   onRemoved: (offerId: string) => void;
 }
 
@@ -27,6 +27,32 @@ function formatDate(d: string) {
   return new Date(d + "T00:00:00").toLocaleDateString("en-GB", {
     weekday: "short", day: "numeric", month: "short",
   });
+}
+
+/* ── Small icon helpers ──────────────────────────────────────────────────── */
+function IconPin() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" className="shrink-0">
+      <path d="M6.5 1.5a3.5 3.5 0 013.5 3.5c0 2.5-3.5 7-3.5 7S3 7.5 3 5a3.5 3.5 0 013.5-3.5z" stroke="#71717A" strokeWidth="1.3" strokeLinejoin="round" />
+      <circle cx="6.5" cy="5" r="1.2" fill="#71717A" />
+    </svg>
+  );
+}
+function IconWrench() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" className="shrink-0">
+      <path d="M9 1.5a2.5 2.5 0 00-2.5 2.5c0 .3.05.6.13.87L1.5 10l1 1.5 5.2-5.2c.27.08.55.13.87.13A2.5 2.5 0 0011.5 4c0-.5-.15-.96-.4-1.35L9.5 4.3 8.7 3.5l1.65-1.6A2.48 2.48 0 009 1.5z" stroke="#71717A" strokeWidth="1.3" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function IconCal() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" className="shrink-0">
+      <rect x="1.5" y="2.5" width="10" height="9" rx="1.5" stroke="#71717A" strokeWidth="1.3" />
+      <path d="M1.5 5.5h10" stroke="#71717A" strokeWidth="1.3" />
+      <path d="M4.5 1.5v2M8.5 1.5v2" stroke="#71717A" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
 }
 
 export function OfferCard({ offer, onRemoved }: OfferCardProps) {
@@ -40,7 +66,7 @@ export function OfferCard({ offer, onRemoved }: OfferCardProps) {
     setAccepting(true);
     setError(null);
     try {
-      const res = await fetch(`/api/plumber/offers/${offer.id}/accept`, { method: "POST" });
+      const res  = await fetch(`/api/plumber/offers/${offer.id}/accept`, { method: "POST" });
       const data = await res.json();
       if (!res.ok) { setError(data.error ?? "Failed to accept"); return; }
       router.push(`/plumber/jobs/${data.bookingId}`);
@@ -51,47 +77,56 @@ export function OfferCard({ offer, onRemoved }: OfferCardProps) {
 
   return (
     <>
-      <div className="rounded-2xl bg-white border border-gray-100 shadow-sm overflow-hidden">
-        {/* Header */}
-        <div className="flex items-start justify-between px-5 pt-5 pb-3">
+      <div className="rounded-2xl bg-[#111111] border border-white/[0.07] overflow-hidden transition-all duration-200 hover:border-white/[0.12]">
+
+        {/* ── Header ── */}
+        <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-white/[0.06]">
           <div>
-            <span className="inline-block rounded-full bg-blue-100 text-blue-700 text-xs font-semibold px-2.5 py-0.5 mb-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/15 border border-blue-500/20 px-2.5 py-1 text-xs font-semibold text-blue-400 mb-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
               New Request
             </span>
-            <p className="font-mono text-xs text-gray-400">{b.bookingRef}</p>
+            <p className="font-mono text-xs text-zinc-600">{b.bookingRef}</p>
           </div>
           {b.images.length > 0 && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={b.images[0].url} alt="" className="h-12 w-12 rounded-lg object-cover border border-gray-100" />
+            <img
+              src={b.images[0].url}
+              alt=""
+              className="h-14 w-14 rounded-xl object-cover border border-white/[0.07]"
+            />
           )}
         </div>
 
-        {/* Body */}
-        <div className="px-5 pb-4 flex flex-col gap-2">
-          <Row icon="📍" label={b.postcode} />
-          <Row icon="🔧" label={b.serviceType ?? "General plumbing"} className="capitalize" />
-          <Row icon="📅" label={`${formatDate(b.slot.date)} · ${b.slot.startTime}–${b.slot.endTime}`} />
+        {/* ── Body ── */}
+        <div className="px-5 py-4 flex flex-col gap-3">
+          <Row icon={<IconPin />}    label={b.postcode} />
+          <Row icon={<IconWrench />} label={b.serviceType ?? "General plumbing"} className="capitalize" />
+          <Row icon={<IconCal />}    label={`${formatDate(b.slot.date)} · ${b.slot.startTime}–${b.slot.endTime}`} />
+
           {b.description && (
-            <p className="mt-1 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600 line-clamp-3">
-              {b.description}
-            </p>
+            <div className="mt-1 rounded-xl bg-[#1A1A1A] border border-white/[0.05] px-3.5 py-3">
+              <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">{b.description}</p>
+            </div>
           )}
         </div>
 
-        {error && <p className="px-5 pb-2 text-xs text-red-600">{error}</p>}
+        {error && (
+          <p className="px-5 pb-2 text-xs text-red-400">{error}</p>
+        )}
 
-        {/* Actions */}
+        {/* ── Actions ── */}
         <div className="flex gap-3 px-5 pb-5">
           <button
             onClick={() => setShowReject(true)}
-            className="flex-1 rounded-xl border border-red-200 py-3 text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors"
+            className="flex-1 rounded-xl border border-white/[0.08] py-3 text-sm font-medium text-zinc-400 hover:border-red-500/30 hover:text-red-400 transition-colors"
           >
-            Reject
+            Decline
           </button>
           <button
             onClick={handleAccept}
             disabled={accepting}
-            className="flex-1 rounded-xl bg-pp-teal py-3 text-sm font-bold text-white hover:bg-pp-teal-dark transition-colors disabled:opacity-60"
+            className="flex-1 rounded-xl bg-[var(--brand)] py-3 text-sm font-bold text-white hover:bg-[var(--brand-hover)] transition-colors disabled:opacity-50 shadow-md shadow-[var(--brand)]/15"
           >
             {accepting ? "Accepting…" : "Accept Job"}
           </button>
@@ -110,11 +145,17 @@ export function OfferCard({ offer, onRemoved }: OfferCardProps) {
   );
 }
 
-function Row({ icon, label, className = "" }: { icon: string; label: string; className?: string }) {
+function Row({
+  icon, label, className = "",
+}: {
+  icon: React.ReactNode;
+  label: string;
+  className?: string;
+}) {
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-sm">{icon}</span>
-      <span className={`text-sm text-pp-navy ${className}`}>{label}</span>
+    <div className="flex items-center gap-2.5">
+      {icon}
+      <span className={`text-sm text-zinc-300 ${className}`}>{label}</span>
     </div>
   );
 }
