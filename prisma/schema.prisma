@@ -190,6 +190,27 @@ model BookingRating {
   @@map("pb_booking_ratings")
 }
 
+// ── Lead ──────────────────────────────────────────────────────────────────
+
+model Lead {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String
+  email       String
+  postcode    String
+  serviceType String?
+  message     String?
+  // status: new | contacted | converted | closed
+  status      String   @default("new")
+  source      String   @default("contact_form")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@map("pb_leads")
+}
+
 // ── Service ───────────────────────────────────────────────────────────────────
 
 model Service {
@@ -262,6 +283,8 @@ model Area {
   name           String
   slug           String   @unique
   intro          String   @db.Text
+  content        String   @db.Text @default("")
+  faqs           Json     @default("[]")
   landmarks      Json
   postcodes      Json
   seoTitle       String
