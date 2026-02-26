@@ -14,6 +14,8 @@ export const siteSettings = {
   primaryCtaHref: "/contact",
   secondaryCtaLabel: "WhatsApp Chat",
   whatsappPrefillMessage: "Hi, I'd like to book a plumbing service.",
+  facebookUrl: "https://www.facebook.com/profile.php?id=61587839547753",
+  youtubeUrl: "https://www.youtube.com/@Peterboroughplumbers",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",
   seoTitle: "Peterborough Plumbers | 30+ Years Established | Gas Safe Registered",
   seoDescription:
