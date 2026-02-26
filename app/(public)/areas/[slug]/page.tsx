@@ -131,7 +131,7 @@ export default async function AreaPage({
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
         </div>
-        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-28 pb-8">
+        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-20 sm:pt-28 pb-8">
           <Breadcrumbs items={[{ name: "Areas", href: "/areas" }, { name: area.name, href: `/areas/${area.slug}` }]} inverted />
           <div className="inline-flex items-center gap-2.5 mt-4 mb-5">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
@@ -166,7 +166,7 @@ export default async function AreaPage({
               </li>
             ))}
           </ul>
-          <dl className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-y-6 sm:gap-y-0 max-w-xl">
+          <dl className="mt-5 sm:mt-10 grid grid-cols-2 sm:grid-cols-4 gap-y-4 sm:gap-y-0 max-w-xl">
             {[
               { value: `${settings.googleRating}★`, label: "Google Rating" },
               { value: `${settings.reviewCount}+`, label: "5-Star Reviews" },
