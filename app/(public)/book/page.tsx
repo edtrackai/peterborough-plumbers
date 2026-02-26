@@ -17,7 +17,7 @@ export const metadata: Metadata = buildMetadata({
 export default function BookPage() {
   return (
     <>
-      <section className="relative bg-pp-navy pt-14 sm:pt-28 pb-16 min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
+      <section className="relative bg-pp-navy pt-4 sm:pt-28 pb-16 min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/homepage/boiler-service.png"

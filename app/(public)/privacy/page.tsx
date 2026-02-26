@@ -13,7 +13,7 @@ export const metadata: Metadata = buildMetadata({
 export default function PrivacyPage() {
   return (
     <>
-      <section className="bg-pp-navy pt-14 sm:pt-28 pb-16">
+      <section className="bg-pp-navy pt-4 sm:pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
           <Breadcrumbs items={[{ name: "Privacy Policy", href: "/privacy" }]} />
           <h1 className="text-4xl lg:text-5xl font-bold text-white">Privacy Policy</h1>

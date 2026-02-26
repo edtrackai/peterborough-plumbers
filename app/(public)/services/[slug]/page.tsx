@@ -197,7 +197,7 @@ export default async function ServicePage({
         </div>
 
         {/* Main content */}
-        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-20 sm:pt-28 pb-8">
+        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-4 sm:pt-28 pb-8">
           <Breadcrumbs
             items={[
               { name: "Services", href: "/services" },

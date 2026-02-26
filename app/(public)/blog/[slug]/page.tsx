@@ -82,7 +82,7 @@ export default async function BlogPostPage({
           ),
         }}
       />
-      <section className="bg-pp-navy pt-14 sm:pt-28 pb-16">
+      <section className="bg-pp-navy pt-4 sm:pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
           <Breadcrumbs
             items={[
