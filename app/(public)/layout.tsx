@@ -2,6 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyCtaBar from "@/components/layout/StickyCtaBar";
 import MainWrapper from "@/components/layout/MainWrapper";
+import ChatWidget from "@/components/ChatWidget";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,6 +15,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       </MainWrapper>
       <Footer />
       <StickyCtaBar />
+      <ChatWidget />
     </>
   );
 }

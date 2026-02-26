@@ -338,3 +338,50 @@ model SiteSettings {
 
   @@map("pb_site_settings")
 }
+
+// ── ChatSession ───────────────────────────────────────────────────────────────
+
+model ChatSession {
+  id         String        @id @default(cuid())
+  createdAt  DateTime      @default(now())
+  lastSeenAt DateTime      @default(now())
+  sourcePage String?
+
+  messages   ChatMessage[]
+  leads      ChatLead[]
+
+  @@index([createdAt(sort: Desc)])
+  @@map("pb_chat_sessions")
+}
+
+// ── ChatMessage ───────────────────────────────────────────────────────────────
+
+model ChatMessage {
+  id        String      @id @default(cuid())
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      String      // 'user' | 'assistant'
+  content   String      @db.Text
+  category  String?
+  isBlocked Boolean     @default(false)
+  createdAt DateTime    @default(now())
+
+  @@index([sessionId])
+  @@index([createdAt(sort: Desc)])
+  @@map("pb_chat_messages")
+}
+
+// ── ChatLead ──────────────────────────────────────────────────────────────────
+
+model ChatLead {
+  id        String      @id @default(cuid())
+  sessionId String
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  name      String?
+  phone     String?
+  postcode  String?
+  createdAt DateTime    @default(now())
+
+  @@index([sessionId])
+  @@map("pb_chat_leads")
+}
