@@ -279,7 +279,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Combine with a Boiler Service and Save</h3>
-<p>Many of our Peterborough landlords book a <a href="/services/boiler-service">boiler service</a> at the same time as their CP12 inspection. It makes sense — the engineer is already on site, so you save on call-out time and get both jobs done in a single visit. Ask about our combined rates when you <a href="/book">book online</a> or call us on 01234 567890.</p>`,
+<p>Many of our Peterborough landlords book a <a href="/services/boiler-service">boiler service</a> at the same time as their CP12 inspection. It makes sense — the engineer is already on site, so you save on call-out time and get both jobs done in a single visit. Ask about our combined rates when you <a href="/book">book online</a> or call us on 02039514510.</p>`,
     faqs: [
       {
         q: "How often do I need a gas safety certificate?",
@@ -382,7 +382,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Keep Your Heating Running Efficiently</h3>
-<p>Regular maintenance prevents costly breakdowns and keeps your energy bills low. If your heating hasn't been serviced recently, or you've noticed any changes in performance, <a href="/book">book a heating check</a> or call us on 01234 567890. We'll make sure your system is ready for the cold weather.</p>`,
+<p>Regular maintenance prevents costly breakdowns and keeps your energy bills low. If your heating hasn't been serviced recently, or you've noticed any changes in performance, <a href="/book">book a heating check</a> or call us on 02039514510. We'll make sure your system is ready for the cold weather.</p>`,
     faqs: [
       {
         q: "How long does a new central heating installation take?",
@@ -483,7 +483,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Ready to Transform Your Bathroom?</h3>
-<p>Whether you have a clear vision or need help with ideas, we're here to help. <a href="/book">Book a free consultation</a> or call us on 01234 567890 to discuss your project. We'll visit your home, talk through your options, and provide a no-obligation quote.</p>`,
+<p>Whether you have a clear vision or need help with ideas, we're here to help. <a href="/book">Book a free consultation</a> or call us on 02039514510 to discuss your project. We'll visit your home, talk through your options, and provide a no-obligation quote.</p>`,
     faqs: [
       {
         q: "How long does a bathroom installation take?",
@@ -655,7 +655,7 @@ export const services: Service[] = [
 
 <h3>How Our Emergency Service Works</h3>
 <ul>
-<li><strong>1. Call us any time</strong> — our emergency line is open 24 hours a day, 7 days a week, 365 days a year on 01234 567890</li>
+<li><strong>1. Call us any time</strong> — our emergency line is open 24 hours a day, 7 days a week, 365 days a year on 02039514510</li>
 <li><strong>2. Speak to a real person</strong> — no call centres or automated menus. You'll speak directly to our team who can assess the urgency and dispatch an engineer</li>
 <li><strong>3. Engineer dispatched</strong> — for genuine emergencies in Peterborough, we aim to reach you within 1 hour</li>
 <li><strong>4. Pricing confirmed on arrival</strong> — we'll assess the situation and confirm the cost before starting any work. No surprises</li>
@@ -695,7 +695,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Don't Wait — Call Now</h3>
-<p>If you have a plumbing emergency in Peterborough, call us now on <strong>01234 567890</strong>. We're ready to help 24 hours a day, 7 days a week. You can also <a href="/book">book online</a> for non-urgent repairs, or message us on WhatsApp for a quick response.</p>`,
+<p>If you have a plumbing emergency in Peterborough, call us now on <strong>02039514510</strong>. We're ready to help 24 hours a day, 7 days a week. You can also <a href="/book">book online</a> for non-urgent repairs, or message us on WhatsApp for a quick response.</p>`,
     faqs: [
       {
         q: "How quickly can you respond to an emergency?",
@@ -777,7 +777,7 @@ export const services: Service[] = [
 
 <h3>Plumbing Installation Pricing</h3>
 <p>Costs depend on the type of installation and the amount of pipework involved. Simple appliance connections start from around £80, while larger projects like full bathroom plumbing or extension pipework are quoted individually after we assess the job. We provide clear, written quotes with no hidden fees — and we'll never start work until you've approved the price.</p>
-<p>Need a quote? <a href="/book">Book a free assessment</a> or call us on 01234 567890.</p>
+<p>Need a quote? <a href="/book">Book a free assessment</a> or call us on 02039514510.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out plumbing installations across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford.</p>
@@ -856,7 +856,7 @@ export const services: Service[] = [
 <h3>How We Work</h3>
 <p>We keep things simple and transparent:</p>
 <ul>
-<li><strong>1. Book a convenient time</strong> — <a href="/book">online</a> or by calling 01234 567890</li>
+<li><strong>1. Book a convenient time</strong> — <a href="/book">online</a> or by calling 02039514510</li>
 <li><strong>2. We diagnose the problem</strong> — our plumber will inspect the issue and explain what needs fixing in plain English</li>
 <li><strong>3. Price confirmed before we start</strong> — you'll know exactly what it costs before we pick up a tool. No surprises</li>
 <li><strong>4. Repair completed</strong> — most repairs take 30 minutes to 2 hours. We test everything and clean up before we leave</li>
@@ -986,7 +986,7 @@ export const services: Service[] = [
 
 <h3>Leak Detection Pricing</h3>
 <p>Our standard leak detection survey covers a thorough investigation using multiple detection methods, and includes a detailed report with our findings. If we locate the leak and can repair it on the same visit, we'll quote the repair cost separately and only proceed with your approval.</p>
-<p>Pricing depends on the complexity and size of the property, but we'll always confirm costs before we start. <a href="/book">Book a leak detection survey</a> or call us on 01234 567890.</p>
+<p>Pricing depends on the complexity and size of the property, but we'll always confirm costs before we start. <a href="/book">Book a leak detection survey</a> or call us on 02039514510.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out leak detection across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford.</p>
@@ -1104,7 +1104,7 @@ export const services: Service[] = [
 
 <h3>Drain Unblocking Pricing</h3>
 <p>Most domestic drain blockages are cleared at a fixed price that we confirm before starting work. High-pressure jetting and CCTV surveys are priced separately depending on the extent of the drainage system. We don't charge by the hour for standard unblocking — you'll know the cost upfront.</p>
-<p>For <a href="/services/landlord-services">landlords</a> with multiple properties, we offer discounted rates for regular drain maintenance. <a href="/book">Book online</a> or call 01234 567890.</p>
+<p>For <a href="/services/landlord-services">landlords</a> with multiple properties, we offer discounted rates for regular drain maintenance. <a href="/book">Book online</a> or call 02039514510.</p>
 
 <h3>Areas We Cover</h3>
 <p>We clear blocked drains across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford. Available 7 days a week, with <a href="/services/emergency-plumber">emergency response</a> for sewage backflow and flooding.</p>
@@ -1204,7 +1204,7 @@ export const services: Service[] = [
 
 <h3>Plumbing Survey Pricing</h3>
 <p>Our standard pre-purchase plumbing survey covers a typical 2–4 bedroom property and includes a detailed written report. Larger properties or those with complex systems are quoted individually. We can usually carry out the survey within a few days of booking — important when you're working to exchange deadlines.</p>
-<p><a href="/book">Book your plumbing survey</a> or call us on 01234 567890 for pricing and availability.</p>
+<p><a href="/book">Book your plumbing survey</a> or call us on 02039514510 for pricing and availability.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out pre-purchase plumbing surveys across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford. If you're buying a property in the Peterborough area, we can help.</p>

@@ -166,7 +166,7 @@ export default function AdminSidebar({
         >
           <p className="text-white/25 text-[0.58rem] uppercase tracking-[0.18em] font-bold">Quick Access</p>
           <a
-            href="tel:01733000000"
+            href="tel:02039514510"
             className="flex items-center gap-2.5 text-white/50 text-xs hover:text-white/80 transition-colors"
           >
             <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>

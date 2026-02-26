@@ -10,7 +10,7 @@ export default function MainWrapper({ children }: { children: React.ReactNode })
     <main
       id="main-content"
       className={`flex-1 pb-20 lg:pb-0 bg-white ${
-        isHome ? "pt-20 lg:pt-[192px]" : "pt-20 lg:pt-[128px]"
+        isHome ? "pt-20 lg:pt-[160px]" : "pt-20 lg:pt-[112px]"
       }`}
     >
       {children}

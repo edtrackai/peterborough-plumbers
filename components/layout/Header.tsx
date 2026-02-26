@@ -37,7 +37,7 @@ export default function Header() {
           ROW 1 — Logo LEFT · Phone + CTAs RIGHT
       ═══════════════════════════════════════════════════════════════════ */}
       <div className="bg-[#EDEDED] lg:bg-white overflow-visible border-b border-black/[0.06] lg:border-0">
-        <div className={`mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-6 overflow-visible ${isHome ? "h-20 lg:h-36" : "h-20"}`}>
+        <div className={`mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-6 overflow-visible ${isHome ? "h-20 lg:h-28" : "h-20"}`}>
 
           {/* ── Mobile: burger + logo ── */}
           <div className="flex items-center gap-3 lg:hidden min-w-0">
@@ -66,10 +66,10 @@ export default function Header() {
           {/* ── Desktop: logo — LEFT ── */}
           {isHome ? (
             <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
-              <Image src="/logos/logo-mark.png" alt="" width={136} height={136}
-                className="h-[136px] w-[136px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={340} height={136}
-                className="h-[136px] w-auto object-contain shrink-0 -ml-[32px]" priority />
+              <Image src="/logos/logo-mark.png" alt="" width={104} height={104}
+                className="h-[104px] w-[104px] object-contain shrink-0" priority aria-hidden />
+              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={260} height={104}
+                className="h-[104px] w-auto object-contain shrink-0 -ml-[24px]" priority />
             </Link>
           ) : (
             <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
@@ -110,7 +110,7 @@ export default function Header() {
                 <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Book Now
+                Contact Us
               </Link>
             </div>
           ) : (
@@ -126,17 +126,17 @@ export default function Header() {
               </Link>
               <Link href="/contact" className="inline-flex items-center justify-center bg-white text-[#C8102E] px-5 h-[42px] rounded-full font-bold text-[0.85rem] hover:bg-[#C8102E] hover:text-white transition-all duration-150 whitespace-nowrap"
                 style={{ border: "2px solid #C8102E" }}>
-                Book Now
+                Contact Us
               </Link>
             </div>
           )}
 
-          {/* ── Mobile: Book Now pill ── */}
+          {/* ── Mobile: Contact Us pill ── */}
           <Link
             href="/contact"
             className="lg:hidden shrink-0 bg-[#C8102E] text-white px-4 py-2 rounded-full font-bold text-sm"
           >
-            Book Now
+            Contact Us
           </Link>
 
         </div>

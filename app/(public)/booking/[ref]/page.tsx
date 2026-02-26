@@ -66,8 +66,8 @@ export default async function BookingDetailPage({ params }: Props) {
           {/* Footer */}
           <div className="border-t border-gray-100 px-6 py-5 text-center text-sm text-gray-500">
             Questions?{" "}
-            <a href="tel:01733123456" className="font-semibold text-pp-teal">
-              Call 01733 123 456
+            <a href="tel:02039514510" className="font-semibold text-pp-teal">
+              Call 02039514510
             </a>
           </div>
         </div>

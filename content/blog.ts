@@ -222,7 +222,7 @@ export const blogPosts: BlogPost[] = [
 <p>Pricing depends on the number of radiators and the condition of the system. Most domestic properties in Peterborough fall within a predictable range. We'll always give you a clear, fixed price before we start — no hourly rates, no hidden charges. <a href="/book">Book a heating assessment</a> and we'll advise whether a power flush is the right solution for your system.</p>
 
 <h3>Get Your Heating Working Properly Again</h3>
-<p>If your heating has felt sluggish or inefficient this winter, don't just put up with it. A power flush can restore performance you may not have had in years. Call us on 01234 567890 or <a href="/book">book online</a> — our <a href="/services/central-heating-services">central heating team</a> covers the whole of Peterborough and surrounding areas.</p>`,
+<p>If your heating has felt sluggish or inefficient this winter, don't just put up with it. A power flush can restore performance you may not have had in years. Call us on 02039514510 or <a href="/book">book online</a> — our <a href="/services/central-heating-services">central heating team</a> covers the whole of Peterborough and surrounding areas.</p>`,
     seoTitle: "What Is a Power Flush? | Peterborough Heating Guide",
     seoDescription:
       "Find out if your central heating needs a power flush. Signs, process, costs, and when it's essential. Expert advice from Peterborough heating engineers.",
@@ -264,7 +264,7 @@ export const blogPosts: BlogPost[] = [
 <p>If you find a frozen pipe, turn off the water at the stopcock immediately. Gently warm the pipe using a hairdryer or hot water bottle — never an open flame. Work from the tap end back towards the frozen section. If the pipe has already cracked, you'll need an <a href="/services/emergency-plumber">emergency plumber</a> to repair it before you restore the water supply.</p>
 
 <h3>Need Help Getting Ready for Winter?</h3>
-<p>Our engineers carry out winter plumbing checks across Peterborough, covering boiler servicing, pipe insulation advice, and system testing. <a href="/book">Book online</a> or call us on 01234 567890 — and sort it before the cold weather catches you out.</p>`,
+<p>Our engineers carry out winter plumbing checks across Peterborough, covering boiler servicing, pipe insulation advice, and system testing. <a href="/book">Book online</a> or call us on 02039514510 — and sort it before the cold weather catches you out.</p>`,
     seoTitle: "How to Prepare Your Plumbing for Winter | Peterborough Guide",
     seoDescription:
       "Prevent frozen pipes and winter plumbing emergencies in Peterborough. Practical steps to protect your home before temperatures drop.",
@@ -321,7 +321,7 @@ export const blogPosts: BlogPost[] = [
 <p>Many new build buyers want to add outdoor taps, appliance connections, or additional heating controls shortly after moving in. We carry out all types of <a href="/services/plumbing-installation">plumbing installations</a> in new build properties across Peterborough — and we know the common builders' configurations well, which makes the work faster and tidier.</p>
 
 <h3>Based in Peterborough — We Know the New Developments</h3>
-<p>We've worked on new build properties across Hampton, Cardea, Orton, and the newer Stanground developments. If you've recently moved in or you're about to complete, <a href="/book">book a plumbing check</a> or call us on 01234 567890. It's the best way to start your time in a new home with complete confidence in your plumbing and heating.</p>`,
+<p>We've worked on new build properties across Hampton, Cardea, Orton, and the newer Stanground developments. If you've recently moved in or you're about to complete, <a href="/book">book a plumbing check</a> or call us on 02039514510. It's the best way to start your time in a new home with complete confidence in your plumbing and heating.</p>`,
     seoTitle: "New Build Plumbing Peterborough | What to Check Before Completion",
     seoDescription:
       "Buying a new build in Peterborough? Here's what to check about plumbing and heating before completion. Snagging advice from local Gas Safe engineers.",

@@ -10,7 +10,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { siteSettings, getWhatsAppUrl } from "@/content/settings";
+import { siteSettings } from "@/content/settings";
 
 // ── SVG Icons ─────────────────────────────────────────────────────────────────
 
@@ -22,13 +22,6 @@ function PhoneIcon({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
-function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-    </svg>
-  );
-}
 
 function StarIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
   return (
@@ -56,13 +49,6 @@ function ClockIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-function ChevronRightIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M9 5l7 7-7 7" />
-    </svg>
-  );
-}
 
 // ── Card guarantee items ──────────────────────────────────────────────────────
 
@@ -87,8 +73,7 @@ export default function HeroSection() {
   return (
     <section
       aria-label="Hero"
-      className="relative overflow-hidden flex flex-col w-screen ml-[calc(50%_-_50vw)]"
-      style={{ minHeight: "clamp(400px, 40vw, 660px)" }}
+      className="relative overflow-hidden flex flex-col w-screen ml-[calc(50%_-_50vw)] min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]"
     >
 
       {/* ── BACKGROUND LAYER ─────────────────────────────────────────────────── */}
@@ -131,13 +116,13 @@ export default function HeroSection() {
       </div>
 
       {/* ── MAIN CONTENT ─────────────────────────────────────────────────────── */}
-      <div className="relative z-10 flex-1 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10 pt-6 sm:pt-8 lg:pt-10 pb-8 lg:pb-10 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
+      <div className="relative z-10 flex-1 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10 pt-4 sm:pt-8 lg:pt-10 pb-4 sm:pb-8 lg:pb-10 flex flex-col lg:flex-row lg:items-center gap-4 sm:gap-6 lg:gap-10">
 
         {/* ── LEFT: headline + stats + CTAs ────────────────────────────────────── */}
         <div className="flex-1 lg:max-w-[58%]">
 
           {/* Live availability badge */}
-          <div className="inline-flex items-center gap-2.5 mb-4">
+          <div className="inline-flex items-center gap-2.5 mb-2 sm:mb-4">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
@@ -170,7 +155,7 @@ export default function HeroSection() {
 
           {/* Subtext */}
           <p
-            className="mt-3 text-white/65 leading-[1.65] max-w-[480px]"
+            className="mt-3 hidden sm:block text-white/65 leading-[1.65] max-w-[480px]"
             style={{ fontSize: "clamp(13px, 1vw, 15px)" }}
           >
             Local Gas Safe engineers for boiler repairs, central heating, bathroom
@@ -178,7 +163,7 @@ export default function HeroSection() {
           </p>
 
           {/* ── Stats grid ───────────────────────────────────────────────────── */}
-          <dl className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-0 max-w-[380px] sm:max-w-none">
+          <dl className="mt-4 hidden sm:grid sm:grid-cols-4 sm:gap-0 sm:max-w-none">
             {heroStats.map(({ value, label }, idx) => (
               <div
                 key={label}
@@ -198,11 +183,11 @@ export default function HeroSection() {
           </dl>
 
           {/* ── CTA buttons ──────────────────────────────────────────────────── */}
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mt-3 sm:mt-5 flex flex-wrap gap-2.5 sm:gap-3">
             {/* Primary: Book */}
             <Link
               href="/book"
-              className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="inline-flex items-center justify-center h-[44px] sm:h-[52px] px-6 sm:px-8 rounded-full text-white font-bold text-[0.85rem] sm:text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               style={{
                 background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)",
                 boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)",
@@ -215,7 +200,7 @@ export default function HeroSection() {
             <a
               href={`tel:${siteSettings.phoneHref}`}
               aria-label={`Call us on ${siteSettings.phone}`}
-              className="inline-flex items-center justify-center gap-2.5 h-[52px] px-7 rounded-full text-white font-bold text-[0.9rem] border border-white/20 bg-white/[0.07] hover:bg-white/[0.14] hover:border-white/35 transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
+              className="inline-flex items-center justify-center gap-2.5 h-[44px] sm:h-[52px] px-5 sm:px-7 rounded-full text-white font-bold text-[0.85rem] sm:text-[0.9rem] border border-white/20 bg-white/[0.07] hover:bg-white/[0.14] hover:border-white/35 transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
             >
               <PhoneIcon className="h-4 w-4 shrink-0" />
               {siteSettings.phone}
@@ -233,120 +218,11 @@ export default function HeroSection() {
           </ul>
         </div>
 
-        {/* ── RIGHT: floating action card ───────────────────────────────────── */}
-        <div className="w-full sm:max-w-[380px] lg:w-[320px] xl:w-[350px] mx-auto lg:mx-0 shrink-0">
-          <div
-            className="rounded-[20px] overflow-hidden"
-            style={{
-              background: "rgba(8, 10, 18, 0.52)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: "1px solid rgba(255,255,255,0.09)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.45), 0 6px 20px rgba(0,0,0,0.30)",
-            }}
-          >
-            {/* ── Card header ─────────────────────────────────────────────── */}
-            <div
-              className="px-4 py-3 flex items-center gap-3"
-              style={{ background: "linear-gradient(135deg, #C8102E 0%, #9e0d25 100%)" }}
-            >
-              <div className="h-9 w-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
-                <PhoneIcon className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <p className="text-white font-black text-[0.88rem] leading-tight">
-                  Need a plumber today?
-                </p>
-                <p className="text-white/65 text-[0.72rem] mt-0.5">
-                  Fast response &middot; No hidden fees
-                </p>
-              </div>
-            </div>
-
-            {/* ── Card body ───────────────────────────────────────────────── */}
-            <div className="px-4 py-3 flex flex-col gap-2.5">
-
-              {/* Review summary */}
-              <div className="flex items-center gap-2 pb-2.5 border-b border-white/[0.10]">
-                <div className="flex gap-0.5" aria-label={`${siteSettings.googleRating} out of 5 stars`}>
-                  {[...Array(5)].map((_, i) => (
-                    <StarIcon key={i} className="h-3.5 w-3.5 text-amber-400" />
-                  ))}
-                </div>
-                <span className="text-sm font-bold text-white">{siteSettings.googleRating}/5</span>
-                <span className="text-xs text-white/40 mx-0.5">&middot;</span>
-                <span className="text-xs text-white/55">{siteSettings.reviewCount}+ Google reviews</span>
-              </div>
-
-              {/* Phone CTA — prominent */}
-              <a
-                href={`tel:${siteSettings.phoneHref}`}
-                className="flex items-center gap-3 w-full rounded-xl px-4 py-3 transition-all duration-150 hover:brightness-110 active:scale-[0.98]"
-                style={{
-                  background: "linear-gradient(135deg, #C8102E 0%, #9e0d25 100%)",
-                  boxShadow: "0 3px 14px rgba(200,16,46,0.32)",
-                }}
-              >
-                <div className="h-8 w-8 rounded-full bg-white/15 flex items-center justify-center shrink-0">
-                  <PhoneIcon className="h-3.5 w-3.5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-white/70 text-[0.62rem] font-semibold uppercase tracking-widest">
-                    Call free — no obligation
-                  </p>
-                  <p className="text-white font-black text-[0.95rem] leading-tight truncate">
-                    {siteSettings.phone}
-                  </p>
-                </div>
-              </a>
-
-              {/* WhatsApp */}
-              <a
-                href={getWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2.5 w-full rounded-xl px-4 py-3 font-semibold text-white text-[0.85rem] transition-all duration-150 hover:brightness-110 active:scale-[0.98]"
-                style={{
-                  background: "#25D366",
-                  boxShadow: "0 3px 12px rgba(37,211,102,0.25)",
-                }}
-              >
-                <WhatsAppIcon className="h-4 w-4 shrink-0" />
-                <span>WhatsApp Us</span>
-                <span className="ml-auto text-white/65 text-xs font-normal">
-                  Replies in minutes
-                </span>
-              </a>
-
-              {/* Book online */}
-              <Link
-                href="/book"
-                className="group flex items-center justify-center gap-2 w-full rounded-xl px-4 py-3 font-bold text-white/80 text-[0.85rem] border border-white/20 hover:border-[#C8102E] hover:text-[#C8102E] transition-all duration-150"
-              >
-                Book Online
-                <ChevronRightIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              </Link>
-
-              {/* Guarantee list */}
-              <ul className="pt-2.5 border-t border-white/[0.10] flex flex-col gap-1.5 list-none">
-                {cardGuarantees.map((g) => (
-                  <li key={g} className="flex items-center gap-2.5">
-                    <span className="h-5 w-5 rounded-full bg-emerald-500/15 flex items-center justify-center shrink-0">
-                      <CheckCircleIcon className="h-3.5 w-3.5 text-emerald-400" />
-                    </span>
-                    <span className="text-xs text-white/65 font-medium">{g}</span>
-                  </li>
-                ))}
-              </ul>
-
-            </div>
-          </div>
-        </div>
 
       </div>
 
       {/* ── BOTTOM TRUST PILL ────────────────────────────────────────────────── */}
-      <div className="relative z-10 pb-5 sm:pb-7">
+      <div className="relative z-10 pb-5 sm:pb-7 hidden sm:block">
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
           <div
             className="bg-pp-navy rounded-2xl sm:rounded-full overflow-hidden border border-white/[0.10] py-4 px-5 sm:py-5 sm:px-8"
