@@ -89,7 +89,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── MAIN CONTENT ─────────────────────────────────────────────────────── */}
-      <div className="relative z-10 flex-1 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10 pt-4 sm:pt-8 lg:pt-10 pb-4 sm:pb-8 lg:pb-10 flex flex-col lg:flex-row lg:items-center gap-4 sm:gap-6 lg:gap-10">
+      <div className="relative z-10 flex-1 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-10 pt-4 sm:pt-8 lg:pt-10 pb-4 sm:pb-20 lg:pb-24 flex flex-col lg:flex-row lg:items-center gap-4 sm:gap-6 lg:gap-10">
 
         {/* ── LEFT: headline + stats + CTAs ────────────────────────────────────── */}
         <div className="flex-1 lg:max-w-[58%]">
