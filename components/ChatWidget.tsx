@@ -27,8 +27,9 @@ const QUICK_ACTIONS = [
   { emoji: "📅", label: "Book a Visit",     message: "I want to book an engineer visit" },
 ];
 
-const STORAGE_KEY = "pp_chat_session_id";
-const SEEN_KEY    = "pp_chat_seen";
+const STORAGE_KEY   = "pp_chat_session_id";
+const SEEN_KEY      = "pp_chat_seen";
+const DISMISS_KEY   = "pp_chat_greeting_dismissed";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -83,11 +84,12 @@ export default function ChatWidget() {
     if (stored) setSessionId(stored);
   }, []);
 
-  // Attention tooltip — shows after 5s if user has never opened chat
+  // Greeting card — shows after 2s if never opened or dismissed
   useEffect(() => {
-    const seen = localStorage.getItem(SEEN_KEY);
-    if (seen) return;
-    const t = setTimeout(() => setShowTooltip(true), 5000);
+    const seen      = localStorage.getItem(SEEN_KEY);
+    const dismissed = localStorage.getItem(DISMISS_KEY);
+    if (seen || dismissed) return;
+    const t = setTimeout(() => setShowTooltip(true), 2000);
     return () => clearTimeout(t);
   }, []);
 
@@ -202,24 +204,81 @@ export default function ChatWidget() {
         @keyframes pp-up   { from { opacity:0; transform:translateY(14px) scale(.97) } to { opacity:1; transform:translateY(0) scale(1) } }
         @keyframes pp-down { from { opacity:1; transform:translateY(0) scale(1) } to { opacity:0; transform:translateY(14px) scale(.97) } }
         @keyframes pp-msg  { from { opacity:0; transform:translateY(7px) } to { opacity:1; transform:translateY(0) } }
-        @keyframes pp-tip  { 0%{opacity:0;transform:translateY(5px)} 12%{opacity:1;transform:translateY(0)} 82%{opacity:1;transform:translateY(0)} 100%{opacity:0;transform:translateY(5px)} }
+        @keyframes pp-tip  { from{opacity:0;transform:translateY(10px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
         .pp-enter { animation: pp-up   .25s cubic-bezier(.34,1.2,.64,1) forwards }
         .pp-exit  { animation: pp-down .22s ease-in forwards }
         .pp-msg   { animation: pp-msg  .18s ease-out forwards }
-        .pp-tip   { animation: pp-tip  4.2s ease-in-out forwards }
+        .pp-tip   { animation: pp-tip  .3s cubic-bezier(.34,1.2,.64,1) forwards }
       `}</style>
 
-      {/* ── Attention tooltip ─────────────────────────────────────────────────── */}
+      {/* ── Greeting card ─────────────────────────────────────────────────────── */}
       {showTooltip && !open && (
         <div
-          className="fixed z-[9999] pp-tip pointer-events-none"
-          style={{ bottom: "calc(5rem + 68px)", right: "1.25rem" }}
-          onAnimationEnd={() => setShowTooltip(false)}
+          className="fixed z-[9999] pp-tip"
+          style={{ bottom: "calc(5rem + 72px)", right: "1.25rem" }}
         >
-          <div className="relative bg-[#242424] text-white text-[13px] font-semibold px-4 py-2.5 rounded-2xl rounded-br-sm shadow-2xl whitespace-nowrap flex items-center gap-2">
-            💬 Need plumbing help?
-            <span className="absolute -bottom-2 right-5 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[9px] border-t-[#242424]" />
-          </div>
+          {/* Card */}
+          <button
+            onClick={() => { setShowTooltip(false); setOpen(true); }}
+            className="relative block text-left w-[230px] bg-white rounded-2xl rounded-br-sm overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E]"
+            style={{ boxShadow: "0 12px 40px rgba(0,0,0,0.16), 0 3px 10px rgba(0,0,0,0.10)", border: "1px solid rgba(0,0,0,0.07)" }}
+          >
+            {/* Red top strip */}
+            <div className="h-1 w-full" style={{ background: "linear-gradient(90deg, #E31530, #C8102E)" }} />
+
+            <div className="px-4 pt-3 pb-3.5">
+              {/* Avatar + name row */}
+              <div className="flex items-center gap-2.5 mb-2.5">
+                <div className="relative shrink-0">
+                  <div className="h-9 w-9 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, #C8102E 0%, #9e0d25 100%)" }}>
+                    <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                    </svg>
+                  </div>
+                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[#242424] font-bold text-[13px] leading-tight">Peterborough Plumbers</p>
+                  <p className="text-emerald-500 text-[10px] font-semibold flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 inline-block" />
+                    Online now
+                  </p>
+                </div>
+              </div>
+
+              {/* Greeting text */}
+              <p className="text-[#242424] font-bold text-[13px] leading-snug mb-1">
+                👋 Hi there!
+              </p>
+              <p className="text-gray-500 text-[12px] leading-snug mb-3">
+                How can we help you today?<br />
+                Get instant plumbing advice.
+              </p>
+
+              {/* CTA */}
+              <div
+                className="w-full rounded-xl py-2 text-center text-white text-[12px] font-bold"
+                style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)" }}
+              >
+                Chat with us →
+              </div>
+            </div>
+          </button>
+
+          {/* Tail */}
+          <span className="absolute -bottom-2 right-6 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[10px] border-t-white" />
+
+          {/* Dismiss ×  */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setShowTooltip(false); localStorage.setItem(DISMISS_KEY, "1"); }}
+            aria-label="Dismiss"
+            className="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-white shadow-md flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors"
+            style={{ border: "1px solid rgba(0,0,0,0.10)" }}
+          >
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
       )}
 
