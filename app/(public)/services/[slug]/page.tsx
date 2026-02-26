@@ -164,7 +164,7 @@ export default async function ServicePage({
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text" style={{ minHeight: "clamp(600px, 75vw, 1000px)" }}>
+      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
 
         {/* Background */}
         <div className="absolute inset-0 z-0" aria-hidden="true">

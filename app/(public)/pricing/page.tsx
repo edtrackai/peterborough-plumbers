@@ -197,7 +197,7 @@ export default function PricingPage() {
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text" style={{ minHeight: "clamp(580px, 72vw, 920px)" }}>
+      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
           <Image src="/images/homepage/boiler-service.png" alt="Gas Safe engineer conducting a boiler service in Peterborough" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
