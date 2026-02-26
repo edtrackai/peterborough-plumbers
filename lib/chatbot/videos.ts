@@ -18,33 +18,33 @@ export interface VideoEntry {
 export const videoWhitelist: VideoEntry[] = [
   {
     category: "leak_tap",
-    title: "How to Fix a Dripping Tap",
-    url: "https://www.youtube.com/watch?v=EzBSUkWpZ1I",
+    title: "How to Replace a Tap Washer",
+    url: "https://www.youtube.com/watch?v=hYL7EbB3nFU",
   },
   {
     category: "blocked_drain",
     title: "How to Unblock a Sink or Drain",
-    url: "https://www.youtube.com/watch?v=3O_oADvEOhY",
+    url: "https://www.youtube.com/watch?v=3COQSVP--8A",
   },
   {
     category: "toilet_running",
-    title: "How to Fix a Running Toilet Cistern",
-    url: "https://www.youtube.com/watch?v=cfE1jG6-4bQ",
+    title: "Why Won't My Toilet Stop Filling Up?",
+    url: "https://www.youtube.com/watch?v=nPX_aQNPX1U",
   },
   {
     category: "stopcock_emergency",
     title: "How to Turn Off Your Stopcock",
-    url: "https://www.youtube.com/watch?v=oNuvDVvAiGw",
+    url: "https://www.youtube.com/watch?v=9Uy4SeXVRYg",
   },
   {
     category: "burst_pipe",
-    title: "Burst Pipe – Emergency Steps",
-    url: "https://www.youtube.com/watch?v=oNuvDVvAiGw",
+    title: "How to Turn Off Your Stopcock",
+    url: "https://www.youtube.com/watch?v=9Uy4SeXVRYg",
   },
   {
     category: "low_pressure",
-    title: "Low Water Pressure – Common Causes",
-    url: "https://www.youtube.com/watch?v=B0F3fVxUeRs",
+    title: "How to Test for Low Water Pressure",
+    url: "https://www.youtube.com/watch?v=TOVc5i47KG8",
   },
 ];
 

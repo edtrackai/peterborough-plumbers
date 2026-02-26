@@ -1,15 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getAllServiceSlugs } from "@/content/services";
-import { getAllAreaSlugs } from "@/content/areas";
-import { blogPosts } from "@/content/blog";
-import { getAllGuideSlugs } from "@/content/guides";
+import { prisma } from "@/lib/prisma";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com";
 
 // Last significant site update — update this when content changes substantially
-const LAST_UPDATED = new Date("2026-02-25");
+const LAST_UPDATED = new Date("2026-02-26");
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
     { path: "",           priority: 1.0,  freq: "weekly"  as const },
     { path: "/services",  priority: 0.9,  freq: "weekly"  as const },
@@ -31,35 +28,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority,
   }));
 
-  const servicePages = getAllServiceSlugs().map((slug) => ({
+  const [services, areas, guides, blogPosts] = await Promise.all([
+    prisma.service.findMany({ select: { slug: true, updatedAt: true } }),
+    prisma.area.findMany({ select: { slug: true, updatedAt: true } }),
+    prisma.guide.findMany({ select: { slug: true, updatedAt: true } }),
+    prisma.blogPost.findMany({
+      where: { status: "Published", publishedAt: { not: null } },
+      select: { slug: true, publishedAt: true, updatedAt: true },
+    }),
+  ]);
+
+  const servicePages = services.map(({ slug, updatedAt }) => ({
     url: `${siteUrl}/services/${slug}`,
-    lastModified: LAST_UPDATED,
+    lastModified: updatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
 
-  const areaPages = getAllAreaSlugs().map((slug) => ({
+  const areaPages = areas.map(({ slug, updatedAt }) => ({
     url: `${siteUrl}/areas/${slug}`,
-    lastModified: LAST_UPDATED,
+    lastModified: updatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  const guidePages = getAllGuideSlugs().map((slug) => ({
+  const guidePages = guides.map(({ slug, updatedAt }) => ({
     url: `${siteUrl}/guides/${slug}`,
-    lastModified: LAST_UPDATED,
+    lastModified: updatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.75,
   }));
 
-  const blogPages = blogPosts
-    .filter((p) => p.status === "Published" && p.publishedAt)
-    .map((post) => ({
-      url: `${siteUrl}/blog/${post.slug}`,
-      lastModified: new Date(post.publishedAt!),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    }));
+  const blogPages = blogPosts.map(({ slug, publishedAt, updatedAt }) => ({
+    url: `${siteUrl}/blog/${slug}`,
+    lastModified: updatedAt ?? publishedAt!,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
 
   return [...staticPages, ...servicePages, ...areaPages, ...guidePages, ...blogPages];
 }
