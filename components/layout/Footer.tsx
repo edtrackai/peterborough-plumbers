@@ -127,7 +127,7 @@ export default function Footer() {
                 </svg>
               </a>
               {/* Instagram */}
-              <a href="#" aria-label="Instagram" className="h-9 w-9 rounded-full bg-[#555555] hover:bg-[#666666] flex items-center justify-center transition-colors duration-200">
+              <a href={siteSettings.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-9 w-9 rounded-full bg-[#555555] hover:bg-[#E1306C] flex items-center justify-center transition-colors duration-200">
                 <svg className="h-[18px] w-[18px] text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden>
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />

@@ -16,6 +16,7 @@ export const siteSettings = {
   whatsappPrefillMessage: "Hi, I'd like to book a plumbing service.",
   facebookUrl: "https://www.facebook.com/profile.php?id=61587839547753",
   youtubeUrl: "https://www.youtube.com/@Peterboroughplumbers",
+  instagramUrl: "https://www.instagram.com/peterboroughplumbers",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",
   seoTitle: "Peterborough Plumbers | 30+ Years Established | Gas Safe Registered",
   seoDescription:
