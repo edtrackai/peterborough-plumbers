@@ -267,19 +267,6 @@ export default function FaqPage() {
               </li>
             ))}
           </ul>
-          <dl className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-y-6 sm:gap-y-0 max-w-xl">
-            {[
-              { value: `${siteSettings.googleRating}★`, label: "Google Rating" },
-              { value: `${siteSettings.reviewCount}+`, label: "5-Star Reviews" },
-              { value: siteSettings.yearsExperience, label: "Years Established" },
-              { value: siteSettings.engineersCount, label: "Local Engineers" },
-            ].map(({ value, label }, idx, arr) => (
-              <div key={label} className={["flex flex-col", idx < arr.length - 1 ? "sm:pr-8 sm:mr-8 sm:border-r sm:border-white/[0.12]" : ""].join(" ")}>
-                <dt className="text-white font-black leading-none tracking-[-0.02em]" style={{ fontSize: "clamp(22px, 2vw, 30px)" }}>{value}</dt>
-                <dd className="text-white/40 text-[0.67rem] mt-1.5 font-semibold uppercase tracking-[0.12em]">{label}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
         <div className="absolute bottom-0 left-0 right-0 z-[5]" aria-hidden="true" style={{ lineHeight: 0 }}>
           <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}>

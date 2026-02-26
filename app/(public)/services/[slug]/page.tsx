@@ -285,26 +285,6 @@ export default async function ServicePage({
           </ul>
 
           {/* Stats row */}
-          <dl className="mt-5 sm:mt-10 grid grid-cols-2 sm:grid-cols-4 gap-y-4 sm:gap-y-0 max-w-xl">
-            {[
-              { value: `${settings.googleRating}★`, label: "Google Rating" },
-              { value: `${settings.reviewCount}+`, label: "5-Star Reviews" },
-              { value: settings.yearsExperience, label: "Years Established" },
-              { value: settings.engineersCount, label: "Local Engineers" },
-            ].map(({ value, label }, idx, arr) => (
-              <div
-                key={label}
-                className={["flex flex-col", idx < arr.length - 1 ? "sm:pr-8 sm:mr-8 sm:border-r sm:border-white/[0.12]" : ""].join(" ")}
-              >
-                <dt className="text-white font-black leading-none tracking-[-0.02em]" style={{ fontSize: "clamp(22px, 2vw, 30px)" }}>
-                  {value}
-                </dt>
-                <dd className="text-white/40 text-[0.67rem] mt-1.5 font-semibold uppercase tracking-[0.12em]">
-                  {label}
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
         {/* Curved bottom wave — smooth transition to white content */}
