@@ -5,11 +5,32 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import ServiceGrid from "@/components/blocks/ServiceGrid";
 import CTASection from "@/components/blocks/CTASection";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
-import type { Service } from "@/content/services";
+
+// ── Exact nearby-area mapping (ordered by proximity) ─────────────────────────
+const nearbyAreaMap: Record<string, string[]> = {
+  "city-centre":    ["werrington", "bretton", "hampton", "orton", "yaxley", "whittlesey"],
+  "werrington":     ["bretton", "city-centre", "hampton", "orton", "yaxley", "whittlesey"],
+  "bretton":        ["werrington", "city-centre", "hampton", "orton", "yaxley", "whittlesey"],
+  "hampton":        ["orton", "city-centre", "werrington", "bretton", "yaxley", "whittlesey"],
+  "orton":          ["hampton", "city-centre", "werrington", "bretton", "yaxley", "whittlesey"],
+  "yaxley":         ["city-centre", "hampton", "orton", "werrington", "bretton", "stamford"],
+  "whittlesey":     ["city-centre", "yaxley", "hampton", "orton", "werrington", "market-deeping"],
+  "market-deeping": ["stamford", "yaxley", "whittlesey", "city-centre", "werrington", "hampton"],
+  "stamford":       ["market-deeping", "yaxley", "whittlesey", "city-centre", "hampton", "orton"],
+};
+
+// ── Fixed 6 service links shown on every area page ───────────────────────────
+const areaServiceLinks = [
+  { slug: "emergency-plumber",      name: "Emergency Plumber" },
+  { slug: "plumbing-repairs",       name: "Plumbing Repairs" },
+  { slug: "drain-blockages",        name: "Drain Blockages" },
+  { slug: "bathroom-installations", name: "Bathroom Installations" },
+  { slug: "plumbing-installation",  name: "Plumbing Installation" },
+  { slug: "damp-leak-detection",    name: "Damp & Leak Detection" },
+] as const;
 
 export async function generateStaticParams() {
   const areas = await prisma.area.findMany({ select: { slug: true } });
@@ -50,14 +71,21 @@ export default async function AreaPage({
   const postcodes = area.postcodes as string[];
   const faqs = area.faqs as { q: string; a: string }[];
 
-  const [areaReviews, servicesRaw] = await Promise.all([
+  const nearbySlugs = nearbyAreaMap[slug] ?? [];
+
+  const [areaReviews, nearbyAreasRaw] = await Promise.all([
     prisma.review.findMany({
       where: { areaName: { equals: area.name, mode: "insensitive" } },
     }),
-    prisma.service.findMany({ take: 6, orderBy: { sortOrder: "asc" } }),
+    prisma.area.findMany({
+      where: { slug: { in: nearbySlugs } },
+      select: { name: true, slug: true },
+    }),
   ]);
 
-  const services = servicesRaw as unknown as Service[];
+  const nearbyAreas = nearbySlugs
+    .map((s) => nearbyAreasRaw.find((a) => a.slug === s))
+    .filter((a): a is { name: string; slug: string } => !!a);
 
   return (
     <>
@@ -266,7 +294,59 @@ export default async function AreaPage({
         </section>
       )}
 
-      <ServiceGrid services={services} heading={`Our Services in ${area.name}`} />
+      {/* Nearby areas */}
+      {nearbyAreas.length > 0 && (
+        <section className="py-12 bg-white border-b border-[var(--border)]">
+          <div className="mx-auto max-w-5xl px-4">
+            <h2 className="text-2xl font-bold text-pp-heading mb-6">Nearby Areas We Cover</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {nearbyAreas.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/areas/${a.slug}`}
+                  className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface-alt)] px-4 py-3 text-sm font-medium text-pp-heading hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                >
+                  <svg className="h-3.5 w-3.5 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                  </svg>
+                  {a.name}
+                </Link>
+              ))}
+            </div>
+            <p className="mt-5">
+              <Link href="/areas" className="text-sm font-semibold text-[var(--brand)] hover:underline">
+                View all areas we cover →
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Services in this area */}
+      <section className="py-12 bg-[var(--surface-alt)] border-b border-[var(--border)]">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="text-2xl font-bold text-pp-heading mb-6">Our Services in {area.name}</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {areaServiceLinks.map((svc) => (
+              <Link
+                key={svc.slug}
+                href={`/services/${svc.slug}`}
+                className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-sm font-medium text-pp-heading hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+              >
+                <svg className="h-3.5 w-3.5 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                {svc.name}
+              </Link>
+            ))}
+          </div>
+          <p className="mt-5">
+            <Link href="/services" className="text-sm font-semibold text-[var(--brand)] hover:underline">
+              View all our services →
+            </Link>
+          </p>
+        </div>
+      </section>
 
       <CTASection
         heading={`Need a Plumber in ${area.name}?`}

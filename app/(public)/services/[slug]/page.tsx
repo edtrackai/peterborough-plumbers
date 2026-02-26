@@ -12,20 +12,30 @@ import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
 
-// Semantic related-service map (slug → related slugs)
+// Exact related-service map per spec (slug → 4 related slugs)
 const relatedServiceMap: Record<string, string[]> = {
-  "boiler-service": ["central-heating-services", "gas-safety-certificates", "emergency-plumber"],
-  "gas-safety-certificates": ["boiler-service", "landlord-services", "central-heating-services"],
-  "central-heating-services": ["boiler-service", "plumbing-installation", "plumbing-repairs"],
-  "bathroom-installations": ["plumbing-installation", "plumbing-repairs", "damp-leak-detection"],
-  "landlord-services": ["gas-safety-certificates", "boiler-service", "plumbing-repairs"],
-  "emergency-plumber": ["plumbing-repairs", "drain-blockages", "damp-leak-detection"],
-  "plumbing-installation": ["bathroom-installations", "central-heating-services", "plumbing-repairs"],
-  "plumbing-repairs": ["emergency-plumber", "damp-leak-detection", "plumbing-installation"],
-  "damp-leak-detection": ["plumbing-repairs", "emergency-plumber", "drain-blockages"],
-  "drain-blockages": ["emergency-plumber", "damp-leak-detection", "plumbing-repairs"],
-  "pre-purchase-plumbing-survey": ["boiler-service", "damp-leak-detection", "central-heating-services"],
+  "emergency-plumber":          ["plumbing-repairs", "damp-leak-detection", "drain-blockages", "plumbing-installation"],
+  "plumbing-repairs":           ["emergency-plumber", "damp-leak-detection", "plumbing-installation", "bathroom-installations"],
+  "drain-blockages":            ["emergency-plumber", "plumbing-repairs", "damp-leak-detection", "plumbing-installation"],
+  "damp-leak-detection":        ["plumbing-repairs", "emergency-plumber", "plumbing-installation", "bathroom-installations"],
+  "plumbing-installation":      ["plumbing-repairs", "bathroom-installations", "landlord-services", "drain-blockages"],
+  "bathroom-installations":     ["plumbing-installation", "plumbing-repairs", "damp-leak-detection", "landlord-services"],
+  "landlord-services":          ["gas-safety-certificates", "plumbing-repairs", "plumbing-installation", "pre-purchase-plumbing-survey"],
+  "pre-purchase-plumbing-survey": ["landlord-services", "plumbing-repairs", "damp-leak-detection", "gas-safety-certificates"],
+  "gas-safety-certificates":    ["landlord-services", "pre-purchase-plumbing-survey", "boiler-service", "central-heating-services"],
+  "boiler-service":             ["central-heating-services", "gas-safety-certificates", "emergency-plumber", "plumbing-repairs"],
+  "central-heating-services":   ["boiler-service", "gas-safety-certificates", "emergency-plumber", "plumbing-repairs"],
 };
+
+// Fixed 6 area links shown on every service page
+const servicePageAreas = [
+  { slug: "city-centre", name: "City Centre" },
+  { slug: "werrington",  name: "Werrington" },
+  { slug: "hampton",     name: "Hampton" },
+  { slug: "bretton",     name: "Bretton" },
+  { slug: "orton",       name: "Orton" },
+  { slug: "yaxley",      name: "Yaxley" },
+] as const;
 
 export async function generateStaticParams() {
   const services = await prisma.service.findMany({ select: { slug: true } });
@@ -69,7 +79,7 @@ export default async function ServicePage({
   const relatedSlugs = relatedServiceMap[slug] ?? [];
   const relatedRaw = relatedSlugs.length
     ? await prisma.service.findMany({ where: { slug: { in: relatedSlugs } } })
-    : await prisma.service.findMany({ where: { slug: { not: slug } }, take: 3 });
+    : await prisma.service.findMany({ where: { slug: { not: slug } }, take: 4 });
   const related = relatedRaw as unknown as Service[];
 
   return (
@@ -330,6 +340,32 @@ export default async function ServicePage({
       {related.length > 0 && (
         <ServiceGrid services={related} heading="Related Services" />
       )}
+
+      {/* Areas we cover */}
+      <section className="py-12 bg-[var(--surface-alt)] border-b border-[var(--border)]">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="text-2xl font-bold text-pp-heading mb-6">Areas We Cover in Peterborough</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {servicePageAreas.map((area) => (
+              <Link
+                key={area.slug}
+                href={`/areas/${area.slug}`}
+                className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-sm font-medium text-pp-heading hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+              >
+                <svg className="h-3.5 w-3.5 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+                {area.name}
+              </Link>
+            ))}
+          </div>
+          <p className="mt-5">
+            <Link href="/areas" className="text-sm font-semibold text-[var(--brand)] hover:underline">
+              View all areas we cover →
+            </Link>
+          </p>
+        </div>
+      </section>
 
       <CTASection
         heading={`Book ${service.name}`}

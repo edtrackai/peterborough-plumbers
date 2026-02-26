@@ -25,14 +25,36 @@ const onlineFeatures = [
   "Receive confirmation and engineer updates by text",
 ];
 
+// Exact ordered slugs for homepage linking blocks
+const popularServiceSlugs = [
+  "emergency-plumber", "plumbing-repairs", "drain-blockages", "bathroom-installations",
+  "plumbing-installation", "damp-leak-detection", "landlord-services", "gas-safety-certificates",
+] as const;
+const coverAreaSlugs = [
+  "city-centre", "werrington", "bretton", "hampton", "orton", "yaxley", "whittlesey", "stamford",
+] as const;
+
 export default async function HomePage() {
-  const [featuredReviewsRaw, siteSettings, areasRaw] = await Promise.all([
+  const [featuredReviewsRaw, siteSettings, popularServicesRaw, coverAreasRaw] = await Promise.all([
     prisma.review.findMany({ where: { featured: true }, take: 4 }),
     getSiteSettings(),
-    prisma.area.findMany({ take: 6, orderBy: { name: "asc" } }),
+    prisma.service.findMany({
+      where: { slug: { in: [...popularServiceSlugs] } },
+      select: { slug: true, name: true },
+    }),
+    prisma.area.findMany({
+      where: { slug: { in: [...coverAreaSlugs] } },
+      select: { slug: true, name: true },
+    }),
   ]);
   const featuredReviews = featuredReviewsRaw;
-  const areas = areasRaw;
+  // Preserve spec-defined order
+  const popularServices = popularServiceSlugs
+    .map((s) => popularServicesRaw.find((r) => r.slug === s))
+    .filter((r): r is { slug: string; name: string } => !!r);
+  const areas = coverAreaSlugs
+    .map((s) => coverAreasRaw.find((r) => r.slug === s))
+    .filter((r): r is { slug: string; name: string } => !!r);
 
   return (
     <>
@@ -423,6 +445,37 @@ export default async function HomePage() {
           </div>
         </div>
 
+      </section>
+
+      {/* ── G1) POPULAR SERVICES ─────────────────────────────────────────────── */}
+      <section className="bg-white py-8 sm:py-14 border-t border-[var(--border)]">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center mb-6 sm:mb-10">
+            <h2 className="text-2xl lg:text-3xl font-bold text-pp-heading mb-2">Popular Services in Peterborough</h2>
+            <p className="text-[var(--muted)] text-sm">
+              Gas Safe registered engineers for all your plumbing and heating needs.
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {popularServices.map((svc) => (
+              <Link
+                key={svc.slug}
+                href={`/services/${svc.slug}`}
+                className="inline-flex items-center gap-1.5 border border-[var(--border)] bg-white text-pp-heading text-sm font-medium px-4 py-2 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+              >
+                <svg className="h-3 w-3 text-[var(--muted)]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                {svc.name}
+              </Link>
+            ))}
+          </div>
+          <p className="text-center mt-6">
+            <Link href="/services" className="text-sm font-semibold text-pp-teal hover:text-pp-teal-dark transition-colors duration-200">
+              View all services →
+            </Link>
+          </p>
+        </div>
       </section>
 
       {/* ── G) AREAS WE COVER ─────────────────────────────────────────────────── */}

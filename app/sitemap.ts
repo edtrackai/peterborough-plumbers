@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com";
 
-// Last significant site update — update this when content changes substantially
-const LAST_UPDATED = new Date("2026-02-26");
+// Stamped at build time — never midnight
+const BUILD_LASTMOD = new Date().toISOString();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
@@ -18,12 +18,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/reviews",   priority: 0.8,  freq: "monthly" as const },
     { path: "/blog",      priority: 0.75, freq: "weekly"  as const },
     { path: "/about",     priority: 0.7,  freq: "monthly" as const },
-    { path: "/book",      priority: 0.85, freq: "monthly" as const },
     { path: "/contact",   priority: 0.7,  freq: "monthly" as const },
-    // /privacy, /terms, /cookies are noIndex — excluded from sitemap
+    // /book, /privacy, /terms, /cookies are noIndex — excluded from sitemap
   ].map(({ path, priority, freq }) => ({
     url: `${siteUrl}${path}`,
-    lastModified: LAST_UPDATED,
+    lastModified: BUILD_LASTMOD,
     changeFrequency: freq,
     priority,
   }));
