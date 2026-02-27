@@ -76,7 +76,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }, [sidebarOpen]);
 
   return (
-    <div className="flex w-full min-h-screen">
+    <div className="flex flex-1">
 
       {/* ── Desktop sidebar ── */}
       <div className="hidden lg:block shrink-0" style={{ width: 260 }}>
