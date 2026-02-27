@@ -1,20 +1,24 @@
 import { services, type Service } from "@/content/services";
 import { areas, type Area } from "@/content/areas";
 
-// Semantic mapping: each service links to its most relevant related services
-const relatedServiceMap: Record<string, string[]> = {
-  "boiler-service": ["central-heating-services", "gas-safety-certificates", "emergency-plumber"],
-  "gas-safety-certificates": ["boiler-service", "landlord-services", "central-heating-services"],
-  "central-heating-services": ["boiler-service", "plumbing-installation", "plumbing-repairs"],
-  "bathroom-installations": ["plumbing-installation", "plumbing-repairs", "damp-leak-detection"],
-  "landlord-services": ["gas-safety-certificates", "boiler-service", "plumbing-repairs"],
-  "emergency-plumber": ["plumbing-repairs", "drain-blockages", "damp-leak-detection"],
-  "plumbing-installation": ["bathroom-installations", "central-heating-services", "plumbing-repairs"],
-  "plumbing-repairs": ["emergency-plumber", "damp-leak-detection", "plumbing-installation"],
-  "damp-leak-detection": ["plumbing-repairs", "emergency-plumber", "drain-blockages"],
-  "drain-blockages": ["emergency-plumber", "damp-leak-detection", "plumbing-repairs"],
-  "pre-purchase-plumbing-survey": ["boiler-service", "damp-leak-detection", "central-heating-services"],
+// Single source of truth for related service slugs (4 per service)
+export const relatedServiceMap: Record<string, string[]> = {
+  "emergency-plumber":            ["plumbing-repairs", "damp-leak-detection", "drain-blockages", "plumbing-installation"],
+  "plumbing-repairs":             ["emergency-plumber", "damp-leak-detection", "plumbing-installation", "bathroom-installations"],
+  "drain-blockages":              ["emergency-plumber", "plumbing-repairs", "damp-leak-detection", "plumbing-installation"],
+  "damp-leak-detection":          ["plumbing-repairs", "emergency-plumber", "plumbing-installation", "bathroom-installations"],
+  "plumbing-installation":        ["plumbing-repairs", "bathroom-installations", "landlord-services", "drain-blockages"],
+  "bathroom-installations":       ["plumbing-installation", "plumbing-repairs", "damp-leak-detection", "landlord-services"],
+  "landlord-services":            ["gas-safety-certificates", "plumbing-repairs", "plumbing-installation", "pre-purchase-plumbing-survey"],
+  "pre-purchase-plumbing-survey": ["landlord-services", "plumbing-repairs", "damp-leak-detection", "gas-safety-certificates"],
+  "gas-safety-certificates":      ["landlord-services", "pre-purchase-plumbing-survey", "boiler-service", "central-heating-services"],
+  "boiler-service":               ["central-heating-services", "landlord-services", "emergency-plumber", "plumbing-repairs"],
+  "central-heating-services":     ["boiler-service", "gas-safety-certificates", "emergency-plumber", "plumbing-repairs"],
 };
+
+export function getRelatedServiceSlugs(slug: string): string[] {
+  return relatedServiceMap[slug] ?? [];
+}
 
 export function getRelatedServices(currentSlug: string, count = 3): Service[] {
   const relatedSlugs = relatedServiceMap[currentSlug];

@@ -10,7 +10,7 @@ import type { Service } from "@/content/services";
 import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Services Peterborough | Peterborough Plumbers",
+  title: "Plumbing & Heating Services in Peterborough | Book Online",
   description:
     "Plumbing and heating services across Peterborough and surrounding areas — boiler servicing, emergency repairs, bathroom installations, drain clearance. Clear upfront quotes.",
   path: "/services",

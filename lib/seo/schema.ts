@@ -59,11 +59,11 @@ export function localBusinessSchema() {
       "@type": "OfferCatalog",
       name: "Plumbing & Heating Services",
       itemListElement: [
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Boiler Service" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Emergency Plumber" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gas Safety Certificates" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Central Heating Services" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Bathroom Installations" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Boiler Service", url: `${siteUrl}/services/boiler-service` } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Emergency Plumber", url: `${siteUrl}/services/emergency-plumber` } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gas Safety Certificates", url: `${siteUrl}/services/gas-safety-certificates` } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Central Heating Services", url: `${siteUrl}/services/central-heating-services` } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Bathroom Installations", url: `${siteUrl}/services/bathroom-installations` } },
       ],
     },
   };
@@ -140,6 +140,7 @@ export function articleSchema(post: {
   slug: string;
   publishedAt?: string | null;
   category: string;
+  image?: string | null;
 }) {
   return {
     "@context": "https://schema.org",
@@ -153,10 +154,20 @@ export function articleSchema(post: {
     publisher: {
       "@type": "Organization",
       name: siteSettings.companyName,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/images/logo.png`,
+      },
     },
     datePublished: post.publishedAt,
     mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
     articleSection: post.category,
+    ...(post.image && {
+      image: {
+        "@type": "ImageObject",
+        url: post.image.startsWith("http") ? post.image : `${siteUrl}${post.image}`,
+      },
+    }),
   };
 }
 

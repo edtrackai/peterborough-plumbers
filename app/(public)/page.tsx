@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Peterborough Plumbers | Plumbing & Heating | Emergency Call-Outs",
+  title: "Peterborough Plumbing & Heating | Emergency Call-Outs",
   description:
     "Peterborough Plumbers provides emergency call-outs, plumbing repairs, boiler servicing and heating support across Peterborough and surrounding areas. Clear upfront quotes.",
   path: "/",

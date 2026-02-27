@@ -11,21 +11,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
-
-// Exact related-service map per spec (slug → 4 related slugs)
-const relatedServiceMap: Record<string, string[]> = {
-  "emergency-plumber":          ["plumbing-repairs", "damp-leak-detection", "drain-blockages", "plumbing-installation"],
-  "plumbing-repairs":           ["emergency-plumber", "damp-leak-detection", "plumbing-installation", "bathroom-installations"],
-  "drain-blockages":            ["emergency-plumber", "plumbing-repairs", "damp-leak-detection", "plumbing-installation"],
-  "damp-leak-detection":        ["plumbing-repairs", "emergency-plumber", "plumbing-installation", "bathroom-installations"],
-  "plumbing-installation":      ["plumbing-repairs", "bathroom-installations", "landlord-services", "drain-blockages"],
-  "bathroom-installations":     ["plumbing-installation", "plumbing-repairs", "damp-leak-detection", "landlord-services"],
-  "landlord-services":          ["gas-safety-certificates", "plumbing-repairs", "plumbing-installation", "pre-purchase-plumbing-survey"],
-  "pre-purchase-plumbing-survey": ["landlord-services", "plumbing-repairs", "damp-leak-detection", "gas-safety-certificates"],
-  "gas-safety-certificates":    ["landlord-services", "pre-purchase-plumbing-survey", "boiler-service", "central-heating-services"],
-  "boiler-service":             ["central-heating-services", "landlord-services", "emergency-plumber", "plumbing-repairs"],
-  "central-heating-services":   ["boiler-service", "gas-safety-certificates", "emergency-plumber", "plumbing-repairs"],
-};
+import { getRelatedServiceSlugs } from "@/lib/seo/internalLinks";
 
 // Helpful guides per service slug
 const helpfulGuidesMap: Record<string, { slug: string; title: string }[]> = {
@@ -90,7 +76,7 @@ export default async function ServicePage({
   const heroImage = service.heroImage || service.image;
 
   // Fetch related services from DB
-  const relatedSlugs = relatedServiceMap[slug] ?? [];
+  const relatedSlugs = getRelatedServiceSlugs(slug);
   const relatedRaw = relatedSlugs.length
     ? await prisma.service.findMany({ where: { slug: { in: relatedSlugs } } })
     : await prisma.service.findMany({ where: { slug: { not: slug } }, take: 4 });
