@@ -4,7 +4,7 @@ export const config = {
   matcher: ["/admin/:path*", "/plumber/:path*"],
 };
 
-export default function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // ── Admin routes: HTTP Basic Auth ─────────────────────────────────────────
