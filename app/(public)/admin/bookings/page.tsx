@@ -115,19 +115,27 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
   }));
 
   return (
-    <div className="p-4 lg:p-6 space-y-4 lg:space-y-5">
+    <div className="p-4 lg:p-6 space-y-4 lg:space-y-5 max-w-[1400px] mx-auto">
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Bookings Pipeline</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
-            {totalActive} active &middot; {completedToday} completed today &middot; {totalAll} all-time
-          </p>
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Operations</p>
+          <h1 className="text-xl font-bold text-slate-900 tracking-tight">Bookings Pipeline</h1>
         </div>
-        <Link href="/admin" className="text-sm text-slate-500 hover:text-slate-700 transition-colors">
-          ← Dashboard
-        </Link>
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600" style={{ background: "#F1F5F9", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <span className="h-1.5 w-1.5 rounded-full bg-violet-500 animate-pulse" />
+            {totalActive} active
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600" style={{ background: "#F1F5F9", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            {completedToday} today
+          </span>
+          <Link href="/admin" className="text-xs font-semibold text-slate-400 hover:text-slate-700 transition-colors px-2">
+            ← Dashboard
+          </Link>
+        </div>
       </div>
 
       {/* Status chips */}
@@ -140,7 +148,7 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
             <span
               key={s}
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold capitalize"
-              style={{ background: st.bg, color: st.text }}
+              style={{ background: st.bg, color: st.text, border: `1px solid ${st.dot}22` }}
             >
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: st.dot }} />
               {s.replace(/_/g, " ")} · {count}
@@ -150,7 +158,10 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
       </div>
 
       {/* Tab switcher */}
-      <div className="flex items-center gap-1 bg-white rounded-xl p-1 border border-slate-200 shadow-sm w-fit">
+      <div
+        className="flex items-center gap-1 w-fit rounded-xl p-1"
+        style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.08)", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}
+      >
         {(["pipeline", "history"] as const).map((t) => (
           <Link
             key={t}
@@ -159,9 +170,9 @@ export default async function AdminBookingsPage({ searchParams }: Props) {
               "px-4 py-1.5 rounded-lg text-sm font-semibold transition-all",
               tab === t ? "text-white shadow-sm" : "text-slate-500 hover:text-slate-700",
             ].join(" ")}
-            style={tab === t ? { background: "#C8102E" } : {}}
+            style={tab === t ? { background: "linear-gradient(135deg, #E31530, #C8102E)", boxShadow: "0 2px 6px rgba(200,16,46,0.3)" } : {}}
           >
-            {t === "pipeline" ? "🗂 Pipeline" : "📋 History"}
+            {t === "pipeline" ? "Pipeline" : "History"}
           </Link>
         ))}
       </div>
