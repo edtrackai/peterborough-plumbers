@@ -76,11 +76,11 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }, [sidebarOpen]);
 
   return (
-    <div className="flex w-full" style={{ minHeight: "calc(100vh - 80px)" }}>
+    <div className="flex w-full min-h-screen">
 
       {/* ── Desktop sidebar ── */}
       <div className="hidden lg:block shrink-0" style={{ width: 260 }}>
-        <div className="sticky top-0 h-[calc(100vh-80px)] overflow-hidden">
+        <div className="sticky top-0 h-screen overflow-hidden">
           <AdminSidebar />
         </div>
       </div>
