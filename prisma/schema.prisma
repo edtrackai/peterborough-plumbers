@@ -247,6 +247,7 @@ model BlogPost {
   content        String    @db.Text
   seoTitle       String
   seoDescription String
+  image          String?
   status         String    @default("Draft")
   publishedAt    DateTime?
   createdAt      DateTime  @default(now())
