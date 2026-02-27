@@ -132,8 +132,16 @@ export default async function GuideDetailPage({ params }: Props) {
                 href="/contact"
                 className="btn-book-now bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
               >
-                Book Now
+                Contact Peterborough Plumbers
               </Link>
+              {["what-to-do-burst-pipe", "emergency-plumber-call-out-cost", "boiler-not-working-guide"].includes(slug) && (
+                <Link
+                  href="/emergency"
+                  className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                >
+                  Emergency plumber in Peterborough
+                </Link>
+              )}
               <a
                 href={`tel:${settings.phoneHref}`}
                 className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] transition-colors duration-200"
@@ -186,6 +194,30 @@ export default async function GuideDetailPage({ params }: Props) {
               </Link>
             </div>
           )}
+
+          {/* End-of-article CTA */}
+          <div className="mt-12 pt-10 border-t border-[var(--border)] flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <div className="flex-1">
+              <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
+              <p className="text-sm text-[var(--muted)] mt-1">Qualified engineers — clear upfront quotes, no hidden extras.</p>
+            </div>
+            <div className="flex flex-wrap gap-3 shrink-0">
+              <Link
+                href="/contact"
+                className="bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
+              >
+                Contact Peterborough Plumbers
+              </Link>
+              {["what-to-do-burst-pipe", "emergency-plumber-call-out-cost", "boiler-not-working-guide"].includes(slug) && (
+                <Link
+                  href="/emergency"
+                  className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                >
+                  Emergency plumber in Peterborough
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

@@ -135,6 +135,30 @@ export default async function BlogPostPage({
               </div>
             </div>
           )}
+
+          {/* End-of-article CTA */}
+          <div className="mt-10 pt-8 border-t border-gray-100 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <div className="flex-1">
+              <p className="font-semibold text-pp-heading">Ready to book a plumber?</p>
+              <p className="text-sm text-[var(--muted)] mt-1">Qualified engineers across Peterborough — clear upfront quotes.</p>
+            </div>
+            <div className="flex flex-wrap gap-3 shrink-0">
+              <Link
+                href="/contact"
+                className="bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
+              >
+                Contact Peterborough Plumbers
+              </Link>
+              {category === "Emergency & Repairs" && (
+                <Link
+                  href="/emergency"
+                  className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                >
+                  Emergency plumber in Peterborough
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 

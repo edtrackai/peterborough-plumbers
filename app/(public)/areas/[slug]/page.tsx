@@ -22,14 +22,13 @@ const nearbyAreaMap: Record<string, string[]> = {
   "stamford":       ["market-deeping", "yaxley", "whittlesey", "city-centre", "hampton", "orton"],
 };
 
-// ── Fixed 6 service links shown on every area page ───────────────────────────
+// ── Fixed 5 service links shown on every area page ───────────────────────────
 const areaServiceLinks = [
-  { slug: "emergency-plumber",      name: "Emergency Plumber" },
-  { slug: "plumbing-repairs",       name: "Plumbing Repairs" },
-  { slug: "drain-blockages",        name: "Drain Blockages" },
-  { slug: "bathroom-installations", name: "Bathroom Installations" },
-  { slug: "plumbing-installation",  name: "Plumbing Installation" },
-  { slug: "damp-leak-detection",    name: "Damp & Leak Detection" },
+  { slug: "emergency-plumber",        name: "Emergency Plumber" },
+  { slug: "plumbing-repairs",         name: "Plumbing Repairs" },
+  { slug: "boiler-service",           name: "Boiler Service" },
+  { slug: "central-heating-services", name: "Central Heating" },
+  { slug: "drain-blockages",          name: "Drain Blockages" },
 ] as const;
 
 export async function generateStaticParams() {

@@ -23,8 +23,22 @@ const relatedServiceMap: Record<string, string[]> = {
   "landlord-services":          ["gas-safety-certificates", "plumbing-repairs", "plumbing-installation", "pre-purchase-plumbing-survey"],
   "pre-purchase-plumbing-survey": ["landlord-services", "plumbing-repairs", "damp-leak-detection", "gas-safety-certificates"],
   "gas-safety-certificates":    ["landlord-services", "pre-purchase-plumbing-survey", "boiler-service", "central-heating-services"],
-  "boiler-service":             ["central-heating-services", "gas-safety-certificates", "emergency-plumber", "plumbing-repairs"],
+  "boiler-service":             ["central-heating-services", "landlord-services", "emergency-plumber", "plumbing-repairs"],
   "central-heating-services":   ["boiler-service", "gas-safety-certificates", "emergency-plumber", "plumbing-repairs"],
+};
+
+// Helpful guides per service slug
+const helpfulGuidesMap: Record<string, { slug: string; title: string }[]> = {
+  "boiler-service": [
+    { slug: "how-much-does-a-boiler-service-cost", title: "How Much Does a Boiler Service Cost?" },
+    { slug: "how-to-repressurise-your-boiler",      title: "How to Repressurise Your Boiler" },
+    { slug: "how-long-does-boiler-service-take",    title: "How Long Does a Boiler Service Take?" },
+  ],
+  "central-heating-services": [
+    { slug: "central-heating-not-working",          title: "Central Heating Not Working?" },
+    { slug: "what-is-a-power-flush",                title: "What Is a Power Flush?" },
+    { slug: "radiators-not-heating-up",             title: "Radiators Not Heating Up?" },
+  ],
 };
 
 // Fixed 6 area links shown on every service page
@@ -346,6 +360,34 @@ export default async function ServicePage({
           </p>
         </div>
       </section>
+
+      {/* Helpful guides */}
+      {helpfulGuidesMap[slug] && (
+        <section className="py-12 bg-white border-b border-[var(--border)]">
+          <div className="mx-auto max-w-5xl px-4">
+            <h2 className="text-2xl font-bold text-pp-heading mb-6">Helpful Guides</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {helpfulGuidesMap[slug].map((guide) => (
+                <Link
+                  key={guide.slug}
+                  href={`/guides/${guide.slug}`}
+                  className="flex items-start gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-alt)] px-4 py-3 text-sm font-medium text-pp-heading hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                >
+                  <svg className="h-4 w-4 text-[var(--brand)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  {guide.title}
+                </Link>
+              ))}
+            </div>
+            <p className="mt-5">
+              <Link href="/guides" className="text-sm font-semibold text-[var(--brand)] hover:underline">
+                View all guides →
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
 
       <CTASection
         heading={`Book ${service.name}`}
