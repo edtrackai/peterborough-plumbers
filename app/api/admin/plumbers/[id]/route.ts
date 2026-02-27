@@ -34,17 +34,42 @@ export async function PATCH(
   }
 }
 
-// Soft-delete: deactivate rather than hard-delete to preserve booking history
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    await prisma.plumber.update({
+
+    // Check for any linked history before hard-deleting
+    const plumber = await prisma.plumber.findUnique({
       where: { id },
-      data: { isActive: false },
+      select: {
+        name: true,
+        _count: { select: { bookings: true, offers: true, events: true } },
+      },
     });
+
+    if (!plumber) {
+      return NextResponse.json({ error: "Plumber not found" }, { status: 404 });
+    }
+
+    const hasHistory =
+      plumber._count.bookings > 0 ||
+      plumber._count.offers > 0 ||
+      plumber._count.events > 0;
+
+    if (hasHistory) {
+      return NextResponse.json(
+        {
+          error: `Cannot delete "${plumber.name}" — they have booking history. Suspend the account instead to preserve records.`,
+          canSuspend: true,
+        },
+        { status: 409 }
+      );
+    }
+
+    await prisma.plumber.delete({ where: { id } });
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[admin/plumbers DELETE]", err);

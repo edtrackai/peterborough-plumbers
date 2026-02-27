@@ -15,11 +15,9 @@ type Plumber = {
   _count: { bookings: number };
 };
 
-type Props = {
-  initial: Plumber[];
-};
+type Props = { initial: Plumber[] };
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// ── Small helpers ─────────────────────────────────────────────────────────────
 function initials(name: string) {
   return name
     .split(" ")
@@ -44,14 +42,14 @@ function StatusPill({ active }: { active: boolean }) {
   return (
     <span
       className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.68rem] font-semibold ${
-        active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"
+        active ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"
       }`}
     >
       <span
         className="h-1.5 w-1.5 rounded-full shrink-0"
-        style={{ background: active ? "#22C55E" : "#9CA3AF" }}
+        style={{ background: active ? "#22C55E" : "#F59E0B" }}
       />
-      {active ? "Active" : "Inactive"}
+      {active ? "Active" : "Suspended"}
     </span>
   );
 }
@@ -59,22 +57,26 @@ function StatusPill({ active }: { active: boolean }) {
 function DutyPill({ onDuty }: { onDuty: boolean }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.68rem] font-semibold cursor-pointer select-none ${
-        onDuty ? "bg-amber-50 text-amber-700 hover:bg-amber-100" : "bg-slate-100 text-slate-400 hover:bg-slate-200"
+      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.68rem] font-semibold ${
+        onDuty
+          ? "bg-blue-50 text-blue-700 hover:bg-blue-100"
+          : "bg-slate-100 text-slate-400 hover:bg-slate-200"
       }`}
     >
       <span
         className="h-1.5 w-1.5 rounded-full shrink-0"
-        style={{ background: onDuty ? "#F59E0B" : "#D1D5DB" }}
+        style={{ background: onDuty ? "#3B82F6" : "#D1D5DB" }}
       />
       {onDuty ? "On duty" : "Off duty"}
     </span>
   );
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
+// ── Main ──────────────────────────────────────────────────────────────────────
 export default function PlumbersPanel({ initial }: Props) {
   const [plumbers, setPlumbers] = useState<Plumber[]>(initial);
+
+  // Create form
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -87,7 +89,12 @@ export default function PlumbersPanel({ initial }: Props) {
   const [formSuccess, setFormSuccess] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
-  // ── Create plumber ──────────────────────────────────────────────────────────
+  // Per-row action state
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [actionBusy, setActionBusy] = useState<string | null>(null); // plumber id
+  const [rowError, setRowError] = useState<Record<string, string>>({});
+
+  // ── Create ──────────────────────────────────────────────────────────────────
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     setFormError(null);
@@ -118,15 +125,12 @@ export default function PlumbersPanel({ initial }: Props) {
       if (!res.ok) {
         setFormError(data.error ?? "Failed to create plumber.");
       } else {
-        setFormSuccess(
-          `✓  Created "${data.plumber.name}" — ID: ${data.plumber.id}`
-        );
+        setFormSuccess(`✓  Created "${data.plumber.name}" — ID: ${data.plumber.id}`);
         setForm({ name: "", email: "", phone: "", password: "", confirm: "" });
         setPlumbers((prev) => [
           {
             ...data.plumber,
-            createdAt:
-              data.plumber.createdAt ?? new Date().toISOString(),
+            createdAt: data.plumber.createdAt ?? new Date().toISOString(),
             lastSeenAt: null,
             _count: { bookings: 0 },
           },
@@ -140,43 +144,70 @@ export default function PlumbersPanel({ initial }: Props) {
     }
   }
 
-  // ── Toggle field ────────────────────────────────────────────────────────────
-  async function toggle(
-    id: string,
-    field: "isActive" | "isOnDuty",
-    current: boolean
-  ) {
-    const res = await fetch(`/api/admin/plumbers/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ [field]: !current }),
-    });
-    if (res.ok) {
-      const { plumber } = await res.json();
-      setPlumbers((prev) =>
-        prev.map((p) => (p.id === id ? { ...p, ...plumber } : p))
-      );
+  // ── Toggle isActive / isOnDuty ──────────────────────────────────────────────
+  async function toggle(id: string, field: "isActive" | "isOnDuty", current: boolean) {
+    setActionBusy(id);
+    setRowError((prev) => { const n = { ...prev }; delete n[id]; return n; });
+    try {
+      const res = await fetch(`/api/admin/plumbers/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [field]: !current }),
+      });
+      if (res.ok) {
+        const { plumber } = await res.json();
+        setPlumbers((prev) => prev.map((p) => (p.id === id ? { ...p, ...plumber } : p)));
+      } else {
+        const d = await res.json();
+        setRowError((prev) => ({ ...prev, [id]: d.error ?? "Update failed" }));
+      }
+    } catch {
+      setRowError((prev) => ({ ...prev, [id]: "Network error" }));
+    } finally {
+      setActionBusy(null);
     }
   }
 
-  // ── Render ──────────────────────────────────────────────────────────────────
-  const active = plumbers.filter((p) => p.isActive).length;
-  const onDuty = plumbers.filter((p) => p.isOnDuty).length;
+  // ── Delete ──────────────────────────────────────────────────────────────────
+  async function handleDelete(id: string) {
+    setActionBusy(id);
+    setRowError((prev) => { const n = { ...prev }; delete n[id]; return n; });
+    try {
+      const res = await fetch(`/api/admin/plumbers/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (res.ok) {
+        setPlumbers((prev) => prev.filter((p) => p.id !== id));
+        setConfirmDeleteId(null);
+      } else {
+        setRowError((prev) => ({ ...prev, [id]: data.error ?? "Delete failed" }));
+        setConfirmDeleteId(null);
+        // If the error suggests suspending, auto-scroll / highlight stays visible via rowError
+      }
+    } catch {
+      setRowError((prev) => ({ ...prev, [id]: "Network error" }));
+      setConfirmDeleteId(null);
+    } finally {
+      setActionBusy(null);
+    }
+  }
+
+  // ── Stats ───────────────────────────────────────────────────────────────────
+  const activeCount = plumbers.filter((p) => p.isActive).length;
+  const suspendedCount = plumbers.filter((p) => !p.isActive).length;
+  const onDutyCount = plumbers.filter((p) => p.isOnDuty).length;
 
   return (
     <div className="p-4 lg:p-6 space-y-5 lg:space-y-6">
 
       {/* Header */}
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <h1 className="text-lg lg:text-xl font-bold text-slate-800">Team</h1>
-          <p className="text-xs lg:text-sm text-slate-500 mt-0.5">
-            {plumbers.length} registered · {active} active · {onDuty} on duty
-          </p>
-        </div>
+      <div>
+        <h1 className="text-lg lg:text-xl font-bold text-slate-800">Team</h1>
+        <p className="text-xs lg:text-sm text-slate-500 mt-0.5">
+          {plumbers.length} registered · {activeCount} active · {suspendedCount} suspended · {onDutyCount} on duty
+        </p>
       </div>
 
-      {/* ── Create form ───────────────────────────────────────────────────── */}
+      {/* ── Create form ─────────────────────────────────────────────────────── */}
       <div className="bg-white rounded-xl border border-slate-100 shadow-sm">
         <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2">
           <span
@@ -192,8 +223,6 @@ export default function PlumbersPanel({ initial }: Props) {
 
         <form onSubmit={handleCreate} className="p-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-            {/* Name */}
             <div>
               <label className="block text-xs font-semibold text-slate-500 mb-1.5">
                 Full Name <span className="text-red-500">*</span>
@@ -202,15 +231,11 @@ export default function PlumbersPanel({ initial }: Props) {
                 type="text"
                 required
                 value={form.name}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, name: e.target.value }))
-                }
+                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                 placeholder="John Smith"
                 className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C8102E]/25 focus:border-[#C8102E] transition-colors"
               />
             </div>
-
-            {/* Email */}
             <div>
               <label className="block text-xs font-semibold text-slate-500 mb-1.5">
                 Email <span className="text-red-500">*</span>
@@ -219,32 +244,23 @@ export default function PlumbersPanel({ initial }: Props) {
                 type="email"
                 required
                 value={form.email}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, email: e.target.value }))
-                }
+                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                 placeholder="john@example.com"
                 className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C8102E]/25 focus:border-[#C8102E] transition-colors"
               />
             </div>
-
-            {/* Phone */}
             <div>
               <label className="block text-xs font-semibold text-slate-500 mb-1.5">
-                Phone{" "}
-                <span className="text-slate-400 font-normal">(optional)</span>
+                Phone <span className="text-slate-400 font-normal">(optional)</span>
               </label>
               <input
                 type="tel"
                 value={form.phone}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, phone: e.target.value }))
-                }
+                onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                 placeholder="07700 900001"
                 className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C8102E]/25 focus:border-[#C8102E] transition-colors"
               />
             </div>
-
-            {/* Password */}
             <div>
               <label className="block text-xs font-semibold text-slate-500 mb-1.5">
                 Password <span className="text-red-500">*</span>
@@ -254,9 +270,7 @@ export default function PlumbersPanel({ initial }: Props) {
                   type={showPassword ? "text" : "password"}
                   required
                   value={form.password}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, password: e.target.value }))
-                  }
+                  onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
                   placeholder="Min. 8 characters"
                   className="w-full px-3.5 py-2.5 pr-10 rounded-lg border border-slate-200 text-sm text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C8102E]/25 focus:border-[#C8102E] transition-colors"
                 />
@@ -279,15 +293,14 @@ export default function PlumbersPanel({ initial }: Props) {
                   )}
                 </button>
               </div>
-              {/* Strength hint */}
               {form.password && (
                 <p className={`mt-1 text-[0.68rem] ${form.password.length >= 8 ? "text-green-600" : "text-amber-600"}`}>
-                  {form.password.length >= 8 ? "✓ Strong enough" : `${8 - form.password.length} more character${8 - form.password.length !== 1 ? "s" : ""} needed`}
+                  {form.password.length >= 8
+                    ? "✓ Strong enough"
+                    : `${8 - form.password.length} more character${8 - form.password.length !== 1 ? "s" : ""} needed`}
                 </p>
               )}
             </div>
-
-            {/* Confirm password */}
             <div>
               <label className="block text-xs font-semibold text-slate-500 mb-1.5">
                 Confirm Password <span className="text-red-500">*</span>
@@ -296,9 +309,7 @@ export default function PlumbersPanel({ initial }: Props) {
                 type={showPassword ? "text" : "password"}
                 required
                 value={form.confirm}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, confirm: e.target.value }))
-                }
+                onChange={(e) => setForm((f) => ({ ...f, confirm: e.target.value }))}
                 placeholder="Repeat password"
                 className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-800 placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-colors ${
                   form.confirm && form.confirm !== form.password
@@ -310,8 +321,6 @@ export default function PlumbersPanel({ initial }: Props) {
                 <p className="mt-1 text-[0.68rem] text-red-500">Passwords do not match</p>
               )}
             </div>
-
-            {/* Submit */}
             <div className="flex items-end">
               <button
                 type="submit"
@@ -324,7 +333,6 @@ export default function PlumbersPanel({ initial }: Props) {
             </div>
           </div>
 
-          {/* Feedback */}
           {(formError || formSuccess) && (
             <div className="mt-4">
               {formError && (
@@ -342,7 +350,7 @@ export default function PlumbersPanel({ initial }: Props) {
         </form>
       </div>
 
-      {/* ── Plumbers table ─────────────────────────────────────────────────── */}
+      {/* ── Plumbers table ────────────────────────────────────────────────────── */}
       <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100">
           <p className="text-sm font-bold text-slate-700">Registered Plumbers</p>
@@ -354,52 +362,104 @@ export default function PlumbersPanel({ initial }: Props) {
           </p>
         ) : (
           <>
-            {/* Mobile card list */}
+            {/* ── Mobile cards ── */}
             <div className="block lg:hidden divide-y divide-slate-50">
-              {plumbers.map((p) => (
-                <div key={p.id} className="px-4 py-4 space-y-3">
-                  <div className="flex items-start gap-3">
-                    <Avatar name={p.name} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-800">{p.name}</p>
-                      <p className="text-xs text-slate-400 truncate">{p.email}</p>
-                      {p.phone && (
-                        <p className="text-xs text-slate-400">{p.phone}</p>
-                      )}
+              {plumbers.map((p) => {
+                const busy = actionBusy === p.id;
+                const confirming = confirmDeleteId === p.id;
+                const err = rowError[p.id];
+
+                return (
+                  <div key={p.id} className={`px-4 py-4 space-y-3 ${!p.isActive ? "bg-amber-50/40" : ""}`}>
+                    <div className="flex items-start gap-3">
+                      <Avatar name={p.name} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-800">{p.name}</p>
+                        <p className="text-xs text-slate-400 truncate">{p.email}</p>
+                        {p.phone && <p className="text-xs text-slate-400">{p.phone}</p>}
+                      </div>
+                      <StatusPill active={p.isActive} />
                     </div>
-                    <StatusPill active={p.isActive} />
+
+                    <div className="flex flex-wrap items-center gap-2 pl-11">
+                      <span className="text-[0.68rem] text-slate-400 font-mono bg-slate-50 px-2 py-0.5 rounded">
+                        …{p.id.slice(-8)}
+                      </span>
+                      <span className="text-[0.68rem] text-slate-500">
+                        {p._count.bookings} job{p._count.bookings !== 1 ? "s" : ""}
+                      </span>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => toggle(p.id, "isOnDuty", p.isOnDuty)}
+                      >
+                        <DutyPill onDuty={p.isOnDuty} />
+                      </button>
+                    </div>
+
+                    {/* Action row */}
+                    {confirming ? (
+                      <div className="pl-11 flex items-center gap-2 flex-wrap">
+                        <span className="text-xs text-slate-600 font-medium">
+                          Delete <strong>{p.name}</strong>? This is permanent.
+                        </span>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => handleDelete(p.id)}
+                          className="px-3 py-1 rounded-lg bg-red-600 text-white text-xs font-bold hover:bg-red-700 disabled:opacity-50 transition-colors"
+                        >
+                          {busy ? "Deleting…" : "Yes, delete"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDeleteId(null)}
+                          className="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-semibold hover:bg-slate-200 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="pl-11 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => toggle(p.id, "isActive", p.isActive)}
+                          className={`px-3 py-1 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50 ${
+                            p.isActive
+                              ? "bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200"
+                              : "bg-green-50 text-green-700 hover:bg-green-100 border border-green-200"
+                          }`}
+                        >
+                          {busy ? "…" : p.isActive ? "Suspend" : "Activate"}
+                        </button>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => setConfirmDeleteId(p.id)}
+                          className="px-3 py-1 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 text-xs font-semibold transition-colors disabled:opacity-50"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+
+                    {err && (
+                      <p className="pl-11 text-xs text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+                        {err}
+                      </p>
+                    )}
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 pl-11">
-                    <span className="text-[0.68rem] text-slate-400 font-mono bg-slate-50 px-2 py-0.5 rounded">
-                      …{p.id.slice(-8)}
-                    </span>
-                    <span className="text-[0.68rem] text-slate-500">
-                      {p._count.bookings} job{p._count.bookings !== 1 ? "s" : ""}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => toggle(p.id, "isActive", p.isActive)}
-                      className="text-[0.68rem] text-slate-500 underline hover:text-slate-700"
-                    >
-                      {p.isActive ? "Deactivate" : "Activate"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => toggle(p.id, "isOnDuty", p.isOnDuty)}
-                    >
-                      <DutyPill onDuty={p.isOnDuty} />
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            {/* Desktop table */}
+            {/* ── Desktop table ── */}
             <div className="hidden lg:block overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-slate-100">
-                    {["Plumber", "Email", "Phone", "Plumber ID", "Jobs", "Status", "On Duty"].map(
+                    {["Plumber", "Email", "Phone", "Plumber ID", "Jobs", "Status", "On Duty", "Actions"].map(
                       (h) => (
                         <th
                           key={h}
@@ -412,47 +472,119 @@ export default function PlumbersPanel({ initial }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
-                  {plumbers.map((p) => (
-                    <tr key={p.id} className="hover:bg-slate-50 transition-colors group">
-                      <td className="px-5 py-3">
-                        <div className="flex items-center gap-3">
-                          <Avatar name={p.name} />
-                          <span className="text-sm font-semibold text-slate-700">
-                            {p.name}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="px-5 py-3 text-sm text-slate-500">{p.email}</td>
-                      <td className="px-5 py-3 text-sm text-slate-500">
-                        {p.phone ?? <span className="text-slate-300">—</span>}
-                      </td>
-                      <td className="px-5 py-3">
-                        <span className="text-xs text-slate-400 font-mono bg-slate-50 px-2 py-0.5 rounded">
-                          {p.id}
-                        </span>
-                      </td>
-                      <td className="px-5 py-3 text-sm font-medium text-slate-600">
-                        {p._count.bookings}
-                      </td>
-                      <td className="px-5 py-3">
-                        <button
-                          type="button"
-                          onClick={() => toggle(p.id, "isActive", p.isActive)}
-                          title={p.isActive ? "Click to deactivate" : "Click to activate"}
+                  {plumbers.map((p) => {
+                    const busy = actionBusy === p.id;
+                    const confirming = confirmDeleteId === p.id;
+                    const err = rowError[p.id];
+
+                    return (
+                      <>
+                        <tr
+                          key={p.id}
+                          className={`transition-colors ${!p.isActive ? "bg-amber-50/30" : "hover:bg-slate-50"}`}
                         >
-                          <StatusPill active={p.isActive} />
-                        </button>
-                      </td>
-                      <td className="px-5 py-3">
-                        <button
-                          type="button"
-                          onClick={() => toggle(p.id, "isOnDuty", p.isOnDuty)}
-                        >
-                          <DutyPill onDuty={p.isOnDuty} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                          <td className="px-5 py-3">
+                            <div className="flex items-center gap-3">
+                              <Avatar name={p.name} />
+                              <span className="text-sm font-semibold text-slate-700">{p.name}</span>
+                            </div>
+                          </td>
+                          <td className="px-5 py-3 text-sm text-slate-500">{p.email}</td>
+                          <td className="px-5 py-3 text-sm text-slate-500">
+                            {p.phone ?? <span className="text-slate-300">—</span>}
+                          </td>
+                          <td className="px-5 py-3">
+                            <span className="text-xs text-slate-400 font-mono bg-slate-50 px-2 py-0.5 rounded select-all">
+                              {p.id}
+                            </span>
+                          </td>
+                          <td className="px-5 py-3 text-sm font-medium text-slate-600">
+                            {p._count.bookings}
+                          </td>
+                          <td className="px-5 py-3">
+                            <StatusPill active={p.isActive} />
+                          </td>
+                          <td className="px-5 py-3">
+                            <button
+                              type="button"
+                              disabled={busy}
+                              onClick={() => toggle(p.id, "isOnDuty", p.isOnDuty)}
+                            >
+                              <DutyPill onDuty={p.isOnDuty} />
+                            </button>
+                          </td>
+                          <td className="px-5 py-3">
+                            <div className="flex items-center gap-2">
+                              {/* Suspend / Activate */}
+                              <button
+                                type="button"
+                                disabled={busy}
+                                onClick={() => toggle(p.id, "isActive", p.isActive)}
+                                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50 whitespace-nowrap ${
+                                  p.isActive
+                                    ? "bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200"
+                                    : "bg-green-50 text-green-700 hover:bg-green-100 border border-green-200"
+                                }`}
+                              >
+                                {busy && confirmDeleteId !== p.id ? "…" : p.isActive ? "Suspend" : "Activate"}
+                              </button>
+
+                              {/* Delete */}
+                              <button
+                                type="button"
+                                disabled={busy}
+                                onClick={() =>
+                                  setConfirmDeleteId((cur) => (cur === p.id ? null : p.id))
+                                }
+                                className="px-3 py-1 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 text-xs font-semibold transition-colors disabled:opacity-50"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        {/* Inline confirmation row */}
+                        {confirming && (
+                          <tr className="bg-red-50 border-b border-red-100">
+                            <td colSpan={8} className="px-5 py-3">
+                              <div className="flex items-center gap-4 flex-wrap">
+                                <span className="text-sm text-red-700 font-medium">
+                                  Permanently delete <strong>{p.name}</strong>? This cannot be undone.
+                                </span>
+                                <div className="flex gap-2">
+                                  <button
+                                    type="button"
+                                    disabled={busy}
+                                    onClick={() => handleDelete(p.id)}
+                                    className="px-4 py-1.5 rounded-lg bg-red-600 text-white text-xs font-bold hover:bg-red-700 disabled:opacity-50 transition-colors"
+                                  >
+                                    {busy ? "Deleting…" : "Yes, delete permanently"}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => setConfirmDeleteId(null)}
+                                    className="px-4 py-1.5 rounded-lg bg-white text-slate-600 text-xs font-semibold border border-slate-200 hover:bg-slate-50 transition-colors"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+
+                        {/* Per-row error */}
+                        {err && (
+                          <tr className="bg-red-50">
+                            <td colSpan={8} className="px-5 py-2.5">
+                              <p className="text-xs text-red-600">{err}</p>
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
