@@ -200,7 +200,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           </button>
         </header>
 
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto flex flex-col">
           {children}
         </div>
       </div>

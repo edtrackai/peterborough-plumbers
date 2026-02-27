@@ -197,7 +197,7 @@ export default function PlumbersPanel({ initial }: Props) {
   const onDutyCount = plumbers.filter((p) => p.isOnDuty).length;
 
   return (
-    <div className="p-4 lg:p-6 space-y-5 lg:space-y-6">
+    <div className="p-4 lg:p-6 flex flex-col flex-1 gap-5 lg:gap-6">
 
       {/* Header */}
       <div>
@@ -351,7 +351,7 @@ export default function PlumbersPanel({ initial }: Props) {
       </div>
 
       {/* ── Plumbers table ────────────────────────────────────────────────────── */}
-      <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden flex-1 flex flex-col">
         <div className="px-5 py-4 border-b border-slate-100">
           <p className="text-sm font-bold text-slate-700">Registered Plumbers</p>
         </div>
