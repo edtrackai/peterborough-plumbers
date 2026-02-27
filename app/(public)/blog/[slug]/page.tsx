@@ -4,7 +4,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
-import { articleSchema, breadcrumbSchema } from "@/lib/seo/schema";
+import { articleSchema } from "@/lib/seo/schema";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
@@ -70,18 +70,6 @@ export default async function BlogPostPage({
           __html: JSON.stringify(articleSchema(post as Parameters<typeof articleSchema>[0])),
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            breadcrumbSchema([
-              { name: "Home", href: "/" },
-              { name: "Blog", href: "/blog" },
-              { name: post.title, href: `/blog/${post.slug}` },
-            ])
-          ),
-        }}
-      />
       <section className="bg-pp-navy pt-4 sm:pt-28 pb-16">
         <div className="mx-auto max-w-7xl px-4">
           <Breadcrumbs
@@ -89,6 +77,7 @@ export default async function BlogPostPage({
               { name: "Blog", href: "/blog" },
               { name: post.title, href: `/blog/${post.slug}` },
             ]}
+            inverted
           />
           <span className="text-xs font-semibold text-pp-teal uppercase tracking-wider">
             {post.category}
