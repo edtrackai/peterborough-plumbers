@@ -8,9 +8,9 @@ import { siteSettings } from "@/content/settings";
 import Link from "next/link";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About Peterborough Plumbers | Gas Safe, 30+ Years",
+  title: "About Peterborough Plumbers | Local Plumbing & Heating Engineers",
   description:
-    "Peterborough Plumbers — Gas Safe registered with 30+ years experience. Family-run, locally based, and trusted by thousands of homeowners. Call for a free quote today.",
+    "Peterborough Plumbers — qualified, fully insured plumbing & heating engineers. Family-run, locally based, and trusted by homeowners and landlords across Peterborough. Clear upfront quotes.",
   path: "/about",
   absoluteTitle: true,
   image: "/images/homepage/hero.png",
@@ -35,7 +35,7 @@ export default function AboutPage() {
       addressRegion: "Cambridgeshire",
       addressCountry: "GB",
     },
-    description: `Gas Safe registered plumbing and heating company serving Peterborough for ${siteSettings.yearsExperience} years.`,
+    description: `Qualified plumbing and heating engineers serving Peterborough and surrounding areas.`,
   };
 
   return (
@@ -51,7 +51,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.png" alt="Expert plumbers in Peterborough — Gas Safe registered engineers" fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/homepage/hero.png" alt="Expert plumbers in Peterborough — qualified plumbing & heating engineers" fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -72,7 +72,7 @@ export default function AboutPage() {
             </span>
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
-            Over {siteSettings.yearsExperience} years of trusted plumbing and heating service — Gas Safe registered engineers, honest prices, no hidden extras.
+            Qualified plumbing and heating engineers, locally based in Peterborough — honest service, clear upfront quotes, no hidden extras.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href={siteSettings.primaryCtaHref} className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
@@ -84,7 +84,7 @@ export default function AboutPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "No call-out charge", "Fixed, upfront pricing"].map((item) => (
+            {["Qualified engineers", "Transparent call-out fees", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
@@ -104,11 +104,10 @@ export default function AboutPage() {
           <div className="prose prose-lg max-w-none">
             <h2 className="text-2xl font-bold text-pp-heading">Our Story</h2>
             <p className="text-pp-body leading-relaxed">
-              With over {siteSettings.yearsExperience} years of experience,{" "}
-              {siteSettings.companyName} has grown from a small family operation into one of
-              Peterborough&apos;s most trusted plumbing and heating companies. Our team of{" "}
-              {siteSettings.engineersCount} Gas Safe registered engineers serve thousands of
-              homes and businesses across Peterborough and surrounding areas each year.
+              {siteSettings.companyName} started as a small family operation and has grown into
+              one of Peterborough&apos;s trusted plumbing and heating companies. Our qualified
+              engineers serve homes and businesses across Peterborough and surrounding areas,
+              delivering honest workmanship and clear upfront quotes on every job.
             </p>
 
             <h2 className="text-2xl font-bold text-pp-heading mt-10">What Sets Us Apart</h2>
@@ -119,12 +118,11 @@ export default function AboutPage() {
               our commitment to quality workmanship and customer service.
             </p>
 
-            <h2 className="text-2xl font-bold text-pp-heading mt-10">Gas Safe Registered</h2>
+            <h2 className="text-2xl font-bold text-pp-heading mt-10">Qualified &amp; Fully Insured</h2>
             <p className="text-pp-body leading-relaxed">
-              Safety is our top priority. All our engineers are Gas Safe registered
-              (Reg: {siteSettings.gasSafeNumber}) and undergo regular training to stay current
-              with the latest regulations and best practices. You can verify our registration
-              on the Gas Safe Register website.
+              Safety is our top priority. Our engineers are qualified and fully insured,
+              and undergo regular training to stay current with the latest regulations
+              and best practices. We carry full public liability insurance on every job.
             </p>
 
             <h2 className="text-2xl font-bold text-pp-heading mt-10">Local &amp; Reliable</h2>

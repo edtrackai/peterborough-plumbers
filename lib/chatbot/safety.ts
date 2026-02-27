@@ -97,7 +97,7 @@ export function detectRestrictedTopic(text: string): SafetyCheckResult {
         "4. **Leave the property immediately.**",
         "5. **Call the UK Gas Emergency line: 0800 111 999** (free, 24/7).",
         "",
-        "Once you are safe and outside, you can also call us and we will arrange a Gas Safe registered engineer for follow-up work once the property has been made safe by the emergency service.",
+        "Once you are safe and outside, you can also call us and we will arrange a qualified engineer for follow-up work once the property has been made safe by the emergency service.",
       ].join("\n"),
     };
   }
@@ -113,7 +113,7 @@ export function detectRestrictedTopic(text: string): SafetyCheckResult {
         "",
         "Gas appliances must only be worked on by a **Gas Safe registered engineer**. Attempting repairs yourself can be dangerous and illegal.",
         "",
-        "Our Gas Safe engineers can diagnose and fix your boiler safely:",
+        "Our qualified engineers can diagnose and fix your boiler safely:",
         "• **Call us:** 02039514510 (7 days a week)",
         "• **Book online** using the button below",
         "• **Request a callback** and we'll ring you back",

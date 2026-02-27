@@ -5,11 +5,11 @@ export const siteSettings = {
   whatsappNumber: "442039514510",
   email: "info@peterboroughplumbers.com",
   address: "Peterborough, Cambridgeshire",
-  gasSafeNumber: "123456",
+  gasSafeNumber: "",
   googleRating: "4.6",
   reviewCount: "120",
-  yearsExperience: "30+",
-  engineersCount: "12+",
+  yearsExperience: "",
+  engineersCount: "",
   primaryCtaLabel: "Book Now",
   primaryCtaHref: "/contact",
   secondaryCtaLabel: "WhatsApp Chat",
@@ -18,9 +18,9 @@ export const siteSettings = {
   youtubeUrl: "https://www.youtube.com/@Peterboroughplumbers",
   instagramUrl: "https://www.instagram.com/peterboroughplumbers",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",
-  seoTitle: "Peterborough Plumbers | 30+ Years Established | Gas Safe Registered",
+  seoTitle: "Peterborough Plumbers | Plumbing & Heating | Emergency Call-Outs",
   seoDescription:
-    "Peterborough's leading plumbers with 30+ years experience. Gas Safe registered engineers for boiler service, central heating, bathroom installations, emergency plumbing and more.",
+    "Peterborough Plumbers provides plumbing repairs, boiler servicing, heating support and emergency call-outs across Peterborough and surrounding areas. Clear upfront quotes.",
 } as const;
 
 export function getWhatsAppUrl() {

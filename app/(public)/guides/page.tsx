@@ -12,7 +12,7 @@ import { guideCategories } from "@/content/guides";
 export const metadata: Metadata = buildMetadata({
   title: "Free Plumbing & Heating Guides | Peterborough Homeowner Advice 2026",
   description:
-    "Free plumbing and heating guides for Peterborough homeowners — 2026 cost guides, boiler help, DIY tips, and emergency advice from Gas Safe registered engineers.",
+    "Free plumbing and heating guides for Peterborough homeowners — 2026 cost guides, boiler help, DIY tips, and emergency advice from qualified plumbing & heating engineers.",
   path: "/guides",
   image: "/images/homepage/hero.png",
 });
@@ -75,7 +75,7 @@ export default async function GuidesPage() {
             </span>
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
-            Practical, honest advice from Gas Safe registered engineers — 2026 cost guides, step-by-step DIY tips, boiler troubleshooting, and emergency help. No jargon, no upsell.
+            Practical, honest advice from qualified plumbing &amp; heating engineers — 2026 cost guides, step-by-step DIY tips, boiler troubleshooting, and emergency help. No jargon, no upsell.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/contact" className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
@@ -87,7 +87,7 @@ export default async function GuidesPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {[`${guides.length} Free Guides`, "Gas Safe Registered", "Updated 2026"].map((item) => (
+            {[`${guides.length} Free Guides`, "Qualified engineers", "Updated 2026"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
@@ -214,7 +214,7 @@ export default async function GuidesPage() {
             About Our Guides
           </h2>
           <p className="text-sm text-[var(--muted)] max-w-2xl mx-auto mb-6">
-            Every guide on this site is written or reviewed by our Gas Safe registered engineers
+            Every guide on this site is written or reviewed by our qualified engineers
             based on real jobs in the Peterborough area. Prices are updated annually to reflect
             current market rates. We never recommend unnecessary work — our goal is to help you
             make informed decisions, whether you book with us or not.
@@ -235,7 +235,7 @@ export default async function GuidesPage() {
 
       <CTASection
         heading="Need Help From a Real Engineer?"
-        subheading="Our Gas Safe registered team covers all of Peterborough and surrounding areas. Call or book online for a fast, reliable response."
+        subheading="Need plumbing or heating help in Peterborough? Call now or request a visit online — clear upfront quotes."
       />
     </>
   );

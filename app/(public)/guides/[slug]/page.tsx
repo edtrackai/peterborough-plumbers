@@ -124,7 +124,7 @@ export default async function GuideDetailPage({ params }: Props) {
             <div className="flex-1">
               <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
               <p className="text-sm text-[var(--muted)] mt-1">
-                Gas Safe registered engineers — fast response across Peterborough and surrounding areas.
+                Qualified plumbing &amp; heating engineers — Peterborough and surrounding areas.
               </p>
             </div>
             <div className="flex gap-3 shrink-0">

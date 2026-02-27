@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
 
       const suggestedActions = safety.isGasSmell
         ? ["Call 0800 111 999 (Gas Emergency)", "I'm safe — book a follow-up visit"]
-        : ["Book a Gas Safe engineer", "Call 02039514510", "Request a callback"];
+        : ["Book a qualified engineer", "Call 02039514510", "Request a callback"];
 
       return NextResponse.json({
         sessionId: session.id,

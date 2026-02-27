@@ -52,9 +52,9 @@ function CheckCircleIcon({ className = "h-4 w-4" }: { className?: string }) {
 // ── Card guarantee items ──────────────────────────────────────────────────────
 
 const cardGuarantees = [
-  "Gas Safe Registered",
-  "No call-out charge",
-  "Fixed, upfront pricing",
+  "Qualified engineers",
+  "Transparent call-out fees",
+  "Clear upfront quotes",
 ] as const;
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -127,7 +127,7 @@ export default function HeroSection() {
             className="text-white font-black leading-[1.0] tracking-[-0.02em]"
             style={{ fontSize: "clamp(28px, 4vw, 46px)" }}
           >
-            Peterborough&apos;s
+            Peterborough
             <br />
             <span
               style={{
@@ -137,10 +137,10 @@ export default function HeroSection() {
                 backgroundClip: "text",
               }}
             >
-              Most Trusted
+              Plumbing &amp; Heating
             </span>
             <br />
-            Plumbers
+            Engineers
           </h1>
 
           {/* Subtext */}
@@ -148,8 +148,8 @@ export default function HeroSection() {
             className="mt-3 hidden sm:block text-white/65 leading-[1.65] max-w-[480px]"
             style={{ fontSize: "clamp(13px, 1vw, 15px)" }}
           >
-            Local Gas Safe engineers for boiler repairs, central heating, bathroom
-            installations and emergency call-outs &mdash; honest prices, no hidden extras.
+            Local plumbing and heating engineers for boiler repairs, central heating, bathroom
+            installations and emergency call-outs &mdash; clear upfront quotes, no hidden extras.
           </p>
 
 
@@ -194,44 +194,36 @@ export default function HeroSection() {
             style={{ scrollbarWidth: "none" }}
             aria-label="Trust signals"
           >
-            {/* Gas Safe */}
+            {/* Qualified engineers */}
             <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
               <svg className="h-3 w-3 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              Gas Safe Reg.
+              Qualified engineers
             </span>
 
-            {/* Google rating */}
-            <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
-              <svg className="h-3 w-3 text-yellow-400 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.84L12 17.77l-6.18 3.24L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              {siteSettings.googleRating} Google
-            </span>
-
-            {/* No call-out fee */}
+            {/* Fully insured */}
             <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
               <svg className="h-3 w-3 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              No call-out fee
+              Fully insured
             </span>
 
-            {/* Fixed pricing */}
+            {/* Transparent call-out fees */}
             <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
               <svg className="h-3 w-3 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              Fixed pricing
+              Transparent call-out fees
             </span>
 
-            {/* 30+ years */}
+            {/* Clear upfront quotes */}
             <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
               <svg className="h-3 w-3 text-brand shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
               </svg>
-              {siteSettings.yearsExperience} yrs established
+              Clear upfront quotes
             </span>
           </div>
         </div>
@@ -272,28 +264,29 @@ export default function HeroSection() {
 
               <div className="h-5 w-px bg-white/20" aria-hidden />
 
-              {/* Gas Safe */}
+              {/* Qualified engineers */}
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
-                <span className="text-white text-xs sm:text-sm font-semibold">Gas Safe Registered — No. {siteSettings.gasSafeNumber}</span>
+                <span className="text-white text-xs sm:text-sm font-semibold">Qualified engineers</span>
               </div>
 
               <div className="h-5 w-px bg-white/20" aria-hidden />
 
-              {/* Years */}
+              {/* Fully insured */}
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <ClockIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
-                <span className="text-white text-xs sm:text-sm font-semibold">{siteSettings.yearsExperience}+ Years Established</span>
+                <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
+                <span className="text-white text-xs sm:text-sm font-semibold">Fully insured</span>
               </div>
 
               <div className="h-5 w-px bg-white/20" aria-hidden />
 
-              {/* Engineers */}
+              {/* Serving Peterborough */}
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <svg className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span className="text-white text-xs sm:text-sm font-semibold">{siteSettings.engineersCount} Engineers</span>
+                <span className="text-white text-xs sm:text-sm font-semibold">Peterborough &amp; surrounding areas</span>
               </div>
 
             </div>

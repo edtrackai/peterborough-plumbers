@@ -8,9 +8,9 @@ import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Peterborough Plumbers | Local Gas Safe Plumbing & Heating",
+  title: "Peterborough Plumbers | Plumbing & Heating | Emergency Call-Outs",
   description:
-    "Peterborough's trusted plumbers with 30+ years experience. Gas Safe registered engineers for boiler service, heating, bathrooms, and emergency plumbing.",
+    "Peterborough Plumbers provides emergency call-outs, plumbing repairs, boiler servicing and heating support across Peterborough and surrounding areas. Clear upfront quotes.",
   path: "/",
   absoluteTitle: true,
   image: "/images/homepage/hero.png",
@@ -64,7 +64,7 @@ export default async function HomePage() {
       {/* ── C) HOW CAN WE HELP YOU? — HomeServe-style 2×2 grid ──────────────── */}
       <HelpTodaySection />
 
-      {/* ── D) BOOK & MANAGE ONLINE 24/7 — HomeServe-style two-column ──────── */}
+      {/* ── D) BOOK & MANAGE ONLINE — HomeServe-style two-column ──────── */}
       <section className="bg-white py-10 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -75,7 +75,7 @@ export default async function HomePage() {
                 Quick &amp; Easy
               </p>
               <h2 className="text-3xl lg:text-4xl font-bold text-[#1A2744] leading-tight mb-5">
-                Book &amp; manage your visit online, 24/7
+                Book &amp; manage your visit online
               </h2>
               <p className="text-[#6b7280] mb-8 leading-relaxed">
                 No waiting on hold. Request a visit, choose your preferred time slot, and track
@@ -453,7 +453,7 @@ export default async function HomePage() {
           <div className="text-center mb-6 sm:mb-10">
             <h2 className="text-2xl lg:text-3xl font-bold text-pp-heading mb-2">Popular Services in Peterborough</h2>
             <p className="text-[var(--muted)] text-sm">
-              Gas Safe registered engineers for all your plumbing and heating needs.
+              Qualified engineers for all your plumbing and heating needs.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
@@ -516,8 +516,8 @@ export default async function HomePage() {
             Ready to book your plumber?
           </h2>
           <p className="text-[#6b7280] text-lg leading-relaxed mb-10">
-            Get in touch today for a free, no-obligation quote from our Gas Safe registered
-            engineers. We cover the whole Peterborough area.
+            Get in touch today for plumbing repairs, boiler servicing and heating support
+            across Peterborough and surrounding areas.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -534,7 +534,7 @@ export default async function HomePage() {
             </a>
           </div>
           <p className="mt-8 text-[#9ca3af] text-sm">
-            30+ years established · Gas Safe Reg. {siteSettings.gasSafeNumber} · {siteSettings.engineersCount} qualified engineers
+            Peterborough plumbing &amp; heating · Fully insured · Clear upfront quotes
           </p>
         </div>
       </section>

@@ -126,7 +126,7 @@ export default async function AreaPage({
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.png" alt={`Plumber in ${area.name}, Peterborough — Gas Safe registered engineers`} fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/homepage/hero.png" alt={`Plumber in ${area.name}, Peterborough — qualified plumbing & heating engineers`} fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -159,7 +159,7 @@ export default async function AreaPage({
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "No call-out charge", "Fixed, upfront pricing"].map((item) => (
+            {["Qualified engineers", "Transparent call-out fees", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
@@ -337,7 +337,7 @@ export default async function AreaPage({
 
       <CTASection
         heading={`Need a Plumber in ${area.name}?`}
-        subheading={`Call ${settings.phone} or book online for fast, reliable Gas Safe registered service in ${area.name}.`}
+        subheading={`Call ${settings.phone} or book online for plumbing & heating support in ${area.name} and surrounding areas.`}
       />
     </>
   );

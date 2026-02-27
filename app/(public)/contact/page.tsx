@@ -9,9 +9,9 @@ import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 import LeadForm from "@/components/forms/LeadForm";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact Peterborough Plumbers | Call, WhatsApp or Book Online",
+  title: "Contact Peterborough Plumbers | Plumbing & Heating Enquiries",
   description:
-    "Get in touch with Peterborough Plumbers — Gas Safe registered engineers available 24/7. Call, WhatsApp, email or book online. Same-day and emergency appointments available.",
+    "Get in touch with Peterborough Plumbers for plumbing & heating support across Peterborough and surrounding areas. Call, WhatsApp, email or book online.",
   path: "/contact",
   absoluteTitle: true,
   image: "/images/homepage/hero.png",
@@ -58,7 +58,7 @@ export default function ContactPage() {
             </span>
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
-            Gas Safe registered engineers serving Peterborough and surrounding areas. Call for emergencies, or use the form below for standard enquiries and quotes.
+            Plumbing &amp; heating support across Peterborough and surrounding areas. Call for emergencies, or use the form below for standard enquiries and quotes.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/book" className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
@@ -70,7 +70,7 @@ export default function ContactPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "24/7 Emergency Line", "Quote Within 2 Hours"].map((item) => (
+            {["Plumbing & heating support", "Emergency call-outs available", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
@@ -101,7 +101,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-pp-heading mb-1">Call Us — 24/7</h2>
+                    <h2 className="text-lg font-bold text-pp-heading mb-1">Call Us</h2>
                     <a
                       href={`tel:${siteSettings.phoneHref}`}
                       className="text-2xl font-bold text-pp-teal hover:text-pp-teal-dark transition-colors"
@@ -109,7 +109,7 @@ export default function ContactPage() {
                       {siteSettings.phone}
                     </a>
                     <p className="text-sm text-[var(--muted)] mt-1">
-                      For emergencies, always call — we answer 24 hours a day.
+                      For emergencies, always call us directly.
                     </p>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                   ))}
                 </div>
                 <p className="text-xs text-[var(--muted)] mt-3">
-                  24/7 emergency line available outside business hours —{" "}
+                  Emergency call-outs available outside business hours —{" "}
                   <a href={`tel:${siteSettings.phoneHref}`} className="text-pp-teal font-medium hover:underline">
                     call {siteSettings.phone}
                   </a>
@@ -209,7 +209,7 @@ export default function ContactPage() {
               {
                 step: "1",
                 title: "We Call You Back",
-                body: "Within 2 hours during business hours. We ask a few quick questions about the job to give you an accurate quote.",
+                body: "During business hours. We ask a few quick questions about the job to give you an accurate quote.",
               },
               {
                 step: "2",
@@ -219,7 +219,7 @@ export default function ContactPage() {
               {
                 step: "3",
                 title: "We Complete the Work",
-                body: "Our Gas Safe registered engineer arrives on time, completes the work to the agreed specification, and provides a full invoice on completion.",
+                body: "Our qualified engineer arrives on time, completes the work to the agreed specification, and provides a full invoice on completion.",
               },
             ].map((item) => (
               <div key={item.step} className="bg-white p-6 rounded-xl border border-[var(--border)] text-center">
@@ -271,7 +271,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <CTASection heading="Need an Emergency Plumber?" subheading={`Call ${siteSettings.phone} now — Gas Safe registered engineers available 24/7.`} />
+      <CTASection heading="Need an Emergency Plumber?" subheading={`Call ${siteSettings.phone} now for plumbing & heating support across Peterborough and surrounding areas.`} />
     </>
   );
 }

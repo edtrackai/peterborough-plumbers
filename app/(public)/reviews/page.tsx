@@ -11,9 +11,9 @@ import { getSiteSettings } from "@/lib/db/content";
 import type { Review } from "@/content/reviews";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Peterborough Plumber Reviews | 4.6★ | 120+ Customers",
+  title: "Customer Reviews | Peterborough Plumbers | Peterborough & Surrounding Areas",
   description:
-    "Read genuine reviews from 120+ customers across Peterborough. Gas Safe plumbers — 4.6★ rated. Trusted by homeowners and landlords across the city. Book today.",
+    "Read genuine reviews from customers across Peterborough. Trusted by homeowners and landlords. Plumbing & heating engineers — clear upfront quotes. Book today.",
   path: "/reviews",
   image: "/images/homepage/hero.png",
 });
@@ -98,7 +98,7 @@ export default async function ReviewsPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "No call-out charge", "Fixed, upfront pricing"].map((item) => (
+            {["Qualified engineers", "Transparent call-out fees", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}

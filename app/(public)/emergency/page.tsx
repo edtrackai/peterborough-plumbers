@@ -8,9 +8,9 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Emergency Plumber Peterborough — 24/7, 1–2 Hr Response | Gas Safe",
+  title: "Emergency Plumber Peterborough | Urgent Plumbing & Heating Call-Outs",
   description:
-    "Emergency plumber in Peterborough available 24 hours a day, 7 days a week. Burst pipes, no heating, gas leaks, flooding — Gas Safe registered engineers respond in 1–2 hours. Call now.",
+    "Emergency plumber in Peterborough. Burst pipes, no heating, flooding and drain blockages — qualified engineers available for urgent call-outs across Peterborough and surrounding areas.",
   path: "/emergency",
   image: "/images/homepage/emergency-plumbing.png",
 });
@@ -87,11 +87,11 @@ const faqs = [
   },
   {
     q: "Do you cover out-of-hours and weekend emergencies?",
-    a: "Yes. We provide 24/7 emergency cover 365 days a year — including evenings, weekends, and bank holidays — across Peterborough and the surrounding areas.",
+    a: "Yes. We respond to emergency call-outs outside normal hours, including evenings, weekends, and bank holidays, across Peterborough and the surrounding areas.",
   },
   {
-    q: "Are your emergency engineers Gas Safe registered?",
-    a: "Yes. Every engineer we send is fully Gas Safe registered. You can verify their registration number on the official Gas Safe Register website (gassaferegister.co.uk). They will carry their Gas Safe ID card on every visit.",
+    q: "Are your emergency engineers qualified?",
+    a: "Yes. Every engineer we send is fully qualified and insured. They will carry their ID card on every visit and will confirm all costs before starting any work.",
   },
   {
     q: "What areas do you cover for emergency call-outs?",
@@ -126,7 +126,7 @@ const steps = [
   },
   {
     name: "Engineer arrives",
-    text: "Our Gas Safe registered engineer arrives within the quoted timeframe carrying a fully stocked parts van. They will show their Gas Safe ID card and give you a written cost breakdown before starting any work.",
+    text: "Our qualified engineer arrives within the confirmed timeframe carrying a fully stocked parts van. They will show their ID card and give you a written cost breakdown before starting any work.",
   },
   {
     name: "Diagnosis and repair",
@@ -159,7 +159,7 @@ export default function EmergencyPage() {
   const schema = serviceSchema({
     name: "Emergency Plumber Peterborough",
     description:
-      "24/7 emergency plumbing and heating service in Peterborough. Burst pipes, boiler breakdowns, gas leaks, flooding — Gas Safe registered engineers respond in 1–2 hours.",
+      "Emergency plumbing and heating service in Peterborough. Burst pipes, boiler breakdowns, flooding — qualified engineers, fast response, clear upfront quotes.",
     slug: "emergency-plumber",
     offers: {
       price: "99",
@@ -196,7 +196,7 @@ export default function EmergencyPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/emergency-plumbing.png" alt="Emergency plumber Peterborough — Gas Safe registered engineer, 24/7" fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/homepage/emergency-plumbing.png" alt="Emergency plumber Peterborough — qualified engineer for urgent call-outs" fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -208,7 +208,7 @@ export default function EmergencyPage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
             </span>
-            <span className="text-emerald-400 text-[0.72rem] font-bold tracking-[0.18em] uppercase">Available Now &mdash; 24/7 Emergency Response</span>
+            <span className="text-emerald-400 text-[0.72rem] font-bold tracking-[0.18em] uppercase">Available Now &mdash; Emergency Call-Outs</span>
           </div>
           <h1 className="text-white font-black leading-[1.05] tracking-[-0.025em] hero-text max-w-3xl" style={{ fontSize: "clamp(30px, 4.2vw, 56px)" }}>
             Emergency Plumber in{" "}
@@ -217,7 +217,7 @@ export default function EmergencyPage() {
             </span>
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
-            Burst pipes, no heating, flooding, gas leaks, boiler breakdowns. Gas Safe registered engineers on call around the clock — average response time <strong className="text-white font-bold">1–2 hours</strong>.
+            Burst pipes, no heating, flooding, gas leaks, boiler breakdowns. Qualified engineers available for urgent call-outs — <strong className="text-white font-bold">fast response</strong> across all Peterborough postcodes.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href={`tel:${siteSettings.phoneHref}`} className="inline-flex items-center justify-center gap-2.5 h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
@@ -229,7 +229,7 @@ export default function EmergencyPage() {
             </Link>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "1–2 Hour Response", "24/7 Emergency Cover"].map((item) => (
+            {["Emergency call-outs available", "Plumbing & heating support", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
@@ -251,7 +251,7 @@ export default function EmergencyPage() {
           <a href={`tel:${siteSettings.phoneHref}`} className="underline font-bold hover:no-underline">
             Call {siteSettings.phone}
           </a>{" "}
-          — we answer 24 hours a day.
+          — call us for urgent assistance.
         </p>
       </div>
 
@@ -508,7 +508,7 @@ export default function EmergencyPage() {
             Emergency Plumber FAQs
           </h2>
           <p className="text-center text-[var(--muted)] mb-10 max-w-xl mx-auto">
-            Common questions about our 24/7 emergency plumbing service in Peterborough.
+            Common questions about our emergency plumbing service in Peterborough.
           </p>
           <div className="space-y-4">
             {faqs.map((faq) => (
@@ -537,7 +537,7 @@ export default function EmergencyPage() {
 
       <CTASection
         heading="Call Our Emergency Line Now"
-        subheading={`Gas Safe registered engineers available 24/7 across Peterborough. Average response time 1–2 hours. Call ${siteSettings.phone}.`}
+        subheading={`Qualified engineers available for emergency call-outs across Peterborough and surrounding areas. Call ${siteSettings.phone} for urgent assistance.`}
       />
     </>
   );

@@ -16,11 +16,11 @@ export default function HelpTodaySection() {
           {/* ─── CARD 1: Emergency Plumbing ─────────────────────────────── */}
           <div className="relative bg-white rounded-2xl shadow-[0_1px_12px_rgba(0,0,0,0.07)] overflow-visible flex flex-col mt-7 sm:mt-0">
 
-            {/* Floating "Available 24/7 | Fast Response" badge */}
+            {/* Floating "Emergency Call-Outs | Fast Response" badge */}
             <div className="absolute -top-5 right-6 flex z-10 rounded-t-xl overflow-hidden shadow-md">
               <div className="bg-[#0F6E6E] text-white px-4 py-2 text-center leading-tight">
-                <div className="text-[10px] font-medium tracking-wide">Available</div>
-                <div className="text-[15px] font-extrabold">24/7</div>
+                <div className="text-[10px] font-medium tracking-wide">Emergency</div>
+                <div className="text-[15px] font-extrabold">Call-Outs</div>
               </div>
               <div className="bg-[#0a5a5a] text-white px-4 py-2 leading-tight">
                 <div className="text-[10px] font-medium tracking-wide">Fast</div>
@@ -68,7 +68,7 @@ export default function HelpTodaySection() {
                   Boiler Service &amp; Repair
                 </h3>
                 <p className="text-[0.88rem] text-[#6b7280] leading-relaxed mb-5">
-                  Gas Safe engineers for all major boiler brands. Annual service from £79, certificate included.
+                  Qualified engineers for all major boiler brands. Annual servicing — certificate included.
                 </p>
                 <Link
                   href="/services/boiler-service"
@@ -98,10 +98,10 @@ export default function HelpTodaySection() {
           <div className="bg-white rounded-2xl shadow-[0_1px_12px_rgba(0,0,0,0.07)] p-6 lg:p-8 flex flex-col">
             <div className="flex gap-5 items-start flex-1">
 
-              {/* GAS SAFE REG. text mark */}
+              {/* CP12 certificate mark */}
               <div
                 className="shrink-0 text-[#C8102E] font-black leading-none text-center mt-0.5 select-none"
-                aria-label="Gas Safe Registered"
+                aria-label="Gas Safety Certificate"
               >
                 <div className="text-[0.95rem] tracking-tight uppercase">GAS</div>
                 <div className="text-[0.95rem] tracking-tight uppercase">SAFE</div>
@@ -109,7 +109,7 @@ export default function HelpTodaySection() {
                   className="text-[0.52rem] tracking-[0.12em] font-bold mt-0.5 uppercase"
                   style={{ borderTop: "1.5px solid #C8102E", paddingTop: "2px" }}
                 >
-                  REG.
+                  CP12
                 </div>
               </div>
 
@@ -118,7 +118,7 @@ export default function HelpTodaySection() {
                   Need a Gas Safety Certificate?
                 </h3>
                 <p className="text-[0.88rem] text-[#6b7280] leading-relaxed mb-5">
-                  CP12 certificates from £65. Same-day turnaround available for landlords and homeowners.
+                  CP12 gas safety certificates for landlords and homeowners. Fast turnaround — appointments available.
                 </p>
                 <Link
                   href="/pricing"
@@ -160,8 +160,8 @@ export default function HelpTodaySection() {
 
         {/* ── Footer footnote ── */}
         <p className="text-center text-[0.78rem] text-[#9ca3af] mt-8">
-          * Available 24/7 for emergency call-outs.{" "}
-          <span className="text-[#C8102E] font-medium">Standard call-out charges apply.</span>
+          Emergency call-outs available.{" "}
+          <span className="text-[#C8102E] font-medium">Call-out fees confirmed before we attend.</span>
         </p>
 
       </div>

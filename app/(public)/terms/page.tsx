@@ -5,7 +5,7 @@ import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
   title: "Terms & Conditions | Peterborough Plumbers Services",
-  description: "Terms and conditions for Peterborough Plumbers. Gas Safe registered engineers, 12-month workmanship guarantee and transparent pricing across Peterborough.",
+  description: "Terms and conditions for Peterborough Plumbers. Qualified engineers, 12-month workmanship guarantee and transparent pricing across Peterborough.",
   path: "/terms",
   noIndex: true,
 });
@@ -23,7 +23,7 @@ export default function TermsPage() {
         <div className="mx-auto max-w-3xl px-4 space-y-6 text-pp-body leading-relaxed">
           <p>Last updated: January 2025</p>
           <h2 className="text-2xl font-bold text-pp-heading">1. Services</h2>
-          <p>{siteSettings.companyName} provides plumbing, heating, and related services across Peterborough and surrounding areas. All work is carried out by qualified, Gas Safe registered engineers.</p>
+          <p>{siteSettings.companyName} provides plumbing, heating, and related services across Peterborough and surrounding areas. All work is carried out by qualified, fully insured engineers.</p>
           <h2 className="text-2xl font-bold text-pp-heading">2. Quotes &amp; Pricing</h2>
           <p>All quotes are provided free of charge and without obligation. Final pricing will be confirmed before any work commences. Additional work discovered during a job will be quoted separately and only carried out with your approval.</p>
           <h2 className="text-2xl font-bold text-pp-heading">3. Payment</h2>

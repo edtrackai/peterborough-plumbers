@@ -35,7 +35,7 @@ export const knowledgeBase: Record<Exclude<PlumbingCategory, "boiler_gas">, KBEn
       "Reassemble, turn the water back on, and check for drips.",
     ],
     callToAction:
-      "If the drip persists or you're unsure, our engineers can fix it same day. No call-out charge.",
+      "If the drip persists or you're unsure, our engineers can fix it same day — clear upfront quote provided.",
     suggestedActions: ["Book a visit", "Request a callback", "Get a quote"],
   },
 
@@ -84,8 +84,8 @@ export const knowledgeBase: Record<Exclude<PlumbingCategory, "boiler_gas">, KBEn
       "If water is near electrical fittings or the consumer unit, turn off the electricity at the mains.",
     ],
     callToAction:
-      "Call us now — we respond to burst pipe emergencies 24/7 across Peterborough.",
-    suggestedActions: ["Call now — 24/7 emergency", "Book emergency visit"],
+      "Call us now — emergency call-outs available across Peterborough.",
+    suggestedActions: ["Call now — emergency", "Book emergency visit"],
   },
 
   low_pressure: {
@@ -112,9 +112,9 @@ export const knowledgeBase: Record<Exclude<PlumbingCategory, "boiler_gas">, KBEn
     tips: [
       "Use our online booking tool for same-day or next-day appointments.",
       "Call us on 02039514510 — we answer 7 days a week.",
-      "No call-out charge — you only pay for the work done.",
-      "Gas Safe registered engineers for all plumbing and heating work.",
-      "Fixed, upfront pricing — no hidden extras.",
+      "Transparent call-out fees — confirmed before we attend.",
+      "Qualified engineers for all plumbing and heating work.",
+      "Clear upfront quotes — no hidden extras.",
     ],
     callToAction: "Ready to book? Use the links below.",
     suggestedActions: ["Book online", "Call 02039514510", "Request a callback"],

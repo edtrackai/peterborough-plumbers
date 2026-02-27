@@ -75,7 +75,7 @@ export default async function Image({
             Peterborough Plumbers
           </div>
           <div style={{ display: "flex", color: "rgba(255,255,255,0.45)", fontSize: "18px" }}>
-            Gas Safe Registered · Est. 30+ Years
+            Peterborough Plumbers · Fully Insured
           </div>
         </div>
       </div>

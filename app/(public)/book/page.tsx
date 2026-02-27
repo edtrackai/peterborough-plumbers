@@ -8,7 +8,7 @@ import BookingFormWrapper from "./BookingFormWrapper";
 export const metadata: Metadata = buildMetadata({
   title: "Book a Plumber in Peterborough | Same-Day Available",
   description:
-    "Book a Gas Safe plumber in Peterborough online. Fill in our simple form and we'll confirm your appointment quickly. Same-week availability in most cases.",
+    "Book a plumber in Peterborough online. Fill in our simple form and we'll confirm your appointment quickly. Same-week availability in most cases.",
   path: "/book",
   noIndex: true,
   image: "/images/homepage/boiler-service.png",

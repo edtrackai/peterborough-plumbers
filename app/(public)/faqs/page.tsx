@@ -12,7 +12,7 @@ import { siteSettings } from "@/content/settings";
 export const metadata: Metadata = buildMetadata({
   title: "Plumbing & Heating FAQs Peterborough | Common Questions Answered",
   description:
-    "Answers to the most common questions about plumbing, boiler servicing, gas safety, emergency call-outs, and heating in Peterborough. Gas Safe registered company.",
+    "Answers to the most common questions about plumbing, boiler servicing, gas safety, emergency call-outs, and heating in Peterborough and surrounding areas.",
   path: "/faqs",
   image: "/images/homepage/hero.png",
 });
@@ -30,7 +30,7 @@ const faqCategories = [
       },
       {
         q: "How much does a boiler service cost in Peterborough?",
-        a: "Our annual boiler service starts from £79 including VAT. This covers a comprehensive 21-point inspection, combustion analysis, flue test, and a written service certificate signed by our Gas Safe registered engineer. See our full pricing guide for details.",
+        a: "Our annual boiler service pricing is listed on our pricing guide. This covers a comprehensive inspection, combustion analysis, flue test, and a written service certificate. See our full pricing guide for details.",
       },
       {
         q: "What is included in a boiler service?",
@@ -58,11 +58,11 @@ const faqCategories = [
     faqs: [
       {
         q: "What is a Gas Safety Certificate (CP12)?",
-        a: "A Gas Safety Certificate — also called a CP12 or Landlord Gas Safety Record — is a document issued by a Gas Safe registered engineer confirming that all gas appliances and installations at a property have been checked and are safe to use. Landlords are legally required to obtain one every 12 months for all gas appliances in rented properties.",
+        a: "A Gas Safety Certificate — also called a CP12 or Landlord Gas Safety Record — is a document issued by a qualified engineer confirming that all gas appliances and installations at a property have been checked and are safe to use. Landlords are legally required to obtain one every 12 months for all gas appliances in rented properties.",
       },
       {
         q: "How much does a gas safety certificate cost in Peterborough?",
-        a: "Our gas safety certificate starts from £65 for one appliance (typically the boiler), with an additional £15 per extra appliance (gas hob, gas fire, warm air unit). This includes VAT and a same-day certificate in PDF format.",
+        a: "Our gas safety certificate pricing is listed on our pricing guide — covering one or more appliances (boiler, gas hob, gas fire, warm air unit). This includes VAT and a certificate in PDF format. Fast turnaround — appointments available.",
       },
       {
         q: "Do I need a gas safety certificate if I own my own home?",
@@ -86,7 +86,7 @@ const faqCategories = [
     faqs: [
       {
         q: "How quickly does an emergency plumber arrive in Peterborough?",
-        a: "We aim to respond to genuine plumbing emergencies within 1–2 hours across all Peterborough postcodes (PE1–PE7). For outlying areas such as Stamford and Market Deeping, response times may be slightly longer. We answer the phone 24 hours a day, 365 days a year — call us for a current ETA.",
+        a: "We aim to respond as quickly as possible to genuine plumbing emergencies across all Peterborough postcodes (PE1–PE7). For outlying areas such as Stamford and Market Deeping, response times may vary. Call us and we will confirm our current availability and estimated arrival time.",
       },
       {
         q: "What counts as a plumbing emergency?",
@@ -198,7 +198,7 @@ const faqCategories = [
       },
       {
         q: "How do I find a trustworthy plumber in Peterborough?",
-        a: "Check for Gas Safe registration (mandatory for any gas work), public liability insurance, and verifiable reviews on Google or Checkatrade. Ask for a written quote before work begins and check that VAT is included. We carry £5 million public liability insurance, are Gas Safe registered, and all our reviews are from verified customers.",
+        a: "Check for relevant qualifications (mandatory for gas work), public liability insurance, and verifiable reviews on Google or Checkatrade. Ask for a written quote before work begins and check that VAT is included. We carry £5 million public liability insurance, are fully insured and qualified, and all our reviews are from verified customers.",
       },
     ],
   },
@@ -227,7 +227,7 @@ export default function FaqPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero-engineer.png" alt="Gas Safe registered Peterborough Plumbers engineer ready to answer your questions" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
+          <Image src="/images/homepage/hero-engineer.png" alt="Peterborough Plumbers qualified engineer ready to answer your questions" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -260,7 +260,7 @@ export default function FaqPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "No call-out charge", "Fixed, upfront pricing"].map((item) => (
+            {["Qualified engineers", "Transparent call-out fees", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
@@ -395,8 +395,8 @@ export default function FaqPage() {
       </section>
 
       <CTASection
-        heading="Peterborough's Trusted Gas Safe Plumbers"
-        subheading="Book online or call for a free, no-obligation quote. Written price before every job."
+        heading="Peterborough's Trusted Plumbing & Heating Engineers"
+        subheading="Book online or call for a written quote before every job. No obligation."
       />
     </>
   );

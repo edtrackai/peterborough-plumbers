@@ -3,7 +3,7 @@ import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 
 export default function CTASection({
   heading = "Ready to Book Your Plumber?",
-  subheading = "Get in touch today for a free, no-obligation quote from our Gas Safe registered engineers.",
+  subheading = "Get in touch today for plumbing repairs, boiler servicing and heating support across Peterborough.",
 }: {
   heading?: string;
   subheading?: string;

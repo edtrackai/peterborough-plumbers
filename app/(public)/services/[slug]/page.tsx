@@ -95,7 +95,7 @@ export default async function ServicePage({
               ...(slug === "boiler-service" && {
                 offers: {
                   price: "79",
-                  description: "Annual boiler service by Gas Safe registered engineers — from £79, no hidden fees.",
+                  description: "Annual boiler service by qualified engineers — clear upfront quote provided before work begins.",
                 },
               }),
             })
@@ -118,7 +118,7 @@ export default async function ServicePage({
               howToSchema({
                 name: "How to Book a Boiler Service in Peterborough",
                 description:
-                  "Step-by-step guide to booking a professional annual boiler service with Peterborough Plumbers — Gas Safe registered engineers from £79.",
+                  "Step-by-step guide to booking a professional annual boiler service with Peterborough Plumbers — qualified engineers, clear upfront quotes.",
                 steps: [
                   {
                     name: "Book online or by phone",
@@ -130,11 +130,11 @@ export default async function ServicePage({
                   },
                   {
                     name: "Engineer arrives on time",
-                    text: "Our Gas Safe registered engineer arrives within the agreed window carrying all necessary test equipment and Gas Safe photo ID.",
+                    text: "Our qualified engineer arrives within the agreed window carrying all necessary test equipment and photo ID.",
                   },
                   {
-                    name: "21-point boiler inspection",
-                    text: "The engineer carries out a comprehensive 30–60 minute service covering every critical component, including gas pressure, burner, heat exchanger, flue, combustion analysis, and safety devices.",
+                    name: "Comprehensive boiler inspection",
+                    text: "The engineer carries out a thorough service covering every critical component, including gas pressure, burner, heat exchanger, flue, combustion analysis, and safety devices.",
                   },
                   {
                     name: "Combustion analysis",
@@ -142,7 +142,7 @@ export default async function ServicePage({
                   },
                   {
                     name: "Receive written service record",
-                    text: "On completion you receive a written service record signed by the engineer and bearing their Gas Safe registration number — valid for warranty and insurance purposes.",
+                    text: "On completion you receive a written service record signed by the engineer — valid for warranty and insurance purposes.",
                   },
                 ],
               })
@@ -171,7 +171,7 @@ export default async function ServicePage({
           {heroImage && (
             <Image
               src={heroImage}
-              alt={`${service.name} in Peterborough — professional Gas Safe registered engineers`}
+              alt={`${service.name} in Peterborough — qualified plumbing & heating engineers`}
               fill
               className="object-cover"
               priority
@@ -274,7 +274,7 @@ export default async function ServicePage({
 
           {/* Trust chips */}
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "No call-out charge", "Fixed, upfront pricing"].map((item) => (
+            {["Qualified engineers", "Transparent call-out fees", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

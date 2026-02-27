@@ -8,9 +8,9 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Prices Peterborough 2026 | From £65 | No Hidden Fees",
+  title: "Plumbing & Heating Pricing in Peterborough | Clear Upfront Quotes | Peterborough Plumbers",
   description:
-    "Transparent plumbing and heating prices in Peterborough 2026. Boiler service from £79, gas safety certificate from £65, emergency call-out from £99, new boiler from £1,800. No hidden fees — written quote before every job.",
+    "Plumbing and heating pricing in Peterborough for 2026. Written quote before every job — no hidden fees. Covers boiler servicing, emergency call-outs, installations and more.",
   path: "/pricing",
   image: "/images/homepage/hero.png",
 });
@@ -20,9 +20,9 @@ const priceGroups = [
     heading: "Boiler Services",
     icon: "🔧",
     slug: "boiler-service",
-    description: "All boiler service and repair work is carried out by Gas Safe registered engineers. Prices confirmed before work starts.",
+    description: "All boiler service and repair work is carried out by qualified engineers. Prices confirmed before work starts.",
     items: [
-      { service: "Annual Boiler Service", price: "From £79", note: "Includes written service certificate, Gas Safe ID provided" },
+      { service: "Annual Boiler Service", price: "From £79", note: "Includes written service certificate, engineer ID provided" },
       { service: "Boiler Repair (diagnosis + repair)", price: "From £95", note: "Parts quoted separately, approved before fitting" },
       { service: "Boiler Repair (complex fault)", price: "From £150", note: "Heat exchanger, PCB, gas valve — parts extra" },
       { service: "New Combi Boiler (supply & fit)", price: "From £1,800", note: "Worcester Bosch, Vaillant, Baxi — 10-year warranty available" },
@@ -87,7 +87,7 @@ const priceGroups = [
     heading: "Gas Safety & Certification",
     icon: "✅",
     slug: "gas-safety-certificates",
-    description: "All gas safety work carries a Gas Safe registered engineer's signature. Landlord CP12 certificates issued same-day.",
+    description: "All gas safety work is carried out by qualified engineers. Landlord CP12 certificates available — fast turnaround.",
     items: [
       { service: "Gas Safety Certificate (CP12) — 1 appliance", price: "From £65", note: "Mandatory annual requirement for landlords" },
       { service: "Gas Safety Certificate — each extra appliance", price: "+£15", note: "Boiler, hob, fire, warm air unit" },
@@ -100,7 +100,7 @@ const priceGroups = [
     heading: "Drain Blockages & CCTV",
     icon: "🚿",
     slug: "drain-blockages",
-    description: "Professional drain clearance using jetting equipment and CCTV camera survey. No call-out fee for drain bookings.",
+    description: "Professional drain clearance using jetting equipment and CCTV camera survey. Transparent call-out fees confirmed before we attend.",
     items: [
       { service: "Internal Drain Clearance (jetting)", price: "From £75", note: "Kitchen, bathroom, or soil stack" },
       { service: "External Drain Clearance (jetting)", price: "From £120", note: "Manhole to manhole, includes CCTV scan" },
@@ -113,7 +113,7 @@ const priceGroups = [
     heading: "Emergency Call-Out",
     icon: "🚨",
     slug: "emergency-plumber",
-    description: "24/7 emergency response across Peterborough. All costs confirmed by phone before we attend.",
+    description: "Emergency call-outs available across Peterborough and surrounding areas. All costs confirmed before we attend.",
     items: [
       { service: "Daytime Emergency (Mon–Fri 8am–6pm)", price: "From £99", note: "Includes call-out + first 30 min labour" },
       { service: "Evening Emergency (Mon–Fri after 6pm)", price: "From £149", note: "Includes call-out + first 30 min labour" },
@@ -199,7 +199,7 @@ export default function PricingPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/boiler-service.png" alt="Gas Safe engineer conducting a boiler service in Peterborough" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
+          <Image src="/images/homepage/boiler-service.png" alt="Qualified engineer conducting a boiler service in Peterborough" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -214,13 +214,13 @@ export default function PricingPage() {
             <span className="text-emerald-400 text-[0.72rem] font-bold tracking-[0.18em] uppercase">Available Today &mdash; Peterborough &amp; Surrounding Areas</span>
           </div>
           <h1 className="text-white font-black leading-[1.05] tracking-[-0.025em] hero-text max-w-3xl" style={{ fontSize: "clamp(30px, 4.2vw, 56px)" }}>
-            Transparent Plumbing Prices in{" "}
+            Plumbing &amp; Heating Pricing in{" "}
             <span style={{ background: "linear-gradient(135deg, #f05060 0%, #C8102E 55%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               Peterborough
             </span>
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
-            No hidden fees. Written quote before every job. All prices include VAT — boiler service from <strong className="text-white font-bold">£79</strong>, gas safety from <strong className="text-white font-bold">£65</strong>, emergency from <strong className="text-white font-bold">£99</strong>.
+            We confirm any call-out fees (where applicable) and provide <strong className="text-white font-bold">clear upfront quotes</strong> before work begins. All prices include VAT.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/contact" className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
@@ -232,7 +232,7 @@ export default function PricingPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "Written Quote Always", "0% Finance Available"].map((item) => (
+            {["Qualified engineers", "Written Quote Always", "0% Finance Available"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
@@ -256,7 +256,7 @@ export default function PricingPage() {
               "All Prices Include VAT",
               "Fixed Prices Where Possible",
               "0% Finance Available",
-              "No Call-Out Fee on Standard Jobs",
+              "Transparent Call-Out Fees",
             ].map((t) => (
               <span key={t} className="flex items-center gap-2">
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -274,7 +274,7 @@ export default function PricingPage() {
         <div className="mx-auto max-w-4xl px-4">
           <div className="prose prose-sm max-w-none text-[var(--muted)] leading-relaxed">
             <p>
-              Peterborough Plumbers is an independent Gas Safe registered company serving all
+              Peterborough Plumbers is an independent plumbing and heating company serving all
               Peterborough postcodes (PE1–PE7) and the surrounding areas including Stamford, Market
               Deeping, Yaxley, and Whittlesey. Unlike national companies that charge premium rates
               to cover franchise fees and marketing, we offer directly-employed engineers and

@@ -120,7 +120,7 @@ export function PostcodeGate({ onAvailable }: PostcodeGateProps) {
 
       {/* Trust badges */}
       <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-500 mt-2">
-        {["Gas Safe Registered", "1-hr Response", "Fixed-Price Guarantee"].map((t) => (
+        {["Qualified engineers", "Emergency call-outs", "Clear upfront quotes"].map((t) => (
           <span key={t} className="flex items-center gap-1">
             <span className="text-pp-teal font-bold">✓</span> {t}
           </span>

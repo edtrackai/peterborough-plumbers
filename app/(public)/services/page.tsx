@@ -10,9 +10,9 @@ import type { Service } from "@/content/services";
 import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Services Peterborough | Gas Safe",
+  title: "Plumbing & Heating Services Peterborough | Peterborough Plumbers",
   description:
-    "Gas Safe plumbing and heating services in Peterborough — boilers, bathrooms, emergency repairs, drain clearance. 30+ years experience. Book online today.",
+    "Plumbing and heating services across Peterborough and surrounding areas — boiler servicing, emergency repairs, bathroom installations, drain clearance. Clear upfront quotes.",
   path: "/services",
   image: "/images/homepage/hero.png",
 });
@@ -48,7 +48,7 @@ export default async function ServicesPage() {
             </span>
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
-            From annual boiler servicing to full bathroom installations and 24/7 emergency repairs — Gas Safe registered engineers covering all PE postcodes.
+            From annual boiler servicing to full bathroom installations and emergency repairs — qualified engineers covering all PE postcodes and surrounding areas.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/contact" className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
@@ -60,7 +60,7 @@ export default async function ServicesPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "No call-out charge", "Fixed, upfront pricing"].map((item) => (
+            {["Qualified engineers", "Transparent call-out fees", "Clear upfront quotes"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}

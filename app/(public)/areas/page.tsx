@@ -11,9 +11,9 @@ import { getSiteSettings } from "@/lib/db/content";
 import type { Area } from "@/content/areas";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Areas We Cover | Plumbers Across Peterborough & Surroundings",
+  title: "Areas We Cover in Peterborough | Peterborough Plumbers",
   description:
-    "Gas Safe registered plumbers serving all of Peterborough (PE1–PE7), Stamford, Market Deeping, Yaxley, and Whittlesey. Same-day and emergency cover across all areas. Book today.",
+    "Plumbing & heating support across Peterborough (PE1–PE7), Stamford, Market Deeping, Yaxley, and Whittlesey. Emergency call-outs available. Book today.",
   path: "/areas",
   image: "/images/homepage/hero.png",
 });
@@ -25,15 +25,15 @@ const coverageFeatures = [
   },
   {
     title: "Same-Day Appointments",
-    body: "Standard same-day bookings available in most areas on most days. Emergency response within 1–2 hours.",
+    body: "Standard same-day bookings available in most areas on most days. Emergency call-outs available for urgent issues.",
   },
   {
     title: "No Travel Surcharge",
     body: "We do not add travel fees for any area in our standard service zone — including outlying towns like Stamford and Market Deeping.",
   },
   {
-    title: "Gas Safe Registered",
-    body: "Every engineer carries a Gas Safe ID card. All gas work is carried out to BS 6891 standards.",
+    title: "Qualified & Insured Engineers",
+    body: "Our engineers are fully qualified, insured, and complete all work to current UK plumbing and heating standards.",
   },
 ];
 
@@ -79,7 +79,7 @@ export default async function AreasPage() {
             </span>
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
-            Gas Safe plumbers covering all PE postcodes and surrounding towns — same-day appointments and 24/7 emergency response. No travel surcharges across our service zone.
+            Qualified engineers covering all PE postcodes and surrounding towns — emergency call-outs available. No travel surcharges across our service zone.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/contact" className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
@@ -91,7 +91,7 @@ export default async function AreasPage() {
             </a>
           </div>
           <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
-            {["Gas Safe Registered", "No call-out charge", "No travel surcharge"].map((item) => (
+            {["Qualified engineers", "Transparent call-out fees", "No travel surcharge"].map((item) => (
               <li key={item} className="flex items-center gap-1.5 text-white/55 text-sm">
                 <svg className="h-3.5 w-3.5 text-emerald-400/80 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                 {item}
