@@ -178,19 +178,9 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* Inline promise chips — desktop only */}
-          <ul className="mt-3 hidden sm:flex flex-wrap gap-x-4 gap-y-1.5 list-none">
-            {cardGuarantees.map((p) => (
-              <li key={p} className="flex items-center gap-1.5 text-white/55 text-sm">
-                <CheckCircleIcon className="h-3.5 w-3.5 text-emerald-400/70 shrink-0" />
-                {p}
-              </li>
-            ))}
-          </ul>
-
-          {/* ── Mobile trust strip ── visible below sm only */}
+          {/* ── Trust strip ── all screen sizes */}
           <div
-            className="mt-4 sm:hidden flex gap-2 overflow-x-auto pb-0.5"
+            className="mt-4 flex flex-wrap gap-2 pb-0.5"
             style={{ scrollbarWidth: "none" }}
             aria-label="Trust signals"
           >
