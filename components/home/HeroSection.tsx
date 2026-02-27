@@ -232,77 +232,63 @@ export default function HeroSection() {
       </div>
 
 
-      {/* ── BOTTOM TRUST PILL ────────────────────────────────────────────────── */}
-      <div className="relative z-10 pb-5 sm:pb-7 hidden sm:block">
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+      {/* ── BOTTOM TRUST STRIP + CURVED EDGE ────────────────────────────────── */}
+      <div className="relative z-10 hidden sm:block">
+        {/* Glassmorphism trust bar */}
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 pb-5 sm:pb-7">
           <div
-            className="bg-pp-navy rounded-2xl sm:rounded-full overflow-hidden border border-white/[0.10] py-4 px-5 sm:py-5 sm:px-8"
-            style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.10)" }}
+            className="rounded-2xl sm:rounded-full border border-white/20 backdrop-blur-md py-4 px-5 sm:py-5 sm:px-8"
+            style={{ background: "rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.10)" }}
           >
-            <div className="sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-10">
+          <div className="flex flex-wrap items-center justify-center gap-x-10">
 
-              {/* Google rating */}
-              <div className="flex items-center justify-center gap-2.5">
-                <svg className="h-4 sm:h-5 w-auto" viewBox="0 0 74 24" xmlns="http://www.w3.org/2000/svg" aria-label="Google">
-                  <path d="M9.24 8.19v2.46h5.88c-.18 1.38-.64 2.39-1.34 3.1-.86.86-2.2 1.8-4.54 1.8-3.62 0-6.45-2.92-6.45-6.54s2.83-6.54 6.45-6.54c1.95 0 3.38.77 4.43 1.76L15.4 2.5C13.94 1.08 11.98 0 9.24 0 4.28 0 .11 4.04.11 9s4.17 9 9.13 9c2.68 0 4.7-.88 6.28-2.52 1.62-1.62 2.13-3.91 2.13-5.75 0-.57-.04-1.1-.13-1.54H9.24z" fill="#4285F4" />
-                  <path d="M25 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z" fill="#EA4335" />
-                  <path d="M38.17 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z" fill="#FBBC05" />
-                  <path d="M53.58 7.49h-.09c-.57-.68-1.67-1.3-3.06-1.3-2.9 0-5.56 2.55-5.56 5.83 0 3.26 2.66 5.79 5.56 5.79 1.39 0 2.49-.62 3.06-1.32h.09v.81c0 2.22-1.19 3.41-3.1 3.41-1.56 0-2.53-1.12-2.93-2.07l-2.22.92c.64 1.54 2.33 3.43 5.15 3.43 2.99 0 5.52-1.76 5.52-6.05V6.49h-2.42v1zm-2.93 8.03c-1.76 0-3.1-1.5-3.1-3.52 0-2.05 1.34-3.54 3.1-3.54 1.74 0 3.1 1.5 3.1 3.54 0 2.03-1.36 3.52-3.1 3.52z" fill="#4285F4" />
-                  <path d="M58 .24h2.51v17.57H58z" fill="#34A853" />
-                  <path d="M66.89 15.52c-1.3 0-2.22-.59-2.82-1.76l7.77-3.21-.26-.66c-.48-1.3-1.96-3.7-4.97-3.7-2.99 0-5.48 2.35-5.48 5.81 0 3.26 2.46 5.81 5.76 5.81 2.66 0 4.2-1.63 4.84-2.57l-1.98-1.32c-.66.96-1.56 1.6-2.86 1.6zm-.18-7.15c1.03 0 1.91.53 2.2 1.28l-5.25 2.17c0-2.44 1.73-3.45 3.05-3.45z" fill="#EA4335" />
-                </svg>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-white font-bold text-base sm:text-lg leading-none">{siteSettings.googleRating}</span>
-                  <div className="flex gap-0.5" aria-label={`${siteSettings.googleRating} out of 5 stars`}>
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <StarIcon key={i} className={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${i <= Math.floor(Number(siteSettings.googleRating)) ? "text-amber-400" : "text-white/20"}`} />
-                    ))}
-                  </div>
-                  <span className="text-white/60 text-xs">{siteSettings.reviewCount}+ reviews</span>
-                </div>
-              </div>
-
-              <div className="h-5 w-px bg-white/20" aria-hidden />
-
-              {/* Qualified engineers */}
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
-                <span className="text-white text-xs sm:text-sm font-semibold">Qualified engineers</span>
-              </div>
-
-              <div className="h-5 w-px bg-white/20" aria-hidden />
-
-              {/* Fully insured */}
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
-                <span className="text-white text-xs sm:text-sm font-semibold">Fully insured</span>
-              </div>
-
-              <div className="h-5 w-px bg-white/20" aria-hidden />
-
-              {/* Serving Peterborough */}
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <svg className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span className="text-white text-xs sm:text-sm font-semibold">Peterborough &amp; surrounding areas</span>
-              </div>
-
+            {/* Trusted Local Plumber */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
+              <span className="text-white text-xs sm:text-sm font-semibold">Trusted Local Plumber</span>
             </div>
+
+            <div className="h-5 w-px bg-white/20" aria-hidden />
+
+            {/* Qualified engineers */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
+              <span className="text-white text-xs sm:text-sm font-semibold">Qualified engineers</span>
+            </div>
+
+            <div className="h-5 w-px bg-white/20" aria-hidden />
+
+            {/* Fully insured */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
+              <span className="text-white text-xs sm:text-sm font-semibold">Fully insured</span>
+            </div>
+
+            <div className="h-5 w-px bg-white/20" aria-hidden />
+
+            {/* Serving Peterborough */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <svg className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span className="text-white text-xs sm:text-sm font-semibold">Peterborough &amp; surrounding areas</span>
+            </div>
+
+          </div>
           </div>
         </div>
-      </div>
 
-      {/* ── CURVED BOTTOM WAVE ─────────────────────────────────────────────────── */}
-      <div className="absolute bottom-0 left-0 right-0 z-[5]" aria-hidden="true" style={{ lineHeight: 0 }}>
-        <svg
-          viewBox="0 0 1440 80"
-          preserveAspectRatio="none"
-          style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}
-        >
-          <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
-        </svg>
+        {/* Curved bottom wave — flush below the trust bar */}
+        <div aria-hidden="true" style={{ lineHeight: 0 }}>
+          <svg
+            viewBox="0 0 1440 80"
+            preserveAspectRatio="none"
+            style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}
+          >
+            <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
+          </svg>
+        </div>
       </div>
 
     </section>
