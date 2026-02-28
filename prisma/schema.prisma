@@ -101,6 +101,7 @@ model Booking {
 
   @@index([bookingRef])
   @@index([status])
+  @@index([status, expiresAt]) // cleanupExpired: where status="reserved" AND expiresAt < now
   @@index([createdAt(sort: Desc)])
   @@index([zonePrefix])
   @@index([assignedPlumberId])
@@ -311,6 +312,7 @@ model Review {
   updatedAt    DateTime @updatedAt
 
   @@index([featured])
+  @@index([areaName]) // area pages: where areaName = area.name (insensitive)
   @@map("pb_reviews")
 }
 

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { cleanupExpired } from "@/lib/booking/cleanupExpired";
 import { checkAvailabilitySchema } from "@/lib/validations/booking-system";
 
 // Extract outward code prefix from a UK postcode: "PE1 1AA" → "PE1"
@@ -33,9 +32,6 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Free any expired reservations before querying availability
-    await cleanupExpired();
 
     // Check if the zone is served
     const zone = await prisma.serviceZone.findFirst({

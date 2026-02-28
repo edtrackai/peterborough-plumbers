@@ -233,8 +233,9 @@ export default function HeroSection() {
 
 
       {/* ── BOTTOM TRUST STRIP + CURVED EDGE ────────────────────────────────── */}
+
+      {/* Glassmorphism trust bar — desktop/tablet only */}
       <div className="relative z-10 hidden sm:block">
-        {/* Glassmorphism trust bar */}
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 pb-5 sm:pb-7">
           <div
             className="rounded-2xl sm:rounded-full border border-white/20 backdrop-blur-md py-4 px-5 sm:py-5 sm:px-8"
@@ -278,17 +279,17 @@ export default function HeroSection() {
           </div>
           </div>
         </div>
+      </div>
 
-        {/* Curved bottom wave — flush below the trust bar */}
-        <div aria-hidden="true" style={{ lineHeight: 0 }}>
-          <svg
-            viewBox="0 0 1440 80"
-            preserveAspectRatio="none"
-            style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}
-          >
-            <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
-          </svg>
-        </div>
+      {/* Curved bottom wave — always visible, flush at section bottom */}
+      <div className="relative z-10" aria-hidden="true" style={{ lineHeight: 0 }}>
+        <svg
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          style={{ display: "block", width: "100%", height: "clamp(36px, 5.5vw, 80px)" }}
+        >
+          <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
+        </svg>
       </div>
 
     </section>
