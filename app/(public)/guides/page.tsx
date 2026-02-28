@@ -9,12 +9,14 @@ import { siteSettings } from "@/content/settings";
 import { prisma } from "@/lib/prisma";
 import { guideCategories } from "@/content/guides";
 
+export const revalidate = 3600; // rebuild stale pages every hour
+
 export const metadata: Metadata = buildMetadata({
   title: "Free Plumbing & Heating Guides | Peterborough Homeowner Advice 2026",
   description:
     "Free plumbing and heating guides for Peterborough homeowners — 2026 cost guides, boiler help, DIY tips, and emergency advice from qualified plumbing & heating engineers.",
   path: "/guides",
-  image: "/images/homepage/hero.png",
+  image: "/images/homepage/hero.webp",
 });
 
 const categoryOrder: (keyof typeof guideCategories)[] = [
@@ -54,7 +56,7 @@ export default async function GuidesPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/plumbing-repairs.png" alt="Plumber providing expert repairs and advice in Peterborough" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
+          <Image src="/images/homepage/plumbing-repairs.webp" alt="Plumber providing expert repairs and advice in Peterborough" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />

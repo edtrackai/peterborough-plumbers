@@ -17,6 +17,7 @@ export default function Footer() {
             alt="Peterborough Plumbers"
             width={52}
             height={52}
+            loading="lazy"
             className="h-[52px] w-[52px] object-contain"
           />
         </div>

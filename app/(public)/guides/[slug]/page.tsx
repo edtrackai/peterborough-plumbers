@@ -7,10 +7,13 @@ import CTASection from "@/components/blocks/CTASection";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import { guideCategories } from "@/content/guides";
+import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+export const revalidate = 3600; // rebuild stale pages every hour
 
 export async function generateStaticParams() {
   const guides = await prisma.guide.findMany({ select: { slug: true } });
@@ -154,7 +157,7 @@ export default async function GuideDetailPage({ params }: Props) {
           {/* Guide content */}
           <div
             className="prose prose-lg max-w-none prose-headings:text-pp-heading prose-headings:font-bold prose-a:text-[var(--brand)] prose-a:no-underline hover:prose-a:underline prose-ul:my-4 prose-li:my-1"
-            dangerouslySetInnerHTML={{ __html: guide.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(guide.content) }}
           />
 
           {/* Related guides */}

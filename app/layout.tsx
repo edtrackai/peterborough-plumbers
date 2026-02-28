@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { siteSettings } from "@/content/settings";
-import { localBusinessSchema } from "@/lib/seo/schema";
+import { localBusinessSchema, webSiteSchema } from "@/lib/seo/schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,6 +47,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema()) }}
         />
         {children}
       </body>

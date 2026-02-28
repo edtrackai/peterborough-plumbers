@@ -5,6 +5,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 import { articleSchema } from "@/lib/seo/schema";
+import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
@@ -17,6 +18,8 @@ const categoryServiceMap: Record<BlogCategory, string[]> = {
   "Emergency & Repairs": ["emergency-plumber", "plumbing-repairs", "damp-leak-detection"],
   "Local Guides": ["plumbing-installation", "bathroom-installations", "plumbing-repairs"],
 };
+
+export const revalidate = 3600; // rebuild stale pages every hour
 
 export async function generateStaticParams() {
   const posts = await prisma.blogPost.findMany({
@@ -93,7 +96,7 @@ export default async function BlogPostPage({
             </p>
           )}
           <div className="mt-6">
-            <Link href={settings.primaryCtaHref} className="bg-[var(--brand)] text-[var(--pp-navy)] px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
+            <Link href={settings.primaryCtaHref} className="bg-[var(--brand)] text-white px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
               {settings.primaryCtaLabel}
             </Link>
           </div>
@@ -104,13 +107,13 @@ export default async function BlogPostPage({
         <div className="mx-auto max-w-3xl px-4">
           <div
             className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-heading [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-heading [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-body [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-body [&_li]:mb-1"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
           />
 
           {/* Related services */}
           {relatedServices.length > 0 && (
             <div className="mt-12 pt-8 border-t border-gray-100">
-              <h3 className="text-lg font-bold text-pp-heading mb-4">Related Services</h3>
+              <h2 className="text-lg font-bold text-pp-heading mb-4">Related Services</h2>
               <div className="flex flex-wrap gap-2">
                 {relatedServices.map((s) => (
                   <Link

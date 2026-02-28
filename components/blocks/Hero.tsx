@@ -8,7 +8,7 @@ export default function Hero() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/homepage/hero.png"
+          src="/images/homepage/hero.webp"
           alt="Professional Gas Safe registered plumber carrying out plumbing work in a Peterborough home"
           fill
           className="object-cover object-[70%_center] md:object-center"

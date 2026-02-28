@@ -40,8 +40,10 @@ export function buildMetadata(options: {
       ...(ogImage && { images: [ogImage[0].url] }),
     },
     other: {
-      "geo.region": "GB-CAM",
+      "geo.region": "GB-PTE",
       "geo.placename": "Peterborough",
+      "geo.position": "52.5735;-0.2404",
+      "ICBM": "52.5735, -0.2404",
     },
   };
 }

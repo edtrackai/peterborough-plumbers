@@ -12,6 +12,7 @@ import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
 import { getRelatedServiceSlugs } from "@/lib/seo/internalLinks";
+import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 
 // Helpful guides per service slug
 const helpfulGuidesMap: Record<string, { slug: string; title: string }[]> = {
@@ -36,6 +37,8 @@ const servicePageAreas = [
   { slug: "orton",       name: "Orton" },
   { slug: "yaxley",      name: "Yaxley" },
 ] as const;
+
+export const revalidate = 3600; // rebuild stale pages every hour
 
 export async function generateStaticParams() {
   const services = await prisma.service.findMany({ select: { slug: true } });
@@ -75,12 +78,17 @@ export default async function ServicePage({
   const faqs = service.faqs as { q: string; a: string }[];
   const heroImage = service.heroImage || service.image;
 
-  // Fetch related services from DB
+  // Fetch related services — only the fields ServiceGrid actually renders
+  const relatedSelect = {
+    slug: true,
+    name: true,
+    image: true,
+    shortDescription: true,
+  } as const;
   const relatedSlugs = getRelatedServiceSlugs(slug);
-  const relatedRaw = relatedSlugs.length
-    ? await prisma.service.findMany({ where: { slug: { in: relatedSlugs } } })
-    : await prisma.service.findMany({ where: { slug: { not: slug } }, take: 4 });
-  const related = relatedRaw as unknown as Service[];
+  const related = relatedSlugs.length
+    ? await prisma.service.findMany({ where: { slug: { in: relatedSlugs } }, select: relatedSelect })
+    : await prisma.service.findMany({ where: { slug: { not: slug } }, take: 4, select: relatedSelect });
 
   return (
     <>
@@ -304,7 +312,7 @@ export default async function ServicePage({
         <div className="mx-auto max-w-4xl px-4">
           <div
             className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-heading [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-heading [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-body [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-body [&_li]:mb-1"
-            dangerouslySetInnerHTML={{ __html: service.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.content) }}
           />
         </div>
       </section>
@@ -318,7 +326,7 @@ export default async function ServicePage({
 
       {/* Related services */}
       {related.length > 0 && (
-        <ServiceGrid services={related} heading="Related Services" />
+        <ServiceGrid services={related as unknown as Service[]} heading="Related Services" />
       )}
 
       {/* Areas we cover */}

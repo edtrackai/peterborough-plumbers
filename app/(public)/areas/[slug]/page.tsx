@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
+import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 
 // ── Exact nearby-area mapping (ordered by proximity) ─────────────────────────
 const nearbyAreaMap: Record<string, string[]> = {
@@ -31,6 +32,8 @@ const areaServiceLinks = [
   { slug: "drain-blockages",          name: "Drain Blockages" },
 ] as const;
 
+export const revalidate = 3600; // rebuild stale pages every hour
+
 export async function generateStaticParams() {
   const areas = await prisma.area.findMany({ select: { slug: true } });
   return areas.map((a) => ({ slug: a.slug }));
@@ -48,7 +51,7 @@ export async function generateMetadata({
     title: area.seoTitle,
     description: area.seoDescription,
     path: `/areas/${area.slug}`,
-    image: "/images/homepage/hero.png",
+    image: "/images/homepage/hero.webp",
   });
 }
 
@@ -125,7 +128,7 @@ export default async function AreaPage({
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.png" alt={`Plumber in ${area.name}, Peterborough — qualified plumbing & heating engineers`} fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/homepage/hero.webp" alt={`Plumber in ${area.name}, Peterborough — qualified plumbing & heating engineers`} fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -179,7 +182,7 @@ export default async function AreaPage({
           <div className="mx-auto max-w-4xl px-4">
             <div
               className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-heading [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-heading [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-body [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-body [&_li]:mb-1 [&_strong]:text-pp-heading"
-              dangerouslySetInnerHTML={{ __html: area.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(area.content) }}
             />
           </div>
         </section>

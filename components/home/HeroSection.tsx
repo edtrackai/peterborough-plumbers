@@ -69,7 +69,7 @@ export default function HeroSection() {
       {/* ── BACKGROUND LAYER ─────────────────────────────────────────────────── */}
       <div className="absolute inset-0 z-0" aria-hidden="true">
         <Image
-          src="/images/homepage/hero-team.png"
+          src="/images/homepage/hero-team.webp"
           alt=""
           fill
           className="object-cover object-center"

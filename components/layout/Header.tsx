@@ -43,9 +43,10 @@ export default function Header() {
           <div className="flex items-center gap-3 lg:hidden min-w-0">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="shrink-0 text-[#242424] p-1"
+              className="shrink-0 text-[#242424] p-2 -ml-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-1"
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
+              aria-controls="mobile-nav"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 {mobileOpen ? (
@@ -253,7 +254,7 @@ export default function Header() {
           MOBILE DRAWER
       ═══════════════════════════════════════════════════════════════════ */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-80px)]">
+        <div id="mobile-nav" className="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-80px)]">
           <nav className="px-4 py-4 space-y-0.5" aria-label="Mobile navigation">
 
             <Link href="/" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">

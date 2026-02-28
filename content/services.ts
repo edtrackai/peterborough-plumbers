@@ -18,7 +18,7 @@ export const services: Service[] = [
   {
     name: "Boiler Service",
     slug: "boiler-service",
-    image: "/images/homepage/boiler-service.png",
+    image: "/images/homepage/boiler-service.webp",
     heroImage: "/images/services/boiler-service-peterborough-gas-safe.webp",
     shortDescription:
       "Annual boiler servicing from £79 by Gas Safe registered engineers. All major brands, 21-point inspection, written service record, same-week appointments across Peterborough.",
@@ -210,7 +210,7 @@ export const services: Service[] = [
   {
     name: "Gas Safety Certificates",
     slug: "gas-safety-certificates",
-    image: "/images/homepage/gas-safety-certificate.png",
+    image: "/images/homepage/gas-safety-certificate.webp",
     shortDescription:
       "Landlord gas safety certificates (CP12) and domestic gas safety checks by qualified Gas Safe engineers.",
     heroHeading: "Gas Safety Certificates in Peterborough",
@@ -315,7 +315,7 @@ export const services: Service[] = [
   {
     name: "Central Heating Services",
     slug: "central-heating-services",
-    image: "/images/homepage/central-heating-service.png",
+    image: "/images/homepage/central-heating-service.webp",
     shortDescription:
       "Full central heating installation, repair, and maintenance including radiators, thermostats, and pipework.",
     heroHeading: "Central Heating Services in Peterborough",
@@ -418,7 +418,7 @@ export const services: Service[] = [
   {
     name: "Bathroom Installations",
     slug: "bathroom-installations",
-    image: "/images/homepage/bathroom-installation-service.png",
+    image: "/images/homepage/bathroom-installation-service.webp",
     shortDescription:
       "Complete bathroom design and installation including suites, showers, tiling, and plumbing work.",
     heroHeading: "Bathroom Installations in Peterborough",
@@ -519,7 +519,7 @@ export const services: Service[] = [
   {
     name: "Landlord Services",
     slug: "landlord-services",
-    image: "/images/homepage/gas-safety-certificate.png",
+    image: "/images/homepage/gas-safety-certificate.webp",
     shortDescription:
       "Comprehensive plumbing and gas services for landlords including CP12, maintenance contracts, and tenant call-outs.",
     heroHeading: "Landlord Plumbing Services in Peterborough",
@@ -630,7 +630,7 @@ export const services: Service[] = [
   {
     name: "Emergency Plumber Service",
     slug: "emergency-plumber",
-    image: "/images/homepage/emergency-plumbing.png",
+    image: "/images/homepage/emergency-plumbing.webp",
     shortDescription:
       "24/7 emergency plumbing service for burst pipes, leaks, boiler breakdowns, and blocked drains in Peterborough.",
     heroHeading: "Emergency Plumber in Peterborough",
@@ -830,7 +830,7 @@ export const services: Service[] = [
   {
     name: "Plumbing Repairs",
     slug: "plumbing-repairs",
-    image: "/images/homepage/plumbing-repairs.png",
+    image: "/images/homepage/plumbing-repairs.webp",
     shortDescription:
       "Fast, reliable plumbing repairs for leaks, dripping taps, faulty toilets, and pipework issues.",
     heroHeading: "Plumbing Repairs in Peterborough",
@@ -934,7 +934,7 @@ export const services: Service[] = [
   {
     name: "Damp & Leak Detection",
     slug: "damp-leak-detection",
-    image: "/images/homepage/hero.png",
+    image: "/images/homepage/hero.webp",
     shortDescription:
       "Advanced leak detection and damp investigation services to find hidden water damage without destructive methods.",
     heroHeading: "Damp & Leak Detection in Peterborough",
@@ -1040,7 +1040,7 @@ export const services: Service[] = [
   {
     name: "Drain Blockages",
     slug: "drain-blockages",
-    image: "/images/homepage/plumbing-repairs.png",
+    image: "/images/homepage/plumbing-repairs.webp",
     shortDescription:
       "Professional drain unblocking and clearance for sinks, toilets, outside drains, and sewer lines.",
     heroHeading: "Drain Unblocking in Peterborough",
@@ -1159,7 +1159,7 @@ export const services: Service[] = [
   {
     name: "Pre-Purchase Plumbing Survey",
     slug: "pre-purchase-plumbing-survey",
-    image: "/images/homepage/hero-team.png",
+    image: "/images/homepage/hero-team.webp",
     shortDescription:
       "Detailed plumbing survey before buying a property. Identify hidden issues and avoid costly surprises.",
     heroHeading: "Pre-Purchase Plumbing Surveys in Peterborough",

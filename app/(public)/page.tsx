@@ -7,13 +7,15 @@ import HelpTodaySection from "@/components/home/HelpTodaySection";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 
+export const revalidate = 3600; // rebuild stale pages every hour
+
 export const metadata: Metadata = buildMetadata({
   title: "Peterborough Plumbing & Heating | Emergency Call-Outs",
   description:
     "Peterborough Plumbers provides emergency call-outs, plumbing repairs, boiler servicing and heating support across Peterborough and surrounding areas. Clear upfront quotes.",
   path: "/",
   absoluteTitle: true,
-  image: "/images/homepage/hero.png",
+  image: "/images/homepage/hero.webp",
 });
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -384,7 +386,7 @@ export default async function HomePage() {
               <Link href="/guides/how-to-bleed-a-radiator" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/central-heating-service.png"
+                    src="/images/homepage/central-heating-service.webp"
                     alt="How to bleed a radiator"
                     width={140}
                     height={140}
@@ -399,7 +401,7 @@ export default async function HomePage() {
               <Link href="/guides/how-to-fix-a-dripping-tap" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/plumbing-repairs.png"
+                    src="/images/homepage/plumbing-repairs.webp"
                     alt="How to fix a dripping tap"
                     width={140}
                     height={140}
@@ -414,7 +416,7 @@ export default async function HomePage() {
               <Link href="/guides/how-to-repressurise-your-boiler" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/boiler-service.png"
+                    src="/images/homepage/boiler-service.webp"
                     alt="How to repressurise your boiler"
                     width={140}
                     height={140}
@@ -429,7 +431,7 @@ export default async function HomePage() {
               <Link href="/guides/what-to-do-burst-pipe" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/emergency-plumbing.png"
+                    src="/images/homepage/emergency-plumbing.webp"
                     alt="What to do with a burst pipe"
                     width={140}
                     height={140}

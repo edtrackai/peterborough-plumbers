@@ -22,8 +22,13 @@ export function localBusinessSchema() {
       latitude: 52.5735,
       longitude: -0.2404,
     },
-    image: `${siteUrl}/images/homepage/hero.png`,
+    image: `${siteUrl}/images/homepage/hero.webp`,
     url: siteUrl,
+    sameAs: [
+      siteSettings.facebookUrl,
+      siteSettings.youtubeUrl,
+      siteSettings.instagramUrl,
+    ],
     priceRange: "££",
     description: siteSettings.seoDescription,
     areaServed: [
@@ -156,7 +161,7 @@ export function articleSchema(post: {
       name: siteSettings.companyName,
       logo: {
         "@type": "ImageObject",
-        url: `${siteUrl}/images/logo.png`,
+        url: `${siteUrl}/logos/logo-mark.png`,
       },
     },
     datePublished: post.publishedAt,
@@ -168,6 +173,23 @@ export function articleSchema(post: {
         url: post.image.startsWith("http") ? post.image : `${siteUrl}${post.image}`,
       },
     }),
+  };
+}
+
+export function webSiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteSettings.companyName,
+    url: siteUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteUrl}/services?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }
 
