@@ -151,7 +151,7 @@ export default async function JobDetailPage({
                   className="block aspect-square rounded-xl overflow-hidden border border-white/[0.07] hover:border-white/[0.18] transition-colors"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img.url} alt={`Photo ${i + 1}`} className="h-full w-full object-cover" />
+                  <img src={img.url} alt={`Photo ${i + 1}`} className="h-full w-full object-cover" loading="lazy" />
                 </a>
               ))}
             </div>

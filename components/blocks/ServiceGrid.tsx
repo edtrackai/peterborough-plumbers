@@ -245,6 +245,7 @@ export default function ServiceGrid({
                       draggable={false}
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                       sizes="(max-width: 640px) 82vw, (max-width: 1024px) 47vw, 30vw"
+                      loading="lazy"
                     />
                   </div>
                 ) : (

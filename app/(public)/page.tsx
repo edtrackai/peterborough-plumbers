@@ -391,6 +391,7 @@ export default async function HomePage() {
                     width={140}
                     height={140}
                     className="h-full w-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <span className="text-[#0F6E6E] font-semibold text-sm leading-snug group-hover:underline">
@@ -406,6 +407,7 @@ export default async function HomePage() {
                     width={140}
                     height={140}
                     className="h-full w-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <span className="text-[#0F6E6E] font-semibold text-sm leading-snug group-hover:underline">
@@ -421,6 +423,7 @@ export default async function HomePage() {
                     width={140}
                     height={140}
                     className="h-full w-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <span className="text-[#0F6E6E] font-semibold text-sm leading-snug group-hover:underline">
@@ -436,6 +439,7 @@ export default async function HomePage() {
                     width={140}
                     height={140}
                     className="h-full w-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <span className="text-[#0F6E6E] font-semibold text-sm leading-snug group-hover:underline">
