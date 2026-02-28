@@ -210,7 +210,7 @@ export default function Header() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-inset"
                 }
               >
-                <svg className="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <svg className="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <defs>
                     <mask id="hm">
                       <rect width="24" height="24" fill="white"/>
