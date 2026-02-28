@@ -39,6 +39,11 @@ export default function BookPage() {
             Fill in the form below and we&apos;ll confirm your booking as soon as possible.
           </p>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 z-[5]" aria-hidden="true" style={{ lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}>
+            <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
+          </svg>
+        </div>
       </section>
 
       <section className="py-16 lg:py-24">
