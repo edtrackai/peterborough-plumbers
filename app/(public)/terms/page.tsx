@@ -7,6 +7,7 @@ export const metadata: Metadata = buildMetadata({
   title: "Terms & Conditions | Peterborough Plumbers Services",
   description: "Terms and conditions for Peterborough Plumbers. Qualified engineers, 12-month workmanship guarantee and transparent pricing across Peterborough.",
   path: "/terms",
+  absoluteTitle: true,
   noIndex: true,
 });
 

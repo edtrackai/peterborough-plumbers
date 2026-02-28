@@ -7,6 +7,7 @@ export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy | Data Protection — Peterborough Plumbers",
   description: "Read the Peterborough Plumbers privacy policy. We explain how we collect, use, and protect your personal data in line with UK GDPR and data protection law.",
   path: "/privacy",
+  absoluteTitle: true,
   noIndex: true,
 });
 
