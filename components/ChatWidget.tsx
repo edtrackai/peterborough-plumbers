@@ -19,12 +19,12 @@ interface Message {
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const QUICK_ACTIONS = [
-  { emoji: "🚰", label: "Leaking Tap",      message: "My tap is dripping and leaking" },
-  { emoji: "🚿", label: "Blocked Drain",    message: "I have a blocked drain" },
-  { emoji: "🚽", label: "Running Toilet",   message: "My toilet keeps running and won't stop" },
-  { emoji: "💧", label: "Burst Pipe",       message: "I have a burst pipe emergency" },
-  { emoji: "📋", label: "Get a Quote",      message: "I'd like a quote for plumbing work" },
-  { emoji: "📅", label: "Book a Visit",     message: "I want to book an engineer visit" },
+  { emoji: "🚰", label: "Leaking Tap",      desc: "Dripping or running tap",     message: "My tap is dripping and leaking" },
+  { emoji: "🚿", label: "Blocked Drain",    desc: "Sink, bath or shower",        message: "I have a blocked drain" },
+  { emoji: "🚽", label: "Running Toilet",   desc: "Won't stop filling up",       message: "My toilet keeps running and won't stop" },
+  { emoji: "💧", label: "Burst Pipe",       desc: "Emergency — act fast",        message: "I have a burst pipe emergency", emergency: true },
+  { emoji: "📋", label: "Get a Quote",      desc: "Free upfront estimate",       message: "I'd like a quote for plumbing work" },
+  { emoji: "📅", label: "Book an Engineer", desc: "Same or next-day available",  message: "I want to book an engineer visit" },
 ];
 
 const STORAGE_KEY   = "pp_chat_session_id";
@@ -102,9 +102,11 @@ export default function ChatWidget() {
       localStorage.setItem(SEEN_KEY, "1");
       setTimeout(() => inputRef.current?.focus(), 200);
       if (messages.length === 0) {
+        const hour = new Date().getHours();
+        const timeGreet = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
         setMessages([{
           role: "assistant",
-          content: "Hi! 👋 I'm the Peterborough Plumbers assistant.\n\nI can help with common plumbing issues. Tap a topic below or type your question.",
+          content: `${timeGreet}! 👋 I'm the Peterborough Plumbers assistant.\n\nAsk me about any plumbing issue — I'll give you honest advice and let you know when you need an engineer out.`,
           suggestedActions: [],
           ts: Date.now(),
           isNew: true,
@@ -248,11 +250,11 @@ export default function ChatWidget() {
 
               {/* Greeting text */}
               <p className="text-[#242424] font-bold text-[13px] leading-snug mb-1">
-                👋 Hi there!
+                Got a plumbing problem?
               </p>
               <p className="text-gray-500 text-[12px] leading-snug mb-3">
-                How can we help you today?<br />
-                Get instant plumbing advice.
+                Get honest advice in seconds —<br />
+                no call needed.
               </p>
 
               {/* CTA */}
@@ -489,7 +491,11 @@ export default function ChatWidget() {
                       key={qa.label}
                       onClick={() => sendMessage(qa.message)}
                       className="text-left px-3 py-3 bg-white rounded-xl transition-all duration-150 active:scale-[0.97]"
-                      style={{ border: "1px solid rgba(0,0,0,0.08)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}
+                      style={{
+                        border: qa.emergency ? "1px solid rgba(200,16,46,0.25)" : "1px solid rgba(0,0,0,0.08)",
+                        borderLeft: qa.emergency ? "3px solid #C8102E" : undefined,
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                      }}
                       onMouseEnter={e => {
                         const el = e.currentTarget as HTMLButtonElement;
                         el.style.borderColor = "#C8102E";
@@ -497,12 +503,13 @@ export default function ChatWidget() {
                       }}
                       onMouseLeave={e => {
                         const el = e.currentTarget as HTMLButtonElement;
-                        el.style.borderColor = "rgba(0,0,0,0.08)";
+                        el.style.borderColor = qa.emergency ? "rgba(200,16,46,0.25)" : "rgba(0,0,0,0.08)";
                         el.style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
                       }}
                     >
                       <span className="text-xl leading-none block mb-1.5">{qa.emoji}</span>
                       <span className="text-xs font-semibold text-[#242424] leading-tight block">{qa.label}</span>
+                      <span className="text-[10px] text-gray-400 leading-tight block mt-0.5">{qa.desc}</span>
                     </button>
                   ))}
                 </div>

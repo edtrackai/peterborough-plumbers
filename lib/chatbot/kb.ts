@@ -26,106 +26,106 @@ export const knowledgeBase: Record<Exclude<PlumbingCategory, "boiler_gas">, KBEn
   leak_tap: {
     category: "leak_tap",
     videoCategory: "leak_tap",
-    intro: "A dripping tap is usually a worn washer or O-ring — a quick fix in most cases.",
+    intro: "A dripping tap is one of the most common calls we get — and it's often a DIY fix. It's usually a worn washer or O-ring. Here's what to try:",
     tips: [
       "Turn off the water supply under the sink (isolation valve) or at the stopcock.",
-      "Turn the tap on to release remaining pressure in the pipe.",
-      "Undo the tap head (usually a screw under the hot/cold cap) to access the cartridge.",
-      "Replace the rubber washer or cartridge — take the old one to a hardware shop to match the size.",
-      "Reassemble, turn the water back on, and check for drips.",
+      "Turn the tap on fully to release remaining pressure in the pipe.",
+      "Undo the tap head — there's usually a screw under the hot/cold cap — to access the cartridge.",
+      "Replace the rubber washer or cartridge. Take the old one to a hardware shop to match the exact size.",
+      "Reassemble, turn the water back on slowly, and check for drips.",
     ],
     callToAction:
-      "If the drip persists or you're unsure, our engineers can fix it same day — clear upfront quote provided.",
-    suggestedActions: ["Book a visit", "Request a callback", "Get a quote"],
+      "If the drip comes back or you're not comfortable doing this yourself, we can fix it same day — with a clear price before we start.",
+    suggestedActions: ["Book a same-day visit", "Get a free quote", "What if it's still dripping?"],
   },
 
   blocked_drain: {
     category: "blocked_drain",
     videoCategory: "blocked_drain",
-    intro: "Most blocked drains can be cleared with a few simple steps before calling a plumber.",
+    intro: "Before calling an engineer, it's worth trying these steps — they clear the majority of household blockages:",
     tips: [
-      "Pour boiling water slowly down the drain — this can dissolve grease build-up.",
-      "Use a plunger: block the overflow hole with a cloth and plunge firmly 10–15 times.",
-      "Try a drain-clearing solution (e.g. bicarbonate of soda + white vinegar, leave 30 mins, flush).",
-      "For a shower/bath drain, remove the cover and clear any hair or debris by hand.",
-      "Avoid pouring cooking grease down sinks — it solidifies and causes repeat blockages.",
+      "Pour a full kettle of boiling water slowly down the drain — this dissolves most grease build-up.",
+      "Use a plunger: block the overflow hole with a damp cloth and plunge firmly 10–15 times.",
+      "Try bicarbonate of soda + white vinegar — pour both in, wait 30 minutes, then flush with hot water.",
+      "For a shower or bath drain, remove the cover and pull out any hair or debris by hand.",
+      "Avoid pouring cooking fat or oil down sinks — it cools and solidifies, causing repeat blockages.",
     ],
     callToAction:
-      "If the blockage won't clear or affects multiple drains, it could be a deeper issue. We carry drain rods and high-pressure jetting equipment.",
-    suggestedActions: ["Book a drain clearance", "Request a callback", "Get a quote"],
+      "If it won't clear or multiple drains are affected, it's likely a deeper blockage. We carry drain rods and high-pressure jetting equipment for exactly this.",
+    suggestedActions: ["Book drain clearance", "What if it won't clear?", "Get a quote"],
   },
 
   toilet_running: {
     category: "toilet_running",
     videoCategory: "toilet_running",
     intro:
-      "A constantly running toilet wastes up to 200 litres a day. It's usually the fill valve or flapper.",
+      "A constantly running toilet wastes up to 200 litres a day — that's roughly £300 added to your annual water bill. The good news: the fix is usually cheap and quick.",
     tips: [
-      "Lift the cistern lid and check if the float arm is too high — bend it slightly downward.",
-      "Check the flapper (rubber seal at the bottom of the cistern) — if worn or warped, replace it.",
-      "If the overflow pipe is dripping outside, the water level in the cistern is too high — adjust the float.",
-      "Turn off the isolation valve behind the toilet before doing any repairs.",
-      "Replacement flappers and fill valves cost £5–£15 at any DIY store.",
+      "Lift the cistern lid and check the float arm — if it's set too high, bend it slightly downward.",
+      "Check the flapper (the rubber seal at the bottom of the cistern) — if it's worn or warped, it needs replacing.",
+      "If you can see water dripping from the overflow pipe outside the house, the cistern level is too high.",
+      "Turn off the isolation valve behind the toilet before touching anything inside the cistern.",
+      "Replacement flappers and fill valves cost £5–£15 at any DIY store and take about 20 minutes to swap.",
     ],
     callToAction:
-      "Still running? Our plumbers can diagnose and fix toilet faults quickly, including dual-flush mechanisms.",
-    suggestedActions: ["Book a visit", "Request a callback", "Get a quote"],
+      "Still running after trying the above? Our plumbers can diagnose toilet faults quickly, including dual-flush mechanisms and concealed cisterns.",
+    suggestedActions: ["Book a toilet repair", "How much will it cost?", "Get a free quote"],
   },
 
   burst_pipe: {
     category: "burst_pipe",
     videoCategory: "burst_pipe",
-    intro: "A burst pipe is an emergency. Act fast to minimise water damage.",
+    intro: "Act immediately — a burst pipe can cause serious damage within minutes. Follow these steps in order:",
     tips: [
-      "🔴 IMMEDIATELY turn off your stopcock — usually under the kitchen sink or where the water main enters.",
-      "Turn on all taps to drain remaining water from the pipes.",
+      "🔴 Turn off your stopcock RIGHT NOW — it's usually under the kitchen sink or where the water main enters your property.",
+      "Open all taps to drain the remaining water from your pipes quickly.",
       "Switch off your immersion heater and central heating system.",
       "Catch dripping water in buckets and move belongings away from the affected area.",
-      "If water is near electrical fittings or the consumer unit, turn off the electricity at the mains.",
+      "If water is near electrical fittings or your consumer unit, switch off the electricity at the mains.",
     ],
     callToAction:
-      "Call us now — emergency call-outs available across Peterborough.",
-    suggestedActions: ["Call now — emergency", "Book emergency visit"],
+      "Call us now — we take emergency call-outs across Peterborough and surrounding areas.",
+    suggestedActions: ["📞 Call us now — emergency", "Book an emergency visit"],
   },
 
   low_pressure: {
     category: "low_pressure",
     videoCategory: "low_pressure",
     intro:
-      "Low water pressure from taps or showers is often a simple fix. Note: this is mains water pressure, not boiler pressure.",
+      "Low pressure is usually one of three things: a blocked aerator, a partially-closed stopcock, or a local supply issue. Let's work through it. (Note: this is mains water pressure — not boiler pressure.)",
     tips: [
-      "Check if all taps in the house are affected or just one — a single tap suggests a blocked aerator.",
-      "Unscrew the aerator (the small mesh filter on the tap spout) and rinse it clean.",
-      "Check if your stopcock is fully open — sometimes it gets partially closed accidentally.",
-      "Contact your water company (Anglian Water in Peterborough) to check for local supply issues.",
-      "If pressure is fine at the mains but low at taps, you may have an internal pipe restriction.",
+      "Check if all taps are affected or just one — a single tap points to a blocked aerator (the small mesh filter on the spout).",
+      "Unscrew the aerator and rinse it under running water to clear the build-up.",
+      "Check your stopcock is fully open — it sometimes gets knocked partially closed.",
+      "Contact Anglian Water (the local supplier for Peterborough) to check for any known supply issues in your area.",
+      "If mains pressure is fine but your taps are still weak, there may be a restriction or partial blockage inside your pipework.",
     ],
     callToAction:
-      "Persistent low pressure could indicate a leak or supply issue. Our engineers can trace and fix it.",
-    suggestedActions: ["Book a diagnosis visit", "Request a callback", "Get a quote"],
+      "Persistent low pressure often means a hidden leak or corroded pipework. Our engineers can trace and fix it with minimal disruption.",
+    suggestedActions: ["Book a diagnosis visit", "Is it my water supplier?", "Get a quote"],
   },
 
   quote_booking: {
     category: "quote_booking",
     intro:
-      "We'd love to help. Here's the quickest way to get a quote or book an engineer.",
+      "Happy to help you get booked in. We're available Mon–Fri 8am–6pm and Sat 8am–5pm, with emergency call-outs any time.",
     tips: [
       "Use our online booking tool for same-day or next-day appointments.",
-      "Call us on 02039514510 — we answer 7 days a week.",
-      "Transparent call-out fees — confirmed before we attend.",
-      "Qualified engineers for all plumbing and heating work.",
-      "Clear upfront quotes — no hidden extras.",
+      "Or call us on 02039514510 — we answer 7 days a week.",
+      "We confirm the call-out fee before we attend — no surprises.",
+      "All engineers are fully qualified and carry parts for the most common repairs.",
+      "You'll receive a clear written quote before any work begins.",
     ],
-    callToAction: "Ready to book? Use the links below.",
-    suggestedActions: ["Book online", "Call 02039514510", "Request a callback"],
+    callToAction: "Ready to get sorted? Use the options below.",
+    suggestedActions: ["Book online", "Call 02039514510", "What are your prices?"],
   },
 
   general: {
     category: "general",
-    intro: "I can help with common plumbing questions. What's the issue you're experiencing?",
+    intro: "I'm not sure I caught that — could you describe the issue in a bit more detail? Or tap one of the quick topics below:",
     tips: [],
     callToAction:
-      "For a fast answer, tap one of the quick topics below or describe your problem.",
+      "If it's urgent, call us directly on 02039514510 — we're available 7 days a week.",
     suggestedActions: ["Leaking tap", "Blocked drain", "Toilet running", "Burst pipe", "Get a quote"],
   },
 };
