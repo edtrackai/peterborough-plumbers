@@ -57,6 +57,7 @@ export async function generateMetadata({
     title: service.seoTitle,
     description: service.seoDescription,
     path: `/services/${service.slug}`,
+    absoluteTitle: true,
     image: service.heroImage ?? undefined,
   });
 }

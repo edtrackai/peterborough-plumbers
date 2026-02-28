@@ -51,6 +51,7 @@ export async function generateMetadata({
     title: area.seoTitle,
     description: area.seoDescription,
     path: `/areas/${area.slug}`,
+    absoluteTitle: true,
     image: "/images/homepage/hero.webp",
   });
 }
