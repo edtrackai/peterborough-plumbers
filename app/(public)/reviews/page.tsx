@@ -19,7 +19,6 @@ export const metadata: Metadata = buildMetadata({
   path: "/reviews",
   absoluteTitle: true,
   image: "/images/homepage/hero.webp",
-  absoluteTitle: true,
 });
 
 export default async function ReviewsPage() {
