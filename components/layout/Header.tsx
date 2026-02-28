@@ -210,8 +210,16 @@ export default function Header() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-inset"
                 }
               >
-                <svg className="h-[17px] w-[17px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                <svg className="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <defs>
+                    <mask id="hm">
+                      <rect width="24" height="24" fill="white"/>
+                      <path d="M10 17l4-6" stroke="black" strokeWidth="1.8" strokeLinecap="round"/>
+                      <circle cx="10.5" cy="17" r="1.2" fill="black"/>
+                      <circle cx="13.5" cy="11" r="1.2" fill="black"/>
+                    </mask>
+                  </defs>
+                  <path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1H5a1 1 0 01-1-1V10.5z" fill="currentColor" mask="url(#hm)"/>
                 </svg>
               </Link>
 
