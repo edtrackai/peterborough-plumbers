@@ -198,6 +198,34 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Map */}
+      <section className="py-14 bg-white border-b border-[var(--border)]">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-pp-heading mb-2">Our Service Area</h2>
+            <p className="text-sm text-[var(--muted)] max-w-lg mx-auto">
+              Based in Peterborough, we cover the city and all surrounding areas. Not sure if we reach you?{" "}
+              <a href={`tel:${siteSettings.phoneHref}`} className="text-[var(--brand)] font-medium hover:underline">
+                Call us
+              </a>{" "}
+              and we&apos;ll confirm in seconds.
+            </p>
+          </div>
+          <div className="rounded-xl overflow-hidden border border-[var(--border)] shadow-sm" style={{ aspectRatio: "16/7" }}>
+            <iframe
+              src="https://maps.google.com/maps?q=3+Saville+Road,+Peterborough,+PE3+7PR,+UK&z=15&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0, display: "block" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Map showing Peterborough Plumbers service area in Peterborough, Cambridgeshire"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* What happens next */}
       <section className="bg-[var(--surface-alt)] py-14 border-y border-[var(--border)]">
         <div className="mx-auto max-w-5xl px-4">

@@ -16,7 +16,7 @@ const csp = [
   "connect-src 'self' https://www.google-analytics.com https://analytics.google.com",
   "media-src 'self'",
   "frame-ancestors 'none'",
-  "frame-src 'none'",
+  "frame-src https://www.google.com https://maps.google.com",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",

@@ -4,7 +4,7 @@ export const siteSettings = {
   phoneHref: "+442039514510",
   whatsappNumber: "442039514510",
   email: "info@peterboroughplumbers.com",
-  address: "Peterborough, Cambridgeshire",
+  address: "3 Saville Road, Peterborough PE3 7PR",
   gasSafeNumber: "",
   googleRating: "4.6",
   reviewCount: "120",
