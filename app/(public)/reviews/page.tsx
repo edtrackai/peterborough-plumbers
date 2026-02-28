@@ -18,6 +18,7 @@ export const metadata: Metadata = buildMetadata({
     "Read genuine reviews from customers across Peterborough. Trusted by homeowners and landlords. Plumbing & heating engineers — clear upfront quotes. Book today.",
   path: "/reviews",
   image: "/images/homepage/hero.webp",
+  absoluteTitle: true,
 });
 
 export default async function ReviewsPage() {

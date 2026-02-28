@@ -19,7 +19,7 @@ export const services: Service[] = [
     name: "Boiler Service",
     slug: "boiler-service",
     image: "/images/homepage/boiler-service.webp",
-    heroImage: "/images/services/boiler-service-peterborough-gas-safe.webp",
+    heroImage: "/images/homepage/boiler-service.webp",
     shortDescription:
       "Annual boiler servicing from £79 by Gas Safe registered engineers. All major brands, 21-point inspection, written service record, same-week appointments across Peterborough.",
     heroHeading: "Boiler Service in Peterborough — Gas Safe Engineers",
@@ -210,7 +210,7 @@ export const services: Service[] = [
   {
     name: "Gas Safety Certificates",
     slug: "gas-safety-certificates",
-    image: "/images/homepage/gas-safety-certificate.webp",
+    image: "/images/homepage/hero-engineer.webp",
     shortDescription:
       "Landlord gas safety certificates (CP12) and domestic gas safety checks by qualified Gas Safe engineers.",
     heroHeading: "Gas Safety Certificates in Peterborough",
@@ -315,7 +315,7 @@ export const services: Service[] = [
   {
     name: "Central Heating Services",
     slug: "central-heating-services",
-    image: "/images/homepage/central-heating-service.webp",
+    image: "/images/homepage/boiler-service.webp",
     shortDescription:
       "Full central heating installation, repair, and maintenance including radiators, thermostats, and pipework.",
     heroHeading: "Central Heating Services in Peterborough",
@@ -418,7 +418,7 @@ export const services: Service[] = [
   {
     name: "Bathroom Installations",
     slug: "bathroom-installations",
-    image: "/images/homepage/bathroom-installation-service.webp",
+    image: "/images/homepage/plumbing-repairs.webp",
     shortDescription:
       "Complete bathroom design and installation including suites, showers, tiling, and plumbing work.",
     heroHeading: "Bathroom Installations in Peterborough",
@@ -519,7 +519,7 @@ export const services: Service[] = [
   {
     name: "Landlord Services",
     slug: "landlord-services",
-    image: "/images/homepage/gas-safety-certificate.webp",
+    image: "/images/homepage/hero-engineer.webp",
     shortDescription:
       "Comprehensive plumbing and gas services for landlords including CP12, maintenance contracts, and tenant call-outs.",
     heroHeading: "Landlord Plumbing Services in Peterborough",

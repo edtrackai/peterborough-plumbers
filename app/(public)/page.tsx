@@ -12,7 +12,7 @@ export const revalidate = 3600; // rebuild stale pages every hour
 export const metadata: Metadata = buildMetadata({
   title: "Peterborough Plumbing & Heating | Emergency Call-Outs",
   description:
-    "Peterborough Plumbers provides emergency call-outs, plumbing repairs, boiler servicing and heating support across Peterborough and surrounding areas. Clear upfront quotes.",
+    "Emergency plumbers in Peterborough — boiler servicing, repairs & heating. Qualified engineers, clear upfront quotes, fast response across Peterborough.",
   path: "/",
   absoluteTitle: true,
   image: "/images/homepage/hero.webp",
@@ -386,7 +386,7 @@ export default async function HomePage() {
               <Link href="/guides/how-to-bleed-a-radiator" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/central-heating-service.webp"
+                    src="/images/homepage/boiler-service.webp"
                     alt="How to bleed a radiator"
                     width={140}
                     height={140}

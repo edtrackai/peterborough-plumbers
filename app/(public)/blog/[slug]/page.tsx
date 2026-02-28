@@ -41,6 +41,8 @@ export async function generateMetadata({
     title: post.seoTitle,
     description: post.seoDescription,
     path: `/blog/${post.slug}`,
+    ogType: "article",
+    image: post.image ?? "/images/homepage/hero.webp",
   });
 }
 
@@ -58,19 +60,35 @@ export default async function BlogPostPage({
 
   if (!post || post.status !== "Published") notFound();
 
-  // Fetch related services for this category
+  // Fetch related services and related blog posts for this category
   const category = post.category as BlogCategory;
   const relatedSlugs = categoryServiceMap[category] ?? [];
-  const relatedServices = relatedSlugs.length
-    ? ((await prisma.service.findMany({ where: { slug: { in: relatedSlugs } } })) as unknown as Service[])
-    : [];
+  const [relatedServices, relatedPosts] = await Promise.all([
+    relatedSlugs.length
+      ? ((await prisma.service.findMany({ where: { slug: { in: relatedSlugs } } })) as unknown as Service[])
+      : Promise.resolve([] as Service[]),
+    prisma.blogPost.findMany({
+      where: { category: post.category, status: "Published", slug: { not: post.slug } },
+      take: 3,
+      orderBy: { publishedAt: "desc" },
+      select: { slug: true, title: true, publishedAt: true },
+    }),
+  ]);
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleSchema(post as Parameters<typeof articleSchema>[0])),
+          __html: JSON.stringify(articleSchema({
+            title: post.title,
+            excerpt: post.excerpt,
+            slug: post.slug,
+            publishedAt: post.publishedAt?.toISOString() ?? null,
+            updatedAt: post.updatedAt?.toISOString() ?? null,
+            category: post.category,
+            image: post.image,
+          })),
         }}
       />
       <section className="bg-pp-navy pt-4 sm:pt-28 pb-16">
@@ -125,6 +143,37 @@ export default async function BlogPostPage({
                   </Link>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Related blog posts */}
+          {relatedPosts.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-gray-100">
+              <h2 className="text-lg font-bold text-pp-heading mb-4">More from {post.category}</h2>
+              <div className="grid gap-3">
+                {relatedPosts.map((p) => (
+                  <Link
+                    key={p.slug}
+                    href={`/blog/${p.slug}`}
+                    className="flex items-start gap-3 p-4 rounded-lg border border-gray-100 hover:border-[var(--brand)] transition-colors duration-200 group"
+                  >
+                    <svg className="h-4 w-4 text-[var(--brand)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-pp-heading text-sm group-hover:text-[var(--brand)] transition-colors duration-200">{p.title}</p>
+                      {p.publishedAt && (
+                        <p className="text-xs text-[var(--muted)] mt-0.5">
+                          {new Date(p.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <Link href="/blog" className="mt-4 inline-block text-sm text-[var(--brand)] font-semibold hover:underline">
+                ← View all articles
+              </Link>
             </div>
           )}
 

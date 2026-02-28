@@ -11,6 +11,8 @@ export function buildMetadata(options: {
   image?: string;
   /** Pass true on pages whose title already contains the brand name, to bypass the root template. */
   absoluteTitle?: boolean;
+  /** Set to "article" for blog/guide pages. Defaults to "website". */
+  ogType?: "article" | "website";
 }): Metadata {
   const url = `${siteUrl}${options.path}`;
   const ogImage = options.image
@@ -29,7 +31,7 @@ export function buildMetadata(options: {
       description: options.description,
       url,
       siteName: siteSettings.companyName,
-      type: "website",
+      type: options.ogType ?? "website",
       locale: "en_GB",
       ...(ogImage && { images: ogImage }),
     },

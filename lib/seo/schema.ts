@@ -11,7 +11,7 @@ export function localBusinessSchema() {
     email: siteSettings.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Peterborough",
+      streetAddress: "Peterborough, PE1",
       addressLocality: "Peterborough",
       addressRegion: "Cambridgeshire",
       postalCode: "PE1",
@@ -144,6 +144,7 @@ export function articleSchema(post: {
   excerpt: string;
   slug: string;
   publishedAt?: string | null;
+  updatedAt?: string | null;
   category: string;
   image?: string | null;
 }) {
@@ -162,9 +163,12 @@ export function articleSchema(post: {
       logo: {
         "@type": "ImageObject",
         url: `${siteUrl}/logos/logo-mark.png`,
+        width: 512,
+        height: 512,
       },
     },
     datePublished: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
     mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
     articleSection: post.category,
     ...(post.image && {
@@ -182,14 +186,6 @@ export function webSiteSchema() {
     "@type": "WebSite",
     name: siteSettings.companyName,
     url: siteUrl,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteUrl}/services?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 

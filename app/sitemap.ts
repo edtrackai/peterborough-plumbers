@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
     { path: "",           priority: 1.0,  freq: "weekly"  as const },
     { path: "/services",  priority: 0.9,  freq: "weekly"  as const },
-    { path: "/emergency", priority: 0.95, freq: "weekly"  as const },
+    { path: "/emergency", priority: 0.9,  freq: "weekly"  as const },
     { path: "/pricing",   priority: 0.9,  freq: "monthly" as const },
     { path: "/guides",    priority: 0.85, freq: "weekly"  as const },
     { path: "/areas",     priority: 0.85, freq: "monthly" as const },
@@ -62,7 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${siteUrl}/blog/${slug}`,
     lastModified: updatedAt ?? publishedAt!,
     changeFrequency: "monthly" as const,
-    priority: 0.6,
+    priority: 0.7,
   }));
 
   return [...staticPages, ...servicePages, ...areaPages, ...guidePages, ...blogPages];

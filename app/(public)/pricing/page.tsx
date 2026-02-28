@@ -8,7 +8,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Pricing in Peterborough | Clear Upfront Quotes | Peterborough Plumbers",
+  title: "Plumbing & Heating Pricing Peterborough | Peterborough Plumbers",
   description:
     "Plumbing and heating pricing in Peterborough for 2026. Written quote before every job — no hidden fees. Covers boiler servicing, emergency call-outs, installations and more.",
   path: "/pricing",

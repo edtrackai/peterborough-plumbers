@@ -105,9 +105,19 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-pp-heading">Our Story</h2>
             <p className="text-pp-body leading-relaxed">
               {siteSettings.companyName} started as a small family operation and has grown into
-              one of Peterborough&apos;s trusted plumbing and heating companies. Our qualified
-              engineers serve homes and businesses across Peterborough and surrounding areas,
-              delivering honest workmanship and clear upfront quotes on every job.
+              one of Peterborough&apos;s most trusted plumbing and heating companies. Our
+              qualified engineers serve homes, rental properties, and businesses across
+              Peterborough and surrounding areas — delivering honest workmanship and clear
+              upfront quotes on every job, from a simple washer replacement to a full
+              central heating installation.
+            </p>
+            <p className="text-pp-body leading-relaxed">
+              We were founded on a simple principle: treat every customer the way we would
+              want a tradesperson to treat our own home. That means turning up on time,
+              explaining the work before we start, and never adding charges that weren&apos;t
+              agreed upfront. It sounds straightforward, but you&apos;d be surprised how rare
+              it is — and it&apos;s why so many of our customers come back to us and recommend
+              us to their neighbours.
             </p>
 
             <h2 className="text-2xl font-bold text-pp-heading mt-10">What Sets Us Apart</h2>
@@ -115,22 +125,79 @@ export default function AboutPage() {
               We believe in doing things properly. Every job, whether it&apos;s a simple tap
               repair or a full central heating installation, receives the same level of care
               and professionalism. Our {siteSettings.googleRating}-star Google rating reflects
-              our commitment to quality workmanship and customer service.
+              our commitment to quality workmanship and customer service — and with over{" "}
+              {siteSettings.reviewCount} genuine reviews from homeowners and landlords across
+              Peterborough, that&apos;s not something we take lightly.
+            </p>
+            <p className="text-pp-body leading-relaxed">
+              Unlike some larger companies, you&apos;ll always speak to a real person when you
+              call us. We provide a written quote before any work begins, and we won&apos;t
+              start until you&apos;re happy with the price. If unexpected complications arise
+              during a job, we&apos;ll tell you immediately — never after the fact.
             </p>
 
             <h2 className="text-2xl font-bold text-pp-heading mt-10">Qualified &amp; Fully Insured</h2>
             <p className="text-pp-body leading-relaxed">
               Safety is our top priority. Our engineers are qualified and fully insured,
               and undergo regular training to stay current with the latest regulations
-              and best practices. We carry full public liability insurance on every job.
+              and best practices. We carry full public liability insurance on every job,
+              giving you complete peace of mind.
             </p>
+            <p className="text-pp-body leading-relaxed">
+              All gas work is carried out by Gas Safe registered engineers — you can verify
+              our registration on the Gas Safe Register. For boiler installations and
+              servicing, we follow manufacturer guidelines and current Building Regulations,
+              ensuring your warranty remains valid. We also issue Gas Safety Certificates
+              (CP12) for landlords, which are a legal requirement for all rental properties
+              with gas appliances.
+            </p>
+            <ul className="mt-4 space-y-2 list-none p-0">
+              {[
+                "Gas Safe registered engineers",
+                "Full public liability insurance",
+                "CP12 Gas Safety Certificates for landlords",
+                "Regular CPD training on current regulations",
+                "Manufacturer-approved boiler installation & servicing",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2 text-pp-body">
+                  <svg className="h-5 w-5 text-brand shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <h2 className="text-2xl font-bold text-pp-heading mt-10">Our Services</h2>
+            <p className="text-pp-body leading-relaxed">
+              We cover the full range of domestic plumbing and heating services, including:
+            </p>
+            <ul className="mt-2 space-y-1 list-disc pl-6">
+              {[
+                "Emergency plumber call-outs — available for urgent leaks, burst pipes, and no hot water",
+                "Boiler servicing, repairs, and replacements",
+                "Central heating system installation, power flushing, and maintenance",
+                "Gas Safety Certificates (CP12) for landlords and homeowners",
+                "Bathroom installations and refurbishments",
+                "General plumbing repairs — taps, toilets, radiators, and more",
+                "Damp and leak detection",
+              ].map((item) => (
+                <li key={item} className="text-pp-body">{item}</li>
+              ))}
+            </ul>
 
             <h2 className="text-2xl font-bold text-pp-heading mt-10">Local &amp; Reliable</h2>
             <p className="text-pp-body leading-relaxed">
               Based in Peterborough, we serve the city and surrounding areas including Orton,
               Werrington, Hampton, Bretton, Market Deeping, Yaxley, Whittlesey, and Stamford.
-              Being local means faster response times and a genuine understanding of the
-              community we serve.
+              Being local means faster response times, no excessive call-out charges for nearby
+              areas, and a genuine understanding of the community we serve.
+            </p>
+            <p className="text-pp-body leading-relaxed">
+              When you book with us, you know exactly who is coming to your property. We don&apos;t
+              subcontract work to unknown third parties — every job is handled by our own
+              vetted, qualified engineers. That consistency is something our customers value,
+              and it&apos;s something we&apos;re proud to offer.
             </p>
           </div>
         </div>

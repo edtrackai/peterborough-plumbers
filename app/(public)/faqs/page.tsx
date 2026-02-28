@@ -10,11 +10,12 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating FAQs Peterborough | Common Questions Answered",
+  title: "Plumbing & Heating FAQs Peterborough | Peterborough Plumbers",
   description:
     "Answers to the most common questions about plumbing, boiler servicing, gas safety, emergency call-outs, and heating in Peterborough and surrounding areas.",
   path: "/faqs",
   image: "/images/homepage/hero.webp",
+  absoluteTitle: true,
 });
 
 const faqCategories = [

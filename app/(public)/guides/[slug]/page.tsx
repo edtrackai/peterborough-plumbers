@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: guide.name,
     description: guide.excerpt,
     path: `/guides/${guide.slug}`,
+    ogType: "article",
   });
 }
 
@@ -64,8 +65,15 @@ export default async function GuideDetailPage({ params }: Props) {
     publisher: {
       "@type": "Organization",
       name: settings.companyName,
+      logo: {
+        "@type": "ImageObject",
+        url: `${settings.siteUrl}/logos/logo-mark.png`,
+        width: 512,
+        height: 512,
+      },
     },
     datePublished: guide.publishedAt.toISOString(),
+    dateModified: guide.updatedAt.toISOString(),
     mainEntityOfPage: `${settings.siteUrl}/guides/${guide.slug}`,
     articleSection: guideCategories[guide.category as keyof typeof guideCategories],
   };
