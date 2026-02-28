@@ -240,7 +240,7 @@ export default function ServiceGrid({
                   <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#f0f0f0]">
                     <Image
                       src={service.image}
-                      alt={service.name}
+                      alt={`${service.name} — Peterborough plumbing service`}
                       fill
                       draggable={false}
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,10 +24,47 @@ export default function Header() {
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen]     = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
+  // Lock body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  // Escape key + focus trap
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const drawer = drawerRef.current;
+    if (!drawer) return;
+
+    const getFocusable = () =>
+      Array.from(drawer.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      ));
+
+    // Move focus into drawer on open
+    getFocusable()[0]?.focus();
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = getFocusable();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+      }
+    };
+
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
   }, [mobileOpen]);
 
   return (
@@ -43,7 +80,7 @@ export default function Header() {
           <div className="flex items-center gap-3 lg:hidden min-w-0">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="shrink-0 text-[#242424] p-2 -ml-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-1"
+              className="shrink-0 text-[#242424] p-2.5 -ml-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-1"
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav"
@@ -135,7 +172,7 @@ export default function Header() {
           {/* ── Mobile: Contact Us pill ── */}
           <Link
             href="/contact"
-            className="lg:hidden shrink-0 bg-[#C8102E] text-white px-4 py-2 rounded-full font-bold text-sm"
+            className="lg:hidden shrink-0 bg-[#C8102E] text-white px-4 py-2.5 rounded-full font-bold text-sm"
           >
             Contact Us
           </Link>
@@ -254,7 +291,7 @@ export default function Header() {
           MOBILE DRAWER
       ═══════════════════════════════════════════════════════════════════ */}
       {mobileOpen && (
-        <div id="mobile-nav" className="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-80px)]">
+        <div id="mobile-nav" ref={drawerRef} className="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-80px)]">
           <nav className="px-4 py-4 space-y-0.5" aria-label="Mobile navigation">
 
             <Link href="/" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">

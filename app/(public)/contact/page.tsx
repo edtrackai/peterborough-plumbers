@@ -271,6 +271,31 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Popular services — contextual internal links */}
+      <section className="py-10 bg-[#f9fafb] border-t border-gray-100">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-widest mb-5">Our Most Popular Services</p>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {[
+              { name: "Emergency Plumber",       href: "/services/emergency-plumber" },
+              { name: "Boiler Service",          href: "/services/boiler-service" },
+              { name: "Gas Safety Certificate",  href: "/services/gas-safety-certificates" },
+              { name: "Central Heating",         href: "/services/central-heating-services" },
+              { name: "Bathroom Installations",  href: "/services/bathroom-installations" },
+              { name: "Plumbing Repairs",        href: "/services/plumbing-repairs" },
+            ].map(({ name, href }) => (
+              <Link
+                key={href}
+                href={href}
+                className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 text-[var(--text)] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+              >
+                {name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CTASection heading="Need an Emergency Plumber?" subheading={`Call ${siteSettings.phone} now for plumbing & heating support across Peterborough and surrounding areas.`} />
     </>
   );
