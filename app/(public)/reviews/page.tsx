@@ -13,10 +13,11 @@ import type { Review } from "@/content/reviews";
 export const revalidate = 3600; // rebuild stale pages every hour
 
 export const metadata: Metadata = buildMetadata({
-  title: "Customer Reviews | Peterborough Plumbers | Peterborough & Surrounding Areas",
+  title: "Customer Reviews | Peterborough Plumbers",
   description:
     "Read genuine reviews from customers across Peterborough. Trusted by homeowners and landlords. Plumbing & heating engineers — clear upfront quotes. Book today.",
   path: "/reviews",
+  absoluteTitle: true,
   image: "/images/homepage/hero.webp",
   absoluteTitle: true,
 });

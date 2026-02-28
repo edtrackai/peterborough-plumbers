@@ -12,10 +12,11 @@ import { guideCategories } from "@/content/guides";
 export const revalidate = 3600; // rebuild stale pages every hour
 
 export const metadata: Metadata = buildMetadata({
-  title: "Free Plumbing & Heating Guides | Peterborough Homeowner Advice 2026",
+  title: "Plumbing & Heating Guides | Peterborough 2026",
   description:
-    "Free plumbing and heating guides for Peterborough homeowners — 2026 cost guides, boiler help, DIY tips, and emergency advice from qualified plumbing & heating engineers.",
+    "Free plumbing & heating guides for Peterborough homeowners — boiler help, DIY tips, cost guides and emergency advice from qualified engineers.",
   path: "/guides",
+  absoluteTitle: true,
   image: "/images/homepage/hero.webp",
 });
 

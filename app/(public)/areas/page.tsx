@@ -13,10 +13,11 @@ import type { Area } from "@/content/areas";
 export const revalidate = 3600; // rebuild stale pages every hour
 
 export const metadata: Metadata = buildMetadata({
-  title: "Areas We Cover in Peterborough | Peterborough Plumbers",
+  title: "Areas We Cover | Peterborough Plumbers",
   description:
     "Plumbing & heating support across Peterborough (PE1–PE7), Stamford, Market Deeping, Yaxley, and Whittlesey. Emergency call-outs available. Book today.",
   path: "/areas",
+  absoluteTitle: true,
   image: "/images/homepage/hero.webp",
 });
 

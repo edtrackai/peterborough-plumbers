@@ -13,10 +13,11 @@ import { siteSettings } from "@/content/settings";
 export const revalidate = 3600; // rebuild stale pages every hour
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Services in Peterborough | Book Online",
+  title: "Plumbing & Heating Services | Peterborough",
   description:
-    "Plumbing and heating services across Peterborough and surrounding areas — boiler servicing, emergency repairs, bathroom installations, drain clearance. Clear upfront quotes.",
+    "Plumbing & heating services in Peterborough — boiler repairs, bathroom installs, drain clearance & emergency call-outs. Qualified engineers, clear upfront quotes.",
   path: "/services",
+  absoluteTitle: true,
   image: "/images/homepage/hero.webp",
 });
 

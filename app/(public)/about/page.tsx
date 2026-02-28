@@ -10,7 +10,7 @@ import Link from "next/link";
 export const metadata: Metadata = buildMetadata({
   title: "About Peterborough Plumbers | Local Plumbing & Heating Engineers",
   description:
-    "Peterborough Plumbers — qualified, fully insured plumbing & heating engineers. Family-run, locally based, and trusted by homeowners and landlords across Peterborough. Clear upfront quotes.",
+    "Qualified, fully insured plumbers in Peterborough. Family-run and locally based, trusted by homeowners & landlords across Peterborough. Clear upfront quotes, no hidden fees.",
   path: "/about",
   absoluteTitle: true,
   image: "/images/homepage/hero.webp",

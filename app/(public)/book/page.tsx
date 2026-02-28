@@ -6,10 +6,11 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import BookingFormWrapper from "./BookingFormWrapper";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Book a Plumber in Peterborough | Same-Day Available",
+  title: "Book a Plumber in Peterborough | Same-Day",
   description:
     "Book a plumber in Peterborough online. Fill in our simple form and we'll confirm your appointment quickly. Same-week availability in most cases.",
   path: "/book",
+  absoluteTitle: true,
   noIndex: true,
   image: "/images/homepage/boiler-service.webp",
 });

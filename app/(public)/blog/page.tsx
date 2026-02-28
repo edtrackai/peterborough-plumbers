@@ -11,10 +11,11 @@ import { prisma } from "@/lib/prisma";
 export const revalidate = 3600; // rebuild stale pages every hour
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing Tips & Guides for Peterborough Homeowners",
+  title: "Plumbing Tips & Guides | Peterborough Plumbers",
   description:
     "Expert plumbing tips, guides and local advice from Peterborough Plumbers. Boiler care, landlord guides, emergency tips and more. Book a plumber today.",
   path: "/blog",
+  absoluteTitle: true,
   image: "/images/homepage/plumbing-repairs.webp",
 });
 

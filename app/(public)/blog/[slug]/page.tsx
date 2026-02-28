@@ -41,6 +41,7 @@ export async function generateMetadata({
     title: post.seoTitle,
     description: post.seoDescription,
     path: `/blog/${post.slug}`,
+    absoluteTitle: true,
     ogType: "article",
     image: post.image ?? "/images/homepage/hero.webp",
   });

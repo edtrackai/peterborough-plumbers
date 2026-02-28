@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: guide.name,
     description: guide.excerpt,
     path: `/guides/${guide.slug}`,
+    absoluteTitle: true,
     ogType: "article",
     image: "/images/homepage/hero-engineer.webp",
   });

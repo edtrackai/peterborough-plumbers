@@ -231,7 +231,7 @@ export default function Header() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </Link>
-                <div className="absolute top-full left-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pt-2">
+                <div className="absolute top-full left-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50 pt-2">
                   <div className="bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] py-2 min-w-[260px] border border-gray-100">
                     <Link
                       href="/services"

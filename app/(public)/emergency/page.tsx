@@ -8,9 +8,9 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Emergency Plumber Peterborough | Urgent Plumbing & Heating Call-Outs",
+  title: "Emergency Plumber Peterborough | Fast 24/7 Response",
   description:
-    "Emergency plumber in Peterborough. Burst pipes, no heating, flooding and drain blockages — qualified engineers available for urgent call-outs across Peterborough and surrounding areas.",
+    "24/7 emergency plumber in Peterborough — burst pipes, flooding, no heating & drain blockages. Qualified engineers, fast response across Peterborough and surrounding areas.",
   path: "/emergency",
   image: "/images/homepage/emergency-plumbing.webp",
   absoluteTitle: true,

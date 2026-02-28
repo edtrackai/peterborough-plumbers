@@ -82,8 +82,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  console.log("[Contact] Lead saved:", { leadId, receivedAt: new Date().toISOString() });
-
   if (resend && process.env.OWNER_EMAIL) {
     resend.emails.send({
       from: "Peterborough Plumbers <website@peterboroughplumbers.com>",
