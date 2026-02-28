@@ -9,6 +9,15 @@ import { getSiteSettings } from "@/lib/db/content";
 import { guideCategories } from "@/content/guides";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 
+// ── Guide category → related service slugs ────────────────────────────────────
+const guideServiceMap: Record<string, string[]> = {
+  costs:       ["boiler-service", "central-heating-services", "plumbing-repairs"],
+  diy:         ["plumbing-repairs", "plumbing-installation", "drain-blockages"],
+  boilers:     ["boiler-service", "central-heating-services", "gas-safety-certificates"],
+  heating:     ["central-heating-services", "boiler-service", "plumbing-repairs"],
+  emergencies: ["emergency-plumber", "damp-leak-detection", "plumbing-repairs"],
+};
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -44,10 +53,22 @@ export default async function GuideDetailPage({ params }: Props) {
 
   if (!guide) notFound();
 
-  const relatedGuides = await prisma.guide.findMany({
-    where: { category: guide.category, slug: { not: guide.slug } },
-    take: 3,
-  });
+  const relatedServiceSlugs = guideServiceMap[guide.category] ?? [];
+  const [relatedGuides, relatedServicesRaw] = await Promise.all([
+    prisma.guide.findMany({
+      where: { category: guide.category, slug: { not: guide.slug } },
+      take: 3,
+    }),
+    relatedServiceSlugs.length
+      ? prisma.service.findMany({
+          where: { slug: { in: relatedServiceSlugs } },
+          select: { slug: true, name: true },
+        })
+      : Promise.resolve([]),
+  ]);
+  const relatedServices = relatedServiceSlugs
+    .map((s) => relatedServicesRaw.find((r) => r.slug === s))
+    .filter((r): r is { slug: string; name: string } => !!r);
 
   const breadcrumb = breadcrumbSchema([
     { name: "Home", href: "/" },
@@ -169,6 +190,24 @@ export default async function GuideDetailPage({ params }: Props) {
             className="prose prose-lg max-w-none prose-headings:text-pp-heading prose-headings:font-bold prose-a:text-[var(--brand)] prose-a:no-underline hover:prose-a:underline prose-ul:my-4 prose-li:my-1"
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(guide.content) }}
           />
+
+          {/* Related services */}
+          {relatedServices.length > 0 && (
+            <div className="mt-12 pt-10 border-t border-[var(--border)]">
+              <h2 className="text-xl font-bold text-pp-heading mb-4">Related Services</h2>
+              <div className="flex flex-wrap gap-2">
+                {relatedServices.map((s) => (
+                  <Link
+                    key={s.slug}
+                    href={`/services/${s.slug}`}
+                    className="bg-pp-teal/10 text-pp-heading px-4 py-2 rounded-full text-sm font-medium hover:bg-pp-teal/20 transition-colors"
+                  >
+                    {s.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Related guides */}
           {relatedGuides.length > 0 && (

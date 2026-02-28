@@ -186,6 +186,12 @@ export function webSiteSchema() {
     "@type": "WebSite",
     name: siteSettings.companyName,
     url: siteUrl,
+    description: siteSettings.seoDescription,
+    publisher: {
+      "@type": "Organization",
+      name: siteSettings.companyName,
+      url: siteUrl,
+    },
   };
 }
 

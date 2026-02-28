@@ -10,6 +10,19 @@ import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 
+// ── Per-area geographic coordinates ──────────────────────────────────────────
+const areaGeo: Record<string, { lat: number; lng: number; placename: string }> = {
+  "city-centre":    { lat: 52.5735, lng: -0.2404, placename: "Peterborough City Centre" },
+  "werrington":     { lat: 52.6044, lng: -0.2344, placename: "Werrington, Peterborough" },
+  "bretton":        { lat: 52.5903, lng: -0.2778, placename: "Bretton, Peterborough" },
+  "hampton":        { lat: 52.5476, lng: -0.2404, placename: "Hampton, Peterborough" },
+  "orton":          { lat: 52.5531, lng: -0.2844, placename: "Orton, Peterborough" },
+  "yaxley":         { lat: 52.5086, lng: -0.2417, placename: "Yaxley, Peterborough" },
+  "whittlesey":     { lat: 52.5583, lng: -0.1267, placename: "Whittlesey, Peterborough" },
+  "market-deeping": { lat: 52.6774, lng: -0.3171, placename: "Market Deeping, Peterborough" },
+  "stamford":       { lat: 52.6536, lng: -0.4769, placename: "Stamford, Lincolnshire" },
+};
+
 // ── Exact nearby-area mapping (ordered by proximity) ─────────────────────────
 const nearbyAreaMap: Record<string, string[]> = {
   "city-centre":    ["werrington", "bretton", "hampton", "orton", "yaxley", "whittlesey"],
@@ -53,6 +66,7 @@ export async function generateMetadata({
     path: `/areas/${area.slug}`,
     absoluteTitle: true,
     image: "/images/homepage/hero.webp",
+    geo: areaGeo[slug],
   });
 }
 
@@ -116,6 +130,13 @@ export default async function AreaPage({
               containedInPlace: { "@type": "City", name: "Peterborough" },
             },
             url: `${settings.siteUrl}/areas/${area.slug}`,
+            ...(areaGeo[area.slug] && {
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: areaGeo[area.slug].lat,
+                longitude: areaGeo[area.slug].lng,
+              },
+            }),
           }),
         }}
       />
