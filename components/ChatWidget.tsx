@@ -77,11 +77,22 @@ export default function ChatWidget() {
   const [unread, setUnread]                 = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef       = useRef<HTMLInputElement>(null);
+  const [cookieBannerVisible, setCookieBannerVisible] = useState(false);
 
   // Load sessionId
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) setSessionId(stored);
+  }, []);
+
+  // Track cookie banner visibility so we can push chat UI above it
+  useEffect(() => {
+    if (!localStorage.getItem("pp_cookie_consent")) {
+      setCookieBannerVisible(true);
+    }
+    function onConsent() { setCookieBannerVisible(false); }
+    window.addEventListener("pp:cookie-consent", onConsent);
+    return () => window.removeEventListener("pp:cookie-consent", onConsent);
   }, []);
 
   // Greeting card — shows after 2s if never opened or dismissed
@@ -217,7 +228,7 @@ export default function ChatWidget() {
       {showTooltip && !open && (
         <div
           className="fixed z-[9999] pp-tip"
-          style={{ bottom: "calc(5rem + 72px)", right: "1.25rem" }}
+          style={{ bottom: cookieBannerVisible ? "360px" : "calc(5rem + 72px)", right: "1.25rem", transition: "bottom 0.3s ease" }}
         >
           {/* Card */}
           <button
@@ -292,6 +303,7 @@ export default function ChatWidget() {
         style={{
           background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)",
           boxShadow: "0 8px 28px rgba(200,16,46,0.42), 0 2px 8px rgba(0,0,0,0.16)",
+          ...(cookieBannerVisible ? { bottom: "280px" } : {}),
         }}
       >
         {open ? (
@@ -327,9 +339,11 @@ export default function ChatWidget() {
           aria-label="Plumbing support chat"
           className={`fixed bottom-36 sm:bottom-24 right-5 z-[9997] w-[min(360px,calc(100vw-20px))] flex flex-col rounded-2xl overflow-hidden ${open ? "pp-enter" : "pp-exit"}`}
           style={{
-            height: "min(580px, calc(100dvh - 160px))",
+            height: cookieBannerVisible ? "min(580px, calc(100dvh - 380px))" : "min(580px, calc(100dvh - 160px))",
             boxShadow: "0 24px 60px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.10)",
             border: "1px solid rgba(0,0,0,0.07)",
+            transition: "bottom 0.3s ease",
+            ...(cookieBannerVisible ? { bottom: "356px" } : {}),
           }}
         >
 

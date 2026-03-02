@@ -210,7 +210,7 @@ export default function CookieBanner() {
           aria-modal="false"
           aria-label="Cookie consent"
           aria-live="polite"
-          className="pp-slide-up fixed bottom-5 left-4 right-4 z-[100] sm:left-auto sm:right-6 sm:bottom-6 sm:w-[360px]"
+          className="pp-slide-up fixed bottom-[72px] left-4 right-4 z-[100] sm:left-auto sm:right-6 sm:bottom-6 sm:w-[360px]"
         >
           <div className="rounded-2xl p-5" style={GLASS_DARK}>
 
