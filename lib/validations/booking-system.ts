@@ -30,7 +30,7 @@ export type ReserveSlotInput = z.infer<typeof reserveSlotSchema>;
 export const confirmBookingSchema = z.object({
   bookingRef: z.string().min(1, "Booking reference is required"),
   serviceType: z.string().min(1, "Service type is required"),
-  description: z.string().optional(),
+  description: z.string().max(1000).optional(),
   customerName: z
     .string()
     .min(2, "Name must be at least 2 characters")

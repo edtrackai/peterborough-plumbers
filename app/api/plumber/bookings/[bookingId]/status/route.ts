@@ -19,7 +19,28 @@ export async function POST(
   }
 
   const { bookingId } = await params;
-  const { status: newStatus, notes } = await req.json();
+
+  let newStatus: unknown, notes: unknown;
+  try {
+    ({ status: newStatus, notes } = await req.json());
+  } catch {
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  }
+
+  if (typeof newStatus !== "string") {
+    return NextResponse.json({ error: "Status is required." }, { status: 400 });
+  }
+
+  if (notes !== undefined && notes !== null) {
+    if (typeof notes !== "string") {
+      return NextResponse.json({ error: "Notes must be a string." }, { status: 400 });
+    }
+    if (notes.length > 500) {
+      return NextResponse.json({ error: "Notes must be 500 characters or fewer." }, { status: 400 });
+    }
+  }
+
+  const validNotes: string | null = typeof notes === "string" ? notes.trim() || null : null;
 
   const booking = await prisma.booking.findUnique({ where: { id: bookingId } });
   if (!booking) return NextResponse.json({ error: "Booking not found" }, { status: 404 });
@@ -45,7 +66,7 @@ export async function POST(
         bookingId,
         plumberId: session.plumberId,
         eventType: newStatus,
-        notes: notes ?? null,
+        notes: validNotes,
       },
     }),
   ]);

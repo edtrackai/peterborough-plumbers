@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { siteSettings } from "@/content/settings";
 import { services } from "@/content/services";
+import ManageCookiesButton from "@/components/layout/ManageCookiesButton";
 
 export default function Footer() {
   return (
@@ -148,6 +149,7 @@ export default function Footer() {
           <Link href="/faqs" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
             Accessibility
           </Link>
+          <ManageCookiesButton />
         </div>
 
       </div>

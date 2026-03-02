@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
+import { requireAdminAuth } from "@/lib/security/adminAuth";
 
 const PAGE_SIZE = 20;
 
 export async function GET(req: NextRequest) {
+  const denied = requireAdminAuth(req);
+  if (denied) return denied;
+
   try {
     const { searchParams } = req.nextUrl;
     const status = searchParams.get("status") ?? undefined;

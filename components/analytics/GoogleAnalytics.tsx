@@ -1,16 +1,20 @@
 "use client";
 
 /**
- * GA4 script loader — only activates after the user accepts cookies.
- * Listens for the 'pp:cookie-consent' custom event dispatched by CookieBanner.tsx.
+ * GA4 script loader — only activates after the user accepts analytics cookies.
  *
- * On subsequent page loads, checks localStorage for existing consent.
- * Never loads GA4 if the user has rejected cookies.
+ * On mount: checks localStorage via getAnalyticsConsent().
+ * While mounted: listens for pp:cookie-consent events from CookieBanner.
+ * Never loads GA4 scripts if analytics consent is absent.
+ *
+ * To connect Google Analytics:
+ *   1. Add NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX to .env.local
+ *   2. That's it — this component handles the rest.
  */
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import { getConsentState } from "@/components/ui/CookieBanner";
+import { getAnalyticsConsent, type ConsentPrefs } from "@/components/ui/CookieBanner";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
@@ -19,15 +23,15 @@ export default function GoogleAnalytics() {
 
   useEffect(() => {
     // Check persisted consent on mount
-    if (getConsentState() === "accepted") {
+    if (getAnalyticsConsent()) {
       setEnabled(true);
       return;
     }
 
-    // Listen for consent event from CookieBanner
+    // Listen for live consent changes from CookieBanner
     function handleConsent(e: Event) {
-      const detail = (e as CustomEvent<string>).detail;
-      if (detail === "accepted") setEnabled(true);
+      const prefs = (e as CustomEvent<ConsentPrefs>).detail;
+      if (prefs?.analytics === true) setEnabled(true);
     }
 
     window.addEventListener("pp:cookie-consent", handleConsent);
