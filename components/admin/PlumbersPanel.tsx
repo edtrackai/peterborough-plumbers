@@ -93,6 +93,7 @@ export default function PlumbersPanel({ initial }: Props) {
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [actionBusy, setActionBusy] = useState<string | null>(null); // plumber id
   const [rowError, setRowError] = useState<Record<string, string>>({});
+  const [rowCanSuspend, setRowCanSuspend] = useState<Record<string, boolean>>({});
 
   // ── Create ──────────────────────────────────────────────────────────────────
   async function handleCreate(e: React.FormEvent) {
@@ -148,6 +149,7 @@ export default function PlumbersPanel({ initial }: Props) {
   async function toggle(id: string, field: "isActive" | "isOnDuty", current: boolean) {
     setActionBusy(id);
     setRowError((prev) => { const n = { ...prev }; delete n[id]; return n; });
+    setRowCanSuspend((prev) => { const n = { ...prev }; delete n[id]; return n; });
     try {
       const res = await fetch(`/api/admin/plumbers/${id}`, {
         method: "PATCH",
@@ -180,8 +182,10 @@ export default function PlumbersPanel({ initial }: Props) {
         setConfirmDeleteId(null);
       } else {
         setRowError((prev) => ({ ...prev, [id]: data.error ?? "Delete failed" }));
+        if (data.canSuspend) {
+          setRowCanSuspend((prev) => ({ ...prev, [id]: true }));
+        }
         setConfirmDeleteId(null);
-        // If the error suggests suspending, auto-scroll / highlight stays visible via rowError
       }
     } catch {
       setRowError((prev) => ({ ...prev, [id]: "Network error" }));
@@ -445,9 +449,18 @@ export default function PlumbersPanel({ initial }: Props) {
                     )}
 
                     {err && (
-                      <p className="pl-11 text-xs text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-                        {err}
-                      </p>
+                      <div className="pl-11 space-y-2">
+                        <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">{err}</p>
+                        {rowCanSuspend[p.id] && (
+                          <button
+                            type="button"
+                            onClick={() => toggle(p.id, "isActive", p.isActive)}
+                            className="px-3 py-1 rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-300 text-xs font-semibold transition-colors"
+                          >
+                            Suspend instead
+                          </button>
+                        )}
+                      </div>
                     )}
                   </div>
                 );
@@ -578,7 +591,18 @@ export default function PlumbersPanel({ initial }: Props) {
                         {err && (
                           <tr className="bg-red-50">
                             <td colSpan={8} className="px-5 py-2.5">
-                              <p className="text-xs text-red-600">{err}</p>
+                              <div className="flex items-center gap-3">
+                                <p className="text-xs text-red-600">{err}</p>
+                                {rowCanSuspend[p.id] && (
+                                  <button
+                                    type="button"
+                                    onClick={() => toggle(p.id, "isActive", p.isActive)}
+                                    className="shrink-0 px-3 py-1 rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-300 text-xs font-semibold transition-colors"
+                                  >
+                                    Suspend instead
+                                  </button>
+                                )}
+                              </div>
                             </td>
                           </tr>
                         )}
