@@ -138,6 +138,7 @@ export default async function AdminDashboardPage() {
     weeklyData,
     totalPlumbers,
     activePlumbers,
+    waActiveChats,
   ] = await Promise.all([
     prisma.booking.count(),
     prisma.booking.count({ where: { status: { in: ["accepted", "en_route", "arrived", "in_progress"] } } }),
@@ -173,6 +174,7 @@ export default async function AdminDashboardPage() {
     ),
     prisma.plumber.count(),
     prisma.plumber.count({ where: { isActive: true } }),
+    prisma.waChat.count({ where: { botActive: true } }),
   ]);
 
   const conversionRate = totalLeads > 0 ? Math.round((convertedLeads / totalLeads) * 100) : 0;
@@ -251,6 +253,20 @@ export default async function AdminDashboardPage() {
       ),
       href: "/admin/bookings?tab=history",
     },
+    {
+      label: "WhatsApp Chats",
+      value: waActiveChats,
+      sub: "active bot conversations",
+      color: "#25D366",
+      bg: "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)",
+      border: "#BBF7D0",
+      icon: (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+        </svg>
+      ),
+      href: "/admin/whatsapp",
+    },
   ];
 
   return (
@@ -274,7 +290,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* ── KPI cards ── */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4">
+      <div className="grid grid-cols-2 xl:grid-cols-5 gap-3 lg:gap-4">
         {kpis.map((k) => (
           <Link
             key={k.label}

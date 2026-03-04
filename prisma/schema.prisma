@@ -197,7 +197,7 @@ model Lead {
   id          String   @id @default(cuid())
   name        String
   phone       String
-  email       String
+  email       String?
   postcode    String
   serviceType String?
   message     String?
@@ -387,4 +387,45 @@ model ChatLead {
 
   @@index([sessionId])
   @@map("pb_chat_leads")
+}
+
+// ── WaChat (WhatsApp conversation per phone number) ──────────────────────────
+
+model WaChat {
+  id            String      @id @default(cuid())
+  waId          String      @unique // WhatsApp phone number (e.g. "447700900000")
+  customerName  String?
+  customerPhone String?
+  postcode      String?
+  serviceType   String?
+  botActive     Boolean     @default(true)
+  isEmergency   Boolean     @default(false)
+  lastMessageAt DateTime    @default(now())
+  leadId        String?
+  bookingRef    String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  messages      WaMessage[]
+
+  @@index([lastMessageAt(sort: Desc)])
+  @@index([botActive])
+  @@map("pb_wa_chats")
+}
+
+// ── WaMessage (individual WhatsApp messages) ─────────────────────────────────
+
+model WaMessage {
+  id          String   @id @default(cuid())
+  chatId      String
+  chat        WaChat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  role        String   // "user" | "assistant"
+  content     String   @db.Text
+  waMessageId String?  @unique // Meta message ID for dedup
+  category    String?
+  createdAt   DateTime @default(now())
+
+  @@index([chatId])
+  @@index([createdAt(sort: Desc)])
+  @@map("pb_wa_messages")
 }

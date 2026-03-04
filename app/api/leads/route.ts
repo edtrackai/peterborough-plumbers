@@ -9,7 +9,7 @@ const leadSchema = z.object({
     .min(10, "Enter a valid UK phone number")
     .max(20)
     .regex(/^[\d\s+()-]+$/, "Invalid phone number"),
-  email: z.string().email("Enter a valid email address"),
+  email: z.string().email("Enter a valid email address").optional(),
   postcode: z
     .string()
     .min(3, "Enter a valid postcode")

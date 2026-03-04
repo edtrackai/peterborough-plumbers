@@ -7,7 +7,7 @@ export interface PipelineLead {
   id: string;
   name: string;
   phone: string;
-  email: string;
+  email: string | null;
   postcode: string;
   serviceType: string | null;
   message: string | null;

@@ -1,7 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { hasProcessed, markProcessed } from "@/lib/kv";
-import { sendText } from "@/lib/whatsapp";
-import { getReply } from "@/lib/whatsappBot";
 import crypto from "crypto";
 
 /**
@@ -49,57 +46,19 @@ export async function GET(request: NextRequest) {
   return new NextResponse("Forbidden", { status: 403 });
 }
 
-// ── Types for Meta webhook payload ──────────────────────────────────
-
-interface WhatsAppMessage {
-  id: string;
-  from: string;
-  timestamp: string;
-  type: string;
-  text?: { body: string };
-}
-
-interface WhatsAppChange {
-  value: {
-    messaging_product?: string;
-    metadata?: { phone_number_id: string };
-    messages?: WhatsAppMessage[];
-    statuses?: unknown[];
-  };
-}
-
-interface WhatsAppEntry {
-  id: string;
-  changes: WhatsAppChange[];
-}
-
-interface WhatsAppWebhookBody {
-  object?: string;
-  entry?: WhatsAppEntry[];
-}
-
-// ── Allowed numbers check ───────────────────────────────────────────
-
-function isAllowed(waId: string): boolean {
-  const csv = process.env.WHATSAPP_ALLOWED_NUMBERS;
-  if (!csv) return true; // no allowlist → allow all
-  const allowed = csv.split(",").map((n) => n.trim());
-  return allowed.includes(waId);
-}
-
 /**
  * POST — Inbound webhook events from Meta.
- * Always returns 200 quickly to prevent Meta retries.
+ * n8n handles all message processing now.
+ * This endpoint just validates the signature and returns 200
+ * to prevent Meta from retrying.
  */
 export async function POST(request: NextRequest) {
-  let body: WhatsAppWebhookBody;
   let rawBody: string;
 
   try {
     rawBody = await request.text();
-    body = JSON.parse(rawBody) as WhatsAppWebhookBody;
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
   const signatureValid = await verifySignature(request, rawBody);
@@ -108,57 +67,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  // Must be a WhatsApp webhook
-  if (body.object !== "whatsapp_business_account") {
-    return NextResponse.json({ status: "ignored" }, { status: 200 });
-  }
-
-  const entry = body.entry?.[0];
-  const change = entry?.changes?.[0];
-  const value = change?.value;
-
-  // Ignore status updates
-  if (!value?.messages || value.messages.length === 0) {
-    return NextResponse.json({ status: "no_messages" }, { status: 200 });
-  }
-
-  const message = value.messages[0];
-
-  // Only handle text messages
-  if (message.type !== "text" || !message.text?.body) {
-    return NextResponse.json({ status: "non_text" }, { status: 200 });
-  }
-
-  // Idempotency: skip if already processed
-  if (hasProcessed(message.id)) {
-    if (process.env.WHATSAPP_DEBUG === "true") {
-      console.log(`[WhatsApp] Duplicate message ${message.id}, skipping`);
-    }
-    return NextResponse.json({ status: "duplicate" }, { status: 200 });
-  }
-
-  // Allowed numbers check
-  if (!isAllowed(message.from)) {
-    if (process.env.WHATSAPP_DEBUG === "true") {
-      console.log(`[WhatsApp] Number ${message.from} not in allowlist, ignoring`);
-    }
-    return NextResponse.json({ status: "not_allowed" }, { status: 200 });
-  }
-
-  // Mark as processed before async work
-  markProcessed(message.id);
-
-  // Generate and send reply
-  const replyText = getReply(message.text.body);
-
-  if (process.env.WHATSAPP_DEBUG === "true") {
-    console.log(`[WhatsApp] From: ${message.from} | Text: "${message.text.body}"`);
-  }
-
-  // Fire-and-forget: don't block the 200 response
-  sendText(message.from, replyText).catch((err) => {
-    console.error("[WhatsApp] Reply failed:", err instanceof Error ? err.message : err);
-  });
-
+  // n8n handles all message processing via its own WhatsApp trigger.
+  // This endpoint only exists for Meta webhook verification (GET)
+  // and to acknowledge POST events if Meta sends them here too.
   return NextResponse.json({ status: "ok" }, { status: 200 });
 }

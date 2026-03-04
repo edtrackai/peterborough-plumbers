@@ -1,0 +1,410 @@
+{
+  "name": "Whatsapp Agent PeterBoroughPlumbers",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["messages"],
+        "options": {
+          "messageStatusUpdates": ["all"]
+        }
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [-800, 0],
+      "id": "44f51bc6-dd61-4967-a25e-584503f64095",
+      "name": "Receive Msg",
+      "webhookId": "d9fe1320-e072-4eab-940f-a34c2ddfcab5",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "rugiPb9XjpNfmDce",
+          "name": "WhatsApp OAuth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "" },
+          "conditions": [
+            {
+              "id": "filter-text-only",
+              "leftValue": "={{ $json.messages[0].type }}",
+              "rightValue": "text",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [-580, 0],
+      "id": "b1000001-0001-0001-0001-000000000001",
+      "name": "Filter Text Only"
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "field-text",
+              "name": "text",
+              "value": "={{ $json.messages[0].text.body }}",
+              "type": "string"
+            },
+            {
+              "id": "field-from",
+              "name": "from",
+              "value": "={{ $json.messages[0].from }}",
+              "type": "string"
+            },
+            {
+              "id": "field-msgid",
+              "name": "messageId",
+              "value": "={{ $json.messages[0].id }}",
+              "type": "string"
+            },
+            {
+              "id": "field-name",
+              "name": "senderName",
+              "value": "={{ $json.contacts ? $json.contacts[0].profile.name : '' }}",
+              "type": "string"
+            },
+            {
+              "id": "field-time",
+              "name": "timestamp",
+              "value": "={{ $json.messages[0].timestamp }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-360, 0],
+      "id": "b1000001-0007-0007-0007-000000000007",
+      "name": "Extract Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://peterborough-plumbers-shahlals-projects.vercel.app/api/whatsapp/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $json.from }}\",\n  \"messageText\": {{ JSON.stringify($json.text) }},\n  \"waMessageId\": \"{{ $json.messageId }}\",\n  \"senderName\": \"{{ $json.senderName }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-120, 0],
+      "id": "b1000001-0002-0002-0002-000000000002",
+      "name": "Store Message"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "" },
+          "conditions": [
+            {
+              "id": "check-not-duplicate",
+              "leftValue": "={{ $json.isDuplicate }}",
+              "rightValue": false,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [120, 0],
+      "id": "b1000001-0003-0003-0003-000000000003",
+      "name": "Is Duplicate?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "" },
+          "conditions": [
+            {
+              "id": "check-bot-active",
+              "leftValue": "={{ $json.botActive }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [360, 0],
+      "id": "b1000001-0004-0004-0004-000000000004",
+      "name": "Bot Active?"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer ({{ $('Extract Fields').item.json.from }}): {{ $('Extract Fields').item.json.text }}",
+        "options": {
+          "systemMessage": "**You are the WhatsApp Customer Service & Booking Agent for Peterborough Plumbers.**\n\nYour role is to speak to customers in a **professional, warm, trustworthy, and efficient** way, help them with plumbing and heating enquiries, qualify jobs properly, answer common questions, collect the right information, and guide customers to the next best action:\n\n* **Call now**\n* **Quote request**\n* **Booking request**\n* **Emergency escalation**\n* **Human handoff**\n\nYou represent a trusted local UK plumbing and heating business. Your tone must always feel:\n\n* **Professional**\n* **Polite**\n* **Helpful**\n* **Calm under pressure**\n* **Clear and direct**\n* **Never pushy**\n* **Never robotic**\n\n---\n\n# **1) Core Role**\n\nYou must:\n\n* Greet customers warmly\n* Understand what they need\n* Identify whether the issue is **emergency** or **standard**\n* Ask only relevant questions\n* Keep replies concise and natural for WhatsApp\n* Build trust\n* Collect lead details properly\n* Explain the next step clearly\n* Escalate to a human when needed\n\nYou are **not** a plumber on-site and must **not** pretend to diagnose with certainty.\nYou may guide, qualify, and triage — but **final technical confirmation, pricing confirmation, ETA confirmation, and booking confirmation must come from the team.**\n\n---\n\n# **2) Business Context**\n\n**Business name:** Peterborough Plumbers\n\n**Main service categories:**\n\n* Emergency plumbing\n* Boiler service and boiler repair\n* Gas safety certificates / CP12\n* Central heating services\n* Bathroom installations\n* Landlord services\n* Plumbing repairs\n* Plumbing installations\n* Damp & leak detection\n* Drain blockages\n* Pre-purchase plumbing surveys\n\n**Service area:**\n\n* Peterborough and surrounding areas\n* PE1, PE2, PE3, PE4, PE6, PE7, PE9\n* Nearby towns may also be covered depending on location\n\n**Important operational guidance:**\n\n* For **emergencies**, customers should be encouraged to **call directly**\n* For **standard enquiries**, collect details and pass them to the team\n* The business provides **clear upfront written quotes before work starts**\n* Customers may be asked for **photos or short videos**\n* During out-of-hours:\n\n  * **Emergency customers** should be told to **call**\n  * **Non-emergency customers** can leave details for follow-up\n\n---\n\n# **3) Language, Tone & Formatting**\n\n* Reply in natural **British English**\n* If the customer writes in **Urdu or Roman Urdu**, reply in the same style\n* Keep replies **short, easy to scan, and human**\n* Use **bold** for important actions\n* Use emojis sparingly: max **1 per message**\n* Ask **1 question at a time** unless necessary\n\n---\n\n# **4) Emergency / Safety Rules**\n\n**Gas smell:** Immediately advise to leave property, don't use switches, call gas emergency line.\n**Flooding/burst pipe:** Acknowledge urgency, advise calling directly, collect postcode.\n**Vulnerable occupants:** Show empathy, prioritise, escalate to human.\n\n---\n\n# **5) Lead Capture**\n\nWhen you have collected the customer's **name**, **phone number**, and **postcode**, you MUST use the **Create Lead** tool to save the lead. Pass:\n* name: customer's full name\n* phone: their phone number\n* postcode: their postcode\n* serviceType: the service they need (if known)\n* message: brief summary of their issue\n\n---\n\n# **6) Message Length Rules**\n\n* Default: **max 2 short sentences / 30 words**\n* Complex/safety: **max 60 words**\n* Never send essay-style replies\n* Keep chat moving with short back-and-forth\n\n---\n\n# **7) Hard Rules**\n\nNever: invent prices, guarantee ETAs, diagnose with certainty, give unsafe gas advice, say \"I'm just a bot\", use excessive emojis, send long paragraphs."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [620, 0],
+      "id": "f2092725-a11f-477e-be21-dd0376539866",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://peterborough-plumbers-shahlals-projects.vercel.app/api/whatsapp/chat/bot-reply",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $('Extract Fields').item.json.from }}\",\n  \"replyText\": {{ JSON.stringify($json.output) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 0],
+      "id": "b1000001-0005-0005-0005-000000000005",
+      "name": "Store Bot Reply"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "968799632989844",
+        "recipientPhoneNumber": "={{ $('Extract Fields').item.json.from }}",
+        "textBody": "={{ $('AI Agent').item.json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [1120, 0],
+      "id": "d75c86f0-25dd-455b-a70a-1a89d5999b92",
+      "name": "Send Message",
+      "webhookId": "74f147e7-935c-400c-a36f-66a42c572eb6",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "zU8vkUNxUe8Yu9EL",
+          "name": "WhatsApp account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Extract Fields').item.json.from }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [620, 280],
+      "id": "a70d0f97-63f8-48b0-a49f-92a7441f22ec",
+      "name": "Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [520, 140],
+      "id": "09353ed6-fe02-4b06-b0c4-d3a2a1551b03",
+      "name": "Mistral",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "ZHJAq8JsmjJGUOAX",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Create Lead",
+        "description": "Use this tool when you have collected the customer's name, phone number, and postcode. This saves the lead to the database for the team to follow up.",
+        "method": "POST",
+        "url": "https://peterborough-plumbers-shahlals-projects.vercel.app/api/whatsapp/lead",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            { "name": "x-api-key", "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $('Extract Fields').item.json.from }}\",\n  \"name\": \"{name}\",\n  \"phone\": \"{phone}\",\n  \"postcode\": \"{postcode}\",\n  \"serviceType\": \"{serviceType}\",\n  \"message\": \"{message}\"\n}",
+        "placeholderDefinitions": {
+          "values": [
+            { "name": "name", "description": "Customer's full name" },
+            { "name": "phone", "description": "Customer's phone number" },
+            { "name": "postcode", "description": "Property postcode e.g. PE1 2AB" },
+            { "name": "serviceType", "description": "Service needed e.g. boiler repair, emergency plumbing" },
+            { "name": "message", "description": "Brief summary of the customer's issue" }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [720, 140],
+      "id": "b1000001-0006-0006-0006-000000000006",
+      "name": "Create Lead Tool"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Receive Msg": {
+      "main": [
+        [
+          {
+            "node": "Filter Text Only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Text Only": {
+      "main": [
+        [
+          {
+            "node": "Extract Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Fields": {
+      "main": [
+        [
+          {
+            "node": "Store Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Message": {
+      "main": [
+        [
+          {
+            "node": "Is Duplicate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Duplicate?": {
+      "main": [
+        [
+          {
+            "node": "Bot Active?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Bot Active?": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Store Bot Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Bot Reply": {
+      "main": [
+        [
+          {
+            "node": "Send Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Lead Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "af49838e-4954-46fc-b202-d539c25649dd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ff3304c66ca0869e5b25e541efa316a768fdb73d58c4b8dc0277ac5caa92c13b"
+  },
+  "id": "1fWpDOqT9W8XskYn",
+  "tags": []
+}
