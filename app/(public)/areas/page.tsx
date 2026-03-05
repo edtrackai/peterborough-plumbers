@@ -157,9 +157,26 @@ export default async function AreasPage() {
       {/* Subtle divider between sections */}
       <div className="mx-auto h-px w-full max-w-5xl bg-black/[0.08]" />
 
-      {/* Areas grid — separate section */}
-      <section id="areas-we-cover" className="bg-white py-10 sm:py-16">
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+      {/* Areas grid — separate section with subtle map background */}
+      <section id="areas-we-cover" className="relative overflow-hidden py-10 sm:py-16">
+        {/* Map background + white wash overlay */}
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <Image
+            src="/images/areas/areas-we-cover.webp"
+            alt=""
+            fill
+            className="object-cover object-center"
+            loading="lazy"
+            quality={85}
+            sizes="100vw"
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "rgba(255,255,255,0.88)" }}
+          />
+        </div>
+        {/* Content — above the overlay */}
+        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
           {/* Centered heading + accent */}
           <div className="mb-8 text-center">
             <h2 className="text-2xl lg:text-3xl font-bold text-[#111] mb-2">Areas We Cover</h2>
