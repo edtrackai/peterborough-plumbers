@@ -394,16 +394,27 @@ export default async function HomePage() {
       </section>
 
       {/* ── G) AREAS WE COVER ─────────────────────────────────────────────────── */}
-      <section className="bg-white py-8 sm:py-14 border-t border-[var(--border)]">
+      <section className="bg-white py-12 sm:py-20 border-t border-[var(--border)]">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="text-center mb-6 sm:mb-10">
-            <h2 className="text-2xl lg:text-3xl font-bold text-pp-heading mb-2">Areas We Cover</h2>
-            <p className="text-[var(--muted)] text-sm">
+
+          {/* Heading */}
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl lg:text-3xl font-bold text-pp-heading mb-3">Areas We Cover</h2>
+            <p className="text-[var(--muted)] text-sm max-w-[640px] mx-auto">
               Covering Peterborough and surrounding areas across Cambridgeshire.
             </p>
           </div>
-          {/* Banner image */}
-          <div className="relative w-full rounded-xl overflow-hidden mb-8" style={{ aspectRatio: "21/9" }}>
+
+          {/* Premium map card */}
+          <div
+            className="relative w-full overflow-hidden mb-10"
+            style={{
+              borderRadius: 22,
+              aspectRatio: "21/9",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.07)",
+              border: "1px solid rgba(0,0,0,0.07)",
+            }}
+          >
             <Image
               src="/images/homepage/areas-we-cover.webp"
               alt="Areas we cover across Peterborough and Cambridgeshire"
@@ -411,26 +422,56 @@ export default async function HomePage() {
               className="object-cover"
               loading="lazy"
             />
+            {/* Edge vignette for depth — does not over-darken centre */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.22) 100%)" }}
+              aria-hidden="true"
+            />
+
+            {/* Top-left badges */}
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-2 z-10" aria-hidden="true">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-[#111] shadow-sm border border-black/[0.06]">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                Available Today
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-[#111] shadow-sm border border-black/[0.06]">
+                <svg className="h-3 w-3 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
+                Peterborough
+              </span>
+            </div>
+
+            {/* Bottom-right badge */}
+            <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10" aria-hidden="true">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-[#111] shadow-sm border border-black/[0.06]">
+                <svg className="h-3 w-3 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm.75 5.25a.75.75 0 00-1.5 0V12l3.22 3.22a.75.75 0 001.06-1.06L12.75 11.5V7.25z"/></svg>
+                Fast response
+              </span>
+            </div>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
+
+          {/* Chips row */}
+          <div className="flex flex-wrap justify-center gap-2.5">
             {areas.map((area) => (
               <Link
                 key={area.slug}
                 href={`/areas/${area.slug}`}
-                className="inline-flex items-center gap-1.5 border border-[var(--border)] bg-white text-pp-heading text-sm font-medium px-4 py-2 rounded-full hover:border-pp-teal hover:text-pp-teal transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 h-10 sm:h-11 rounded-full border border-black/[0.10] bg-white px-4 sm:px-5 text-sm font-medium text-pp-heading shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:border-[var(--brand)] hover:text-[var(--brand)] hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
               >
-                <svg className="h-3 w-3 text-[var(--muted)]" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="h-3 w-3 text-[var(--muted)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
                 {area.name}
               </Link>
             ))}
           </div>
-          <p className="text-center mt-6">
+
+          <p className="text-center mt-7">
             <Link href="/areas" className="text-sm font-semibold text-pp-teal hover:text-pp-teal-dark transition-colors duration-200">
               View all areas we cover →
             </Link>
           </p>
+
         </div>
       </section>
 
