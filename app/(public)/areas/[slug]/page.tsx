@@ -5,7 +5,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import CTASection from "@/components/blocks/CTASection";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
@@ -362,9 +362,11 @@ export default async function AreaPage({
 
       <NextStepsLinks variant="area" />
 
-      <CTASection
+      <ImageCTASection
         heading={`Need a Plumber in ${area.name}?`}
         subheading={`Call ${settings.phone} or book online for plumbing & heating support in ${area.name} and surrounding areas.`}
+        imageSrc="/images/areas/ready-to-book-your-plumber.webp"
+        imageAlt={`Peterborough Plumbers engineer serving ${area.name}`}
       />
     </>
   );

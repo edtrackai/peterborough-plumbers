@@ -4,7 +4,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 import AreaGrid from "@/components/blocks/AreaGrid";
-import CTASection from "@/components/blocks/CTASection";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
@@ -175,7 +175,12 @@ export default async function AreasPage() {
         </div>
       </section>
 
-      <CTASection />
+      <ImageCTASection
+        heading="Ready to Book Your Plumber?"
+        subheading="Qualified engineers across all PE postcodes and surrounding areas — clear upfront quotes, no hidden fees."
+        imageSrc="/images/areas/ready-to-book-your-plumber.webp"
+        imageAlt="Peterborough Plumbers engineer ready to book"
+      />
     </>
   );
 }
