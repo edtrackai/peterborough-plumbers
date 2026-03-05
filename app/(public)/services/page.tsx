@@ -4,7 +4,7 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
-import CTASection from "@/components/blocks/CTASection";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { prisma } from "@/lib/prisma";
 import type { Service } from "@/content/services";
@@ -18,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
     "Plumbing & heating services in Peterborough — boiler repairs, bathroom installs, drain clearance & emergency call-outs. Qualified engineers.",
   path: "/services",
   absoluteTitle: true,
-  image: "/images/homepage/hero.webp",
+  image: "/images/services/hero.webp",
 });
 
 export default async function ServicesPage() {
@@ -40,7 +40,7 @@ export default async function ServicesPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.webp" alt="Professional plumbing and heating services in Peterborough" fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/services/hero.webp" alt="Professional plumbing and heating services in Peterborough" fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -90,7 +90,12 @@ export default async function ServicesPage() {
 
       <ServiceGrid services={services} heading="All Services" />
 
-      <CTASection />
+      <ImageCTASection
+        heading="Ready to Book Your Plumber?"
+        subheading="Qualified engineers across Peterborough and surrounding areas — clear upfront quotes, no hidden fees."
+        imageSrc="/images/services/cta.webp"
+        imageAlt="Ready to book a plumber in Peterborough"
+      />
     </>
   );
 }
