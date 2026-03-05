@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import { siteSettings } from "@/content/settings";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import CleanPricingCTA from "@/components/CleanPricingCTA";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 
 export const metadata: Metadata = buildMetadata({
   title: "Plumbing & Heating Pricing Peterborough | Peterborough Plumbers",
@@ -508,7 +508,12 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <CleanPricingCTA />
+      <ImageCTASection
+        heading="Ready to Book a Local Plumber?"
+        subheading="Transparent pricing, trusted engineers, and fast response across Peterborough."
+        imageSrc="/images/pricing/why-our-prices-are-fair.webp"
+        imageAlt="Peterborough Plumbers engineer with transparent invoice pricing"
+      />
     </>
   );
 }
