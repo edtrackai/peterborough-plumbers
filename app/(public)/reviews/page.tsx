@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import PageHeroShell from "@/components/hero/PageHeroShell";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 import Link from "next/link";
@@ -69,14 +69,7 @@ export default async function ReviewsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsSchema) }}
       />
       {/* Hero */}
-      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
-        <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.webp" alt="Peterborough plumbing and heating — trusted local service" fill className="object-cover" priority quality={85} sizes="100vw" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
-          <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
-          <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
-        </div>
-        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-4 sm:pt-28 pb-16 sm:pb-24">
+      <PageHeroShell imageSrc="/images/homepage/hero.webp" imageAlt="Peterborough plumbing and heating — trusted local service" priority>
           <Breadcrumbs items={[{ name: "Reviews", href: "/reviews" }]} inverted />
           <div className="inline-flex items-center gap-2.5 mt-4 mb-5">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
@@ -111,13 +104,7 @@ export default async function ReviewsPage() {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 z-[5]" aria-hidden="true" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}>
-            <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
-          </svg>
-        </div>
-      </section>
+      </PageHeroShell>
 
       <ReviewsGrid reviews={reviews as unknown as Review[]} heading="All Reviews" />
 
