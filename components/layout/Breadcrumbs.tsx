@@ -31,19 +31,29 @@ export default function Breadcrumbs({
             <li key={item.href} className="flex items-center gap-1">
               {i > 0 && <span className="mx-1">/</span>}
               {i === allItems.length - 1 ? (
-                <span className={`font-medium ${inverted ? "text-white" : "text-pp-heading"}`}>
-                  {item.name}
+                <span className={`font-medium flex items-center gap-1 ${inverted ? "text-white" : "text-pp-heading"}`}>
+                  {item.href === "/" ? (
+                    <svg className="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                  ) : null}
+                  {item.href === "/" ? <span className="sr-only">{item.name}</span> : item.name}
                 </span>
               ) : (
                 <Link
                   href={item.href}
-                  className={`transition-colors duration-200 ${
-                    inverted
-                      ? "hover:text-white"
-                      : "hover:text-pp-teal"
+                  className={`flex items-center gap-1 transition-colors duration-200 ${
+                    inverted ? "hover:text-white" : "hover:text-pp-teal"
                   }`}
                 >
-                  {item.name}
+                  {item.href === "/" ? (
+                    <>
+                      <svg className="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                      </svg>
+                      <span className="sr-only">{item.name}</span>
+                    </>
+                  ) : item.name}
                 </Link>
               )}
             </li>

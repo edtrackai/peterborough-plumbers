@@ -18,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
     "Plumbing & heating support across Peterborough (PE1–PE7), Stamford, Market Deeping, Yaxley, and Whittlesey. Emergency call-outs available. Book today.",
   path: "/areas",
   absoluteTitle: true,
-  image: "/images/homepage/hero.webp",
+  image: "/images/areas/hero.webp",
 });
 
 const coverageFeatures = [
@@ -61,7 +61,7 @@ export default async function AreasPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.webp" alt="Plumbing and heating services across Peterborough and surrounding areas" fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/areas/hero.webp" alt="Plumbing and heating services across Peterborough and surrounding areas" fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -112,6 +112,16 @@ export default async function AreasPage() {
       {/* Coverage features */}
       <section className="bg-white py-12 border-b border-[var(--border)]">
         <div className="mx-auto max-w-5xl px-4">
+          {/* Full-width banner image */}
+          <div className="relative w-full rounded-xl overflow-hidden mb-8" style={{ aspectRatio: "21/9" }}>
+            <Image
+              src="/images/areas/areas-we-cover.webp"
+              alt="Areas we cover across Peterborough and surrounding regions"
+              fill
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {coverageFeatures.map((f) => (
               <div key={f.title} className="flex gap-3 p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)]">
@@ -132,21 +142,36 @@ export default async function AreasPage() {
 
       {/* Not on the list? */}
       <section className="bg-[var(--surface-alt)] py-12 border-y border-[var(--border)]">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <h2 className="text-xl font-bold text-pp-heading mb-3">
-            Not Sure If We Cover Your Area?
-          </h2>
-          <p className="text-[var(--muted)] text-sm mb-6 max-w-xl mx-auto">
-            Call us directly with your postcode — we cover a wide area around Peterborough and
-            can usually confirm availability in seconds. We also cover many surrounding villages
-            not listed above.
-          </p>
-          <a
-            href={`tel:${settings.phoneHref}`}
-            className="inline-block bg-[var(--brand)] text-white px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors"
-          >
-            Call {settings.phone}
-          </a>
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* Text + CTA */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-xl font-bold text-pp-heading mb-3">
+                Not Sure If We Cover Your Area?
+              </h2>
+              <p className="text-[var(--muted)] text-sm mb-6 max-w-xl mx-auto lg:mx-0">
+                Call us directly with your postcode — we cover a wide area around Peterborough and
+                can usually confirm availability in seconds. We also cover many surrounding villages
+                not listed above.
+              </p>
+              <a
+                href={`tel:${settings.phoneHref}`}
+                className="inline-block bg-[var(--brand)] text-white px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors mb-4 sm:mb-0"
+              >
+                Call {settings.phone}
+              </a>
+            </div>
+            {/* Side image */}
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
+              <Image
+                src="/images/areas/ready-to-book-your-plumber.webp"
+                alt="Book your plumber in Peterborough and surrounding areas"
+                fill
+                className="object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

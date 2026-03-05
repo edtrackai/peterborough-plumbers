@@ -4,15 +4,15 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, faqSchema, serviceSchema, howToSchema } from "@/lib/seo/schema";
 import { siteSettings } from "@/content/settings";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import CTASection from "@/components/blocks/CTASection";
 
 export const metadata: Metadata = buildMetadata({
   title: "Emergency Plumber Peterborough | Fast 24/7 Response",
   description:
     "24/7 emergency plumber in Peterborough — burst pipes, flooding, no heating & drain blockages. Gas Safe engineers, fast response. Call now.",
   path: "/emergency",
-  image: "/images/homepage/emergency-plumbing.webp",
+  image: "/images/emergency/hero.webp",
   absoluteTitle: true,
 });
 
@@ -197,7 +197,7 @@ export default function EmergencyPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/emergency-plumbing.webp" alt="Emergency plumber Peterborough — qualified engineer for urgent call-outs" fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/emergency/hero.webp" alt="Emergency plumber Peterborough — qualified engineer for urgent call-outs" fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -283,25 +283,38 @@ export default function EmergencyPage() {
 
       {/* How we work */}
       <section className="bg-[var(--surface-alt)] py-16 border-b border-[var(--border)]">
-        <div className="mx-auto max-w-4xl px-4">
+        <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-3xl font-bold text-pp-heading text-center mb-3">
             How Our Emergency Response Works
           </h2>
           <p className="text-center text-[var(--muted)] mb-10 max-w-xl mx-auto">
             From your first call to a completed repair — here is exactly what to expect.
           </p>
-          <div className="space-y-6">
-            {steps.map((item, i) => (
-              <div key={i} className="flex gap-5 p-5 bg-white rounded-xl border border-[var(--border)]">
-                <div className="shrink-0 h-10 w-10 rounded-full bg-[var(--brand)] text-[var(--pp-navy)] flex items-center justify-center font-bold text-lg">
-                  {i + 1}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+            {/* Left: image */}
+            <div className="relative rounded-xl overflow-hidden min-h-[260px] lg:h-full">
+              <Image
+                src="/images/emergency/how-our-emergency-response-works.webp"
+                alt="How our emergency plumbing response works in Peterborough"
+                fill
+                className="object-cover"
+                loading="lazy"
+              />
+            </div>
+            {/* Right: steps */}
+            <div className="space-y-6">
+              {steps.map((item, i) => (
+                <div key={i} className="flex gap-5 p-5 bg-white rounded-xl border border-[var(--border)]">
+                  <div className="shrink-0 h-10 w-10 rounded-full bg-[var(--brand)] text-[var(--pp-navy)] flex items-center justify-center font-bold text-lg">
+                    {i + 1}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-pp-heading mb-1">{item.name}</h3>
+                    <p className="text-sm text-[var(--muted)] leading-relaxed">{item.text}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-pp-heading mb-1">{item.name}</h3>
-                  <p className="text-sm text-[var(--muted)] leading-relaxed">{item.text}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -312,10 +325,20 @@ export default function EmergencyPage() {
           <h2 className="text-3xl font-bold text-pp-heading text-center mb-3">
             What to Do Immediately in a Plumbing Emergency
           </h2>
-          <p className="text-center text-[var(--muted)] mb-10 max-w-xl mx-auto">
+          <p className="text-center text-[var(--muted)] mb-8 max-w-xl mx-auto">
             Taking these steps before our engineer arrives can prevent thousands of pounds of
             additional water damage.
           </p>
+          {/* Wide banner image */}
+          <div className="relative w-full rounded-xl overflow-hidden mb-8" style={{ aspectRatio: "21/9" }}>
+            <Image
+              src="/images/emergency/what-to-do-immediately-in-a-plumbing-emergency.webp"
+              alt="What to do immediately in a plumbing emergency"
+              fill
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {[
               {
@@ -408,10 +431,20 @@ export default function EmergencyPage() {
           <h2 className="text-3xl font-bold text-pp-heading text-center mb-3">
             Areas We Cover for Emergency Call-Outs
           </h2>
-          <p className="text-center text-[var(--muted)] mb-10 max-w-xl mx-auto">
+          <p className="text-center text-[var(--muted)] mb-8 max-w-xl mx-auto">
             We respond to emergency calls across all Peterborough postcodes and the surrounding
             towns and villages listed below.
           </p>
+          {/* Wide banner image */}
+          <div className="relative w-full rounded-xl overflow-hidden mb-8" style={{ aspectRatio: "21/9" }}>
+            <Image
+              src="/images/emergency/areas-we-cover-for-emergency-call-outs.webp"
+              alt="Areas we cover for emergency plumbing call-outs across Peterborough"
+              fill
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {coverageAreas.map((item) => (
               <div key={item.area} className="flex items-center gap-3 p-4 rounded-lg border border-[var(--border)] bg-[var(--surface-alt)]">
@@ -503,7 +536,7 @@ export default function EmergencyPage() {
       </section>
 
       {/* FAQs */}
-      <section className="bg-[var(--surface-alt)] py-16 border-b border-[var(--border)]">
+      <section className="bg-[var(--surface-alt)] py-16">
         <div className="mx-auto max-w-3xl px-4">
           <h2 className="text-3xl font-bold text-pp-heading text-center mb-3">
             Emergency Plumber FAQs
@@ -536,9 +569,11 @@ export default function EmergencyPage() {
         </div>
       </section>
 
-      <CTASection
+      <ImageCTASection
         heading="Call Our Emergency Line Now"
-        subheading={`Qualified engineers available for emergency call-outs across Peterborough and surrounding areas. Call ${siteSettings.phone} for urgent assistance.`}
+        subheading={<>Qualified engineers available for emergency call-outs across Peterborough and surrounding areas. Call {siteSettings.phone} for urgent assistance.</>}
+        imageSrc="/images/emergency/call-our-emergency-line-now.webp"
+        imageAlt="Call our emergency plumbing line now in Peterborough"
       />
     </>
   );

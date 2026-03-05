@@ -4,17 +4,17 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
-import CTASection from "@/components/blocks/CTASection";
 import FaqCategoryAccordion from "@/components/blocks/FaqCategoryAccordion";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { siteSettings } from "@/content/settings";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 
 export const metadata: Metadata = buildMetadata({
   title: "Plumbing & Heating FAQs Peterborough | Peterborough Plumbers",
   description:
     "Answers to the most common questions about plumbing, boiler servicing, gas safety, emergency call-outs, and heating in Peterborough and surrounding areas.",
   path: "/faqs",
-  image: "/images/homepage/hero.webp",
+  image: "/images/faqs/hero.webp",
   absoluteTitle: true,
 });
 
@@ -228,7 +228,7 @@ export default function FaqPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero-engineer.webp" alt="Peterborough Plumbers qualified engineer ready to answer your questions" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
+          <Image src="/images/faqs/hero.webp" alt="Peterborough Plumbers qualified engineer ready to answer your questions" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -370,7 +370,7 @@ export default function FaqPage() {
       </section>
 
       {/* Related pages */}
-      <section className="bg-white py-10 border-b border-[var(--border)]">
+      <section className="bg-white py-10">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-lg font-bold text-pp-heading mb-5">Useful Pages</h2>
           <div className="flex flex-wrap justify-center gap-3">
@@ -395,9 +395,11 @@ export default function FaqPage() {
         </div>
       </section>
 
-      <CTASection
+      <ImageCTASection
         heading="Peterborough's Trusted Plumbing & Heating Engineers"
         subheading="Book online or call for a written quote before every job. No obligation."
+        imageSrc="/images/faqs/peterborough-s-trusted-plumbing-heating-engineers.webp"
+        imageAlt="Peterborough's trusted plumbing and heating engineers"
       />
     </>
   );

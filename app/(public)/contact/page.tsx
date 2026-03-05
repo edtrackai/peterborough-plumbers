@@ -4,9 +4,9 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, localBusinessSchema } from "@/lib/seo/schema";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import CTASection from "@/components/blocks/CTASection";
 import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 import LeadForm from "@/components/forms/LeadForm";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact Peterborough Plumbers | Plumbing & Heating Enquiries",
@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
     "Get in touch with Peterborough Plumbers for plumbing & heating support across Peterborough and surrounding areas. Call, WhatsApp, email or book online.",
   path: "/contact",
   absoluteTitle: true,
-  image: "/images/homepage/hero.webp",
+  image: "/images/contact/hero.webp",
 });
 
 export default function ContactPage() {
@@ -37,7 +37,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.webp" alt="Contact Peterborough Plumbers — call, email or book online" fill className="object-cover" priority quality={85} sizes="100vw" />
+          <Image src="/images/contact/hero.webp" alt="Contact Peterborough Plumbers — call, email or book online" fill className="object-cover" priority quality={85} sizes="100vw" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
           <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
           <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
@@ -229,9 +229,19 @@ export default function ContactPage() {
       {/* What happens next */}
       <section className="bg-[var(--surface-alt)] py-14 border-y border-[var(--border)]">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-2xl font-bold text-pp-heading text-center mb-10">
+          <h2 className="text-2xl font-bold text-pp-heading text-center mb-8">
             What Happens After You Contact Us
           </h2>
+          {/* Wide banner image above the 3 steps */}
+          <div className="relative w-full rounded-xl overflow-hidden mb-8" style={{ aspectRatio: "21/9" }}>
+            <Image
+              src="/images/contact/what-happens-after-you-contact-us.webp"
+              alt="What happens after you contact Peterborough Plumbers"
+              fill
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               {
@@ -263,39 +273,54 @@ export default function ContactPage() {
       </section>
 
       {/* Service areas */}
-      <section className="bg-white py-12 border-b border-[var(--border)]">
-        <div className="mx-auto max-w-5xl px-4 text-center">
-          <h2 className="text-xl font-bold text-pp-heading mb-3">Areas We Serve</h2>
-          <p className="text-sm text-[var(--muted)] mb-6 max-w-xl mx-auto">
-            We cover Peterborough and all surrounding areas. Not sure if we cover your postcode?
-            Call us — we&apos;ll confirm in seconds.
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {[
-              "Peterborough City Centre (PE1)",
-              "Orton (PE2)",
-              "Bretton (PE3)",
-              "Werrington (PE4)",
-              "Yaxley (PE7)",
-              "Hampton (PE7)",
-              "Whittlesey (PE7)",
-              "Market Deeping (PE6)",
-              "Stamford (PE9)",
-            ].map((area) => (
-              <span
-                key={area}
-                className="text-sm text-pp-heading bg-[var(--surface-alt)] border border-[var(--border)] px-4 py-2 rounded-full"
+      <section className="bg-white py-12">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* Text + pills */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-xl font-bold text-pp-heading mb-3">Areas We Serve</h2>
+              <p className="text-sm text-[var(--muted)] mb-6 max-w-xl mx-auto lg:mx-0">
+                We cover Peterborough and all surrounding areas. Not sure if we cover your postcode?
+                Call us — we&apos;ll confirm in seconds.
+              </p>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+                {[
+                  "Peterborough City Centre (PE1)",
+                  "Orton (PE2)",
+                  "Bretton (PE3)",
+                  "Werrington (PE4)",
+                  "Yaxley (PE7)",
+                  "Hampton (PE7)",
+                  "Whittlesey (PE7)",
+                  "Market Deeping (PE6)",
+                  "Stamford (PE9)",
+                ].map((area) => (
+                  <span
+                    key={area}
+                    className="text-sm text-pp-heading bg-[var(--surface-alt)] border border-[var(--border)] px-4 py-2 rounded-full"
+                  >
+                    {area}
+                  </span>
+                ))}
+              </div>
+              <Link
+                href="/areas"
+                className="mt-5 inline-block text-sm text-[var(--brand)] hover:underline font-medium"
               >
-                📍 {area}
-              </span>
-            ))}
+                View all areas we cover →
+              </Link>
+            </div>
+            {/* Side image */}
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
+              <Image
+                src="/images/contact/areas-we-serve.webp"
+                alt="Areas we serve across Peterborough and surrounding towns"
+                fill
+                className="object-cover"
+                loading="lazy"
+              />
+            </div>
           </div>
-          <Link
-            href="/areas"
-            className="mt-5 inline-block text-sm text-[var(--brand)] hover:underline font-medium"
-          >
-            View all areas we cover →
-          </Link>
         </div>
       </section>
 
@@ -324,7 +349,12 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <CTASection heading="Need an Emergency Plumber?" subheading={`Call ${siteSettings.phone} now for plumbing & heating support across Peterborough and surrounding areas.`} />
+      <ImageCTASection
+        heading="Need an Emergency Plumber?"
+        subheading={<>Call {siteSettings.phone} now for plumbing &amp; heating support across Peterborough.</>}
+        imageSrc="/images/contact/need-an-emergency-plumber.webp"
+        imageAlt="Need an emergency plumber in Peterborough"
+      />
     </>
   );
 }

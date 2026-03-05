@@ -5,7 +5,7 @@ import { serviceSchema, faqSchema, breadcrumbSchema, howToSchema } from "@/lib/s
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import FaqAccordion from "@/components/blocks/FaqAccordion";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
-import CTASection from "@/components/blocks/CTASection";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
@@ -13,6 +13,7 @@ import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
 import { getRelatedServiceSlugs } from "@/lib/seo/internalLinks";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
+import NextStepsLinks from "@/components/NextStepsLinks";
 
 // Helpful guides per service slug
 const helpfulGuidesMap: Record<string, { slug: string; title: string }[]> = {
@@ -384,9 +385,13 @@ export default async function ServicePage({
         </section>
       )}
 
-      <CTASection
+      <NextStepsLinks variant="service" />
+
+      <ImageCTASection
         heading={`Book ${service.name}`}
         subheading="Get a free, no-obligation quote today."
+        imageSrc={`/images/services/${service.slug}/cta.webp`}
+        imageAlt={`Book ${service.name} in Peterborough`}
       />
     </>
   );

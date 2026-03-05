@@ -9,6 +9,7 @@ import CTASection from "@/components/blocks/CTASection";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
+import NextStepsLinks from "@/components/NextStepsLinks";
 
 // ── Per-area geographic coordinates ──────────────────────────────────────────
 const areaGeo: Record<string, { lat: number; lng: number; placename: string }> = {
@@ -358,6 +359,8 @@ export default async function AreaPage({
           </p>
         </div>
       </section>
+
+      <NextStepsLinks variant="area" />
 
       <CTASection
         heading={`Need a Plumber in ${area.name}?`}

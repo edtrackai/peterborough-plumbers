@@ -111,108 +111,17 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right: device mockup illustration */}
+            {/* Right: photo */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[460px]">
-                <svg
-                  viewBox="0 0 460 360"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full drop-shadow-2xl"
-                  aria-hidden
-                >
-                  {/* ── Laptop base ─────────────────────────────────────────── */}
-                  <rect x="28" y="276" width="360" height="14" rx="4" fill="#C4CDD8" />
-                  <rect x="10" y="290" width="396" height="10" rx="3" fill="#B0BBC8" />
-                  <ellipse cx="208" cy="306" rx="185" ry="7" fill="#00000012" />
-
-                  {/* ── Laptop lid ──────────────────────────────────────────── */}
-                  <rect x="40" y="16" width="336" height="262" rx="12" fill="#1A2744" />
-                  {/* screen bezel */}
-                  <rect x="50" y="26" width="316" height="242" rx="8" fill="#E8EDF2" />
-
-                  {/* ── Screen: red nav bar ──────────────────────────────────── */}
-                  <rect x="50" y="26" width="316" height="34" rx="8" fill="#C8102E" />
-                  <rect x="50" y="48" width="316" height="12" fill="#C8102E" />
-                  {/* logo placeholder */}
-                  <rect x="62" y="36" width="70" height="14" rx="3" fill="#ffffff30" />
-                  {/* nav pills */}
-                  <rect x="160" y="39" width="34" height="8" rx="2" fill="#ffffff22" />
-                  <rect x="200" y="39" width="34" height="8" rx="2" fill="#ffffff22" />
-                  <rect x="240" y="39" width="34" height="8" rx="2" fill="#ffffff22" />
-                  <rect x="280" y="39" width="34" height="8" rx="2" fill="#ffffff22" />
-
-                  {/* ── Screen: page content ─────────────────────────────────── */}
-                  {/* heading line */}
-                  <rect x="62" y="76" width="150" height="14" rx="3" fill="#1A274490" />
-                  <rect x="62" y="96" width="108" height="10" rx="2" fill="#6b728055" />
-
-                  {/* form fields */}
-                  <rect x="62" y="118" width="180" height="28" rx="6" fill="white" stroke="#DDE3EA" strokeWidth="1" />
-                  <rect x="70" y="126" width="80" height="10" rx="2" fill="#C8D4DC" />
-
-                  <rect x="62" y="152" width="180" height="28" rx="6" fill="white" stroke="#DDE3EA" strokeWidth="1" />
-                  <rect x="70" y="160" width="100" height="10" rx="2" fill="#C8D4DC" />
-
-                  <rect x="62" y="186" width="180" height="28" rx="6" fill="white" stroke="#DDE3EA" strokeWidth="1" />
-                  <rect x="70" y="194" width="60" height="10" rx="2" fill="#C8D4DC" />
-
-                  {/* book button */}
-                  <rect x="62" y="222" width="110" height="30" rx="15" fill="#C8102E" />
-                  <rect x="80" y="231" width="74" height="10" rx="2" fill="#ffffff90" />
-
-                  {/* ── Right panel: calendar ───────────────────────────────── */}
-                  <rect x="264" y="68" width="92" height="192" rx="8" fill="white" stroke="#DDE3EA" strokeWidth="1" />
-                  {/* cal header */}
-                  <rect x="264" y="68" width="92" height="26" rx="8" fill="#0F6E6E" />
-                  <rect x="264" y="82" width="92" height="12" fill="#0F6E6E" />
-                  <rect x="276" y="75" width="68" height="10" rx="2" fill="#ffffff60" />
-                  {/* day labels */}
-                  {[0,1,2,3,4,5,6].map((c) => (
-                    <rect key={`dl${c}`} x={272 + c * 11} y={100} width={8} height={6} rx="1" fill="#9CA3AF" />
-                  ))}
-                  {/* calendar cells — 5 rows x 7 cols */}
-                  {[0,1,2,3,4].map((r) =>
-                    [0,1,2,3,4,5,6].map((c) => (
-                      <rect
-                        key={`c${r}${c}`}
-                        x={272 + c * 11}
-                        y={112 + r * 22}
-                        width={8}
-                        height={8}
-                        rx="2"
-                        fill={r === 1 && c === 3 ? "#C8102E" : r === 2 && c === 1 ? "#0F6E6E30" : "#E8EDF2"}
-                      />
-                    ))
-                  )}
-                  {/* selected date dot */}
-                  <circle cx="305" cy="134" r="5" fill="#C8102E" />
-
-                  {/* ── Phone (floating front-right) ─────────────────────────── */}
-                  {/* phone shadow */}
-                  <ellipse cx="356" cy="354" rx="52" ry="7" fill="#00000015" />
-                  {/* phone body */}
-                  <rect x="302" y="160" width="112" height="198" rx="20" fill="#1A2744" />
-                  {/* phone screen */}
-                  <rect x="310" y="174" width="96" height="172" rx="12" fill="#F0F2F5" />
-                  {/* notch */}
-                  <rect x="344" y="170" width="32" height="8" rx="4" fill="#0F1C35" />
-                  {/* phone: red bar */}
-                  <rect x="310" y="174" width="96" height="26" rx="12" fill="#C8102E" />
-                  <rect x="310" y="188" width="96" height="12" fill="#C8102E" />
-                  <rect x="322" y="181" width="50" height="10" rx="2" fill="#ffffff40" />
-                  {/* phone: success icon */}
-                  <circle cx="358" cy="240" r="22" fill="#0F6E6E20" />
-                  <circle cx="358" cy="240" r="15" fill="#0F6E6E" />
-                  <path d="M350 240 L356 246 L367 232" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                  {/* phone: confirmation text lines */}
-                  <rect x="322" y="270" width="72" height="10" rx="3" fill="#1A274480" />
-                  <rect x="328" y="285" width="60" height="8" rx="2" fill="#6b728055" />
-                  <rect x="332" y="298" width="52" height="8" rx="2" fill="#6b728042" />
-                  {/* phone: book pill */}
-                  <rect x="322" y="316" width="72" height="24" rx="12" fill="#C8102E" />
-                  <rect x="334" y="323" width="48" height="9" rx="2" fill="#ffffff90" />
-                </svg>
+              <div className="relative w-full max-w-[480px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/homepage/book-manage-your-visit-online.webp"
+                  alt="Book and manage your plumbing visit online"
+                  fill
+                  className="object-cover"
+                  loading="lazy"
+                  sizes="(max-width: 1024px) 100vw, 480px"
+                />
               </div>
             </div>
 
@@ -386,7 +295,7 @@ export default async function HomePage() {
               <Link href="/guides/how-to-bleed-a-radiator" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/boiler-service.webp"
+                    src="/images/homepage/how-to-bleed-a-radiator.webp"
                     alt="How to bleed a radiator"
                     width={140}
                     height={140}
@@ -402,7 +311,7 @@ export default async function HomePage() {
               <Link href="/guides/how-to-fix-a-dripping-tap" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/plumbing-repairs.webp"
+                    src="/images/homepage/how-to-fix-a-dripping-tap.webp"
                     alt="How to fix a dripping tap"
                     width={140}
                     height={140}
@@ -418,7 +327,7 @@ export default async function HomePage() {
               <Link href="/guides/how-to-repressurise-your-boiler" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/boiler-service.webp"
+                    src="/images/homepage/how-to-repressurise-your-boiler.webp"
                     alt="How to repressurise your boiler"
                     width={140}
                     height={140}
@@ -434,7 +343,7 @@ export default async function HomePage() {
               <Link href="/guides/what-to-do-burst-pipe" className="group flex flex-col items-center gap-4">
                 <div className="h-[140px] w-[140px] rounded-full overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-[#0F6E6E] transition-all duration-200">
                   <Image
-                    src="/images/homepage/emergency-plumbing.webp"
+                    src="/images/homepage/what-to-do-with-a-burst-pipe.webp"
                     alt="What to do with a burst pipe"
                     width={140}
                     height={140}
@@ -493,6 +402,16 @@ export default async function HomePage() {
               Covering Peterborough and surrounding areas across Cambridgeshire.
             </p>
           </div>
+          {/* Banner image */}
+          <div className="relative w-full rounded-xl overflow-hidden mb-8" style={{ aspectRatio: "21/9" }}>
+            <Image
+              src="/images/homepage/areas-we-cover.webp"
+              alt="Areas we cover across Peterborough and Cambridgeshire"
+              fill
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
           <div className="flex flex-wrap justify-center gap-3">
             {areas.map((area) => (
               <Link
@@ -517,31 +436,46 @@ export default async function HomePage() {
 
       {/* ── H) BOTTOM CTA ────────────────────────────────────────────────────── */}
       <section className="bg-white py-10 sm:py-16">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#242424] mb-4">
-            Ready to book your plumber?
-          </h2>
-          <p className="text-[#6b7280] text-lg leading-relaxed mb-10">
-            Get in touch today for plumbing repairs, boiler servicing and heating support
-            across Peterborough and surrounding areas.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/contact"
-              className="btn-book-now inline-flex items-center gap-2 bg-[var(--brand)] text-white px-9 py-4 rounded-full font-bold text-lg hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-lg"
-            >
-              Book Online
-            </Link>
-            <a
-              href={`tel:${siteSettings.phoneHref}`}
-              className="inline-flex items-center gap-2 bg-transparent text-[#242424] px-9 py-4 rounded-full font-bold text-lg border-2 border-[#242424]/30 hover:bg-[#242424] hover:text-white transition-colors duration-200"
-            >
-              Call {siteSettings.phone}
-            </a>
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left: text + CTAs */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#242424] mb-4">
+                Ready to book your plumber?
+              </h2>
+              <p className="text-[#6b7280] text-lg leading-relaxed mb-10">
+                Get in touch today for plumbing repairs, boiler servicing and heating support
+                across Peterborough and surrounding areas.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
+                <Link
+                  href="/contact"
+                  className="btn-book-now inline-flex items-center gap-2 bg-[var(--brand)] text-white px-9 py-4 rounded-full font-bold text-lg hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-lg"
+                >
+                  Book Online
+                </Link>
+                <a
+                  href={`tel:${siteSettings.phoneHref}`}
+                  className="inline-flex items-center gap-2 bg-transparent text-[#242424] px-9 py-4 rounded-full font-bold text-lg border-2 border-[#242424]/30 hover:bg-[#242424] hover:text-white transition-colors duration-200"
+                >
+                  Call {siteSettings.phone}
+                </a>
+              </div>
+              <p className="mt-8 text-[#9ca3af] text-sm">
+                Peterborough plumbing &amp; heating · Fully insured · Clear upfront quotes
+              </p>
+            </div>
+            {/* Right: side image */}
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
+              <Image
+                src="/images/homepage/ready-to-book-your-plumber.webp"
+                alt="Ready to book your plumber in Peterborough"
+                fill
+                className="object-cover"
+                loading="lazy"
+              />
+            </div>
           </div>
-          <p className="mt-8 text-[#9ca3af] text-sm">
-            Peterborough plumbing &amp; heating · Fully insured · Clear upfront quotes
-          </p>
         </div>
       </section>
     </>

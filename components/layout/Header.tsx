@@ -210,16 +210,8 @@ export default function Header() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-inset"
                 }
               >
-                <svg className="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <defs>
-                    <mask id="hm">
-                      <rect width="24" height="24" fill="white"/>
-                      <path d="M10 17l4-6" stroke="black" strokeWidth="1.8" strokeLinecap="round"/>
-                      <circle cx="10.5" cy="17" r="1.2" fill="black"/>
-                      <circle cx="13.5" cy="11" r="1.2" fill="black"/>
-                    </mask>
-                  </defs>
-                  <path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1H5a1 1 0 01-1-1V10.5z" fill="currentColor" mask="url(#hm)"/>
+                <svg className="h-[22px] w-[22px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                 </svg>
               </Link>
 
@@ -302,7 +294,10 @@ export default function Header() {
         <div id="mobile-nav" ref={drawerRef} className="lg:hidden bg-white border-t border-gray-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-80px)]">
           <nav className="px-4 py-4 space-y-0.5" aria-label="Mobile navigation">
 
-            <Link href="/" onClick={() => setMobileOpen(false)} className="block py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
+            <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-3 text-[#242424] hover:text-[#C8102E] font-medium border-b border-gray-100 text-sm">
+              <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
               Home
             </Link>
 
