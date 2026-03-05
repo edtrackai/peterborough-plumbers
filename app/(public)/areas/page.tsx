@@ -122,8 +122,8 @@ export default async function AreasPage() {
           />
         </div>
 
-        {/* Glass panel */}
-        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 py-14 lg:py-20">
+        {/* Glass panel — benefit cards only */}
+        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 pt-14 lg:pt-20 pb-14 lg:pb-20">
           <div
             className="rounded-[22px] border border-black/[0.06] p-5 sm:p-8 lg:p-10"
             style={{
@@ -134,7 +134,7 @@ export default async function AreasPage() {
             }}
           >
             {/* Feature cards — 4-up desktop, 2-up tablet, 1 column mobile */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {coverageFeatures.map((f) => (
                 <div
                   key={f.title}
@@ -150,33 +150,37 @@ export default async function AreasPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Divider */}
-            <div className="border-t border-black/[0.06] mb-8" />
+      {/* Subtle divider between sections */}
+      <div className="mx-auto h-px w-full max-w-5xl bg-black/[0.08]" />
 
-            {/* "Areas We Cover" heading + red accent line */}
-            <div className="mb-7">
-              <h2 className="text-2xl lg:text-3xl font-bold text-[#111] mb-2">Areas We Cover</h2>
-              <div className="h-[2px] w-10 rounded-full bg-[var(--brand)]" />
-            </div>
-
-            {/* Area grid: 1 → 2 → 3 → 4 col */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {(areas as unknown as Area[]).map((area) => (
-                <Link
-                  key={area.slug}
-                  href={`/areas/${area.slug}`}
-                  className="group rounded-[17px] p-4 sm:p-5 text-center bg-white border border-black/[0.06] hover:border-black/[0.13] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <h3 className="text-sm font-bold text-[#111] group-hover:text-[var(--brand)] transition-colors duration-200 leading-snug">
-                    {area.name}
-                  </h3>
-                  <p className="text-xs mt-1 text-[#555]">
-                    {(area.postcodes as unknown as string[]).join(", ")}
-                  </p>
-                </Link>
-              ))}
-            </div>
+      {/* Areas grid — separate section */}
+      <section id="areas-we-cover" className="bg-white py-10 sm:py-16">
+        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+          {/* Centered heading + accent */}
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl lg:text-3xl font-bold text-[#111] mb-2">Areas We Cover</h2>
+            <div className="h-[2px] w-10 rounded-full bg-[var(--brand)] mx-auto" />
+          </div>
+          {/* Area grid: 2 → 3 → 4 col */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {(areas as unknown as Area[]).map((area) => (
+              <Link
+                key={area.slug}
+                href={`/areas/${area.slug}`}
+                className="group rounded-[17px] p-4 sm:p-5 text-center bg-white border border-black/[0.06] hover:border-black/[0.13] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-200"
+              >
+                <h3 className="text-sm font-bold text-[#111] group-hover:text-[var(--brand)] transition-colors duration-200 leading-snug">
+                  {area.name}
+                </h3>
+                <p className="text-xs mt-1 text-[#555]">
+                  {(area.postcodes as unknown as string[]).join(", ")}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
