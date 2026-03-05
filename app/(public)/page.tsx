@@ -411,8 +411,8 @@ export default async function HomePage() {
             style={{
               borderRadius: 22,
               aspectRatio: "21/9",
-              boxShadow: "0 8px 40px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.07)",
-              border: "1px solid rgba(0,0,0,0.07)",
+              boxShadow: "0 12px 48px rgba(0,0,0,0.16), 0 1px 4px rgba(0,0,0,0.08)",
+              border: "1px solid rgba(255,255,255,0.18)",
             }}
           >
             <Image
@@ -422,29 +422,62 @@ export default async function HomePage() {
               className="object-cover"
               loading="lazy"
             />
-            {/* Edge vignette for depth — does not over-darken centre */}
+            {/* Layer 1 — directional overlay: darkens left + right edges, keeps centre bright */}
             <div
               className="absolute inset-0 pointer-events-none"
-              style={{ background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.22) 100%)" }}
+              style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.55) 100%)" }}
+              aria-hidden="true"
+            />
+            {/* Layer 2 — radial vignette: soft bright spot top-left, dark edges */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(circle at 25% 40%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 45%), radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.28) 100%)" }}
               aria-hidden="true"
             />
 
-            {/* Top-left badges */}
-            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-2 z-10" aria-hidden="true">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-[#111] shadow-sm border border-black/[0.06]">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+            {/* Top-left badges — dark glass pills */}
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-2 z-20">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[12px] font-semibold text-white/95"
+                style={{
+                  background: "rgba(10,10,10,0.55)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+                }}
+              >
+                <span className="h-2 w-2 rounded-full bg-emerald-400 shrink-0" />
                 Available Today
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-[#111] shadow-sm border border-black/[0.06]">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[12px] font-semibold text-white/95"
+                style={{
+                  background: "rgba(10,10,10,0.55)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+                }}
+              >
                 <svg className="h-3 w-3 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
                 Peterborough
               </span>
             </div>
 
-            {/* Bottom-right badge */}
-            <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10" aria-hidden="true">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-[#111] shadow-sm border border-black/[0.06]">
-                <svg className="h-3 w-3 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm.75 5.25a.75.75 0 00-1.5 0V12l3.22 3.22a.75.75 0 001.06-1.06L12.75 11.5V7.25z"/></svg>
+            {/* Top-right badge — Fast response */}
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[12px] font-semibold text-white/95"
+                style={{
+                  background: "rgba(10,10,10,0.55)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.25)",
+                }}
+              >
+                <svg className="h-3 w-3 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm.75 5.25a.75.75 0 00-1.5 0V12l3.22 3.22a.75.75 0 001.06-1.06L12.75 11.5V7.25z"/></svg>
                 Fast response
               </span>
             </div>
@@ -456,7 +489,7 @@ export default async function HomePage() {
               <Link
                 key={area.slug}
                 href={`/areas/${area.slug}`}
-                className="inline-flex items-center gap-1.5 h-10 sm:h-11 rounded-full border border-black/[0.10] bg-white px-4 sm:px-5 text-sm font-medium text-pp-heading shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:border-[var(--brand)] hover:text-[var(--brand)] hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
+                className="inline-flex items-center gap-1.5 h-10 sm:h-11 rounded-full border border-black/[0.12] bg-white px-4 sm:px-5 text-sm font-medium text-pp-heading shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:border-[var(--brand)] hover:text-[var(--brand)] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
               >
                 <svg className="h-3 w-3 text-[var(--muted)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
