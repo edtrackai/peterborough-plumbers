@@ -19,7 +19,6 @@ export interface SerializedLead {
   email: string;
   postcode: string;
   serviceType: string | null;
-  message: string | null;
   status: string;
   source: string;
   createdAt: string;
@@ -57,13 +56,6 @@ function LeadRow({ lead }: { lead: SerializedLead }) {
       </td>
       <td className="px-4 py-3 text-sm text-gray-700">{lead.postcode}</td>
       <td className="px-4 py-3 text-sm text-gray-700">{lead.serviceType ?? <span className="text-gray-400">—</span>}</td>
-      <td className="px-4 py-3 text-sm text-gray-600 max-w-xs">
-        {lead.message ? (
-          <span className="line-clamp-2">{lead.message}</span>
-        ) : (
-          <span className="text-gray-400">—</span>
-        )}
-      </td>
       <td className="px-4 py-3">
         <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_COLOURS[status] ?? "bg-gray-100 text-gray-500"}`}>
           {status}
@@ -103,7 +95,6 @@ export function AdminLeadsTable({ leads }: { leads: SerializedLead[] }) {
             <th className="px-4 py-3">Contact</th>
             <th className="px-4 py-3">Postcode</th>
             <th className="px-4 py-3">Service</th>
-            <th className="px-4 py-3">Message</th>
             <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Update</th>
           </tr>

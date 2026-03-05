@@ -9,7 +9,6 @@ const schema = z.object({
   phone: z.string().min(1),
   postcode: z.string().min(2).transform((v) => v.trim().toUpperCase()),
   serviceType: z.string().optional(),
-  message: z.string().optional(),
 });
 
 /**
@@ -31,7 +30,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { waId, name, phone, postcode, serviceType, message } = parsed.data;
+    const { waId, name, phone, postcode, serviceType } = parsed.data;
 
     // Create lead
     const lead = await prisma.lead.create({
@@ -40,20 +39,19 @@ export async function POST(req: NextRequest) {
         phone,
         postcode,
         serviceType: serviceType ?? null,
-        message: message ?? null,
         source: "whatsapp",
       },
     });
 
-    // Update WaChat with lead link + customer info
+    // Mark lead as captured and reset chat fields so next message starts fresh
     await prisma.waChat.update({
       where: { waId },
       data: {
-        leadId: lead.id,
         customerName: name,
         customerPhone: phone,
         postcode,
         serviceType: serviceType ?? null,
+        leadCaptured: true,
       },
     });
 

@@ -10,7 +10,6 @@ export interface PipelineLead {
   email: string | null;
   postcode: string;
   serviceType: string | null;
-  message: string | null;
   status: string;
   source: string;
   createdAt: string;
@@ -177,13 +176,6 @@ function LeadCard({
       {lead.serviceType && (
         <p className="text-xs font-semibold text-slate-600 bg-slate-50 rounded-lg px-2.5 py-1.5 truncate">
           {lead.serviceType}
-        </p>
-      )}
-
-      {/* Message snippet */}
-      {lead.message && (
-        <p className="text-[0.65rem] text-slate-400 line-clamp-2 leading-relaxed italic">
-          &ldquo;{lead.message}&rdquo;
         </p>
       )}
 

@@ -16,7 +16,6 @@ const leadSchema = z.object({
     .max(10)
     .transform((v) => v.trim().toUpperCase()),
   serviceType: z.string().optional(),
-  message: z.string().max(1000).optional(),
 });
 
 export async function POST(req: NextRequest) {

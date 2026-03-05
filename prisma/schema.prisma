@@ -200,7 +200,6 @@ model Lead {
   email       String?
   postcode    String
   serviceType String?
-  message     String?
   // status: new | contacted | converted | closed
   status      String   @default("new")
   source      String   @default("contact_form")
@@ -400,9 +399,8 @@ model WaChat {
   serviceType   String?
   botActive     Boolean     @default(true)
   isEmergency   Boolean     @default(false)
+  leadCaptured  Boolean     @default(false)
   lastMessageAt DateTime    @default(now())
-  leadId        String?
-  bookingRef    String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 
