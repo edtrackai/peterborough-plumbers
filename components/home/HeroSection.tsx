@@ -72,7 +72,8 @@ export default function HeroSection() {
           src="/images/homepage/hero-team.webp"
           alt=""
           fill
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: "50% 15%" }}
           priority
           quality={92}
           sizes="100vw"
