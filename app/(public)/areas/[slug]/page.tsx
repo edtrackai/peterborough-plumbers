@@ -37,13 +37,16 @@ const nearbyAreaMap: Record<string, string[]> = {
   "stamford":       ["market-deeping", "yaxley", "whittlesey", "city-centre", "hampton", "orton"],
 };
 
-// ── Fixed 5 service links shown on every area page ───────────────────────────
+// ── Service links shown on every area page ───────────────────────────────────
 const areaServiceLinks = [
   { slug: "emergency-plumber",        name: "Emergency Plumber" },
   { slug: "plumbing-repairs",         name: "Plumbing Repairs" },
   { slug: "boiler-service",           name: "Boiler Service" },
   { slug: "central-heating-services", name: "Central Heating" },
   { slug: "drain-blockages",          name: "Drain Blockages" },
+  { slug: "gas-safety-certificates",  name: "Gas Safety Certificates" },
+  { slug: "bathroom-installations",   name: "Bathroom Installations" },
+  { slug: "landlord-services",        name: "Landlord Services" },
 ] as const;
 
 export const revalidate = 3600; // rebuild stale pages every hour
@@ -324,7 +327,7 @@ export default async function AreaPage({
       {/* Services in this area */}
       <section className="py-12 bg-[var(--surface-alt)] border-b border-[var(--border)]">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-2xl font-bold text-pp-heading mb-6">Our Services in {area.name}</h2>
+          <h2 className="text-2xl font-bold text-pp-heading mb-6">Plumbing Services in {area.name}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {areaServiceLinks.map((svc) => (
               <Link
@@ -335,7 +338,7 @@ export default async function AreaPage({
                 <svg className="h-3.5 w-3.5 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                {svc.name}
+                {svc.name} in {area.name}
               </Link>
             ))}
           </div>
@@ -343,6 +346,32 @@ export default async function AreaPage({
             <Link href="/services" className="text-sm font-semibold text-[var(--brand)] hover:underline">
               View all our services →
             </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* ── Trust strip ──────────────────────────────────────────────────── */}
+      <section className="bg-white py-10 border-b border-[var(--border)]">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { icon: "⚡", title: "Emergency Call-Outs", body: "Same-day emergency response available across all PE postcodes." },
+              { icon: "✅", title: "Gas Safe Registered",  body: "All engineers hold Gas Safe Registration for safe, legal gas work." },
+              { icon: "£",  title: "Upfront Pricing",      body: "Clear quotes before any work starts — no hidden extras, ever." },
+              { icon: "🚐", title: "No Travel Surcharge",  body: "No travel fees within our standard service zone." },
+            ].map((item) => (
+              <div key={item.title} className="flex flex-col gap-1.5 p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)]">
+                <span className="text-xl leading-none" aria-hidden="true">{item.icon}</span>
+                <p className="text-sm font-semibold text-pp-heading">{item.title}</p>
+                <p className="text-xs text-[var(--muted)] leading-relaxed">{item.body}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-5 text-sm text-[var(--muted)]">
+            Questions?{" "}
+            <Link href="/pricing" className="text-[var(--brand)] font-medium hover:underline">View our pricing guide</Link>
+            {" "}or{" "}
+            <Link href="/faqs" className="text-[var(--brand)] font-medium hover:underline">read our FAQs</Link>.
           </p>
         </div>
       </section>
