@@ -11,10 +11,10 @@ export function localBusinessSchema() {
     email: siteSettings.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Peterborough, PE1",
+      streetAddress: "3 Saville Road",
       addressLocality: "Peterborough",
       addressRegion: "Cambridgeshire",
-      postalCode: "PE1",
+      postalCode: "PE3 7PR",
       addressCountry: "GB",
     },
     geo: {
@@ -30,6 +30,9 @@ export function localBusinessSchema() {
       siteSettings.instagramUrl,
     ],
     priceRange: "££",
+    currenciesAccepted: "GBP",
+    paymentAccepted: "Cash, Credit Card, Bank Transfer",
+    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteSettings.address)}`,
     description: siteSettings.seoDescription,
     areaServed: [
       "Peterborough", "Orton", "Werrington", "Hampton", "Bretton",
@@ -191,6 +194,14 @@ export function webSiteSchema() {
       "@type": "Organization",
       name: siteSettings.companyName,
       url: siteUrl,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteUrl}/guides?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
     },
   };
 }

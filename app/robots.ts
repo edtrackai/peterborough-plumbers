@@ -7,7 +7,17 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/admin/"],
+      disallow: [
+        "/api/",
+        "/admin/",
+        "/plumber/",   // plumber portal — not for public indexing
+        "/booking/",   // personal booking confirmation pages
+        "/rate/",      // rating pages (require auth context)
+        "/book",       // booking flow — noIndex
+        "/privacy",    // legal pages — noIndex
+        "/terms",
+        "/cookies",
+      ],
     },
     sitemap: `${siteUrl}/sitemap.xml`,
   };
