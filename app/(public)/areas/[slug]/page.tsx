@@ -10,9 +10,11 @@ import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 import NextStepsLinks from "@/components/NextStepsLinks";
+import { areaGuideMap } from "@/lib/seo/internalLinks";
 
 // ── Per-area geographic coordinates ──────────────────────────────────────────
-const areaGeo: Record<string, { lat: number; lng: number; placename: string }> = {
+// region: GB-PTE = Peterborough (Cambridgeshire); GB-LIN = Lincolnshire
+const areaGeo: Record<string, { lat: number; lng: number; placename: string; region?: string }> = {
   "city-centre":    { lat: 52.5735, lng: -0.2404, placename: "Peterborough City Centre" },
   "werrington":     { lat: 52.6044, lng: -0.2344, placename: "Werrington, Peterborough" },
   "bretton":        { lat: 52.5903, lng: -0.2778, placename: "Bretton, Peterborough" },
@@ -20,22 +22,41 @@ const areaGeo: Record<string, { lat: number; lng: number; placename: string }> =
   "orton":          { lat: 52.5531, lng: -0.2844, placename: "Orton, Peterborough" },
   "yaxley":         { lat: 52.5086, lng: -0.2417, placename: "Yaxley, Peterborough" },
   "whittlesey":     { lat: 52.5583, lng: -0.1267, placename: "Whittlesey, Peterborough" },
-  "market-deeping": { lat: 52.6774, lng: -0.3171, placename: "Market Deeping, Peterborough" },
-  "stamford":       { lat: 52.6536, lng: -0.4769, placename: "Stamford, Lincolnshire" },
+  "market-deeping": { lat: 52.6774, lng: -0.3171, placename: "Market Deeping, Lincolnshire", region: "GB-LIN" },
+  "stamford":       { lat: 52.6536, lng: -0.4769, placename: "Stamford, Lincolnshire",        region: "GB-LIN" },
+  // ── Village areas ────────────────────────────────────────────────────────────
+  "longthorpe":     { lat: 52.5742, lng: -0.2776, placename: "Longthorpe, Peterborough" },
+  "eye":            { lat: 52.6022, lng: -0.1666, placename: "Eye, Peterborough" },
+  "glinton":        { lat: 52.6273, lng: -0.2614, placename: "Glinton, Peterborough" },
+  "thorney":        { lat: 52.6165, lng: -0.1158, placename: "Thorney, Cambridgeshire" },
+  "crowland":       { lat: 52.6768, lng: -0.1679, placename: "Crowland, Lincolnshire",         region: "GB-LIN" },
 };
 
 // ── Exact nearby-area mapping (ordered by proximity) ─────────────────────────
 const nearbyAreaMap: Record<string, string[]> = {
-  "city-centre":    ["werrington", "bretton", "hampton", "orton", "yaxley", "whittlesey"],
-  "werrington":     ["bretton", "city-centre", "hampton", "orton", "yaxley", "whittlesey"],
-  "bretton":        ["werrington", "city-centre", "hampton", "orton", "yaxley", "whittlesey"],
+  "city-centre":    ["werrington", "bretton", "hampton", "orton", "longthorpe", "yaxley"],
+  "werrington":     ["bretton", "city-centre", "glinton", "hampton", "orton", "eye"],
+  "bretton":        ["longthorpe", "werrington", "city-centre", "hampton", "orton", "yaxley"],
   "hampton":        ["orton", "city-centre", "werrington", "bretton", "yaxley", "whittlesey"],
-  "orton":          ["hampton", "city-centre", "werrington", "bretton", "yaxley", "whittlesey"],
+  "orton":          ["hampton", "city-centre", "werrington", "bretton", "yaxley", "longthorpe"],
   "yaxley":         ["city-centre", "hampton", "orton", "werrington", "bretton", "stamford"],
-  "whittlesey":     ["city-centre", "yaxley", "hampton", "orton", "werrington", "market-deeping"],
-  "market-deeping": ["stamford", "yaxley", "whittlesey", "city-centre", "werrington", "hampton"],
-  "stamford":       ["market-deeping", "yaxley", "whittlesey", "city-centre", "hampton", "orton"],
+  "whittlesey":     ["city-centre", "yaxley", "thorney", "hampton", "orton", "market-deeping"],
+  "market-deeping": ["stamford", "glinton", "yaxley", "whittlesey", "city-centre", "crowland"],
+  "stamford":       ["market-deeping", "crowland", "yaxley", "whittlesey", "city-centre", "hampton"],
+  // ── Village areas ────────────────────────────────────────────────────────────
+  "longthorpe":     ["bretton", "city-centre", "orton", "hampton", "werrington"],
+  "eye":            ["werrington", "city-centre", "glinton", "bretton", "whittlesey"],
+  "glinton":        ["werrington", "city-centre", "eye", "market-deeping", "bretton"],
+  "thorney":        ["whittlesey", "city-centre", "market-deeping", "eye", "yaxley"],
+  "crowland":       ["market-deeping", "whittlesey", "stamford", "thorney", "yaxley"],
 };
+
+// ── Areas that are sub-districts of Peterborough (get ", Peterborough" in H1) ─
+// Stamford (PE9) and Market Deeping (PE6) are separate Lincolnshire towns — excluded.
+// "city-centre" slug resolves to "Peterborough City Centre" which already contains the city name.
+const peterboroughDistricts = new Set([
+  "werrington", "bretton", "hampton", "orton", "yaxley", "whittlesey", "longthorpe",
+]);
 
 // ── Service links shown on every area page ───────────────────────────────────
 const areaServiceLinks = [
@@ -128,12 +149,12 @@ export default async function AreaPage({
             "@type": "Plumber",
             name: settings.companyName,
             telephone: settings.phoneHref,
+            url: `${settings.siteUrl}/areas/${area.slug}`,
             areaServed: {
               "@type": "City",
               name: area.name,
               containedInPlace: { "@type": "City", name: "Peterborough" },
             },
-            url: `${settings.siteUrl}/areas/${area.slug}`,
             ...(areaGeo[area.slug] && {
               geo: {
                 "@type": "GeoCoordinates",
@@ -141,6 +162,18 @@ export default async function AreaPage({
                 longitude: areaGeo[area.slug].lng,
               },
             }),
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: `Plumbing & Heating Services in ${area.name}`,
+              itemListElement: areaServiceLinks.map((svc) => ({
+                "@type": "Offer",
+                itemOffered: {
+                  "@type": "Service",
+                  name: `${svc.name} in ${area.name}`,
+                  url: `${settings.siteUrl}/services/${svc.slug}`,
+                },
+              })),
+            },
           }),
         }}
       />
@@ -166,6 +199,7 @@ export default async function AreaPage({
             <span style={{ background: "linear-gradient(135deg, #f05060 0%, #C8102E 55%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               {area.name}
             </span>
+            {peterboroughDistricts.has(slug) && ", Peterborough"}
           </h1>
           <p className="mt-5 text-white/70 leading-[1.65] max-w-2xl hero-text" style={{ fontSize: "clamp(15px, 1.1vw, 17px)" }}>
             {area.intro}
@@ -349,6 +383,34 @@ export default async function AreaPage({
           </p>
         </div>
       </section>
+
+      {/* Helpful guides for this area */}
+      {areaGuideMap[slug] && (
+        <section className="py-12 bg-white border-b border-[var(--border)]">
+          <div className="mx-auto max-w-5xl px-4">
+            <h2 className="text-2xl font-bold text-pp-heading mb-6">Helpful Plumbing Guides</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {areaGuideMap[slug].map((guide) => (
+                <Link
+                  key={guide.slug}
+                  href={`/guides/${guide.slug}`}
+                  className="flex items-start gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-alt)] px-4 py-3 text-sm font-medium text-pp-heading hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                >
+                  <svg className="h-4 w-4 text-[var(--brand)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  {guide.title}
+                </Link>
+              ))}
+            </div>
+            <p className="mt-5">
+              <Link href="/guides" className="text-sm font-semibold text-[var(--brand)] hover:underline">
+                View all guides →
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* ── Trust strip ──────────────────────────────────────────────────── */}
       <section className="bg-white py-10 border-b border-[var(--border)]">

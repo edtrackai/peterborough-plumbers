@@ -35,8 +35,15 @@ export function localBusinessSchema() {
     hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteSettings.address)}`,
     description: siteSettings.seoDescription,
     areaServed: [
-      "Peterborough", "Orton", "Werrington", "Hampton", "Bretton",
-      "Market Deeping", "Yaxley", "Whittlesey", "Stamford",
+      { "@type": "City", name: "Peterborough", addressCountry: "GB" },
+      { "@type": "City", name: "Orton" },
+      { "@type": "City", name: "Werrington" },
+      { "@type": "City", name: "Hampton" },
+      { "@type": "City", name: "Bretton" },
+      { "@type": "City", name: "Market Deeping" },
+      { "@type": "City", name: "Yaxley" },
+      { "@type": "City", name: "Whittlesey" },
+      { "@type": "City", name: "Stamford" },
     ],
     openingHours: [
       "Mo-Fr 08:00-18:00",
@@ -58,10 +65,10 @@ export function localBusinessSchema() {
     ],
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: siteSettings.googleRating,
-      bestRating: "5",
-      worstRating: "1",
-      ratingCount: siteSettings.reviewCount,
+      ratingValue: parseFloat(siteSettings.googleRating),
+      bestRating: 5,
+      worstRating: 1,
+      ratingCount: parseInt(siteSettings.reviewCount, 10),
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
@@ -81,6 +88,7 @@ export function serviceSchema(service: {
   name: string;
   description: string;
   slug: string;
+  image?: string;
   offers?: { price: string; priceCurrency?: string; description?: string };
 }) {
   return {
@@ -91,12 +99,23 @@ export function serviceSchema(service: {
     provider: {
       "@type": "Plumber",
       name: siteSettings.companyName,
+      url: siteUrl,
     },
-    areaServed: {
-      "@type": "City",
-      name: "Peterborough",
-    },
+    areaServed: [
+      { "@type": "City", name: "Peterborough",   addressCountry: "GB" },
+      { "@type": "City", name: "Werrington" },
+      { "@type": "City", name: "Bretton" },
+      { "@type": "City", name: "Hampton" },
+      { "@type": "City", name: "Orton" },
+      { "@type": "City", name: "Yaxley" },
+      { "@type": "City", name: "Whittlesey" },
+      { "@type": "City", name: "Market Deeping" },
+      { "@type": "City", name: "Stamford" },
+    ],
     url: `${siteUrl}/services/${service.slug}`,
+    ...(service.image && {
+      image: service.image.startsWith("http") ? service.image : `${siteUrl}${service.image}`,
+    }),
     ...(service.offers && {
       offers: {
         "@type": "Offer",

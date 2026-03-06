@@ -4,11 +4,12 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import CTASection from "@/components/blocks/CTASection";
-import { articleSchema } from "@/lib/seo/schema";
+import { articleSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
+import { blogCategoryAreaMap, blogCategoryGuideMap } from "@/lib/seo/internalLinks";
 
 type BlogCategory = "Boiler & Heating" | "Landlord & Legal" | "Emergency & Repairs" | "Local Guides";
 
@@ -81,6 +82,16 @@ export default async function BlogPostPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([
+            { name: "Home", href: "/" },
+            { name: "Blog", href: "/blog" },
+            { name: post.title, href: `/blog/${post.slug}` },
+          ])),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleSchema({
             title: post.title,
             excerpt: post.excerpt,
@@ -146,6 +157,64 @@ export default async function BlogPostPage({
               </div>
             </div>
           )}
+
+          {/* Helpful guides — contextual per blog category */}
+          {(() => {
+            const guideLinks = blogCategoryGuideMap[category];
+            if (!guideLinks?.length) return null;
+            return (
+              <div className="mt-12 pt-8 border-t border-gray-100">
+                <h2 className="text-lg font-bold text-pp-heading mb-4">Helpful Guides</h2>
+                <div className="grid gap-2">
+                  {guideLinks.map((guide) => (
+                    <Link
+                      key={guide.slug}
+                      href={`/guides/${guide.slug}`}
+                      className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-[var(--brand)] transition-colors duration-200 group"
+                    >
+                      <svg className="h-4 w-4 text-[var(--brand)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                      <p className="font-semibold text-pp-heading text-sm group-hover:text-[var(--brand)] transition-colors duration-200">
+                        {guide.title}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+                <Link href="/guides" className="mt-4 inline-block text-sm text-[var(--brand)] font-semibold hover:underline">
+                  View all guides →
+                </Link>
+              </div>
+            );
+          })()}
+
+          {/* Areas we cover — contextual per blog category */}
+          {(() => {
+            const areaLinks = blogCategoryAreaMap[category];
+            if (!areaLinks?.length) return null;
+            return (
+              <div className="mt-12 pt-8 border-t border-gray-100">
+                <h2 className="text-lg font-bold text-pp-heading mb-4">Areas We Cover in Peterborough</h2>
+                <div className="flex flex-wrap gap-2">
+                  {areaLinks.map((area) => (
+                    <Link
+                      key={area.slug}
+                      href={`/areas/${area.slug}`}
+                      className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                    >
+                      Plumber in {area.name}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/areas"
+                    className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                  >
+                    View all areas →
+                  </Link>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Related blog posts */}
           {relatedPosts.length > 0 && (

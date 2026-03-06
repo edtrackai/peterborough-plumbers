@@ -492,6 +492,11 @@ export default async function HomePage() {
               <p className="mt-8 text-[#9ca3af] text-sm">
                 Peterborough plumbing &amp; heating · Fully insured · Clear upfront quotes
               </p>
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 justify-center lg:justify-start">
+                <Link href="/pricing" className="text-sm text-[#9ca3af] hover:text-[var(--brand)] transition-colors duration-150">View pricing →</Link>
+                <Link href="/faqs" className="text-sm text-[#9ca3af] hover:text-[var(--brand)] transition-colors duration-150">FAQs →</Link>
+                <Link href="/emergency" className="text-sm text-[#9ca3af] hover:text-[var(--brand)] transition-colors duration-150">Emergency call-out →</Link>
+              </div>
             </div>
             {/* Right: side image */}
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden">

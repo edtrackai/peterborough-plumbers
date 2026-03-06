@@ -41,10 +41,10 @@ export default async function ReviewsPage() {
     name: settings.companyName,
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: settings.googleRating,
-      reviewCount: settings.reviewCount,
-      bestRating: "5",
-      worstRating: "1",
+      ratingValue: parseFloat(settings.googleRating),
+      reviewCount: parseInt(settings.reviewCount, 10),
+      bestRating: 5,
+      worstRating: 1,
     },
     review: reviews.map((r) => ({
       "@type": "Review",

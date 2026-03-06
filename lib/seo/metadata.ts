@@ -14,7 +14,7 @@ export function buildMetadata(options: {
   /** Set to "article" for blog/guide pages. Defaults to "website". */
   ogType?: "article" | "website";
   /** Override geo meta tags for area-specific pages. */
-  geo?: { lat: number; lng: number; placename?: string };
+  geo?: { lat: number; lng: number; placename?: string; region?: string };
 }): Metadata {
   const url = `${siteUrl}${options.path}`;
   const ogImage = options.image
@@ -44,7 +44,7 @@ export function buildMetadata(options: {
       ...(ogImage && { images: [ogImage[0].url] }),
     },
     other: {
-      "geo.region": "GB-PTE",
+      "geo.region": options.geo?.region ?? "GB-PTE",
       "geo.placename": options.geo?.placename ?? "Peterborough",
       "geo.position": options.geo ? `${options.geo.lat};${options.geo.lng}` : "52.5735;-0.2404",
       "ICBM": options.geo ? `${options.geo.lat}, ${options.geo.lng}` : "52.5735, -0.2404",

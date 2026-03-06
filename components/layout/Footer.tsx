@@ -160,7 +160,7 @@ export default function Footer() {
       {/* ── Copyright bar ────────────────────────────────────────────────────── */}
       <div style={{ background: "#2e2e2e" }}>
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-4">
-          <p className="text-[#ffffffbf] text-sm">
+          <p className="text-[#ffffffbf] text-sm" suppressHydrationWarning>
             &copy; {siteSettings.companyName} {new Date().getFullYear()}. Peterborough plumbing &amp; heating. Fully insured.
           </p>
         </div>

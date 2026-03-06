@@ -10,12 +10,12 @@ const serviceLinks = [
 ];
 
 const areaLinks = [
-  { href: "/contact",                    label: "Book a Plumber" },
-  { href: "/pricing",                    label: "View Pricing" },
-  { href: "/emergency",                  label: "Emergency Plumber" },
-  { href: "/services/plumbing-repairs",  label: "Plumbing Repairs" },
-  { href: "/services/drain-blockages",   label: "Drain Unblocking" },
-  { href: "/services/boiler-service",    label: "Boiler Service" },
+  { href: "/contact",   label: "Book a Plumber" },
+  { href: "/pricing",   label: "View Pricing" },
+  { href: "/emergency", label: "Emergency Plumber" },
+  { href: "/services",  label: "All Services" },
+  { href: "/guides",    label: "Guides Hub" },
+  { href: "/faqs",      label: "FAQs" },
 ];
 
 export default function NextStepsLinks({ variant }: { variant: "service" | "area" }) {

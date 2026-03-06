@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { serviceSchema, faqSchema, breadcrumbSchema, howToSchema } from "@/lib/seo/schema";
+import { siteSettings } from "@/content/settings";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import FaqAccordion from "@/components/blocks/FaqAccordion";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
@@ -11,15 +12,15 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
-import { getRelatedServiceSlugs } from "@/lib/seo/internalLinks";
+import { getRelatedServiceSlugs, serviceBlogMap } from "@/lib/seo/internalLinks";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 import NextStepsLinks from "@/components/NextStepsLinks";
 
-// Helpful guides per service slug
+// Helpful guides per service slug — used in the "Helpful Guides" section on each service page
 const helpfulGuidesMap: Record<string, { slug: string; title: string }[]> = {
   "boiler-service": [
     { slug: "how-much-does-a-boiler-service-cost", title: "How Much Does a Boiler Service Cost?" },
-    { slug: "how-to-repressurise-your-boiler",      title: "How to Repressurise Your Boiler" },
+    { slug: "boiler-pressure-low",                  title: "Why Your Boiler Keeps Losing Pressure" },
     { slug: "how-long-does-boiler-service-take",    title: "How Long Does a Boiler Service Take?" },
   ],
   "central-heating-services": [
@@ -27,16 +28,64 @@ const helpfulGuidesMap: Record<string, { slug: string; title: string }[]> = {
     { slug: "what-is-a-power-flush",                title: "What Is a Power Flush?" },
     { slug: "radiators-not-heating-up",             title: "Radiators Not Heating Up?" },
   ],
+  "emergency-plumber": [
+    { slug: "no-hot-water-emergency",               title: "No Hot Water? Step-by-Step Guide" },
+    { slug: "what-to-do-burst-pipe",                title: "What to Do If a Pipe Bursts" },
+    { slug: "emergency-plumber-call-out-cost",      title: "Emergency Plumber Call-Out Cost" },
+  ],
+  "plumbing-repairs": [
+    { slug: "how-to-fix-a-dripping-tap",            title: "How to Fix a Dripping Tap" },
+    { slug: "how-to-fix-a-leaking-radiator",        title: "How to Fix a Leaking Radiator Valve" },
+    { slug: "plumber-cost-per-hour",                title: "How Much Does a Plumber Cost Per Hour?" },
+  ],
+  "drain-blockages": [
+    { slug: "how-to-unblock-a-drain",               title: "How to Unblock a Drain" },
+    { slug: "signs-drain-blocked",                  title: "Signs Your Drain Is Blocked" },
+    { slug: "emergency-plumber-call-out-cost",      title: "Emergency Plumber Call-Out Cost" },
+  ],
+  "gas-safety-certificates": [
+    { slug: "gas-safety-certificate-cost",          title: "Gas Safety Certificate Cost for Landlords" },
+    { slug: "how-to-check-plumber-is-gas-safe",     title: "How to Check If a Plumber Is Gas Safe" },
+    { slug: "boiler-replacement-vs-repair",         title: "Boiler Repair vs Replacement" },
+  ],
+  "bathroom-installations": [
+    { slug: "bathroom-installation-cost-peterborough", title: "Bathroom Installation Cost in Peterborough" },
+    { slug: "underfloor-heating-cost",              title: "Underfloor Heating Cost — Installation Guide" },
+    { slug: "plumber-cost-per-hour",                title: "How Much Does a Plumber Cost Per Hour?" },
+  ],
+  "landlord-services": [
+    { slug: "landlord-plumbing-checklist",          title: "Landlord Plumbing Safety Checklist" },
+    { slug: "gas-safety-certificate-cost",          title: "Gas Safety Certificate Cost for Landlords" },
+    { slug: "how-to-check-plumber-is-gas-safe",     title: "How to Check If a Plumber Is Gas Safe" },
+  ],
+  "plumbing-installation": [
+    { slug: "plumber-cost-per-hour",                title: "How Much Does a Plumber Cost Per Hour?" },
+    { slug: "bathroom-installation-cost-peterborough", title: "Bathroom Installation Cost in Peterborough" },
+    { slug: "radiator-replacement-cost",            title: "Radiator Replacement Cost" },
+  ],
+  "damp-leak-detection": [
+    { slug: "hidden-water-leak-signs",              title: "Hidden Water Leak Warning Signs" },
+    { slug: "what-to-do-burst-pipe",                title: "What to Do If a Pipe Bursts" },
+    { slug: "emergency-plumber-call-out-cost",      title: "Emergency Plumber Call-Out Cost" },
+  ],
+  "pre-purchase-plumbing-survey": [
+    { slug: "signs-boiler-needs-replacing",         title: "7 Signs Your Boiler Needs Replacing" },
+    { slug: "how-to-check-plumber-is-gas-safe",     title: "How to Check If a Plumber Is Gas Safe" },
+    { slug: "plumber-cost-per-hour",                title: "How Much Does a Plumber Cost Per Hour?" },
+  ],
 };
 
-// Fixed 6 area links shown on every service page
+// All service-zone areas shown on every service page
 const servicePageAreas = [
-  { slug: "city-centre", name: "City Centre" },
-  { slug: "werrington",  name: "Werrington" },
-  { slug: "hampton",     name: "Hampton" },
-  { slug: "bretton",     name: "Bretton" },
-  { slug: "orton",       name: "Orton" },
-  { slug: "yaxley",      name: "Yaxley" },
+  { slug: "city-centre",    name: "City Centre" },
+  { slug: "werrington",     name: "Werrington" },
+  { slug: "hampton",        name: "Hampton" },
+  { slug: "bretton",        name: "Bretton" },
+  { slug: "orton",          name: "Orton" },
+  { slug: "yaxley",         name: "Yaxley" },
+  { slug: "whittlesey",     name: "Whittlesey" },
+  { slug: "market-deeping", name: "Market Deeping" },
+  { slug: "stamford",       name: "Stamford" },
 ] as const;
 
 export const revalidate = 3600; // rebuild stale pages every hour
@@ -54,13 +103,26 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = await prisma.service.findUnique({ where: { slug } });
   if (!service) return {};
-  return buildMetadata({
+
+  const metadata = buildMetadata({
     title: service.seoTitle,
     description: service.seoDescription,
     path: `/services/${service.slug}`,
     absoluteTitle: true,
     image: service.heroImage ?? undefined,
   });
+
+  // /emergency is the canonical page for "emergency plumber" intent.
+  // /services/emergency-plumber is kept for navigation/service-grid consistency,
+  // but Google is told to prefer /emergency to avoid index dilution.
+  if (slug === "emergency-plumber") {
+    return {
+      ...metadata,
+      alternates: { canonical: `${siteSettings.siteUrl}/emergency` },
+    };
+  }
+
+  return metadata;
 }
 
 export default async function ServicePage({
@@ -102,6 +164,7 @@ export default async function ServicePage({
               name: service.name,
               description: service.shortDescription,
               slug: service.slug,
+              image: heroImage ?? undefined,
               ...(slug === "boiler-service" && {
                 offers: {
                   price: "79",
@@ -264,6 +327,21 @@ export default async function ServicePage({
           {/* Stats row */}
       </PageHeroShell>
 
+      {/* Local service coverage */}
+      <section className="py-5 bg-[var(--surface-alt)] border-b border-[var(--border)]">
+        <div className="mx-auto max-w-4xl px-4">
+          <p className="text-sm text-[var(--muted)] leading-relaxed">
+            Our engineers provide <strong className="text-pp-heading">{service.name.toLowerCase()} services</strong> across{" "}
+            <Link href="/areas/city-centre" className="text-[var(--brand)] hover:underline">Peterborough</Link> and surrounding areas including{" "}
+            <Link href="/areas/werrington" className="text-[var(--brand)] hover:underline">Werrington</Link>,{" "}
+            <Link href="/areas/bretton" className="text-[var(--brand)] hover:underline">Bretton</Link>,{" "}
+            <Link href="/areas/hampton" className="text-[var(--brand)] hover:underline">Hampton</Link>,{" "}
+            <Link href="/areas/yaxley" className="text-[var(--brand)] hover:underline">Yaxley</Link>, and{" "}
+            <Link href="/areas/stamford" className="text-[var(--brand)] hover:underline">Stamford</Link>.
+          </p>
+        </div>
+      </section>
+
       {/* Content */}
       <section className="py-16 lg:py-24">
         <div className="mx-auto max-w-4xl px-4">
@@ -289,7 +367,12 @@ export default async function ServicePage({
       {/* Areas we cover */}
       <section className="py-12 bg-[var(--surface-alt)] border-b border-[var(--border)]">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-2xl font-bold text-pp-heading mb-6">Areas We Cover in Peterborough</h2>
+          <h2 className="text-2xl font-bold text-pp-heading mb-3">
+            Areas We Cover for {slug === "emergency-plumber" ? "Emergency Plumbing" : service.name}
+          </h2>
+          <p className="text-sm text-[var(--muted)] mb-5 leading-relaxed">
+            We cover all Peterborough postcodes (PE1–PE7) and surrounding towns including Werrington, Bretton, Hampton, Orton, Yaxley, Whittlesey, Market Deeping and Stamford. All work comes with a clear upfront quote — no hidden call-out fees.
+          </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {servicePageAreas.map((area) => (
               <Link
@@ -300,7 +383,7 @@ export default async function ServicePage({
                 <svg className="h-3.5 w-3.5 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
-                {area.name}
+                Plumber in {area.name}
               </Link>
             ))}
           </div>
@@ -334,6 +417,34 @@ export default async function ServicePage({
             <p className="mt-5">
               <Link href="/guides" className="text-sm font-semibold text-[var(--brand)] hover:underline">
                 View all guides →
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Related blog posts */}
+      {(serviceBlogMap[slug]?.length ?? 0) > 0 && (
+        <section className="py-12 bg-[var(--surface-alt)] border-b border-[var(--border)]">
+          <div className="mx-auto max-w-5xl px-4">
+            <h2 className="text-2xl font-bold text-pp-heading mb-6">From Our Blog</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {serviceBlogMap[slug].map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="flex items-start gap-3 rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-sm font-medium text-pp-heading hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                >
+                  <svg className="h-4 w-4 text-[var(--brand)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                  {post.title}
+                </Link>
+              ))}
+            </div>
+            <p className="mt-5">
+              <Link href="/blog" className="text-sm font-semibold text-[var(--brand)] hover:underline">
+                View all articles →
               </Link>
             </p>
           </div>
