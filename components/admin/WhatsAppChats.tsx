@@ -23,8 +23,6 @@ interface WaChat {
   isEmergency: boolean;
   lastMessageAt: string;
   createdAt: string;
-  leadId: string | null;
-  bookingRef: string | null;
   messages: WaMessage[];
 }
 
@@ -111,7 +109,6 @@ export default function WhatsAppChats({
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": "admin",
         },
         body: JSON.stringify({ botActive: !chat.botActive }),
       });
@@ -278,11 +275,6 @@ export default function WhatsAppChats({
                     {chat.isEmergency && (
                       <span className="text-[0.55rem] font-bold px-1.5 py-0.5 rounded bg-red-100 text-red-600">
                         EMERGENCY
-                      </span>
-                    )}
-                    {chat.leadId && (
-                      <span className="text-[0.55rem] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-600">
-                        LEAD
                       </span>
                     )}
                     {!chat.botActive && (
@@ -454,12 +446,6 @@ export default function WhatsAppChats({
                 <span>
                   {selected.messages.length} message{selected.messages.length !== 1 ? "s" : ""}
                 </span>
-                {selected.leadId && (
-                  <span className="font-semibold text-blue-600">Lead created</span>
-                )}
-                {selected.bookingRef && (
-                  <span className="font-semibold text-green-600">Booking: {selected.bookingRef}</span>
-                )}
                 <span className="ml-auto">
                   Started {new Date(selected.createdAt).toLocaleDateString("en-GB")}
                 </span>

@@ -34,7 +34,6 @@ export default async function AdminLeadsPage() {
     email: l.email,
     postcode: l.postcode,
     serviceType: l.serviceType,
-    message: l.message,
     status: l.status,
     source: l.source,
     createdAt: l.createdAt.toISOString(),

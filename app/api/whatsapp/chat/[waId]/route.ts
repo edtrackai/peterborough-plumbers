@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { checkApiKey } from "@/lib/whatsappAuth";
 import { z } from "zod";
 
 type RouteContext = { params: Promise<{ waId: string }> };
@@ -8,11 +7,9 @@ type RouteContext = { params: Promise<{ waId: string }> };
 /**
  * GET /api/whatsapp/chat/[waId]
  * Admin: returns full chat with messages.
+ * Protected by Vercel Deployment Protection + HTTP Basic Auth.
  */
 export async function GET(req: NextRequest, ctx: RouteContext) {
-  const authErr = checkApiKey(req);
-  if (authErr) return authErr;
-
   const { waId } = await ctx.params;
 
   try {
@@ -45,9 +42,6 @@ const patchSchema = z.object({
  * Admin: update botActive, customerName, isEmergency.
  */
 export async function PATCH(req: NextRequest, ctx: RouteContext) {
-  const authErr = checkApiKey(req);
-  if (authErr) return authErr;
-
   const { waId } = await ctx.params;
 
   try {

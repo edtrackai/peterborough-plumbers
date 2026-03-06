@@ -46,7 +46,6 @@ export async function GET(req: NextRequest) {
       botActive: c.botActive,
       isEmergency: c.isEmergency,
       lastMessageAt: c.lastMessageAt,
-      leadId: c.leadId,
       lastMessage: c.messages[0] ?? null,
     }));
 
