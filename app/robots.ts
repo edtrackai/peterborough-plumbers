@@ -8,15 +8,13 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
       disallow: [
-        "/api/",
-        "/admin/",
-        "/plumber/",   // plumber portal — not for public indexing
-        "/booking/",   // personal booking confirmation pages
-        "/rate/",      // rating pages (require auth context)
-        "/book",       // booking flow — noIndex
-        "/privacy",    // legal pages — noIndex
-        "/terms",
-        "/cookies",
+        "/api/",      // API endpoints — no public content
+        "/admin/",    // admin panel — private
+        "/plumber/",  // plumber portal — private
+        // NOTE: /book, /booking/, /rate/, /privacy, /terms, /cookies
+        // are public pages with noindex set at the page level.
+        // Blocking them here is incorrect — Google would still index
+        // the URL from external links but couldn't crawl to see noindex.
       ],
     },
     sitemap: `${siteUrl}/sitemap.xml`,
