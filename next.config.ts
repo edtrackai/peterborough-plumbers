@@ -74,7 +74,8 @@ const nextConfig: NextConfig = {
       {
         source: "/images/(.*)",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+          // 7-day TTL + 30-day SWR — images change infrequently in production
+          { key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=2592000" },
         ],
       },
     ];

@@ -2,16 +2,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { siteSettings } from "@/content/settings";
 import { services } from "@/content/services";
+import ManageCookiesButton from "@/components/layout/ManageCookiesButton";
 
 export default function Footer() {
   return (
     <footer style={{ background: "#3a3a3a" }}>
 
       {/* ── Main content ─────────────────────────────────────────────────────── */}
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-8 pb-4">
 
         {/* Logo */}
-        <div className="mb-8">
+        <div className="mb-6">
           <Image
             src="/logos/logo-mark.png"
             alt="Peterborough Plumbers"
@@ -23,7 +24,7 @@ export default function Footer() {
         </div>
 
         {/* 3 columns + social icons */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6">
 
           {/* Column 1: Our Services */}
           <div>
@@ -148,6 +149,7 @@ export default function Footer() {
           <Link href="/faqs" className="text-[#ffffffb3] hover:text-white text-sm transition-colors duration-200">
             Accessibility
           </Link>
+          <ManageCookiesButton />
         </div>
 
       </div>

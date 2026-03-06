@@ -22,6 +22,7 @@ interface FormState {
   postcode: string;
   serviceType: string;
   message: string;
+  website: string; // honeypot — must stay empty
 }
 
 const EMPTY: FormState = {
@@ -31,6 +32,7 @@ const EMPTY: FormState = {
   postcode: "",
   serviceType: "",
   message: "",
+  website: "",
 };
 
 export default function LeadForm() {
@@ -219,6 +221,20 @@ export default function LeadForm() {
           onChange={(e) => set("message", e.target.value)}
           placeholder="Brief description of the issue…"
           className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-pp-teal focus:ring-1 focus:ring-pp-teal resize-none"
+        />
+      </div>
+
+      {/* Honeypot — hidden from users, bots fill it in */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none", tabIndex: -1 } as React.CSSProperties}>
+        <label htmlFor="lead-website">Website</label>
+        <input
+          id="lead-website"
+          type="text"
+          name="website"
+          autoComplete="off"
+          tabIndex={-1}
+          value={form.website}
+          onChange={(e) => set("website", e.target.value)}
         />
       </div>
 

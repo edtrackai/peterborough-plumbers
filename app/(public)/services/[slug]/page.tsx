@@ -5,14 +5,15 @@ import { serviceSchema, faqSchema, breadcrumbSchema, howToSchema } from "@/lib/s
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import FaqAccordion from "@/components/blocks/FaqAccordion";
 import ServiceGrid from "@/components/blocks/ServiceGrid";
-import CTASection from "@/components/blocks/CTASection";
-import Image from "next/image";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
+import PageHeroShell from "@/components/hero/PageHeroShell";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
 import { getRelatedServiceSlugs } from "@/lib/seo/internalLinks";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
+import NextStepsLinks from "@/components/NextStepsLinks";
 
 // Helpful guides per service slug
 const helpfulGuidesMap: Record<string, { slug: string; title: string }[]> = {
@@ -173,40 +174,7 @@ export default async function ServicePage({
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
-
-        {/* Background */}
-        <div className="absolute inset-0 z-0" aria-hidden="true">
-          {heroImage && (
-            <Image
-              src={heroImage}
-              alt={`${service.name} in Peterborough — qualified plumbing & heating engineers`}
-              fill
-              className="object-cover"
-              priority
-              quality={85}
-              sizes="100vw"
-            />
-          )}
-          {/* Deep directional overlay — heaviest on left for text legibility */}
-          <div
-            className="absolute inset-0"
-            style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }}
-          />
-          {/* Bottom vignette */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-44"
-            style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }}
-          />
-          {/* Brand red glow — top-right */}
-          <div
-            className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]"
-            style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }}
-          />
-        </div>
-
-        {/* Main content */}
-        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-4 sm:pt-28 pb-16 sm:pb-24">
+      <PageHeroShell imageSrc={heroImage || undefined} imageAlt={`${service.name} in Peterborough — qualified plumbing & heating engineers`} priority>
           <Breadcrumbs
             items={[
               { name: "Services", href: "/services" },
@@ -294,19 +262,7 @@ export default async function ServicePage({
           </ul>
 
           {/* Stats row */}
-        </div>
-
-        {/* Curved bottom wave — smooth transition to white content */}
-        <div className="absolute bottom-0 left-0 right-0 z-[5]" aria-hidden="true" style={{ lineHeight: 0 }}>
-          <svg
-            viewBox="0 0 1440 80"
-            preserveAspectRatio="none"
-            style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}
-          >
-            <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
-          </svg>
-        </div>
-      </section>
+      </PageHeroShell>
 
       {/* Content */}
       <section className="py-16 lg:py-24">
@@ -384,9 +340,13 @@ export default async function ServicePage({
         </section>
       )}
 
-      <CTASection
+      <NextStepsLinks variant="service" />
+
+      <ImageCTASection
         heading={`Book ${service.name}`}
         subheading="Get a free, no-obligation quote today."
+        imageSrc={`/images/services/${service.slug}/cta.webp`}
+        imageAlt={`Book ${service.name} in Peterborough`}
       />
     </>
   );

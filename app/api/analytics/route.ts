@@ -13,7 +13,13 @@ const analyticsSchema = z.object({
   ]),
   pagePath:  z.string().max(500).optional(),
   sessionId: z.string().max(100).optional(),
-  metadata:  z.record(z.string(), z.unknown()).optional(),
+  metadata:  z
+    .record(
+      z.string().max(50),
+      z.union([z.string().max(200), z.number(), z.boolean(), z.null()])
+    )
+    .refine((m) => Object.keys(m).length <= 20, "Too many metadata keys")
+    .optional(),
 });
 
 export async function POST(request: NextRequest) {

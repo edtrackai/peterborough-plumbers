@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import PageHeroShell from "@/components/hero/PageHeroShell";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema } from "@/lib/seo/schema";
-import AreaGrid from "@/components/blocks/AreaGrid";
-import CTASection from "@/components/blocks/CTASection";
+
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
@@ -18,7 +19,7 @@ export const metadata: Metadata = buildMetadata({
     "Plumbing & heating support across Peterborough (PE1–PE7), Stamford, Market Deeping, Yaxley, and Whittlesey. Emergency call-outs available. Book today.",
   path: "/areas",
   absoluteTitle: true,
-  image: "/images/homepage/hero.webp",
+  image: "/images/areas/hero.webp",
 });
 
 const coverageFeatures = [
@@ -59,14 +60,7 @@ export default async function AreasPage() {
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
-        <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/hero.webp" alt="Plumbing and heating services across Peterborough and surrounding areas" fill className="object-cover" priority quality={85} sizes="100vw" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
-          <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
-          <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
-        </div>
-        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-4 sm:pt-28 pb-16 sm:pb-24">
+      <PageHeroShell imageSrc="/images/areas/hero.webp" imageAlt="Plumbing and heating services across Peterborough and surrounding areas" priority>
           <Breadcrumbs items={[{ name: "Areas", href: "/areas" }]} inverted />
           <div className="inline-flex items-center gap-2.5 mt-4 mb-5">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
@@ -101,56 +95,154 @@ export default async function AreasPage() {
               </li>
             ))}
           </ul>
+      </PageHeroShell>
+
+      {/* ── COVERAGE + AREAS (premium map section) ────────────────────────── */}
+      <section className="relative overflow-hidden bg-[#f7f8fa]">
+        {/* Map as full background — very light overlay keeps it subtle */}
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <Image
+            src="/images/areas/areas-we-cover.webp"
+            alt="Areas we cover across Peterborough and surrounding regions"
+            fill
+            className="object-cover"
+            loading="lazy"
+            quality={85}
+            sizes="100vw"
+          />
+          {/* White wash — top heavy so text is never fighting the image */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.80) 55%, rgba(255,255,255,0.93) 100%)" }}
+          />
+          {/* Soft corner vignette */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.05) 100%)" }}
+          />
         </div>
-        <div className="absolute bottom-0 left-0 right-0 z-[5]" aria-hidden="true" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}>
-            <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
-          </svg>
+
+        {/* Glass panel — benefit cards only */}
+        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 pt-14 lg:pt-20 pb-14 lg:pb-20">
+          <div
+            className="rounded-[22px] border border-black/[0.06] p-5 sm:p-8 lg:p-10"
+            style={{
+              background: "rgba(255,255,255,0.80)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              boxShadow: "0 4px 40px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)",
+            }}
+          >
+            {/* Feature cards — 4-up desktop, 2-up tablet, 1 column mobile */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {coverageFeatures.map((f) => (
+                <div
+                  key={f.title}
+                  className="flex gap-3 p-4 rounded-[17px] bg-white border border-black/[0.06] hover:shadow-[0_4px_18px_rgba(0,0,0,0.09)] hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <svg className="h-5 w-5 text-[var(--brand)] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <div>
+                    <h3 className="font-semibold text-[#111] text-sm mb-1">{f.title}</h3>
+                    <p className="text-xs text-[#555] leading-relaxed">{f.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Coverage features */}
-      <section className="bg-white py-12 border-b border-[var(--border)]">
-        <div className="mx-auto max-w-5xl px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coverageFeatures.map((f) => (
-              <div key={f.title} className="flex gap-3 p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)]">
-                <svg className="h-5 w-5 text-[var(--brand)] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <div>
-                  <h3 className="font-semibold text-pp-heading text-sm mb-1">{f.title}</h3>
-                  <p className="text-xs text-[var(--muted)] leading-relaxed">{f.body}</p>
-                </div>
-              </div>
+      {/* Subtle divider between sections */}
+      <div className="mx-auto h-px w-full max-w-5xl bg-black/[0.08]" />
+
+      {/* Areas grid — separate section with subtle map background */}
+      <section id="areas-we-cover" className="relative overflow-hidden py-10 sm:py-16">
+        {/* Map background + white wash overlay */}
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <Image
+            src="/images/areas/areas-we-cover.webp"
+            alt=""
+            fill
+            className="object-cover object-center"
+            loading="lazy"
+            quality={85}
+            sizes="100vw"
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "rgba(255,255,255,0.88)" }}
+          />
+        </div>
+        {/* Content — above the overlay */}
+        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+          {/* Centered heading + accent */}
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl lg:text-3xl font-bold text-[#111] mb-2">Areas We Cover</h2>
+            <div className="h-[2px] w-10 rounded-full bg-[var(--brand)] mx-auto" />
+          </div>
+          {/* Area grid: 2 → 3 → 4 col */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {(areas as unknown as Area[]).map((area) => (
+              <Link
+                key={area.slug}
+                href={`/areas/${area.slug}`}
+                className="group rounded-[17px] p-4 sm:p-5 text-center bg-white border border-black/[0.06] hover:border-black/[0.13] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-200"
+              >
+                <h3 className="text-sm font-bold text-[#111] group-hover:text-[var(--brand)] transition-colors duration-200 leading-snug">
+                  {area.name}
+                </h3>
+                <p className="text-xs mt-1 text-[#555]">
+                  {(area.postcodes as unknown as string[]).join(", ")}
+                </p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <AreaGrid areas={areas as unknown as Area[]} />
-
       {/* Not on the list? */}
       <section className="bg-[var(--surface-alt)] py-12 border-y border-[var(--border)]">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <h2 className="text-xl font-bold text-pp-heading mb-3">
-            Not Sure If We Cover Your Area?
-          </h2>
-          <p className="text-[var(--muted)] text-sm mb-6 max-w-xl mx-auto">
-            Call us directly with your postcode — we cover a wide area around Peterborough and
-            can usually confirm availability in seconds. We also cover many surrounding villages
-            not listed above.
-          </p>
-          <a
-            href={`tel:${settings.phoneHref}`}
-            className="inline-block bg-[var(--brand)] text-white px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors"
-          >
-            Call {settings.phone}
-          </a>
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* Text + CTA */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-xl font-bold text-pp-heading mb-3">
+                Not Sure If We Cover Your Area?
+              </h2>
+              <p className="text-[var(--muted)] text-sm mb-6 max-w-xl mx-auto lg:mx-0">
+                Call us directly with your postcode — we cover a wide area around Peterborough and
+                can usually confirm availability in seconds. We also cover many surrounding villages
+                not listed above.
+              </p>
+              <a
+                href={`tel:${settings.phoneHref}`}
+                className="inline-block bg-[var(--brand)] text-white px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors mb-4 sm:mb-0"
+              >
+                Call {settings.phone}
+              </a>
+            </div>
+            {/* Side image */}
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
+              <Image
+                src="/images/areas/ready-to-book-your-plumber.webp"
+                alt="Book your plumber in Peterborough and surrounding areas"
+                fill
+                className="object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      <CTASection />
+      <ImageCTASection
+        heading="Ready to Book Your Plumber?"
+        subheading="Qualified engineers across all PE postcodes and surrounding areas — clear upfront quotes, no hidden fees."
+        imageSrc="/images/areas/ready-to-book-your-plumber.webp"
+        imageAlt="Peterborough Plumbers engineer ready to book"
+      />
     </>
   );
 }

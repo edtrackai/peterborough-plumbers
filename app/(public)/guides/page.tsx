@@ -1,11 +1,12 @@
 import Image from "next/image";
+import PageHeroShell from "@/components/hero/PageHeroShell";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema } from "@/lib/seo/schema";
-import CTASection from "@/components/blocks/CTASection";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { siteSettings } from "@/content/settings";
+import ImageCTASection from "@/components/blocks/ImageCTASection";
 import { prisma } from "@/lib/prisma";
 import { guideCategories } from "@/content/guides";
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
     "Free plumbing & heating guides for Peterborough homeowners — boiler help, DIY tips, cost guides and emergency advice from qualified engineers.",
   path: "/guides",
   absoluteTitle: true,
-  image: "/images/homepage/hero.webp",
+  image: "/images/guides/hero.webp",
 });
 
 const categoryOrder: (keyof typeof guideCategories)[] = [
@@ -34,6 +35,14 @@ const categoryColors: Record<keyof typeof guideCategories, string> = {
   boilers:     "bg-gray-100 text-gray-700",
   heating:     "bg-[rgba(200,16,46,0.06)] text-[#a50d26]",
   emergencies: "bg-[rgba(200,16,46,0.14)] text-[#C8102E]",
+};
+
+const categoryImages: Record<keyof typeof guideCategories, { src: string; alt: string }> = {
+  costs:       { src: "/images/guides/costs-pricing.webp",      alt: "Plumbing and heating costs and pricing guides" },
+  diy:         { src: "/images/guides/diy-guides.webp",         alt: "DIY plumbing and heating guides for homeowners" },
+  boilers:     { src: "/images/guides/boiler.webp",             alt: "Boiler advice and troubleshooting guides" },
+  heating:     { src: "/images/guides/central-heating.webp",    alt: "Central heating guides and advice" },
+  emergencies: { src: "/images/guides/emergencies.webp",        alt: "Plumbing emergency guides and advice" },
 };
 
 export default async function GuidesPage() {
@@ -55,14 +64,7 @@ export default async function GuidesPage() {
       />
 
       {/* Hero */}
-      <section className="relative bg-pp-navy overflow-hidden flex flex-col hero-white-text min-h-[280px] sm:min-h-[clamp(400px,40vw,660px)]">
-        <div className="absolute inset-0 z-0" aria-hidden="true">
-          <Image src="/images/homepage/plumbing-repairs.webp" alt="Plumber providing expert repairs and advice in Peterborough" fill className="object-cover object-center" priority quality={85} sizes="100vw" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(8,10,20,0.97) 0%, rgba(8,10,20,0.88) 42%, rgba(8,10,20,0.58) 68%, rgba(8,10,20,0.35) 100%)" }} />
-          <div className="absolute bottom-0 left-0 right-0 h-44" style={{ background: "linear-gradient(to top, rgba(4,6,14,0.80) 0%, rgba(4,6,14,0.30) 55%, transparent 100%)" }} />
-          <div className="absolute -top-20 -right-20 h-[500px] w-[500px] rounded-full opacity-[0.07]" style={{ background: "radial-gradient(circle, #C8102E 0%, transparent 70%)" }} />
-        </div>
-        <div className="relative z-10 flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 pt-4 sm:pt-28 pb-16 sm:pb-24">
+      <PageHeroShell imageSrc="/images/guides/hero.webp" imageAlt="Plumber providing expert repairs and advice in Peterborough" priority>
           <Breadcrumbs items={[{ name: "Guides", href: "/guides" }]} inverted />
           <div className="inline-flex items-center gap-2.5 mt-4 mb-5">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
@@ -97,13 +99,7 @@ export default async function GuidesPage() {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 z-[5]" aria-hidden="true" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "clamp(48px, 5.5vw, 80px)" }}>
-            <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
-          </svg>
-        </div>
-      </section>
+      </PageHeroShell>
 
       {/* Quick-jump category pills */}
       <nav className="bg-white border-b border-[var(--border)] sticky top-16 z-40" aria-label="Guide categories">
@@ -172,9 +168,19 @@ export default async function GuidesPage() {
               className="border-b border-[var(--border)] py-14 scroll-mt-32"
             >
               <div className="mx-auto max-w-7xl px-4">
-                <h2 className="text-2xl font-bold text-pp-heading mb-8">
+                <h2 className="text-2xl font-bold text-pp-heading mb-6">
                   {guideCategories[cat]}
                 </h2>
+                {/* Category image */}
+                <div className="relative w-full rounded-xl overflow-hidden mb-6" style={{ aspectRatio: "16/7" }}>
+                  <Image
+                    src={categoryImages[cat].src}
+                    alt={categoryImages[cat].alt}
+                    fill
+                    className="object-cover"
+                    loading="lazy"
+                  />
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {catGuides.map((guide) => (
                     <Link
@@ -211,7 +217,7 @@ export default async function GuidesPage() {
       </div>
 
       {/* About the guides */}
-      <section className="bg-[var(--surface-alt)] py-12 border-b border-[var(--border)]">
+      <section className="bg-[var(--surface-alt)] py-12">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-xl font-bold text-pp-heading mb-3">
             About Our Guides
@@ -236,9 +242,11 @@ export default async function GuidesPage() {
         </div>
       </section>
 
-      <CTASection
+      <ImageCTASection
         heading="Need Help From a Real Engineer?"
         subheading="Need plumbing or heating help in Peterborough? Call now or request a visit online — clear upfront quotes."
+        imageSrc="/images/guides/need-help-from-a-real-engineer.webp"
+        imageAlt="Need help from a real plumbing and heating engineer in Peterborough"
       />
     </>
   );

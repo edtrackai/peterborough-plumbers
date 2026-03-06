@@ -9,6 +9,14 @@ import { getSiteSettings } from "@/lib/db/content";
 import { guideCategories } from "@/content/guides";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 
+// ── Core areas shown on every guide page ──────────────────────────────────────
+const guideRelatedAreas = [
+  { slug: "city-centre",    name: "Peterborough City Centre" },
+  { slug: "werrington",     name: "Werrington" },
+  { slug: "hampton",        name: "Hampton" },
+  { slug: "bretton",        name: "Bretton" },
+] as const;
+
 // ── Guide category → related service slugs ────────────────────────────────────
 const guideServiceMap: Record<string, string[]> = {
   costs:       ["boiler-service", "central-heating-services", "plumbing-repairs"],
@@ -161,14 +169,14 @@ export default async function GuideDetailPage({ params }: Props) {
                 Qualified plumbing &amp; heating engineers — Peterborough and surrounding areas.
               </p>
             </div>
-            <div className="flex gap-3 shrink-0">
+            <div className="flex flex-wrap gap-3 shrink-0">
               <Link
                 href="/contact"
                 className="btn-book-now bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
               >
                 Contact Peterborough Plumbers
               </Link>
-              {["what-to-do-burst-pipe", "emergency-plumber-call-out-cost", "boiler-not-working-guide"].includes(slug) && (
+              {guide.category === "emergencies" && (
                 <Link
                   href="/emergency"
                   className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
@@ -247,27 +255,69 @@ export default async function GuideDetailPage({ params }: Props) {
             </div>
           )}
 
-          {/* End-of-article CTA */}
-          <div className="mt-12 pt-10 border-t border-[var(--border)] flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <div className="flex-1">
-              <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
-              <p className="text-sm text-[var(--muted)] mt-1">Qualified engineers — clear upfront quotes, no hidden extras.</p>
-            </div>
-            <div className="flex flex-wrap gap-3 shrink-0">
-              <Link
-                href="/contact"
-                className="bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
-              >
-                Contact Peterborough Plumbers
-              </Link>
-              {["what-to-do-burst-pipe", "emergency-plumber-call-out-cost", "boiler-not-working-guide"].includes(slug) && (
+          {/* Related areas we serve */}
+          <div className="mt-14 pt-10 border-t border-[var(--border)]">
+            <h2 className="text-xl font-bold text-pp-heading mb-4">Areas We Serve</h2>
+            <div className="flex flex-wrap gap-2">
+              {guideRelatedAreas.map((area) => (
                 <Link
-                  href="/emergency"
-                  className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                  key={area.slug}
+                  href={`/areas/${area.slug}`}
+                  className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
                 >
-                  Emergency plumber in Peterborough
+                  Plumber in {area.name}
                 </Link>
-              )}
+              ))}
+              <Link
+                href="/areas"
+                className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+              >
+                View all areas →
+              </Link>
+            </div>
+          </div>
+
+          {/* End-of-article CTA */}
+          <div className="mt-12 pt-10 border-t border-[var(--border)]">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center mb-5">
+              <div className="flex-1">
+                <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
+                <p className="text-sm text-[var(--muted)] mt-1">Qualified engineers — clear upfront quotes, no hidden extras.</p>
+              </div>
+              <div className="flex flex-wrap gap-3 shrink-0">
+                <Link
+                  href="/contact"
+                  className="bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
+                >
+                  Contact Peterborough Plumbers
+                </Link>
+                {guide.category === "emergencies" && (
+                  <Link
+                    href="/emergency"
+                    className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                  >
+                    Emergency plumber →
+                  </Link>
+                )}
+              </div>
+            </div>
+            {/* Quick links: related services + pricing */}
+            <div className="flex flex-wrap gap-2">
+              {relatedServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/services/${s.slug}`}
+                  className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                >
+                  {s.name}
+                </Link>
+              ))}
+              <Link
+                href="/pricing"
+                className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+              >
+                View pricing →
+              </Link>
             </div>
           </div>
         </div>
