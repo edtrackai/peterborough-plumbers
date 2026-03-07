@@ -22,7 +22,19 @@ export function localBusinessSchema() {
       latitude: 52.5735,
       longitude: -0.2404,
     },
-    image: `${siteUrl}/images/homepage/hero.webp`,
+    image: {
+      "@type": "ImageObject",
+      url: `${siteUrl}/images/homepage/hero.webp`,
+      width: 1200,
+      height: 630,
+      encodingFormat: "image/webp",
+      representativeOfPage: true,
+      contentLocation: {
+        "@type": "Place",
+        name: "Peterborough, Cambridgeshire, UK",
+        geo: { "@type": "GeoCoordinates", latitude: 52.5735, longitude: -0.2404 },
+      },
+    },
     url: siteUrl,
     sameAs: [
       siteSettings.facebookUrl,
@@ -114,7 +126,18 @@ export function serviceSchema(service: {
     ],
     url: `${siteUrl}/services/${service.slug}`,
     ...(service.image && {
-      image: service.image.startsWith("http") ? service.image : `${siteUrl}${service.image}`,
+      image: {
+        "@type": "ImageObject",
+        url: service.image.startsWith("http") ? service.image : `${siteUrl}${service.image}`,
+        width: 1200,
+        height: 630,
+        encodingFormat: "image/webp",
+        contentLocation: {
+          "@type": "Place",
+          name: "Peterborough, Cambridgeshire, UK",
+          geo: { "@type": "GeoCoordinates", latitude: 52.5735, longitude: -0.2404 },
+        },
+      },
     }),
     ...(service.offers && {
       offers: {
@@ -197,6 +220,15 @@ export function articleSchema(post: {
       image: {
         "@type": "ImageObject",
         url: post.image.startsWith("http") ? post.image : `${siteUrl}${post.image}`,
+        width: 1200,
+        height: 630,
+        encodingFormat: "image/webp",
+        representativeOfPage: true,
+        contentLocation: {
+          "@type": "Place",
+          name: "Peterborough, Cambridgeshire, UK",
+          geo: { "@type": "GeoCoordinates", latitude: 52.5735, longitude: -0.2404 },
+        },
       },
     }),
   };

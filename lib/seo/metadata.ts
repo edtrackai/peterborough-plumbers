@@ -18,7 +18,7 @@ export function buildMetadata(options: {
 }): Metadata {
   const url = `${siteUrl}${options.path}`;
   const ogImage = options.image
-    ? [{ url: `${siteUrl}${options.image}`, width: 1200, height: 630, alt: options.title }]
+    ? [{ url: `${siteUrl}${options.image}`, width: 1200, height: 630, alt: options.title, type: "image/webp" }]
     : undefined;
 
   return {
@@ -41,7 +41,7 @@ export function buildMetadata(options: {
       card: "summary_large_image",
       title: options.title,
       description: options.description,
-      ...(ogImage && { images: [ogImage[0].url] }),
+      ...(ogImage && { images: [{ url: ogImage[0].url, alt: options.title }] }),
     },
     other: {
       "geo.region": options.geo?.region ?? "GB-PTE",

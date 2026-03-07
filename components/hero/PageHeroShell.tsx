@@ -39,8 +39,10 @@ export default function PageHeroShell({
             className="object-cover"
             style={{ objectPosition: focalPoint }}
             priority={priority}
+            fetchPriority={priority ? "high" : "auto"}
             quality={85}
             sizes="100vw"
+            decoding="async"
           />
         )}
         {/* Primary overlay: heaviest on left for text legibility */}
