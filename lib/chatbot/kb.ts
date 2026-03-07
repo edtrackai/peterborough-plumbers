@@ -2,6 +2,7 @@
 // Safe plumbing guidance only. NO boiler/gas content.
 
 import type { VideoCategory } from "./videos";
+import { siteSettings } from "@/content/settings";
 
 export type PlumbingCategory =
   | "leak_tap"
@@ -111,13 +112,13 @@ export const knowledgeBase: Record<Exclude<PlumbingCategory, "boiler_gas">, KBEn
       "Happy to help you get booked in. We're available Mon–Fri 8am–6pm and Sat 8am–5pm, with emergency call-outs any time.",
     tips: [
       "Use our online booking tool for same-day or next-day appointments.",
-      "Or call us on 02039514510 — we answer 7 days a week.",
+      `Or call us on ${siteSettings.phone} — we answer 7 days a week.`,
       "We confirm the call-out fee before we attend — no surprises.",
       "All engineers are fully qualified and carry parts for the most common repairs.",
       "You'll receive a clear written quote before any work begins.",
     ],
     callToAction: "Ready to get sorted? Use the options below.",
-    suggestedActions: ["Book online", "Call 02039514510", "What are your prices?"],
+    suggestedActions: ["Book online", `Call ${siteSettings.phone}`, "What are your prices?"],
   },
 
   general: {
@@ -125,7 +126,7 @@ export const knowledgeBase: Record<Exclude<PlumbingCategory, "boiler_gas">, KBEn
     intro: "I'm not sure I caught that — could you describe the issue in a bit more detail? Or tap one of the quick topics below:",
     tips: [],
     callToAction:
-      "If it's urgent, call us directly on 02039514510 — we're available 7 days a week.",
+      `If it's urgent, call us directly on ${siteSettings.phone} — we're available 7 days a week.`,
     suggestedActions: ["Leaking tap", "Blocked drain", "Toilet running", "Burst pipe", "Get a quote"],
   },
 };

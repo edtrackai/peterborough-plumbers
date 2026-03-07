@@ -4,6 +4,7 @@ import { detectRestrictedTopic } from "@/lib/chatbot/safety";
 import { classifyMessage } from "@/lib/chatbot/classify";
 import { knowledgeBase } from "@/lib/chatbot/kb";
 import { getVideoForCategory } from "@/lib/chatbot/videos";
+import { siteSettings } from "@/content/settings";
 
 // ── Rate limiting ─────────────────────────────────────────────────────────────
 const RATE_LIMIT_MAX = 30;
@@ -65,9 +66,9 @@ export async function POST(req: NextRequest) {
         {
           sessionId: session.id,
           reply:
-            "You've sent a lot of messages. Please call us directly on **02039514510** or [book online](/book) for immediate help.",
+            `You've sent a lot of messages. Please call us directly on **${siteSettings.phone}** or [book online](/book) for immediate help.`,
           category: "general",
-          suggestedActions: ["Call 02039514510", "Book online"],
+          suggestedActions: [`Call ${siteSettings.phone}`, "Book online"],
         },
         { status: 429 }
       );
@@ -98,7 +99,7 @@ export async function POST(req: NextRequest) {
 
       const suggestedActions = safety.isGasSmell
         ? ["Call 0800 111 999 (Gas Emergency)", "I'm safe — book a follow-up visit"]
-        : ["Book a qualified engineer", "Call 02039514510", "Request a callback"];
+        : ["Book a qualified engineer", `Call ${siteSettings.phone}`, "Request a callback"];
 
       return NextResponse.json({
         sessionId: session.id,
@@ -147,7 +148,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error("[/api/chat] Error:", err);
     return NextResponse.json(
-      { error: "Something went wrong. Please call us on 02039514510." },
+      { error: `Something went wrong. Please call us on ${siteSettings.phone}.` },
       { status: 500 }
     );
   }

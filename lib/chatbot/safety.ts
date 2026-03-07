@@ -2,6 +2,8 @@
 // Any message matching boiler/gas keywords returns a safe refusal.
 // NO troubleshooting steps are ever provided for these topics.
 
+import { siteSettings } from "@/content/settings";
+
 const GAS_SMELL_KEYWORDS = [
   "gas smell",
   "smell gas",
@@ -114,7 +116,7 @@ export function detectRestrictedTopic(text: string): SafetyCheckResult {
         "Gas appliances must only be worked on by a **Gas Safe registered engineer**. Attempting repairs yourself can be dangerous and illegal.",
         "",
         "Our qualified engineers can diagnose and fix your boiler safely:",
-        "• **Call us:** 02039514510 (7 days a week)",
+        `• **Call us:** ${siteSettings.phone} (7 days a week)`,
         "• **Book online** using the button below",
         "• **Request a callback** and we'll ring you back",
         "",

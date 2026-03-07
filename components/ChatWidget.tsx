@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { siteSettings } from "@/content/settings";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -162,7 +163,7 @@ export default function ChatWidget() {
       }
       const reply: Message = {
         role: "assistant",
-        content: data.reply ?? "Sorry, something went wrong. Please call us on 02039514510.",
+        content: data.reply ?? `Sorry, something went wrong. Please call us on ${siteSettings.phone}.`,
         videoUrl: data.videoUrl,
         videoTitle: data.videoTitle,
         suggestedActions: data.suggestedActions,
@@ -174,7 +175,7 @@ export default function ChatWidget() {
     } catch {
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: "Sorry, I couldn't connect. Please call us on **02039514510**.",
+        content: `Sorry, I couldn't connect. Please call us on **${siteSettings.phone}**.`,
         ts: Date.now(),
         isNew: true,
       }]);
@@ -189,8 +190,8 @@ export default function ChatWidget() {
       window.location.href = "tel:08001119999";
       return;
     }
-    if (lower.includes("call") || lower.includes("02039514510")) {
-      window.location.href = "tel:02039514510";
+    if (lower.includes("call") || lower.includes(siteSettings.phone)) {
+      window.location.href = `tel:${siteSettings.phoneHref}`;
       return;
     }
     if (lower.includes("book online")) {
