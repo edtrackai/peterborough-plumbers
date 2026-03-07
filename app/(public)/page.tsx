@@ -394,26 +394,57 @@ export default async function HomePage() {
       </section>
 
       {/* ── G) AREAS WE COVER ─────────────────────────────────────────────────── */}
-      <section className="bg-white py-12 sm:py-20 border-t border-[var(--border)]">
-        <div className="mx-auto max-w-7xl px-4">
+      <section
+        className="relative py-24 sm:py-32 overflow-hidden"
+        style={{ backgroundColor: '#f8f8f7' }}
+      >
+        {/* Ghost map texture — grayscale watermark, not a focal point */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage: "url('/images/homepage/areas-bg.webp')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.07,
+            filter: 'grayscale(1) contrast(0.8)',
+          }}
+        />
+        {/* Vignette — fades map texture at edges for a clean, contained look */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{ background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, #f8f8f7 100%)' }}
+        />
+
+        {/* Content */}
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
+
+          {/* Eyebrow label */}
+          <p className="mb-5 text-[11px] font-semibold tracking-[0.18em] uppercase text-[var(--brand)]">
+            Service Coverage
+          </p>
 
           {/* Heading */}
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl lg:text-3xl font-bold text-pp-heading mb-3">Areas We Cover</h2>
-            <p className="text-[var(--muted)] text-sm max-w-[640px] mx-auto">
-              Covering Peterborough and surrounding areas across Cambridgeshire.
-            </p>
-          </div>
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-[#1a1a1a] mb-5 leading-[1.1]">
+            Areas We Cover
+          </h2>
 
-          {/* Chips row */}
+          {/* Subtitle */}
+          <p className="text-[#6b7280] text-[1.0625rem] max-w-sm mx-auto mb-14 leading-relaxed">
+            Covering Peterborough and surrounding areas across Cambridgeshire.
+          </p>
+
+          {/* Area chips */}
           <div className="flex flex-wrap justify-center gap-2.5">
             {areas.map((area) => (
               <Link
                 key={area.slug}
                 href={`/areas/${area.slug}`}
-                className="inline-flex items-center gap-1.5 h-10 sm:h-11 rounded-full border border-black/[0.12] bg-white px-4 sm:px-5 text-sm font-medium text-pp-heading shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:border-[var(--brand)] hover:text-[var(--brand)] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
+                className="inline-flex items-center gap-1.5 h-[2.625rem] rounded-full border border-[#e0e0de] bg-white/90 px-5 text-[0.8125rem] font-medium tracking-[0.01em] text-[#3a3a3a] shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_1px_rgba(0,0,0,0.03)] hover:border-[var(--brand)]/60 hover:text-[var(--brand)] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(0,0,0,0.07)] transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-[#f8f8f7]"
               >
-                <svg className="h-3 w-3 text-[var(--muted)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <svg className="h-2.5 w-2.5 text-[#b0b0ac] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
                 {area.name}
@@ -421,11 +452,18 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <p className="text-center mt-7">
-            <Link href="/areas" className="text-sm font-semibold text-pp-teal hover:text-pp-teal-dark transition-colors duration-200">
-              View all areas we cover →
+          {/* CTA */}
+          <div className="mt-12">
+            <Link
+              href="/areas"
+              className="inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors duration-200 group"
+            >
+              View all areas we cover
+              <svg className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
             </Link>
-          </p>
+          </div>
 
         </div>
       </section>

@@ -20,7 +20,7 @@ export const siteSettings = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",
   seoTitle: "Peterborough Plumbing & Heating | Emergency Call-Outs",
   seoDescription:
-    "50+ years of combined plumbing and heating experience serving Peterborough. Boiler servicing, repairs, central heating and emergency call-outs. Qualified engineers, clear upfront quotes.",
+    "50+ years experience in Peterborough. Boiler servicing, repairs, central heating & emergency call-outs. Qualified engineers, clear upfront quotes.",
 } as const;
 
 export function getWhatsAppUrl() {

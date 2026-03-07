@@ -14,7 +14,7 @@ export default function Footer() {
         {/* Logo */}
         <div className="mb-6">
           <Image
-            src="/logos/logo-mark.png"
+            src="/logos/logo-mark.webp"
             alt="Peterborough Plumbers"
             width={52}
             height={52}

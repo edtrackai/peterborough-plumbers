@@ -195,7 +195,7 @@ export default async function GuideDetailPage({ params }: Props) {
       name: settings.companyName,
       logo: {
         "@type": "ImageObject",
-        url: `${settings.siteUrl}/logos/logo-mark.png`,
+        url: `${settings.siteUrl}/logos/logo-mark.webp`,
         width: 512,
         height: 512,
       },

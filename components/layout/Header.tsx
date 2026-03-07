@@ -94,9 +94,9 @@ export default function Header() {
               </svg>
             </button>
             <Link href="/" onClick={() => setMobileOpen(false)} className="shrink-0 flex items-center">
-              <Image src="/logos/logo-mark.png" alt="" width={56} height={56}
+              <Image src="/logos/logo-mark.webp" alt="" width={56} height={56}
                 className="h-[56px] w-[56px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={140} height={56}
+              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={140} height={56}
                 className="h-[56px] w-auto object-contain shrink-0 -ml-[14px]" priority />
             </Link>
           </div>
@@ -104,16 +104,16 @@ export default function Header() {
           {/* ── Desktop: logo — LEFT ── */}
           {isHome ? (
             <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
-              <Image src="/logos/logo-mark.png" alt="" width={104} height={104}
+              <Image src="/logos/logo-mark.webp" alt="" width={104} height={104}
                 className="h-[104px] w-[104px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={260} height={104}
+              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={260} height={104}
                 className="h-[104px] w-auto object-contain shrink-0 -ml-[24px]" priority />
             </Link>
           ) : (
             <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
-              <Image src="/logos/logo-mark.png" alt="" width={64} height={64}
+              <Image src="/logos/logo-mark.webp" alt="" width={64} height={64}
                 className="h-[64px] w-[64px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.png" alt="Peterborough Plumbers" width={180} height={64}
+              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={180} height={64}
                 className="h-[64px] w-auto object-contain shrink-0 -ml-[16px]" priority />
             </Link>
           )}

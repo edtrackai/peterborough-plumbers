@@ -491,7 +491,7 @@ export const guides: Guide[] = [
 </ul>
 
 <h2>Our Registration Details</h2>
-<p>Peterborough Plumbers Gas Safe Registration No. {gasSafeNumber}. You can verify this on the Gas Safe Register website at any time. We're happy to show our ID cards before starting any job.</p>`,
+<p>You can verify our Gas Safe registration on the Gas Safe Register website at any time. We're happy to show our ID cards before starting any job.</p>`,
   },
 
   // ── BOILERS ────────────────────────────────────────────────────────────────

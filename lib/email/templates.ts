@@ -21,7 +21,7 @@ export function bookingConfirmationHtml(data: {
 <body style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="background: #3a3a3a; padding: 24px; text-align: center; border-radius: 8px 8px 0 0;">
     <h1 style="color: #fff; margin: 0; font-size: 22px;">${siteSettings.companyName}</h1>
-    <p style="color: rgba(255,255,255,0.7); margin: 8px 0 0;">Gas Safe Registered — Reg. ${siteSettings.gasSafeNumber}</p>
+    ${siteSettings.gasSafeNumber ? `<p style="color: rgba(255,255,255,0.7); margin: 8px 0 0;">Gas Safe Registered — Reg. ${siteSettings.gasSafeNumber}</p>` : `<p style="color: rgba(255,255,255,0.7); margin: 8px 0 0;">Gas Safe Registered Engineers</p>`}
   </div>
   <div style="background: #f9f9f9; padding: 32px; border-radius: 0 0 8px 8px; border: 1px solid #e0e0e0;">
     <h2 style="color: #3a3a3a; margin-top: 0;">Thanks, ${data.name} — your booking request is confirmed.</h2>
@@ -41,7 +41,7 @@ export function bookingConfirmationHtml(data: {
 
     <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 24px 0;">
     <p style="font-size: 12px; color: #999; margin: 0;">
-      ${siteSettings.companyName} · Peterborough, Cambridgeshire · Gas Safe Reg. ${siteSettings.gasSafeNumber}
+      ${siteSettings.companyName} · Peterborough, Cambridgeshire${siteSettings.gasSafeNumber ? ` · Gas Safe Reg. ${siteSettings.gasSafeNumber}` : ""}
     </p>
   </div>
 </body>

@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Noindex pages — booking, legal, private
+Disallow: /book
+Disallow: /booking/
+Disallow: /thank-you
+Disallow: /privacy
+Disallow: /terms
+Disallow: /cookies
+Disallow: /admin/
+Disallow: /plumber/
+Disallow: /api/
+
+Sitemap: https://peterboroughplumbers.com/sitemap.xml

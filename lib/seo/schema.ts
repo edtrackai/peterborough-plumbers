@@ -207,7 +207,7 @@ export function articleSchema(post: {
       name: siteSettings.companyName,
       logo: {
         "@type": "ImageObject",
-        url: `${siteUrl}/logos/logo-mark.png`,
+        url: `${siteUrl}/logos/logo-mark.webp`,
         width: 512,
         height: 512,
       },
