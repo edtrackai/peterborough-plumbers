@@ -287,6 +287,7 @@ export default function EmergencyPage() {
                 fill
                 className="object-cover"
                 loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 640px"
               />
             </div>
             {/* Right: steps */}
@@ -325,6 +326,7 @@ export default function EmergencyPage() {
               fill
               className="object-cover"
               loading="lazy"
+              sizes="100vw"
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -431,6 +433,7 @@ export default function EmergencyPage() {
               fill
               className="object-cover"
               loading="lazy"
+              sizes="100vw"
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">

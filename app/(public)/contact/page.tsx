@@ -228,6 +228,7 @@ export default function ContactPage() {
               fill
               className="object-cover"
               loading="lazy"
+              sizes="100vw"
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -306,6 +307,7 @@ export default function ContactPage() {
                 fill
                 className="object-cover"
                 loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 640px"
               />
             </div>
           </div>

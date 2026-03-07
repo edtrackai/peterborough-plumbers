@@ -231,6 +231,7 @@ export default async function AreasPage() {
                 fill
                 className="object-cover"
                 loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 640px"
               />
             </div>
           </div>

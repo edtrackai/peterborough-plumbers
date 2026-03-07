@@ -55,6 +55,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${inter.variable} ${sora.variable}`}>
+      <head>
+        {/* Resource hints — load GTM/GA4 domains earlier to reduce RTT once consent is given */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+      </head>
       <body className={`${inter.className} min-h-screen flex flex-col antialiased`}>
         <a
           href="#main-content"

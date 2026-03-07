@@ -80,6 +80,7 @@ export default function ImageCTASection({ heading, subheading, imageSrc, imageAl
               transform: "scale(1.06)",
             }}
             loading="lazy"
+            sizes="100vw"
           />
         </div>
 

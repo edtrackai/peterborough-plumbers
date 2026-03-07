@@ -75,7 +75,7 @@ export default function HeroSection() {
           className="object-cover"
           style={{ objectPosition: "50% 15%" }}
           priority
-          quality={92}
+          quality={85}
           sizes="100vw"
         />
 
