@@ -2,14 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo/metadata";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import CTASection from "@/components/blocks/CTASection";
 import { articleSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import { sanitizeHtml } from "@/lib/utils/sanitizeHtml";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings } from "@/lib/db/content";
 import type { Service } from "@/content/services";
 import { blogCategoryAreaMap, blogCategoryGuideMap } from "@/lib/seo/internalLinks";
+import CTASection from "@/components/blocks/CTASection";
 
 type BlogCategory = "Boiler & Heating" | "Landlord & Legal" | "Emergency & Repairs" | "Local Guides";
 
@@ -20,7 +19,7 @@ const categoryServiceMap: Record<BlogCategory, string[]> = {
   "Local Guides": ["plumbing-installation", "bathroom-installations", "plumbing-repairs"],
 };
 
-export const revalidate = 3600; // rebuild stale pages every hour
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const posts = await prisma.blogPost.findMany({
@@ -62,7 +61,6 @@ export default async function BlogPostPage({
 
   if (!post || post.status !== "Published") notFound();
 
-  // Fetch related services and related blog posts for this category
   const category = post.category as BlogCategory;
   const relatedSlugs = categoryServiceMap[category] ?? [];
   const [relatedServices, relatedPosts] = await Promise.all([
@@ -77,8 +75,12 @@ export default async function BlogPostPage({
     }),
   ]);
 
+  const guideLinks = blogCategoryGuideMap[category];
+  const areaLinks = blogCategoryAreaMap[category];
+
   return (
     <>
+      {/* ── Schema ─────────────────────────────────────────────────────────── */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -103,53 +105,99 @@ export default async function BlogPostPage({
           })),
         }}
       />
-      <section className="bg-pp-navy pt-4 sm:pt-28 pb-16">
-        <div className="mx-auto max-w-7xl px-4">
-          <Breadcrumbs
-            items={[
-              { name: "Blog", href: "/blog" },
-              { name: post.title, href: `/blog/${post.slug}` },
-            ]}
-            inverted
-          />
-          <span className="text-xs font-semibold text-pp-teal uppercase tracking-wider">
-            {post.category}
-          </span>
-          <h1 className="text-3xl lg:text-5xl font-bold text-white mt-2">{post.title}</h1>
-          {post.publishedAt && (
-            <p className="mt-4 text-white/50 text-sm">
-              {new Date(post.publishedAt).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
-          )}
-          <div className="mt-6">
-            <Link href={settings.primaryCtaHref} className="bg-[var(--brand)] text-white px-6 py-3 rounded-lg font-bold hover:bg-[var(--brand-hover)] transition-colors">
-              {settings.primaryCtaLabel}
-            </Link>
-          </div>
-        </div>
-      </section>
 
-      <section className="py-16 lg:py-24">
+      {/* ── Breadcrumb bar ──────────────────────────────────────────────────── */}
+      <nav
+        aria-label="Breadcrumb"
+        className="bg-[var(--surface-alt)] border-b border-[var(--border)] py-3"
+      >
+        <div className="mx-auto max-w-3xl px-4 flex items-center gap-2 text-sm text-[var(--muted)]">
+          <Link href="/" className="hover:text-[var(--brand)] transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/blog" className="hover:text-[var(--brand)] transition-colors">Blog</Link>
+          <span>/</span>
+          <span className="text-pp-heading font-medium truncate">{post.title}</span>
+        </div>
+      </nav>
+
+      {/* ── Article ─────────────────────────────────────────────────────────── */}
+      <div className="bg-white py-12 lg:py-16">
         <div className="mx-auto max-w-3xl px-4">
+
+          {/* Meta row */}
+          <div className="mb-6 flex items-center gap-3 flex-wrap">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brand)] bg-[rgba(200,16,46,0.08)] px-3 py-1 rounded-full">
+              {post.category}
+            </span>
+            {post.publishedAt && (
+              <span className="text-sm text-[var(--muted)]">
+                {new Date(post.publishedAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </span>
+            )}
+          </div>
+
+          {/* Title */}
+          <h1 className="text-3xl lg:text-4xl font-bold text-pp-heading leading-tight mb-4">
+            {post.title}
+          </h1>
+
+          {/* Excerpt */}
+          <p className="text-lg text-[var(--muted)] leading-relaxed mb-10 border-b border-[var(--border)] pb-10">
+            {post.excerpt}
+          </p>
+
+          {/* Inline CTA box */}
+          <div className="my-10 rounded-xl border border-[var(--brand)] bg-[rgba(200,16,46,0.06)] p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex-1">
+              <p className="font-semibold text-pp-heading">Need a plumber in Peterborough?</p>
+              <p className="text-sm text-[var(--muted)] mt-1">
+                Qualified plumbing &amp; heating engineers — clear upfront quotes, no call-out surprises.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 shrink-0">
+              <Link
+                href={settings.primaryCtaHref}
+                className="bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
+              >
+                {settings.primaryCtaLabel}
+              </Link>
+              {category === "Emergency & Repairs" && (
+                <Link
+                  href="/emergency"
+                  className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                >
+                  Emergency plumber
+                </Link>
+              )}
+              <a
+                href={`tel:${settings.phoneHref}`}
+                className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] transition-colors duration-200"
+              >
+                {settings.phone}
+              </a>
+            </div>
+          </div>
+
+          {/* Article body */}
           <div
-            className="prose prose-lg max-w-none [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-pp-heading [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-pp-heading [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-pp-body [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:text-pp-body [&_li]:mb-1"
+            className="prose prose-lg max-w-none prose-headings:text-pp-heading prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-pp-body prose-p:leading-relaxed prose-a:text-[var(--brand)] prose-a:no-underline hover:prose-a:underline prose-ul:my-4 prose-ul:pl-6 prose-ol:my-4 prose-ol:pl-6 prose-li:my-1.5 prose-li:text-pp-body prose-blockquote:border-l-4 prose-blockquote:border-[var(--brand)] prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-[var(--muted)]"
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
           />
 
-          {/* Related services */}
+          {/* ── Related services ──────────────────────────────────────────────── */}
           {relatedServices.length > 0 && (
-            <div className="mt-12 pt-8 border-t border-gray-100">
-              <h2 className="text-lg font-bold text-pp-heading mb-4">Related Services</h2>
+            <div className="mt-14 pt-10 border-t border-[var(--border)]">
+              <h2 className="text-base font-bold text-pp-heading uppercase tracking-wide mb-4">Related Services</h2>
               <div className="flex flex-wrap gap-2">
                 {relatedServices.map((s) => (
                   <Link
                     key={s.slug}
                     href={`/services/${s.slug}`}
-                    className="bg-pp-teal/10 text-pp-heading px-4 py-2 rounded-full text-sm font-medium hover:bg-pp-teal/20 transition-colors"
+                    className="text-sm font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-4 py-2 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
                   >
                     {s.name}
                   </Link>
@@ -158,80 +206,74 @@ export default async function BlogPostPage({
             </div>
           )}
 
-          {/* Helpful guides — contextual per blog category */}
-          {(() => {
-            const guideLinks = blogCategoryGuideMap[category];
-            if (!guideLinks?.length) return null;
-            return (
-              <div className="mt-12 pt-8 border-t border-gray-100">
-                <h2 className="text-lg font-bold text-pp-heading mb-4">Helpful Guides</h2>
-                <div className="grid gap-2">
-                  {guideLinks.map((guide) => (
-                    <Link
-                      key={guide.slug}
-                      href={`/guides/${guide.slug}`}
-                      className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-[var(--brand)] transition-colors duration-200 group"
-                    >
-                      <svg className="h-4 w-4 text-[var(--brand)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
-                      <p className="font-semibold text-pp-heading text-sm group-hover:text-[var(--brand)] transition-colors duration-200">
-                        {guide.title}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-                <Link href="/guides" className="mt-4 inline-block text-sm text-[var(--brand)] font-semibold hover:underline">
-                  View all guides →
-                </Link>
-              </div>
-            );
-          })()}
-
-          {/* Areas we cover — contextual per blog category */}
-          {(() => {
-            const areaLinks = blogCategoryAreaMap[category];
-            if (!areaLinks?.length) return null;
-            return (
-              <div className="mt-12 pt-8 border-t border-gray-100">
-                <h2 className="text-lg font-bold text-pp-heading mb-4">Areas We Cover in Peterborough</h2>
-                <div className="flex flex-wrap gap-2">
-                  {areaLinks.map((area) => (
-                    <Link
-                      key={area.slug}
-                      href={`/areas/${area.slug}`}
-                      className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
-                    >
-                      Plumber in {area.name}
-                    </Link>
-                  ))}
+          {/* ── Helpful guides ────────────────────────────────────────────────── */}
+          {guideLinks?.length > 0 && (
+            <div className="mt-14 pt-10 border-t border-[var(--border)]">
+              <h2 className="text-base font-bold text-pp-heading uppercase tracking-wide mb-4">Helpful Guides</h2>
+              <div className="grid gap-2">
+                {guideLinks.map((guide) => (
                   <Link
-                    href="/areas"
+                    key={guide.slug}
+                    href={`/guides/${guide.slug}`}
+                    className="flex items-center gap-3 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--brand)] transition-colors duration-200 group"
+                  >
+                    <svg className="h-5 w-5 text-[var(--brand)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span className="font-semibold text-pp-heading text-sm group-hover:text-[var(--brand)] transition-colors duration-200">
+                      {guide.title}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+              <Link href="/guides" className="mt-4 inline-block text-sm text-[var(--brand)] font-semibold hover:underline">
+                View all guides →
+              </Link>
+            </div>
+          )}
+
+          {/* ── Areas we cover ────────────────────────────────────────────────── */}
+          {areaLinks?.length > 0 && (
+            <div className="mt-14 pt-10 border-t border-[var(--border)]">
+              <h2 className="text-base font-bold text-pp-heading uppercase tracking-wide mb-4">Areas We Cover</h2>
+              <div className="flex flex-wrap gap-2">
+                {areaLinks.map((area) => (
+                  <Link
+                    key={area.slug}
+                    href={`/areas/${area.slug}`}
                     className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
                   >
-                    View all areas →
+                    Plumber in {area.name}
                   </Link>
-                </div>
+                ))}
+                <Link
+                  href="/areas"
+                  className="text-xs font-medium text-pp-heading border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 rounded-full hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
+                >
+                  View all areas →
+                </Link>
               </div>
-            );
-          })()}
+            </div>
+          )}
 
-          {/* Related blog posts */}
+          {/* ── More from this category ───────────────────────────────────────── */}
           {relatedPosts.length > 0 && (
-            <div className="mt-12 pt-8 border-t border-gray-100">
-              <h2 className="text-lg font-bold text-pp-heading mb-4">More from {post.category}</h2>
+            <div className="mt-14 pt-10 border-t border-[var(--border)]">
+              <h2 className="text-base font-bold text-pp-heading uppercase tracking-wide mb-4">More from {post.category}</h2>
               <div className="grid gap-3">
                 {relatedPosts.map((p) => (
                   <Link
                     key={p.slug}
                     href={`/blog/${p.slug}`}
-                    className="flex items-start gap-3 p-4 rounded-lg border border-gray-100 hover:border-[var(--brand)] transition-colors duration-200 group"
+                    className="flex items-center gap-3 p-4 rounded-lg border border-[var(--border)] hover:border-[var(--brand)] transition-colors duration-200 group"
                   >
-                    <svg className="h-4 w-4 text-[var(--brand)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                    <svg className="h-4 w-4 text-[var(--brand)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                     <div>
-                      <p className="font-semibold text-pp-heading text-sm group-hover:text-[var(--brand)] transition-colors duration-200">{p.title}</p>
+                      <p className="font-semibold text-pp-heading text-sm group-hover:text-[var(--brand)] transition-colors duration-200 leading-snug">
+                        {p.title}
+                      </p>
                       {p.publishedAt && (
                         <p className="text-xs text-[var(--muted)] mt-0.5">
                           {new Date(p.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
@@ -247,31 +289,42 @@ export default async function BlogPostPage({
             </div>
           )}
 
-          {/* End-of-article CTA */}
-          <div className="mt-10 pt-8 border-t border-gray-100 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <div className="flex-1">
-              <p className="font-semibold text-pp-heading">Ready to book a plumber?</p>
-              <p className="text-sm text-[var(--muted)] mt-1">Qualified engineers across Peterborough — clear upfront quotes.</p>
-            </div>
-            <div className="flex flex-wrap gap-3 shrink-0">
-              <Link
-                href="/contact"
-                className="bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
-              >
-                Contact Peterborough Plumbers
-              </Link>
-              {category === "Emergency & Repairs" && (
+          {/* ── End-of-article CTA ────────────────────────────────────────────── */}
+          <div className="mt-14 pt-10 border-t border-[var(--border)]">
+            <div className="rounded-xl border border-[var(--brand)] bg-[rgba(200,16,46,0.06)] p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="flex-1">
+                <p className="font-bold text-pp-heading text-lg">Ready to book a plumber?</p>
+                <p className="text-sm text-[var(--muted)] mt-1">
+                  Qualified engineers across Peterborough and surrounding areas — clear upfront quotes.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 shrink-0">
                 <Link
-                  href="/emergency"
-                  className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                  href="/contact"
+                  className="bg-[var(--brand)] text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200"
                 >
-                  Emergency plumber in Peterborough
+                  Contact Peterborough Plumbers
                 </Link>
-              )}
+                <a
+                  href={`tel:${settings.phoneHref}`}
+                  className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] transition-colors duration-200"
+                >
+                  {settings.phone}
+                </a>
+                {category === "Emergency & Repairs" && (
+                  <Link
+                    href="/emergency"
+                    className="bg-white border border-[var(--border)] text-pp-heading px-5 py-2.5 rounded-full font-semibold text-sm hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-200"
+                  >
+                    Emergency plumber in Peterborough
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
+
         </div>
-      </section>
+      </div>
 
       <CTASection />
     </>
