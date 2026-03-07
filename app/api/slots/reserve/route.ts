@@ -3,8 +3,14 @@ import { prisma } from "@/lib/prisma";
 import { cleanupExpired } from "@/lib/booking/cleanupExpired";
 import { generateBookingRef } from "@/lib/booking/generateRef";
 import { reserveSlotSchema } from "@/lib/validations/booking-system";
+import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const { limited, retryAfterSec } = checkRateLimit(ip, { name: "slots-reserve", max: 10, windowMs: 10 * 60 * 1000 });
+  if (limited) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429, headers: { "Retry-After": String(retryAfterSec) } });
+  }
   try {
     const body = await req.json();
     const parsed = reserveSlotSchema.safeParse(body);

@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
     token &&
     token === process.env.WHATSAPP_VERIFY_TOKEN
   ) {
-    console.log("[WhatsApp] Webhook verified");
     return new NextResponse(challenge, {
       status: 200,
       headers: { "Content-Type": "text/plain" },
