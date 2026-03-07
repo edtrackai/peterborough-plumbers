@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { siteSettings } from "@/content/settings";
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 function XIcon() {
@@ -220,7 +221,7 @@ export default function AdminSidebar({
           </p>
           <div className="space-y-0.5">
             <a
-              href="tel:02039514510"
+              href={`tel:${siteSettings.phoneHref}`}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[0.82rem] font-medium transition-all"
               style={{ color: "rgba(255,255,255,0.4)" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}

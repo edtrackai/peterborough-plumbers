@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { siteSettings } from "@/content/settings";
 
 export const metadata: Metadata = {
   title: "Booking Details | Peterborough Plumbers",
@@ -66,8 +67,8 @@ export default async function BookingDetailPage({ params }: Props) {
           {/* Footer */}
           <div className="border-t border-gray-100 px-6 py-5 text-center text-sm text-gray-500">
             Questions?{" "}
-            <a href="tel:02039514510" className="font-semibold text-pp-teal">
-              Call 02039514510
+            <a href={`tel:${siteSettings.phoneHref}`} className="font-semibold text-pp-teal">
+              Call {siteSettings.phone}
             </a>
           </div>
         </div>

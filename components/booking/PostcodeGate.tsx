@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { siteSettings } from "@/content/settings";
 
 interface Slot {
   id: string;
@@ -110,8 +111,8 @@ export function PostcodeGate({ onAvailable }: PostcodeGateProps) {
           <p className="font-semibold mb-1">We don&apos;t currently cover that area.</p>
           <p>
             Please call us on{" "}
-            <a href="tel:02039514510" className="font-bold underline">
-              02039514510
+            <a href={`tel:${siteSettings.phoneHref}`} className="font-bold underline">
+              {siteSettings.phone}
             </a>{" "}
             and we&apos;ll do our best to help.
           </p>
