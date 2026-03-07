@@ -29,7 +29,7 @@ export default function CTASection({
             {siteSettings.secondaryCtaLabel}
           </a>
         </div>
-        <p className="mt-8 text-[#9ca3af] text-sm">
+        <p className="mt-8 text-[#737373] text-sm">
           Or call us directly:{" "}
           <a
             href={`tel:${siteSettings.phoneHref}`}

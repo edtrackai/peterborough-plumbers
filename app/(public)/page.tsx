@@ -142,7 +142,7 @@ export default async function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
             <span className="font-semibold text-[#1A2744] text-base">Excellent</span>
             {/* Trustpilot-style green star squares */}
-            <div className="flex gap-0.5" aria-label={`${siteSettings.googleRating} out of 5`}>
+            <div className="flex gap-0.5" role="img" aria-label={`${siteSettings.googleRating} out of 5`}>
               {[1, 2, 3, 4].map((i) => (
                 <span key={i} className="h-9 w-9 bg-[#00B67A] flex items-center justify-center">
                   <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -193,7 +193,7 @@ export default async function HomePage() {
                   >
                     {/* Stars + Verified badge */}
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="flex gap-px" aria-label={`${review.rating} out of 5 stars`}>
+                      <div className="flex gap-px" role="img" aria-label={`${review.rating} out of 5 stars`}>
                         {[1, 2, 3, 4, 5].map((i) => (
                           <span
                             key={i}
@@ -221,7 +221,7 @@ export default async function HomePage() {
                     {/* Customer */}
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <p className="text-xs font-semibold text-[#1A2744]">{review.customerName}</p>
-                      <p className="text-xs text-[#9ca3af]">{review.areaName}</p>
+                      <p className="text-xs text-[#737373]">{review.areaName}</p>
                     </div>
                   </div>
                 );
@@ -495,13 +495,13 @@ export default async function HomePage() {
                   Call {siteSettings.phone}
                 </a>
               </div>
-              <p className="mt-8 text-[#9ca3af] text-sm">
+              <p className="mt-8 text-[#737373] text-sm">
                 Peterborough plumbing &amp; heating · Fully insured · Clear upfront quotes
               </p>
               <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 justify-center lg:justify-start">
-                <Link href="/pricing" className="text-sm text-[#9ca3af] hover:text-[var(--brand)] transition-colors duration-150">View pricing →</Link>
-                <Link href="/faqs" className="text-sm text-[#9ca3af] hover:text-[var(--brand)] transition-colors duration-150">FAQs →</Link>
-                <Link href="/emergency" className="text-sm text-[#9ca3af] hover:text-[var(--brand)] transition-colors duration-150">Emergency call-out →</Link>
+                <Link href="/pricing" className="text-sm text-[#737373] hover:text-[var(--brand)] transition-colors duration-150">View pricing →</Link>
+                <Link href="/faqs" className="text-sm text-[#737373] hover:text-[var(--brand)] transition-colors duration-150">FAQs →</Link>
+                <Link href="/emergency" className="text-sm text-[#737373] hover:text-[var(--brand)] transition-colors duration-150">Emergency call-out →</Link>
               </div>
             </div>
             {/* Right: side image */}

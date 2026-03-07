@@ -83,7 +83,7 @@ export default function HelpTodaySection() {
             <div className="bg-[#0F6E6E] px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
               <div>
                 <p className="text-white font-bold text-[0.92rem]">Ready for a quote?</p>
-                <p className="text-white/75 text-[0.8rem] mt-0.5">A few quick questions is all it takes.</p>
+                <p className="text-white/90 text-[0.8rem] mt-0.5">A few quick questions is all it takes.</p>
               </div>
               <Link
                 href="/contact"
@@ -159,7 +159,7 @@ export default function HelpTodaySection() {
         </div>
 
         {/* ── Footer footnote ── */}
-        <p className="text-center text-[0.78rem] text-[#9ca3af] mt-8">
+        <p className="text-center text-[0.78rem] text-[#737373] mt-8">
           Emergency call-outs available.{" "}
           <span className="text-[#C8102E] font-medium">Call-out fees confirmed before we attend.</span>
         </p>
