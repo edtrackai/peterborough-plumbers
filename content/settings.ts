@@ -8,7 +8,7 @@ export const siteSettings = {
   gasSafeNumber: "",
   googleRating: "4.6",
   reviewCount: "120",
-  yearsExperience: "",
+  yearsExperience: "50+",
   engineersCount: "",
   primaryCtaLabel: "Book Now",
   primaryCtaHref: "/contact",
@@ -20,7 +20,7 @@ export const siteSettings = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",
   seoTitle: "Peterborough Plumbing & Heating | Emergency Call-Outs",
   seoDescription:
-    "Peterborough Plumbers provides plumbing repairs, boiler servicing, heating support and emergency call-outs across Peterborough and surrounding areas. Clear upfront quotes.",
+    "50+ years of combined plumbing and heating experience serving Peterborough. Boiler servicing, repairs, central heating and emergency call-outs. Qualified engineers, clear upfront quotes.",
 } as const;
 
 export function getWhatsAppUrl() {

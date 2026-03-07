@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     prisma.guide.findMany({ select: { slug: true, updatedAt: true } }),
     prisma.blogPost.findMany({
       where: { status: "Published", publishedAt: { not: null } },
-      select: { slug: true, publishedAt: true, updatedAt: true },
+      select: { slug: true, publishedAt: true, updatedAt: true, image: true },
     }),
   ]);
 
@@ -65,11 +65,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
-  const blogPages = blogPosts.map(({ slug, publishedAt, updatedAt }) => ({
+  const blogPages = blogPosts.map(({ slug, publishedAt, updatedAt, image }) => ({
     url: `${siteUrl}/blog/${slug}`,
     lastModified: updatedAt ?? publishedAt!,
     changeFrequency: "monthly" as const,
     priority: 0.7,
+    ...(image ? { images: [image.startsWith("http") ? image : `${siteUrl}${image}`] } : {}),
   }));
 
   return [...staticPages, ...servicePages, ...areaPages, ...guidePages, ...blogPages];

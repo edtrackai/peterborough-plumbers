@@ -203,6 +203,16 @@ export default function HeroSection() {
               Qualified engineers
             </span>
 
+            {/* Experience */}
+            {siteSettings.yearsExperience && (
+              <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
+                <svg className="h-3 w-3 text-brand shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+                </svg>
+                {siteSettings.yearsExperience} Years Experience
+              </span>
+            )}
+
             {/* Fully insured */}
             <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
               <svg className="h-3 w-3 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -244,13 +254,16 @@ export default function HeroSection() {
           >
           <div className="flex flex-wrap items-center justify-center gap-x-10">
 
-            {/* Trusted Local Plumber */}
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
-              <span className="text-white text-xs sm:text-sm font-semibold">Trusted Local Plumber</span>
-            </div>
-
-            <div className="h-5 w-px bg-white/20" aria-hidden />
+            {/* Experience */}
+            {siteSettings.yearsExperience && (
+              <>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
+                  <span className="text-white text-xs sm:text-sm font-semibold">{siteSettings.yearsExperience} Years Experience</span>
+                </div>
+                <div className="h-5 w-px bg-white/20" aria-hidden />
+              </>
+            )}
 
             {/* Qualified engineers */}
             <div className="flex items-center gap-1.5 sm:gap-2">
