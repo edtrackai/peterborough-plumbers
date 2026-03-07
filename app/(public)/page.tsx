@@ -405,38 +405,6 @@ export default async function HomePage() {
             </p>
           </div>
 
-          {/* Premium map card */}
-          <div
-            className="relative w-full overflow-hidden mb-10"
-            style={{
-              borderRadius: 22,
-              aspectRatio: "21/9",
-              boxShadow: "0 12px 48px rgba(0,0,0,0.16), 0 1px 4px rgba(0,0,0,0.08)",
-              border: "1px solid rgba(255,255,255,0.18)",
-            }}
-          >
-            <Image
-              src="/images/homepage/areas-we-cover.webp"
-              alt="Areas we cover across Peterborough and Cambridgeshire"
-              fill
-              className="object-cover"
-              loading="lazy"
-            />
-            {/* Layer 1 — directional overlay: darkens left + right edges, keeps centre bright */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.55) 100%)" }}
-              aria-hidden="true"
-            />
-            {/* Layer 2 — radial vignette: soft bright spot top-left, dark edges */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: "radial-gradient(circle at 25% 40%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 45%), radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.28) 100%)" }}
-              aria-hidden="true"
-            />
-
-          </div>
-
           {/* Chips row */}
           <div className="flex flex-wrap justify-center gap-2.5">
             {areas.map((area) => (
