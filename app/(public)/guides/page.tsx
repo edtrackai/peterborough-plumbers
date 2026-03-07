@@ -171,26 +171,27 @@ export default async function GuidesPage() {
                 <h2 className="text-2xl font-bold text-pp-heading mb-6">
                   {guideCategories[cat]}
                 </h2>
-                {/* Card grid with category image as blurred background */}
-                <div className="relative rounded-2xl overflow-hidden">
-                  {/* Background image layer */}
+                {/* Card grid with category image as atmospheric background */}
+                <div className="relative rounded-2xl overflow-hidden border border-[var(--border)]">
+                  {/* Background image: ghost-level presence — tint not photograph */}
                   <Image
                     src={categoryImages[cat].src}
                     alt=""
                     aria-hidden="true"
                     fill
-                    className="object-cover blur-sm scale-105 opacity-[0.13]"
+                    className="object-cover blur-sm scale-110 opacity-[0.05]"
+                    style={{ filter: "saturate(0.1) brightness(1.4)" }}
                     loading="lazy"
                   />
-                  {/* Subtle white overlay for readability */}
-                  <div className="absolute inset-0 bg-white/60" />
+                  {/* High-opacity neutral wash — suppresses image to atmospheric trace */}
+                  <div className="absolute inset-0 bg-white/[0.92]" />
                   {/* Cards */}
                   <div className="relative z-10 py-6 px-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {catGuides.map((guide) => (
                       <Link
                         key={guide.slug}
                         href={`/guides/${guide.slug}`}
-                        className="group block rounded-xl border border-[var(--border)] bg-white p-6 hover:border-[var(--brand)] hover:shadow-[0_4px_20px_rgba(200,16,46,0.1)] transition-all duration-200"
+                        className="group block rounded-xl border border-[var(--border)] bg-white p-6 shadow-[0_1px_6px_rgba(0,0,0,0.05)] hover:border-[var(--brand)] hover:shadow-[0_4px_20px_rgba(200,16,46,0.08)] transition-all duration-200"
                       >
                         <span
                           className={`inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full mb-4 ${categoryColors[guide.category as keyof typeof guideCategories]}`}
