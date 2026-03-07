@@ -1,4 +1,3 @@
-import Image from "next/image";
 import PageHeroShell from "@/components/hero/PageHeroShell";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -173,18 +172,18 @@ export default async function GuidesPage() {
                 </h2>
                 {/* Card grid with category image as atmospheric background */}
                 <div className="relative rounded-2xl overflow-hidden border border-[var(--border)]">
-                  {/* Background image: ghost-level presence — tint not photograph */}
-                  <Image
+                  {/* Background image — regular img so it fills regardless of container height */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={categoryImages[cat].src}
                     alt=""
                     aria-hidden="true"
-                    fill
-                    className="object-cover blur-sm scale-110 opacity-[0.05]"
-                    style={{ filter: "saturate(0.1) brightness(1.4)" }}
+                    className="absolute inset-0 w-full h-full object-cover blur-sm scale-110 opacity-[0.09]"
+                    style={{ filter: "saturate(0.15) brightness(1.3)" }}
                     loading="lazy"
                   />
-                  {/* High-opacity neutral wash — suppresses image to atmospheric trace */}
-                  <div className="absolute inset-0 bg-white/[0.92]" />
+                  {/* White wash — keeps section airy; adjust opacity to tune visibility */}
+                  <div className="absolute inset-0 bg-white/[0.88]" />
                   {/* Cards */}
                   <div className="relative z-10 py-6 px-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {catGuides.map((guide) => (
