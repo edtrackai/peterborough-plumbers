@@ -81,9 +81,10 @@ export async function POST(req: NextRequest) {
     const result = await processCompletedCall(parsed.data);
     return NextResponse.json(result, { status: 200 });
   } catch (err) {
-    console.error("[calls/process]", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[calls/process]", msg);
     return NextResponse.json(
-      { error: "Post-call processing failed" },
+      { error: "Post-call processing failed", detail: msg },
       { status: 500 }
     );
   }
