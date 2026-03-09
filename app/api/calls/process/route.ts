@@ -24,7 +24,7 @@ const schema = z.object({
   callId: z.string().min(1),
   waId: z.string().min(7).max(20).optional(),
   phone: z.string().min(7).max(20).optional(),
-  name: z.string().min(1).max(100).optional(),
+  name: z.string().max(100).optional().transform(v => v === "" ? undefined : v),
   postcode: z.string().min(2).max(10).optional(),
   serviceType: z.string().max(200).optional(),
   issueSummary: z.string().max(1000).optional(),
