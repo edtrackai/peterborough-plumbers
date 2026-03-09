@@ -74,10 +74,10 @@ export default function Header() {
           ROW 1 — Logo LEFT · Phone + CTAs RIGHT
       ═══════════════════════════════════════════════════════════════════ */}
       <div className="bg-[#EDEDED] lg:bg-white overflow-visible border-b border-black/[0.06] lg:border-0">
-        <div className={`mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-6 overflow-visible ${isHome ? "h-20 lg:h-28" : "h-20"}`}>
+        <div className={`mx-auto max-w-[1280px] px-1 sm:px-6 lg:px-10 flex items-center justify-between gap-2 lg:gap-6 overflow-visible ${isHome ? "h-20 lg:h-28" : "h-20"}`}>
 
           {/* ── Mobile: burger + logo ── */}
-          <div className="flex items-center gap-3 lg:hidden min-w-0">
+          <div className="flex items-center gap-2 lg:hidden min-w-0">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="shrink-0 text-[#242424] p-2.5 -ml-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-1"
@@ -94,10 +94,10 @@ export default function Header() {
               </svg>
             </button>
             <Link href="/" onClick={() => setMobileOpen(false)} className="shrink-0 flex items-center">
-              <Image src="/logos/logo-mark.webp" alt="" width={56} height={56}
-                className="h-[56px] w-[56px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={140} height={56}
-                className="h-[56px] w-auto object-contain shrink-0 -ml-[14px]" priority />
+              <Image src="/logos/logo-mark.webp" alt="" width={70} height={70}
+                className="h-[70px] w-[70px] object-contain shrink-0" priority aria-hidden />
+              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={100} height={100}
+                className="h-[100px] w-[100px] object-contain shrink-0 -ml-[14px]" priority />
             </Link>
           </div>
 
@@ -111,10 +111,10 @@ export default function Header() {
             </Link>
           ) : (
             <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
-              <Image src="/logos/logo-mark.webp" alt="" width={64} height={64}
-                className="h-[64px] w-[64px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={180} height={64}
-                className="h-[64px] w-auto object-contain shrink-0 -ml-[16px]" priority />
+              <Image src="/logos/logo-mark.webp" alt="" width={88} height={88}
+                className="h-[88px] w-[88px] object-contain shrink-0" priority aria-hidden />
+              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={220} height={88}
+                className="h-[88px] w-auto object-contain shrink-0 -ml-[28px]" priority />
             </Link>
           )}
 
@@ -172,7 +172,7 @@ export default function Header() {
           {/* ── Mobile: Contact Us pill ── */}
           <Link
             href="/contact"
-            className="lg:hidden shrink-0 bg-[#C8102E] text-white px-4 py-2.5 rounded-full font-bold text-sm"
+            className="lg:hidden shrink-0 bg-[#C8102E] text-white px-3 py-2 rounded-full font-bold text-xs"
           >
             Contact Us
           </Link>

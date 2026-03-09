@@ -60,6 +60,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        {/* Preload manifest to remove it from the late network dependency chain */}
+        <link rel="preload" href="/manifest.webmanifest" as="fetch" crossOrigin="anonymous" />
       </head>
       <body className={`${inter.className} min-h-screen flex flex-col antialiased`}>
         <a
