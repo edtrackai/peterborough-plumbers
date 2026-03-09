@@ -77,7 +77,7 @@ export default function Header() {
         <div className={`mx-auto max-w-[1280px] px-1 sm:px-6 lg:px-10 flex items-center justify-between gap-2 lg:gap-6 overflow-visible ${isHome ? "h-20 lg:h-28" : "h-20"}`}>
 
           {/* ── Mobile: burger + logo ── */}
-          <div className="flex items-center gap-2 lg:hidden min-w-0">
+          <div className="flex items-center gap-0 lg:hidden min-w-0">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="shrink-0 text-[#242424] p-2.5 -ml-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-1"
