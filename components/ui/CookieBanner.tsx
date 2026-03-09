@@ -259,17 +259,17 @@ export default function CookieBanner() {
                 onClick={openModal}
                 className="flex-1 rounded-full py-2.5 text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                 style={{
-                  color: "rgba(255,255,255,0.55)",
-                  border: "1px solid rgba(255,255,255,0.13)",
+                  color: "rgba(255,255,255,0.80)",
+                  border: "1px solid rgba(255,255,255,0.20)",
                   background: "rgba(255,255,255,0.04)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "rgba(255,255,255,0.9)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)";
+                  e.currentTarget.style.color = "rgba(255,255,255,0.95)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "rgba(255,255,255,0.55)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.13)";
+                  e.currentTarget.style.color = "rgba(255,255,255,0.80)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.20)";
                 }}
               >
                 Manage
@@ -278,17 +278,17 @@ export default function CookieBanner() {
                 onClick={rejectAll}
                 className="flex-1 rounded-full py-2.5 text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                 style={{
-                  color: "rgba(255,255,255,0.55)",
-                  border: "1px solid rgba(255,255,255,0.13)",
+                  color: "rgba(255,255,255,0.80)",
+                  border: "1px solid rgba(255,255,255,0.20)",
                   background: "rgba(255,255,255,0.04)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "rgba(255,255,255,0.9)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)";
+                  e.currentTarget.style.color = "rgba(255,255,255,0.95)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "rgba(255,255,255,0.55)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.13)";
+                  e.currentTarget.style.color = "rgba(255,255,255,0.80)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.20)";
                 }}
               >
                 Reject

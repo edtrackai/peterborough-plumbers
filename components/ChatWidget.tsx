@@ -253,8 +253,8 @@ export default function ChatWidget() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-[#242424] font-bold text-[13px] leading-tight">Peterborough Plumbers</p>
-                  <p className="text-emerald-500 text-[10px] font-semibold flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 inline-block" />
+                  <p className="text-emerald-700 text-[10px] font-semibold flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block" />
                     Online now
                   </p>
                 </div>
