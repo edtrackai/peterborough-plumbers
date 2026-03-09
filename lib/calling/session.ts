@@ -72,11 +72,20 @@ export async function updateCallStatus(
   status: CallStatus,
   outcome?: CallOutcome
 ) {
-  return prisma.call.update({
+  return prisma.call.upsert({
     where: { id: callId },
-    data: {
+    update: {
       status,
       outcome: outcome ?? undefined,
+      endedAt: status === "ended" || status === "failed" ? new Date() : undefined,
+    },
+    create: {
+      id: callId,
+      status,
+      outcome: outcome ?? undefined,
+      direction: "inbound",
+      source: "whatsapp_call",
+      startedAt: new Date(),
       endedAt: status === "ended" || status === "failed" ? new Date() : undefined,
     },
   });

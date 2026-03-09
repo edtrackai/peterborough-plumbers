@@ -111,8 +111,18 @@ export async function processCompletedCall(
 
   // ── 2. Save CallSummary ────────────────────────────────────────────────────
   try {
-    const saved = await prisma.callSummary.create({
-      data: {
+    const saved = await prisma.callSummary.upsert({
+      where: { callId },
+      update: {
+        summary: summary ?? issueSummary ?? "",
+        urgency: urgency ?? null,
+        serviceType: serviceType ?? null,
+        issueSummary: issueSummary ?? null,
+        preferredTime: preferredTime ?? null,
+        needsHuman: needsHuman ?? false,
+        endState: outcome ?? null,
+      },
+      create: {
         callId,
         summary: summary ?? issueSummary ?? "",
         urgency: urgency ?? null,
