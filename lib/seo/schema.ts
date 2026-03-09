@@ -271,3 +271,43 @@ export function breadcrumbSchema(
     })),
   };
 }
+
+export function videoSchema({
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  duration,
+  contentUrl,
+  embedUrl,
+}: {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string; // ISO 8601 e.g. "2025-01-15"
+  duration?: string;  // ISO 8601 duration e.g. "PT3M24S"
+  contentUrl?: string;
+  embedUrl?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name,
+    description,
+    thumbnailUrl,
+    uploadDate,
+    ...(duration && { duration }),
+    ...(contentUrl && { contentUrl }),
+    ...(embedUrl && { embedUrl }),
+    publisher: {
+      "@type": "Organization",
+      name: siteSettings.companyName,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/logos/logo-mark.webp`,
+        width: 192,
+        height: 192,
+      },
+    },
+  };
+}

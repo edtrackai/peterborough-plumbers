@@ -56,6 +56,8 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${inter.variable} ${sora.variable}`}>
       <head>
+        {/* LCP hero image — explicit preload so browser discovers it from raw HTML, not after React hydrates */}
+        <link rel="preload" as="image" href="/images/homepage/hero-team.webp" fetchPriority="high" />
         {/* Resource hints — load GTM/GA4 domains earlier to reduce RTT once consent is given */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />

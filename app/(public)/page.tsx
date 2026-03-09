@@ -221,7 +221,7 @@ export default async function HomePage() {
                     {/* Customer */}
                     <div className="mt-4 pt-3 border-t border-gray-100">
                       <p className="text-xs font-semibold text-[#1A2744]">{review.customerName}</p>
-                      <p className="text-xs text-[#737373]">{review.areaName}</p>
+                      <p className="text-xs text-gray-600">{review.areaName}</p>
                     </div>
                   </div>
                 );

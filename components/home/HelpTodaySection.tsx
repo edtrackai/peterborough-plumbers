@@ -159,7 +159,7 @@ export default function HelpTodaySection() {
         </div>
 
         {/* ── Footer footnote ── */}
-        <p className="text-center text-[0.78rem] text-[#737373] mt-8">
+        <p className="text-center text-[0.78rem] text-[#4b5563] mt-8">
           Emergency call-outs available.{" "}
           <span className="text-[#C8102E] font-medium">Call-out fees confirmed before we attend.</span>
         </p>
