@@ -99,6 +99,7 @@ const NAV_SECTIONS = [
       { href: "/admin/bookings", label: "Bookings",  Icon: CalIcon,     exact: false },
       { href: "/admin/leads",    label: "Leads",     Icon: UsersIcon,   exact: false },
       { href: "/admin/whatsapp", label: "WhatsApp",  Icon: WhatsAppIcon, exact: false },
+      { href: "/admin/calls",    label: "Calls",     Icon: PhoneIcon,    exact: false },
     ],
   },
   {
