@@ -74,7 +74,7 @@ export default function Header() {
           ROW 1 — Logo LEFT · Phone + CTAs RIGHT
       ═══════════════════════════════════════════════════════════════════ */}
       <div className="bg-[#EDEDED] lg:bg-white overflow-visible border-b border-black/[0.06] lg:border-0">
-        <div className={`mx-auto max-w-[1280px] px-1 sm:px-6 lg:px-10 flex items-center justify-between gap-2 lg:gap-6 overflow-visible ${isHome ? "h-20 lg:h-28" : "h-20"}`}>
+        <div className="mx-auto max-w-[1280px] px-1 sm:px-6 lg:px-10 flex items-center justify-between gap-2 lg:gap-6 overflow-visible h-20 lg:h-28">
 
           {/* ── Mobile: burger + logo ── */}
           <div className="flex items-center gap-0 lg:hidden min-w-0">
@@ -101,22 +101,13 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* ── Desktop: logo — LEFT ── */}
-          {isHome ? (
-            <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
-              <Image src="/logos/logo-mark.webp" alt="" width={104} height={104}
-                className="h-[104px] w-[104px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={260} height={104}
-                className="h-[104px] w-auto object-contain shrink-0 -ml-[24px]" priority />
-            </Link>
-          ) : (
-            <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
-              <Image src="/logos/logo-mark.webp" alt="" width={88} height={88}
-                className="h-[88px] w-[88px] object-contain shrink-0" priority aria-hidden />
-              <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={220} height={88}
-                className="h-[88px] w-auto object-contain shrink-0 -ml-[28px]" priority />
-            </Link>
-          )}
+          {/* ── Desktop: logo — LEFT (same size on all pages) ── */}
+          <Link href="/" className="hidden lg:flex items-center shrink-0 relative z-10">
+            <Image src="/logos/logo-mark.webp" alt="" width={104} height={104}
+              className="h-[104px] w-[104px] object-contain shrink-0" priority aria-hidden />
+            <Image src="/logos/logo-text.webp" alt="Peterborough Plumbers" width={260} height={104}
+              className="h-[104px] w-auto object-contain shrink-0 -ml-[24px]" priority />
+          </Link>
 
           {/* ── Desktop: CTAs — RIGHT ── */}
           {isHome ? (

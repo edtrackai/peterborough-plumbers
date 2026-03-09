@@ -18,7 +18,8 @@ export default function StickyCtaBar() {
           href={getWhatsAppUrl()}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 bg-green-700 text-white text-center py-3 rounded-full font-bold text-sm hover:bg-green-800 transition-colors duration-200"
+          className="flex-1 text-white text-center py-3 rounded-full font-bold text-sm transition-colors duration-200"
+          style={{ backgroundColor: "#25D366" }}
         >
           {siteSettings.secondaryCtaLabel}
         </a>

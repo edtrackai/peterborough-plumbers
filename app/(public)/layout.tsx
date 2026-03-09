@@ -2,11 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyCtaBar from "@/components/layout/StickyCtaBar";
 import MainWrapper from "@/components/layout/MainWrapper";
-import ChatWidgetLoader from "@/components/ChatWidgetLoader";
-import CookieBanner from "@/components/ui/CookieBanner";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import ExitIntentModal from "@/components/ui/ExitIntentModal";
-import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
+import ClientOnlyWidgets from "@/components/layout/ClientOnlyWidgets";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,11 +15,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       </MainWrapper>
       <Footer />
       <StickyCtaBar />
-      <WhatsAppFloat />
-      <ChatWidgetLoader />
-      <CookieBanner />
-      <GoogleAnalytics />
-      <ExitIntentModal />
+      <ClientOnlyWidgets />
     </>
   );
 }
