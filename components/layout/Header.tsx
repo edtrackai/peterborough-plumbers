@@ -240,6 +240,14 @@ export default function Header() {
                         {s.name}
                       </Link>
                     ))}
+                    <div className="border-t border-gray-100 mt-1 pt-1">
+                      <Link
+                        href="/landlords"
+                        className="block px-4 py-2.5 text-[#C8102E] hover:bg-red-50 transition-colors text-[13px] font-semibold"
+                      >
+                        🏠 Landlord Services Hub
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

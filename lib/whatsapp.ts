@@ -41,10 +41,6 @@ export async function sendText(to: string, text: string): Promise<boolean> {
       return false;
     }
 
-    if (process.env.WHATSAPP_DEBUG === "true") {
-      console.log(`[WhatsApp] Message sent to ${to}`);
-    }
-
     return true;
   } catch (err) {
     console.error("[WhatsApp] Send error:", err instanceof Error ? err.message : err);

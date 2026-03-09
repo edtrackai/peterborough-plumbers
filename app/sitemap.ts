@@ -18,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/faqs",      priority: 0.8,  freq: "monthly" as const, image: "/images/faqs/hero.webp" },
     { path: "/reviews",   priority: 0.8,  freq: "monthly" as const, image: "/images/reviews/hero.webp" },
     { path: "/blog",      priority: 0.75, freq: "weekly"  as const, image: "/images/homepage/plumbing-repairs.webp" },
+    { path: "/landlords", priority: 0.85, freq: "monthly" as const, image: "/images/services/landlord-services/hero.webp" },
     { path: "/about",     priority: 0.7,  freq: "monthly" as const, image: "/images/about/hero.webp" },
     { path: "/contact",   priority: 0.7,  freq: "monthly" as const, image: "/images/contact/hero.webp" },
     // /book, /privacy, /terms, /cookies are noIndex — excluded from sitemap
