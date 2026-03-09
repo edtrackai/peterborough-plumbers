@@ -1,0 +1,355 @@
+{
+  "name": "Call Processing",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "call-completed",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000001",
+      "name": "Call Completed Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-800, 160],
+      "webhookId": "call-completed-peterborough-plumbers"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "name": "callId",
+              "value": "={{ $json.body.callId ?? $json.callId ?? '' }}",
+              "type": "string"
+            },
+            {
+              "name": "waId",
+              "value": "={{ $json.body.waId ?? $json.waId ?? '' }}",
+              "type": "string"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $json.body.phone ?? $json.phone ?? $json.body.waId ?? $json.waId ?? '' }}",
+              "type": "string"
+            },
+            {
+              "name": "callerName",
+              "value": "={{ $json.body.callerName ?? $json.callerName ?? '' }}",
+              "type": "string"
+            },
+            {
+              "name": "transcriptText",
+              "value": "={{ $json.body.transcriptText ?? $json.transcriptText ?? '' }}",
+              "type": "string"
+            },
+            {
+              "name": "durationSeconds",
+              "value": "={{ $json.body.durationSeconds ?? $json.durationSeconds ?? 0 }}",
+              "type": "number"
+            },
+            {
+              "name": "source",
+              "value": "={{ $json.body.source ?? $json.source ?? 'whatsapp_call' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0002-0002-0002-000000000002",
+      "name": "Normalise Payload",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-560, 160]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.callId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "leftValue": "={{ $json.transcriptText }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0003-0003-0003-000000000003",
+      "name": "Has Transcript?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-320, 160]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"error\": \"Missing callId or transcriptText\" }",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "a1b2c3d4-0004-0004-0004-000000000004",
+      "name": "Reject Invalid",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [-320, 360]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You extract structured call data for Peterborough Plumbers from a voice call transcript.\n\nYour task is to read the transcript and return strict JSON only.\n\nExtract these fields:\n- name\n- phone\n- postcode\n- serviceType\n- issueSummary\n- urgency\n- preferredTime\n- propertyType\n- customerType\n- needsHuman\n- emergencyType\n- outcome\n\nRules:\n- Use empty string for unknown text values\n- Use false for unknown booleans unless clearly true\n- Phone should default to the caller identifier if no different number is given\n- Keep issueSummary short and useful\n- urgency must be one of: low, medium, high\n- customerType must be one of: homeowner, landlord, tenant, unknown\n- propertyType must be one of: house, flat, commercial, unknown\n- needsHuman must be true if: gas smell, severe flooding, vulnerable occupants, angry or distressed customer, legal complaint, pricing dispute, explicit human request, exact ETA demand, low confidence\n- emergencyType must be one of: gas_smell, flooding, active_leak, no_heating_hot_water, drain_overflow, ceiling_leak, none\n- outcome must be one of: emergency_escalated, human_handoff, qualified_lead_captured, general_advice_given, follow_up_requested, no_action\n\nReturn JSON only. Do not add markdown. Do not explain your answer.",
+              "role": "system"
+            },
+            {
+              "content": "=Caller identifier: {{ $json.phone || $json.waId }}\nTranscript:\n{{ $json.transcriptText }}",
+              "role": "user"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0005-0005-0005-000000000005",
+      "name": "Extract Structured Fields",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [-80, 80],
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// FIX 2: Safe JSON parse for extractor output\n// FIX 1: callerName fallback if extracted name is empty\n\nconst raw = $input.item.json.message.content || '';\nconst callerName = $('Normalise Payload').item.json.callerName || '';\n\nlet extracted;\ntry {\n  // Strip markdown code fences if model returns them despite instructions\n  const cleaned = raw.replace(/^```[a-z]*\\n?/i, '').replace(/```$/,'').trim();\n  extracted = JSON.parse(cleaned);\n} catch (e) {\n  // Fallback: return safe defaults so workflow continues\n  extracted = {\n    name: callerName,\n    phone: '',\n    postcode: '',\n    serviceType: '',\n    issueSummary: 'Could not extract — check transcript manually',\n    urgency: 'low',\n    preferredTime: '',\n    propertyType: 'unknown',\n    customerType: 'unknown',\n    needsHuman: false,\n    emergencyType: 'none',\n    outcome: 'no_action'\n  };\n}\n\n// FIX 1: Use callerName as fallback if extracted name is empty\nif (!extracted.name && callerName) {\n  extracted.name = callerName;\n}\n\nreturn {\n  extracted,\n  callId: $('Normalise Payload').item.json.callId,\n  waId: $('Normalise Payload').item.json.waId,\n  phone: $('Normalise Payload').item.json.phone,\n  callerName,\n  transcriptText: $('Normalise Payload').item.json.transcriptText\n};"
+      },
+      "id": "a1b2c3d4-0006-0006-0006-000000000006",
+      "name": "Parse Extracted Fields",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [160, 80]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You create a short internal team summary for a completed Peterborough Plumbers customer call.\n\nYour summary must help the team respond quickly.\n\nWrite a concise operational summary covering:\n- who the customer is if known\n- postcode if known\n- main issue\n- urgency\n- requested timing if any\n- whether human follow-up is needed\n- whether this looks like a qualified lead\n\nRules:\n- keep it short\n- no fluff\n- no robotic language\n- no unnecessary repetition\n- make it useful for staff\n- mention safety risk clearly if relevant\n\nReturn JSON only with keys: summary, urgency, serviceType, needsHuman, qualifiedLead\nDo not add markdown. Do not explain.",
+              "role": "system"
+            },
+            {
+              "content": "=Extracted call data:\n{{ JSON.stringify($json.extracted) }}\n\nTranscript:\n{{ $json.transcriptText }}",
+              "role": "user"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0007-0007-0007-000000000007",
+      "name": "Generate Team Summary",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [400, 80],
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// FIX 2: Safe JSON parse for summary output\n\nconst raw = $input.item.json.message.content || '';\n\nlet teamSummary;\ntry {\n  const cleaned = raw.replace(/^```[a-z]*\\n?/i, '').replace(/```$/, '').trim();\n  teamSummary = JSON.parse(cleaned);\n} catch (e) {\n  // Fallback defaults so workflow continues\n  teamSummary = {\n    summary: 'Summary unavailable — review transcript manually',\n    urgency: $('Parse Extracted Fields').item.json.extracted.urgency || 'low',\n    serviceType: $('Parse Extracted Fields').item.json.extracted.serviceType || '',\n    needsHuman: $('Parse Extracted Fields').item.json.extracted.needsHuman || false,\n    qualifiedLead: false\n  };\n}\n\nreturn {\n  teamSummary,\n  extracted: $('Parse Extracted Fields').item.json.extracted,\n  callId: $('Parse Extracted Fields').item.json.callId,\n  waId: $('Parse Extracted Fields').item.json.waId,\n  phone: $('Parse Extracted Fields').item.json.phone\n};"
+      },
+      "id": "a1b2c3d4-0008-0008-0008-000000000008",
+      "name": "Parse Team Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [640, 80]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://peterboroughplumbers.co.uk/api/calls/process",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"callId\": \"{{ $json.callId }}\",\n  \"waId\": \"{{ $json.waId }}\",\n  \"phone\": \"{{ $json.phone }}\",\n  \"name\": \"{{ $json.extracted.name }}\",\n  \"postcode\": \"{{ $json.extracted.postcode }}\",\n  \"serviceType\": \"{{ $json.extracted.serviceType }}\",\n  \"issueSummary\": \"{{ $json.extracted.issueSummary }}\",\n  \"urgency\": \"{{ $json.extracted.urgency }}\",\n  \"preferredTime\": \"{{ $json.extracted.preferredTime }}\",\n  \"propertyType\": \"{{ $json.extracted.propertyType }}\",\n  \"customerType\": \"{{ $json.extracted.customerType }}\",\n  \"emergencyType\": \"{{ $json.extracted.emergencyType }}\",\n  \"needsHuman\": {{ $json.extracted.needsHuman }},\n  \"outcome\": \"{{ $json.extracted.outcome }}\",\n  \"summary\": {{ JSON.stringify($json.teamSummary.summary) }},\n  \"transcriptText\": {{ JSON.stringify($('Normalise Payload').item.json.transcriptText) }}\n}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0009-0009-0009-000000000009",
+      "name": "Send To Backend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 80]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"callId\": \"{{ $('Parse Team Summary').item.json.callId }}\",\n  \"outcome\": \"{{ $('Parse Team Summary').item.json.extracted.outcome }}\",\n  \"leadCreated\": {{ $('Send To Backend').item.json.leadCreated }},\n  \"escalated\": {{ $('Send To Backend').item.json.escalated }},\n  \"needsHuman\": {{ $('Parse Team Summary').item.json.extracted.needsHuman }}\n}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "a1b2c3d4-0010-0010-0010-000000000010",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 80]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Call Completed Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalise Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalise Payload": {
+      "main": [
+        [
+          {
+            "node": "Has Transcript?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Transcript?": {
+      "main": [
+        [
+          {
+            "node": "Extract Structured Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reject Invalid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Structured Fields": {
+      "main": [
+        [
+          {
+            "node": "Parse Extracted Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Extracted Fields": {
+      "main": [
+        [
+          {
+            "node": "Generate Team Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Team Summary": {
+      "main": [
+        [
+          {
+            "node": "Parse Team Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Team Summary": {
+      "main": [
+        [
+          {
+            "node": "Send To Backend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send To Backend": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "call-processing-v2-peterborough",
+  "meta": {
+    "instanceId": "ff3304c66ca0869e5b25e541efa316a768fdb73d58c4b8dc0277ac5caa92c13b"
+  },
+  "id": "CallProcessingWorkflow01",
+  "tags": []
+}

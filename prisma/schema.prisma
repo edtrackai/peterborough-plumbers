@@ -427,3 +427,91 @@ model WaMessage {
   @@index([createdAt(sort: Desc)])
   @@map("pb_wa_messages")
 }
+
+// ── Call (voice call session) ─────────────────────────────────────────────────
+// Prepared for future Meta Calling API + OpenAI Realtime integration.
+// leadId is nullable — linked after lead is captured during or after the call.
+
+model Call {
+  id              String    @id @default(cuid())
+  // direction: inbound | outbound
+  direction       String    @default("inbound")
+  // status: initiated | active | on_hold | ended | failed | missed
+  status          String    @default("initiated")
+  // source: whatsapp_call | phone | test
+  source          String    @default("whatsapp_call")
+  // outcome: emergency_escalated | human_handoff | qualified_lead_captured | general_advice_given | follow_up_requested | no_action
+  outcome         String?
+  waId            String?   // WhatsApp phone number if applicable
+  phone           String?   // raw caller number
+  leadId          String?   // linked Lead if captured
+  durationSeconds Int?
+  startedAt       DateTime  @default(now())
+  endedAt         DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  transcripts     CallTranscript[]
+  summary         CallSummary?
+  events          CallEvent[]
+
+  @@index([status])
+  @@index([waId])
+  @@index([startedAt(sort: Desc)])
+  @@map("pb_calls")
+}
+
+// ── CallTranscript (per-turn transcript during a call) ────────────────────────
+
+model CallTranscript {
+  id        String   @id @default(cuid())
+  callId    String
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  // speaker: user | agent | system
+  speaker   String
+  text      String   @db.Text
+  // intent logged per turn when classified
+  intent    String?
+  turnIndex Int      @default(0)
+  spokenAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@index([callId])
+  @@index([callId, turnIndex])
+  @@map("pb_call_transcripts")
+}
+
+// ── CallSummary (post-call structured summary) ────────────────────────────────
+
+model CallSummary {
+  id            String   @id @default(cuid())
+  callId        String   @unique
+  call          Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  summary       String   @db.Text
+  // urgency: low | medium | high
+  urgency       String?
+  serviceType   String?
+  issueSummary  String?
+  preferredTime String?
+  needsHuman    Boolean  @default(false)
+  endState      String?  // matches outcome values from Call
+  createdAt     DateTime @default(now())
+
+  @@map("pb_call_summaries")
+}
+
+// ── CallEvent (lifecycle events for a call) ───────────────────────────────────
+
+model CallEvent {
+  id        String   @id @default(cuid())
+  callId    String
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  // eventType: started | agent_greeted | intent_classified | lead_updated | escalated | ended | error
+  eventType String
+  notes     String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([callId])
+  @@map("pb_call_events")
+}
