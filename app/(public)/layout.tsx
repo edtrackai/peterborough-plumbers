@@ -5,6 +5,8 @@ import MainWrapper from "@/components/layout/MainWrapper";
 import ChatWidgetLoader from "@/components/ChatWidgetLoader";
 import CookieBanner from "@/components/ui/CookieBanner";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import ExitIntentModal from "@/components/ui/ExitIntentModal";
+import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -17,9 +19,11 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       </MainWrapper>
       <Footer />
       <StickyCtaBar />
+      <WhatsAppFloat />
       <ChatWidgetLoader />
       <CookieBanner />
       <GoogleAnalytics />
+      <ExitIntentModal />
     </>
   );
 }

@@ -75,6 +75,7 @@ export default function HeroSection() {
           className="object-cover"
           style={{ objectPosition: "50% 15%" }}
           priority
+          fetchPriority="high"
           quality={85}
           sizes="100vw"
         />
@@ -187,6 +188,15 @@ export default function HeroSection() {
                 {p}
               </li>
             ))}
+            {/* Google rating */}
+            <li className="flex items-center gap-1.5 text-white/55 text-sm">
+              <span className="flex items-center gap-0.5" aria-label={`Rated ${siteSettings.googleRating} out of 5 on Google`}>
+                {[1,2,3,4,5].map((i) => (
+                  <StarIcon key={i} className={`h-3 w-3 ${i <= Math.round(Number(siteSettings.googleRating)) ? "text-yellow-400" : "text-white/20"}`} />
+                ))}
+              </span>
+              {siteSettings.googleRating} · {siteSettings.reviewCount} Google reviews
+            </li>
           </ul>
 
           {/* ── Mobile trust strip ── visible below sm only */}
@@ -235,6 +245,12 @@ export default function HeroSection() {
                 <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
               </svg>
               Clear upfront quotes
+            </span>
+
+            {/* Google rating — mobile */}
+            <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-yellow-400/30 bg-yellow-400/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
+              <StarIcon className="h-3 w-3 text-yellow-400 shrink-0" />
+              {siteSettings.googleRating}/5 · {siteSettings.reviewCount} reviews
             </span>
           </div>
         </div>
@@ -288,6 +304,18 @@ export default function HeroSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span className="text-white text-xs sm:text-sm font-semibold">Peterborough &amp; surrounding areas</span>
+            </div>
+
+            <div className="h-5 w-px bg-white/20" aria-hidden />
+
+            {/* Google rating */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="flex items-center gap-0.5" aria-label={`Rated ${siteSettings.googleRating} out of 5 on Google`}>
+                {[1,2,3,4,5].map((i) => (
+                  <StarIcon key={i} className={`h-3.5 w-3.5 ${i <= Math.round(Number(siteSettings.googleRating)) ? "text-yellow-400" : "text-white/20"}`} />
+                ))}
+              </span>
+              <span className="text-white text-xs sm:text-sm font-semibold">{siteSettings.googleRating}/5 · {siteSettings.reviewCount} reviews</span>
             </div>
 
           </div>
