@@ -150,6 +150,26 @@ export default async function AreaPage({
             name: settings.companyName,
             telephone: settings.phoneHref,
             url: `${settings.siteUrl}/areas/${area.slug}`,
+            image: `${settings.siteUrl}/images/homepage/hero.webp`,
+            priceRange: "££",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "3 Saville Road",
+              addressLocality: "Peterborough",
+              postalCode: "PE3 7PR",
+              addressCountry: "GB",
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: parseFloat(settings.googleRating),
+              reviewCount: parseInt(settings.reviewCount, 10),
+              bestRating: 5,
+              worstRating: 1,
+            },
+            openingHoursSpecification: [
+              { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "08:00", closes: "18:00" },
+              { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday"], opens: "08:00", closes: "17:00" },
+            ],
             areaServed: {
               "@type": "City",
               name: area.name,
