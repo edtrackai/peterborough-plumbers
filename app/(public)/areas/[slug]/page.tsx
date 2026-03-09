@@ -378,7 +378,7 @@ export default async function AreaPage({
         </section>
       )}
 
-      {/* Services in this area */}
+      {/* Services in this area — links to dedicated area+service combo pages */}
       <section className="py-12 bg-[var(--surface-alt)] border-b border-[var(--border)]">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="text-2xl font-bold text-pp-heading mb-6">Plumbing Services in {area.name}</h2>
@@ -386,7 +386,7 @@ export default async function AreaPage({
             {areaServiceLinks.map((svc) => (
               <Link
                 key={svc.slug}
-                href={`/services/${svc.slug}`}
+                href={`/areas/${slug}/${svc.slug}`}
                 className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-sm font-medium text-pp-heading hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors duration-150"
               >
                 <svg className="h-3.5 w-3.5 text-[var(--brand)] shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">

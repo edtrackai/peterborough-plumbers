@@ -40,6 +40,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   ]);
 
+  // Area+service combo pages (area.length × service.length)
+  const comboPages = areas.flatMap(({ slug: areaSlug, updatedAt: areaUpdatedAt }) =>
+    services.map(({ slug: serviceSlug, updatedAt: serviceUpdatedAt }) => ({
+      url: `${siteUrl}/areas/${areaSlug}/${serviceSlug}`,
+      lastModified: serviceUpdatedAt > areaUpdatedAt ? serviceUpdatedAt : areaUpdatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+      images: [`${siteUrl}/images/services/${serviceSlug}/hero.webp`],
+    }))
+  );
+
   // Each service has /images/services/{slug}/hero.webp
   const servicePages = services.map(({ slug, updatedAt }) => ({
     url: `${siteUrl}/services/${slug}`,
@@ -73,5 +84,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(image ? { images: [image.startsWith("http") ? image : `${siteUrl}${image}`] } : {}),
   }));
 
-  return [...staticPages, ...servicePages, ...areaPages, ...guidePages, ...blogPages];
+  return [...staticPages, ...servicePages, ...areaPages, ...comboPages, ...guidePages, ...blogPages];
 }
