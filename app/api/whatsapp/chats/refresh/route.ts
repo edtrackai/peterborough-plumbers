@@ -27,8 +27,8 @@ export async function GET() {
     // Group calls by waId (matched via customerPhone on WaChat)
     const callsByWaId: Record<string, object[]> = {};
     for (const call of calls) {
-      if (!call.callerPhone) continue;
-      const matchedChat = chats.find((c) => c.customerPhone === call.callerPhone);
+      if (!call.phone) continue;
+      const matchedChat = chats.find((c) => c.customerPhone === call.phone);
       if (!matchedChat) continue;
       if (!callsByWaId[matchedChat.waId]) callsByWaId[matchedChat.waId] = [];
       callsByWaId[matchedChat.waId].push({
