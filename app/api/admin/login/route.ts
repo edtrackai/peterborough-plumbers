@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { computeAdminToken } from "@/lib/security/adminAuth";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
 
-const RATE_LIMIT = { name: "admin-login", max: 10, windowMs: 15 * 60 * 1000 };
+const RATE_LIMIT = { name: "admin-login", max: 20, windowMs: 15 * 60 * 1000 };
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
