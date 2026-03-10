@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getPlumberSession } from "@/lib/plumber-session";
 import { PlumberNav } from "@/components/plumber/PlumberNav";
 import { DutyToggle } from "@/components/plumber/DutyToggle";
+import { GpsTracker } from "@/components/plumber/GpsTracker";
 
 export const dynamic = "force-dynamic";
 
@@ -10,12 +11,19 @@ export default async function ProfilePage() {
   const session = await getPlumberSession();
   if (!session.plumberId) redirect("/plumber/login");
 
-  const [plumber, offerCount, stats] = await Promise.all([
+  const [plumber, offerCount, stats, activeBooking] = await Promise.all([
     prisma.plumber.findUnique({ where: { id: session.plumberId } }),
     prisma.bookingOffer.count({ where: { plumberId: session.plumberId, status: "offered" } }),
     prisma.booking.findMany({
       where:   { assignedPlumberId: session.plumberId },
       include: { rating: { select: { stars: true } } },
+    }),
+    prisma.booking.findFirst({
+      where: {
+        assignedPlumberId: session.plumberId,
+        status: { in: ["en_route", "arrived", "in_progress"] },
+      },
+      select: { id: true, bookingRef: true, status: true },
     }),
   ]);
 
@@ -56,6 +64,18 @@ export default async function ProfilePage() {
 
           {/* Duty toggle */}
           <DutyToggle isOnDuty={plumber.isOnDuty} />
+
+          {/* GPS tracker */}
+          <div className="mt-3">
+            <GpsTracker activeBookingId={activeBooking?.id ?? null} />
+            {activeBooking && (
+              <p className="mt-2 text-center text-[11px] text-zinc-700">
+                Active job: <span className="text-zinc-500 font-mono">{activeBooking.bookingRef}</span>
+                {" · "}
+                <span className="capitalize">{activeBooking.status.replace("_", " ")}</span>
+              </p>
+            )}
+          </div>
         </div>
 
         {/* ── Stats ── */}
