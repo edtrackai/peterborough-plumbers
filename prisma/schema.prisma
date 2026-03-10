@@ -86,6 +86,7 @@ model Booking {
   accessNotes       String?
   assignedPlumberId String?
   assignedPlumber   Plumber?  @relation("AssignedPlumber", fields: [assignedPlumberId], references: [id])
+  estimatedArrival  DateTime? // ETA set when plumber accepts or goes en_route
   reservedAt        DateTime  @default(now())
   expiresAt         DateTime?
   confirmedAt       DateTime?
@@ -93,11 +94,12 @@ model Booking {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
-  images    BookingImage[]
-  offers    BookingOffer[]
-  events    BookingEvent[]
-  locations BookingLocation[]
-  rating    BookingRating?
+  images        BookingImage[]
+  offers        BookingOffer[]
+  events        BookingEvent[]
+  locations     BookingLocation[]
+  rating        BookingRating?
+  notifications BookingNotification[]
 
   @@index([bookingRef])
   @@index([status])
@@ -176,6 +178,27 @@ model BookingLocation {
 
   @@index([bookingId])
   @@map("pb_booking_locations")
+}
+
+// ── BookingNotification ───────────────────────────────────────────────────────
+
+model BookingNotification {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  // type: accepted | en_route | arrived | completed | cancelled | rescheduled
+  type      String
+  // channel: email | sms | whatsapp
+  channel   String
+  recipient String   // email address or phone number notified
+  message   String   @db.Text
+  success   Boolean  @default(true)
+  errorMsg  String?
+  sentAt    DateTime @default(now())
+
+  @@index([bookingId])
+  @@index([type])
+  @@map("pb_booking_notifications")
 }
 
 // ── BookingRating ─────────────────────────────────────────────────────────────

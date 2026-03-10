@@ -20,9 +20,9 @@ export async function POST(
 
   const { bookingId } = await params;
 
-  let newStatus: unknown, notes: unknown;
+  let newStatus: unknown, notes: unknown, estimatedArrival: unknown;
   try {
-    ({ status: newStatus, notes } = await req.json());
+    ({ status: newStatus, notes, estimatedArrival } = await req.json());
   } catch {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
@@ -58,6 +58,11 @@ export async function POST(
 
   const data: Record<string, unknown> = { status: newStatus };
   if (newStatus === "completed") data.completedAt = new Date();
+  // Store ETA when plumber starts journey — used by customer tracker
+  if (newStatus === "en_route" && typeof estimatedArrival === "string") {
+    const eta = new Date(estimatedArrival);
+    if (!isNaN(eta.getTime())) data.estimatedArrival = eta;
+  }
 
   await prisma.$transaction([
     prisma.booking.update({ where: { id: bookingId }, data }),
