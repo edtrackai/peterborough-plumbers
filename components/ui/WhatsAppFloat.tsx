@@ -2,7 +2,7 @@ import { getWhatsAppUrl } from "@/content/settings";
 
 export default function WhatsAppFloat() {
   return (
-    <div className="fixed bottom-[100px] left-4 lg:left-auto lg:right-4 z-[60]">
+    <div className="hidden lg:block fixed bottom-[100px] right-4 z-[60]">
       {/* Pulse ring */}
       <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-40" aria-hidden="true" />
       <a
