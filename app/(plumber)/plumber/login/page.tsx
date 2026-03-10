@@ -36,11 +36,12 @@ export default function PlumberLoginPage() {
       style={{
         background: "#080808",
         backgroundImage: [
-          "radial-gradient(ellipse 80% 45% at 50% -5%, rgba(200,16,46,0.22) 0%, transparent 60%)",
-          "radial-gradient(ellipse 50% 30% at 80% 80%, rgba(200,16,46,0.05) 0%, transparent 60%)",
-          "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0)",
+          "radial-gradient(ellipse 100% 55% at 50% -8%, rgba(200,16,46,0.28) 0%, transparent 58%)",
+          "radial-gradient(ellipse 60% 35% at 50% -4%, rgba(200,16,46,0.14) 0%, transparent 38%)",
+          "radial-gradient(ellipse 45% 25% at 15% 90%, rgba(200,16,46,0.04) 0%, transparent 60%)",
+          "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.022) 1px, transparent 0)",
         ].join(", "),
-        backgroundSize: "100% 100%, 100% 100%, 28px 28px",
+        backgroundSize: "100% 100%, 100% 100%, 100% 100%, 28px 28px",
       }}
     >
       <div className="w-full max-w-[360px]">
@@ -75,7 +76,7 @@ export default function PlumberLoginPage() {
             Plumber Portal
           </h1>
           <p className="text-[13px] text-zinc-500 mt-1.5 tracking-wide">
-            Peterborough Plumbers &nbsp;·&nbsp; Field Operations
+            Peterborough Plumbers
           </p>
         </div>
 
@@ -83,14 +84,18 @@ export default function PlumberLoginPage() {
         <div
           className="rounded-2xl p-7"
           style={{
-            background: "linear-gradient(160deg, #161616 0%, #111111 100%)",
+            background: "linear-gradient(160deg, rgba(26,26,26,0.92) 0%, rgba(14,14,14,0.96) 100%)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
             border: "1px solid transparent",
             backgroundClip: "padding-box",
             boxShadow: [
-              "0 0 0 1px rgba(255,255,255,0.06)",
-              "0 1px 0 0 rgba(255,255,255,0.07) inset",
-              "0 24px 48px rgba(0,0,0,0.55)",
-              "0 8px 16px rgba(0,0,0,0.35)",
+              "0 0 0 1px rgba(255,255,255,0.07)",
+              "0 1px 0 0 rgba(255,255,255,0.08) inset",
+              "0 24px 60px rgba(0,0,0,0.65)",
+              "0 8px 20px rgba(0,0,0,0.4)",
+              "0 0 80px rgba(200,16,46,0.09)",
+              "0 0 140px rgba(200,16,46,0.05)",
             ].join(", "),
           }}
         >
@@ -287,6 +292,26 @@ export default function PlumberLoginPage() {
             </button>
 
           </form>
+
+          {/* ── Test credentials ──────────────────────────────────────── */}
+          <div className="mt-6 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+            <p className="text-[10px] text-center font-semibold text-zinc-700 uppercase tracking-[0.14em] mb-3">
+              Test login
+            </p>
+            <div
+              className="rounded-xl px-4 py-3 flex flex-col gap-1.5"
+              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[10.5px] text-zinc-700">Email</span>
+                <span className="text-[10.5px] font-mono text-zinc-500 select-all">plumber1@local.test</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-[10.5px] text-zinc-700">Password</span>
+                <span className="text-[10.5px] font-mono text-zinc-500 select-all">Plumber123!</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* ── Footer ─────────────────────────────────────────────────── */}
