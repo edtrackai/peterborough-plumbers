@@ -35,7 +35,7 @@ export async function GET() {
         id: call.id,
         startedAt: call.startedAt.toISOString(),
         durationSeconds: call.durationSeconds,
-        outcome: call.summary?.outcome ?? null,
+        outcome: call.outcome ?? call.summary?.endState ?? null,
         needsHuman: call.summary?.needsHuman ?? false,
         issueSummary: call.summary?.issueSummary ?? null,
       });
