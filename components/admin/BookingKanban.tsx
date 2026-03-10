@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { OfferDispatchDrawer } from "./OfferDispatchDrawer";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 export interface KanbanBooking {
@@ -123,11 +124,13 @@ function BookingCard({
   stageColor,
   nextStatuses,
   onUpdate,
+  onDispatch,
 }: {
   booking: KanbanBooking;
   stageColor: string;
   nextStatuses: readonly string[];
   onUpdate: (id: string, status: string) => void;
+  onDispatch: (id: string, ref: string) => void;
 }) {
   const [dropOpen, setDropOpen] = useState(false);
   const [pending, startTransition] = useTransition();
@@ -194,6 +197,22 @@ function BookingCard({
         </p>
       )}
 
+      {/* Dispatch offer button — only for unassigned bookings */}
+      {["pending_assignment", "reserved", "new"].includes(booking.status) && (
+        <div className="pt-1 border-t border-slate-100">
+          <button
+            onClick={() => onDispatch(booking.id, booking.bookingRef)}
+            className="w-full flex items-center justify-center gap-1.5 px-2.5 py-2 rounded-lg text-[0.7rem] font-bold text-white transition-colors"
+            style={{ background: "#C8102E" }}
+          >
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+              <path d="M1 5.5h9M6 1l4 4.5L6 10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Dispatch to Plumber
+          </button>
+        </div>
+      )}
+
       {/* Actions */}
       {nextStatuses.length > 0 && (
         <div className="relative pt-1 border-t border-slate-100">
@@ -232,9 +251,11 @@ function BookingCard({
 function MobileKanban({
   bookings,
   onUpdate,
+  onDispatch,
 }: {
   bookings: KanbanBooking[];
   onUpdate: (id: string, s: string) => void;
+  onDispatch: (id: string, ref: string) => void;
 }) {
   const [expanded, setExpanded] = useState<string | null>("queued");
 
@@ -279,6 +300,7 @@ function MobileKanban({
                       stageColor={stage.color}
                       nextStatuses={stage.next}
                       onUpdate={onUpdate}
+                      onDispatch={onDispatch}
                     />
                   ))
                 )}
@@ -294,6 +316,7 @@ function MobileKanban({
 // ── Kanban board ──────────────────────────────────────────────────────────────
 export function BookingKanban({ initialBookings }: { initialBookings: KanbanBooking[] }) {
   const [bookings, setBookings] = useState(initialBookings);
+  const [drawer, setDrawer] = useState<{ id: string; ref: string } | null>(null);
 
   function handleUpdate(id: string, newStatus: string) {
     setBookings((prev) =>
@@ -301,11 +324,26 @@ export function BookingKanban({ initialBookings }: { initialBookings: KanbanBook
     );
   }
 
+  function handleDispatch(id: string, ref: string) {
+    setDrawer({ id, ref });
+  }
+
+  function handleDispatched() {
+    // Mark booking as pending_assignment locally if it wasn't already
+    setBookings((prev) =>
+      prev.map((b) =>
+        b.id === drawer?.id && b.status !== "pending_assignment"
+          ? { ...b, status: "pending_assignment" }
+          : b
+      )
+    );
+  }
+
   return (
     <>
       {/* Mobile: accordion */}
       <div className="block lg:hidden">
-        <MobileKanban bookings={bookings} onUpdate={handleUpdate} />
+        <MobileKanban bookings={bookings} onUpdate={handleUpdate} onDispatch={handleDispatch} />
       </div>
 
       {/* Desktop: horizontal kanban */}
@@ -349,6 +387,7 @@ export function BookingKanban({ initialBookings }: { initialBookings: KanbanBook
                       stageColor={stage.color}
                       nextStatuses={stage.next}
                       onUpdate={handleUpdate}
+                      onDispatch={handleDispatch}
                     />
                   ))
                 )}
@@ -357,6 +396,16 @@ export function BookingKanban({ initialBookings }: { initialBookings: KanbanBook
           );
         })}
       </div>
+
+      {/* Offer dispatch drawer */}
+      {drawer && (
+        <OfferDispatchDrawer
+          bookingId={drawer.id}
+          bookingRef={drawer.ref}
+          onClose={() => setDrawer(null)}
+          onDispatched={handleDispatched}
+        />
+      )}
     </>
   );
 }
