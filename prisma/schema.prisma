@@ -493,9 +493,10 @@ model CallSummary {
   serviceType   String?
   issueSummary  String?
   preferredTime String?
-  needsHuman    Boolean  @default(false)
-  endState      String?  // matches outcome values from Call
-  createdAt     DateTime @default(now())
+  needsHuman      Boolean  @default(false)
+  endState        String?  // matches outcome values from Call
+  transcriptText  String?  @db.Text
+  createdAt       DateTime @default(now())
 
   @@map("pb_call_summaries")
 }

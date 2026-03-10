@@ -27,7 +27,11 @@ export default async function CallsPage() {
     createdAt: c.createdAt.toISOString(),
     updatedAt: c.updatedAt.toISOString(),
     summary: c.summary
-      ? { ...c.summary, createdAt: c.summary.createdAt.toISOString() }
+      ? {
+          ...c.summary,
+          createdAt: c.summary.createdAt.toISOString(),
+          transcriptText: c.summary.transcriptText ?? null,
+        }
       : null,
     events: c.events.map((e) => ({
       ...e,

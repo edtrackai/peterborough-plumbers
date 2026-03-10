@@ -98,6 +98,7 @@ export async function processCompletedCall(
     needsHuman,
     outcome,
     summary,
+    transcriptText,
   } = payload;
 
   let summaryId: string | null = null;
@@ -121,6 +122,7 @@ export async function processCompletedCall(
         preferredTime: preferredTime ?? null,
         needsHuman: needsHuman ?? false,
         endState: outcome ?? null,
+        transcriptText: transcriptText ?? null,
       },
       create: {
         callId,
@@ -131,6 +133,7 @@ export async function processCompletedCall(
         preferredTime: preferredTime ?? null,
         needsHuman: needsHuman ?? false,
         endState: outcome ?? null,
+        transcriptText: transcriptText ?? null,
       },
     });
     summaryId = saved.id;
