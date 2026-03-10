@@ -11,8 +11,10 @@ interface TrackerEvent {
 }
 
 interface TrackerData {
+  bookingId:        string;
   bookingRef:       string;
   status:           string;
+  hasRating:        boolean;
   serviceType:      string | null;
   slot:             { date: string; startTime: string; endTime: string };
   plumber:          { name: string } | null;
@@ -24,14 +26,14 @@ interface TrackerData {
 // ── Status config ─────────────────────────────────────────────────────────────
 
 const STATUS_CONFIG: Record<string, { label: string; message: string; color: string; bg: string }> = {
-  pending:            { label: "Pending",        message: "Your booking is awaiting confirmation.",          color: "text-yellow-600", bg: "bg-yellow-50"   },
-  pending_assignment: { label: "Confirming",     message: "We're finding the best available plumber.",      color: "text-yellow-600", bg: "bg-yellow-50"   },
-  accepted:           { label: "Confirmed",      message: "Your plumber has accepted the job.",              color: "text-green-700",  bg: "bg-green-50"    },
-  en_route:           { label: "On the Way",     message: "Your plumber is heading to you now.",             color: "text-blue-700",   bg: "bg-blue-50"     },
-  arrived:            { label: "Arrived",        message: "Your plumber has arrived at your property.",     color: "text-indigo-700", bg: "bg-indigo-50"   },
-  in_progress:        { label: "Working",        message: "Your plumber is currently working on the job.",  color: "text-orange-700", bg: "bg-orange-50"   },
-  completed:          { label: "Completed",      message: "The job is complete. Thank you for choosing us!", color: "text-gray-700",   bg: "bg-gray-100"    },
-  cancelled:          { label: "Cancelled",      message: "This booking has been cancelled.",                color: "text-red-700",    bg: "bg-red-50"      },
+  pending:            { label: "Pending",       message: "Your booking is awaiting confirmation.",         color: "text-yellow-600", bg: "bg-yellow-50"  },
+  pending_assignment: { label: "Confirming",    message: "We're finding the best available plumber.",     color: "text-yellow-600", bg: "bg-yellow-50"  },
+  accepted:           { label: "Confirmed",     message: "Your plumber has accepted the job.",             color: "text-green-700",  bg: "bg-green-50"   },
+  en_route:           { label: "On the Way",    message: "Your plumber is heading to you now.",            color: "text-blue-700",   bg: "bg-blue-50"    },
+  arrived:            { label: "Arrived",       message: "Your plumber has arrived at your property.",    color: "text-indigo-700", bg: "bg-indigo-50"  },
+  in_progress:        { label: "Working",       message: "Your plumber is currently working on the job.", color: "text-orange-700", bg: "bg-orange-50"  },
+  completed:          { label: "Completed",     message: "The job is complete. Thank you for choosing us!", color: "text-gray-700",  bg: "bg-gray-100"   },
+  cancelled:          { label: "Cancelled",     message: "This booking has been cancelled.",               color: "text-red-700",   bg: "bg-red-50"     },
 };
 
 const EVENT_LABELS: Record<string, string> = {
@@ -58,6 +60,104 @@ function formatSlot(date: string, start: string, end: string) {
   const d = new Date(date + "T00:00:00");
   const dayStr = d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
   return `${dayStr} · ${start}–${end}`;
+}
+
+// ── Rating form ───────────────────────────────────────────────────────────────
+
+function RatingForm({ bookingId }: { bookingId: string }) {
+  const [stars,     setStars]     = useState(0);
+  const [hovered,   setHovered]   = useState(0);
+  const [comment,   setComment]   = useState("");
+  const [loading,   setLoading]   = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error,     setError]     = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (stars === 0) { setError("Please select a star rating."); return; }
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/rate/${bookingId}`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ stars, comment: comment.trim() || undefined }),
+      });
+      if (res.status === 409) { setSubmitted(true); return; } // already rated
+      if (!res.ok) {
+        const d = await res.json();
+        setError(d.error ?? "Failed to submit. Please try again.");
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <div className="rounded-2xl bg-green-50 border border-green-200 px-6 py-6 text-center">
+        <p className="text-2xl mb-2">⭐</p>
+        <p className="font-bold text-green-800 text-lg">Thank you for your feedback!</p>
+        <p className="text-sm text-green-700 mt-1">Your review helps us improve our service.</p>
+      </div>
+    );
+  }
+
+  const display = hovered || stars;
+
+  return (
+    <div className="rounded-2xl bg-white border border-gray-200 px-6 py-6">
+      <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1">How did we do?</p>
+      <p className="text-base font-bold text-gray-800 mb-4">Rate your experience</p>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {/* Star selector */}
+        <div
+          className="flex gap-2"
+          role="group"
+          aria-label="Star rating"
+          onMouseLeave={() => setHovered(0)}
+        >
+          {[1, 2, 3, 4, 5].map((n) => (
+            <button
+              key={n}
+              type="button"
+              aria-label={`${n} star${n !== 1 ? "s" : ""}`}
+              onClick={() => { setStars(n); setError(null); }}
+              onMouseEnter={() => setHovered(n)}
+              className="text-4xl leading-none transition-transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] rounded"
+            >
+              <span className={n <= display ? "text-amber-400" : "text-gray-200"}>★</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Comment */}
+        <textarea
+          rows={3}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          maxLength={500}
+          placeholder="Tell us about your experience (optional)…"
+          className="w-full rounded-xl border border-gray-300 px-3.5 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#C8102E]/40 focus:border-[#C8102E]"
+        />
+
+        {error && <p className="text-xs text-red-600">{error}</p>}
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full rounded-xl bg-[#C8102E] py-3.5 text-sm font-bold text-white hover:bg-[#a50d26] transition-colors disabled:opacity-60"
+        >
+          {loading ? "Submitting…" : "Submit Rating"}
+        </button>
+      </form>
+    </div>
+  );
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
@@ -117,7 +217,7 @@ export default function TrackerClient({ bookingRef }: { bookingRef: string }) {
 
   if (!data) return null;
 
-  const cfg = STATUS_CONFIG[data.status] ?? STATUS_CONFIG.pending;
+  const cfg        = STATUS_CONFIG[data.status] ?? STATUS_CONFIG.pending;
   const isTerminal = TERMINAL_STATUSES.includes(data.status);
 
   return (
@@ -190,6 +290,11 @@ export default function TrackerClient({ bookingRef }: { bookingRef: string }) {
             ))}
           </ol>
         </div>
+      )}
+
+      {/* Rating form — shown only when completed and not yet rated */}
+      {data.status === "completed" && !data.hasRating && (
+        <RatingForm bookingId={data.bookingId} />
       )}
 
       {/* Polling indicator */}

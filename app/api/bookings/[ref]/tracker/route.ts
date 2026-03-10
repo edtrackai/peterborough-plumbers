@@ -34,10 +34,12 @@ export async function GET(
     const booking = await prisma.booking.findUnique({
       where: { bookingRef: ref.toUpperCase() },
       select: {
+        id:               true,
         bookingRef:       true,
         status:           true,
         serviceType:      true,
         estimatedArrival: true,
+        rating:           { select: { id: true } },
         assignedPlumber: {
           select: { id: true, name: true, phone: true },
         },
@@ -65,8 +67,10 @@ export async function GET(
     const hasLocation = LOCATION_STATUSES.includes(booking.status);
 
     return NextResponse.json({
+      bookingId:   booking.id,
       bookingRef:  booking.bookingRef,
       status:      booking.status,
+      hasRating:   !!booking.rating,
       serviceType: booking.serviceType,
       slot: {
         date:      booking.slot.date.toISOString().split("T")[0],
