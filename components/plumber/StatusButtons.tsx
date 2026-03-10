@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 const TRANSITIONS: Record<string, { status: string; label: string; cls: string }[]> = {
@@ -10,6 +10,9 @@ const TRANSITIONS: Record<string, { status: string; label: string; cls: string }
   in_progress: [{ status: "completed",   label: "Mark Complete",  cls: "bg-green-600 hover:bg-green-500"   }],
 };
 
+const GPS_STATUSES = ["en_route", "arrived", "in_progress"];
+const GPS_INTERVAL_MS = 30_000;
+
 interface StatusButtonsProps {
   bookingId:     string;
   currentStatus: string;
@@ -17,12 +20,69 @@ interface StatusButtonsProps {
 
 export function StatusButtons({ bookingId, currentStatus }: StatusButtonsProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState<string | null>(null);
-  const [notes, setNotes]     = useState("");
-  const [locationMsg, setLocationMsg] = useState<string | null>(null);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState<string | null>(null);
+  const [notes, setNotes]           = useState("");
+  const [gpsActive, setGpsActive]   = useState(false);
+  const [gpsMsg, setGpsMsg]         = useState<string | null>(null);
+  const watchIdRef                  = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const actions = TRANSITIONS[currentStatus] ?? [];
+  const supportsGps = GPS_STATUSES.includes(currentStatus);
+
+  const pushLocation = useCallback(() => {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const res = await fetch(`/api/plumber/bookings/${bookingId}/location`, {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({
+            lat:      pos.coords.latitude,
+            lng:      pos.coords.longitude,
+            accuracy: pos.coords.accuracy,
+          }),
+        });
+        if (res.ok) {
+          setGpsMsg(`Location updated · ${new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}`);
+        } else {
+          setGpsMsg("Location update failed");
+        }
+      },
+      () => {
+        setGpsMsg("GPS permission denied — enable location in browser settings");
+        stopTracking();
+      },
+      { enableHighAccuracy: true, timeout: 10_000 }
+    );
+  }, [bookingId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function startTracking() {
+    if (!navigator.geolocation) {
+      setGpsMsg("Geolocation not supported on this device.");
+      return;
+    }
+    setGpsActive(true);
+    setGpsMsg("Acquiring GPS…");
+    pushLocation();
+    watchIdRef.current = setInterval(pushLocation, GPS_INTERVAL_MS);
+  }
+
+  function stopTracking() {
+    if (watchIdRef.current) {
+      clearInterval(watchIdRef.current);
+      watchIdRef.current = null;
+    }
+    setGpsActive(false);
+    setGpsMsg(null);
+  }
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (watchIdRef.current) clearInterval(watchIdRef.current);
+    };
+  }, []);
 
   async function handleStatus(newStatus: string) {
     setLoading(true);
@@ -38,38 +98,12 @@ export function StatusButtons({ bookingId, currentStatus }: StatusButtonsProps) 
         setError(d.error ?? "Failed to update status");
         return;
       }
+      stopTracking();
       setNotes("");
       router.refresh();
     } finally {
       setLoading(false);
     }
-  }
-
-  async function shareLocation() {
-    if (!navigator.geolocation) {
-      setLocationMsg("Geolocation not supported on this device.");
-      return;
-    }
-    setLocationMsg("Getting location…");
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const res = await fetch(`/api/plumber/bookings/${bookingId}/location`, {
-          method:  "POST",
-          headers: { "Content-Type": "application/json" },
-          body:    JSON.stringify({
-            lat:      pos.coords.latitude,
-            lng:      pos.coords.longitude,
-            accuracy: pos.coords.accuracy,
-          }),
-        });
-        setLocationMsg(res.ok ? "Location shared" : "Failed to share location");
-        setTimeout(() => setLocationMsg(null), 3000);
-      },
-      () => {
-        setLocationMsg("Location permission denied.");
-        setTimeout(() => setLocationMsg(null), 4000);
-      }
-    );
   }
 
   if (actions.length === 0) return null;
@@ -97,22 +131,23 @@ export function StatusButtons({ bookingId, currentStatus }: StatusButtonsProps) 
         </button>
       ))}
 
-      {/* Location share */}
-      {["en_route", "arrived", "in_progress"].includes(currentStatus) && (
+      {/* GPS auto-tracking toggle */}
+      {supportsGps && (
         <button
-          onClick={shareLocation}
-          className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-3 text-sm font-medium text-zinc-400 hover:border-white/[0.16] hover:text-zinc-200 transition-colors"
+          onClick={gpsActive ? stopTracking : startTracking}
+          className={`w-full flex items-center justify-center gap-2 rounded-xl border py-3 text-sm font-medium transition-colors ${
+            gpsActive
+              ? "border-green-500/30 bg-green-500/10 text-green-400 hover:bg-green-500/15"
+              : "border-white/[0.08] text-zinc-400 hover:border-white/[0.16] hover:text-zinc-200"
+          }`}
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <circle cx="7" cy="7" r="2" fill="currentColor" />
-            <path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          Share Location
+          <span className={`h-2 w-2 rounded-full ${gpsActive ? "bg-green-400 animate-pulse" : "bg-zinc-600"}`} />
+          {gpsActive ? "Tracking active — tap to stop" : "Start GPS tracking"}
         </button>
       )}
 
-      {locationMsg && (
-        <p className="text-center text-xs text-zinc-500">{locationMsg}</p>
+      {gpsMsg && (
+        <p className="text-center text-xs text-zinc-500">{gpsMsg}</p>
       )}
       {error && (
         <p className="text-xs text-red-400">{error}</p>
