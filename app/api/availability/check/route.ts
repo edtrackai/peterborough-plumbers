@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { checkAvailabilitySchema } from "@/lib/validations/booking-system";
+import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
 
 // Extract outward code prefix from a UK postcode: "PE1 1AA" → "PE1"
 function normalisePostcode(raw: string): string | null {
@@ -12,6 +13,11 @@ function normalisePostcode(raw: string): string | null {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const { limited, retryAfterSec } = checkRateLimit(ip, { name: "availability-check", max: 20, windowMs: 10 * 60 * 1000 });
+  if (limited) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429, headers: { "Retry-After": String(retryAfterSec) } });
+  }
   try {
     const body = await req.json();
     const parsed = checkAvailabilitySchema.safeParse(body);
