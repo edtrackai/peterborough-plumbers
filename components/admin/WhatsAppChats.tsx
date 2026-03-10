@@ -297,7 +297,7 @@ export default function WhatsAppChats({
                         BOT OFF
                       </span>
                     )}
-                    {chat.calls.length > 0 && (
+                    {(chat.calls?.length ?? 0) > 0 && (
                       <span className="text-[0.55rem] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
                         {chat.calls.length} CALL{chat.calls.length > 1 ? "S" : ""}
                       </span>
@@ -406,7 +406,7 @@ export default function WhatsAppChats({
             )}
 
             {/* Call history banner — shown if same number has calls */}
-            {selected.calls.length > 0 && (
+            {(selected.calls?.length ?? 0) > 0 && (
               <div
                 className="px-5 py-3 border-b bg-blue-50 shrink-0"
                 style={{ borderColor: "rgba(0,0,0,0.06)" }}
