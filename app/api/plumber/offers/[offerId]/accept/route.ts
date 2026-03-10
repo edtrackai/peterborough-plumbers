@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getPlumberSession } from "@/lib/plumber-session";
+import { notifyCustomerAccepted } from "@/lib/notifications/booking";
 
 export async function POST(
   _req: NextRequest,
@@ -61,6 +62,31 @@ export async function POST(
 
       return booking;
     });
+
+    // Fire-and-forget: fetch full details and notify customer
+    prisma.booking.findUnique({
+      where: { id: result.id },
+      select: {
+        bookingRef:    true,
+        customerName:  true,
+        email:         true,
+        slot:          { select: { date: true, startTime: true, endTime: true } },
+        assignedPlumber: { select: { name: true } },
+      },
+    }).then((full) => {
+      if (full?.email && full.assignedPlumber) {
+        return notifyCustomerAccepted({
+          bookingId:     result.id,
+          bookingRef:    full.bookingRef,
+          customerName:  full.customerName ?? "Customer",
+          customerEmail: full.email,
+          plumberName:   full.assignedPlumber.name,
+          slotDate:      full.slot.date.toISOString().split("T")[0],
+          slotStart:     full.slot.startTime,
+          slotEnd:       full.slot.endTime,
+        });
+      }
+    }).catch((e) => console.error("[offers/accept] notification error:", e));
 
     return NextResponse.json({ ok: true, bookingId: result.id, bookingRef: result.bookingRef });
   } catch (err: unknown) {

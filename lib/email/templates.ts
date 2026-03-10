@@ -84,6 +84,69 @@ export function bookingNotificationHtml(data: {
 </html>`;
 }
 
+// ── Plumber assigned (sent to customer when booking is accepted) ─────────────
+
+export function plumberAssignedHtml(data: {
+  customerName: string;
+  plumberName: string;
+  bookingRef: string;
+  slotDate: string;       // "YYYY-MM-DD"
+  slotStart: string;
+  slotEnd: string;
+  trackingUrl: string;
+}): string {
+  const formattedDate = new Date(data.slotDate + "T00:00:00").toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  return `
+<!DOCTYPE html>
+<html lang="en-GB">
+<head><meta charset="UTF-8"><title>Plumber Confirmed</title></head>
+<body style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: #3a3a3a; padding: 24px; text-align: center; border-radius: 8px 8px 0 0;">
+    <h1 style="color: #fff; margin: 0; font-size: 22px;">${siteSettings.companyName}</h1>
+    ${siteSettings.gasSafeNumber ? `<p style="color: rgba(255,255,255,0.7); margin: 8px 0 0;">Gas Safe Registered — Reg. ${siteSettings.gasSafeNumber}</p>` : `<p style="color: rgba(255,255,255,0.7); margin: 8px 0 0;">Gas Safe Registered Engineers</p>`}
+  </div>
+  <div style="background: #f9f9f9; padding: 32px; border-radius: 0 0 8px 8px; border: 1px solid #e0e0e0;">
+    <h2 style="color: #3a3a3a; margin-top: 0;">Great news, ${data.customerName} — your plumber is confirmed!</h2>
+    <p><strong>${data.plumberName}</strong> has accepted your job and will be with you on the scheduled date.</p>
+
+    <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 20px; margin: 24px 0;">
+      <p style="margin: 0 0 8px;"><strong>Plumber:</strong> ${data.plumberName}</p>
+      <p style="margin: 0 0 8px;"><strong>Date:</strong> ${formattedDate}</p>
+      <p style="margin: 0 0 8px;"><strong>Time window:</strong> ${data.slotStart} – ${data.slotEnd}</p>
+      <p style="margin: 0;"><strong>Reference:</strong> ${data.bookingRef}</p>
+    </div>
+
+    <p>You can track your plumber's progress in real time:</p>
+    <div style="text-align: center; margin: 24px 0;">
+      <a href="${data.trackingUrl}"
+         style="display: inline-block; background: #C8102E; color: #fff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+        Track My Plumber
+      </a>
+    </div>
+
+    <p>Or paste this link into your browser:</p>
+    <p style="word-break: break-all; font-size: 13px; color: #555;">${data.trackingUrl}</p>
+
+    <p>If you have any questions, please call us directly:</p>
+    <p style="font-size: 20px; font-weight: bold;">
+      <a href="tel:${siteSettings.phoneHref}" style="color: #C8102E; text-decoration: none;">${siteSettings.phone}</a>
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 24px 0;">
+    <p style="font-size: 12px; color: #999; margin: 0;">
+      ${siteSettings.companyName} · Peterborough, Cambridgeshire${siteSettings.gasSafeNumber ? ` · Gas Safe Reg. ${siteSettings.gasSafeNumber}` : ""}
+    </p>
+  </div>
+</body>
+</html>`;
+}
+
 // ── Lead notification (sent to owner for contact form) ──────────────────────
 
 export function leadNotificationHtml(data: {
