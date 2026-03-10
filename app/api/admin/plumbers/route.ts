@@ -14,9 +14,9 @@ const createPlumberSchema = z.object({
   phone: z
     .string()
     .max(20)
-    .regex(/^[\d\s+()-]+$/, "Invalid phone number")
     .optional()
-    .transform((v) => v?.trim() || null),
+    .transform((v) => v?.trim() || null)
+    .refine((v) => v === null || /^[\d\s+()-]+$/.test(v), "Invalid phone number"),
   password: z
     .string()
     .min(12, "Password must be at least 12 characters")
