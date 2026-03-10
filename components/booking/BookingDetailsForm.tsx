@@ -145,6 +145,7 @@ export function BookingDetailsForm({
 
       if (filePreviews.length > 0) {
         const formData = new FormData();
+        formData.append("bookingRef", bookingRef);
         for (const fp of filePreviews) {
           formData.append("files", fp.file);
         }
