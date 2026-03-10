@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 const TRANSITIONS: Record<string, { status: string; label: string; cls: string }[]> = {
@@ -11,7 +11,6 @@ const TRANSITIONS: Record<string, { status: string; label: string; cls: string }
 };
 
 const GPS_STATUSES = ["en_route", "arrived", "in_progress"];
-const GPS_INTERVAL_MS = 30_000;
 
 interface StatusButtonsProps {
   bookingId:     string;
@@ -20,67 +19,83 @@ interface StatusButtonsProps {
 
 export function StatusButtons({ bookingId, currentStatus }: StatusButtonsProps) {
   const router = useRouter();
-  const [loading, setLoading]       = useState(false);
-  const [error, setError]           = useState<string | null>(null);
-  const [notes, setNotes]           = useState("");
-  const [gpsActive, setGpsActive]   = useState(false);
-  const [gpsMsg, setGpsMsg]         = useState<string | null>(null);
-  const watchIdRef                  = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [loading, setLoading]     = useState(false);
+  const [error, setError]         = useState<string | null>(null);
+  const [notes, setNotes]         = useState("");
+  const [gpsActive, setGpsActive] = useState(false);
+  const [gpsMsg, setGpsMsg]       = useState<string | null>(null);
+  // watchPosition ID — number on browsers, NodeJS.Timeout shim avoided by using number
+  const watchIdRef = useRef<number | null>(null);
 
-  const actions = TRANSITIONS[currentStatus] ?? [];
+  const actions     = TRANSITIONS[currentStatus] ?? [];
   const supportsGps = GPS_STATUSES.includes(currentStatus);
 
-  const pushLocation = useCallback(() => {
-    if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const res = await fetch(`/api/plumber/bookings/${bookingId}/location`, {
-          method:  "POST",
-          headers: { "Content-Type": "application/json" },
-          body:    JSON.stringify({
-            lat:      pos.coords.latitude,
-            lng:      pos.coords.longitude,
-            accuracy: pos.coords.accuracy,
-          }),
-        });
-        if (res.ok) {
-          setGpsMsg(`Location updated · ${new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}`);
-        } else {
-          setGpsMsg("Location update failed");
-        }
-      },
-      () => {
-        setGpsMsg("GPS permission denied — enable location in browser settings");
-        stopTracking();
-      },
-      { enableHighAccuracy: true, timeout: 10_000 }
-    );
-  }, [bookingId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  function startTracking() {
-    if (!navigator.geolocation) {
-      setGpsMsg("Geolocation not supported on this device.");
-      return;
+  // Push a single position reading to the API
+  async function pushPosition(pos: GeolocationPosition) {
+    try {
+      const res = await fetch(`/api/plumber/bookings/${bookingId}/location`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({
+          lat:      pos.coords.latitude,
+          lng:      pos.coords.longitude,
+          accuracy: pos.coords.accuracy,
+        }),
+      });
+      if (res.ok) {
+        setGpsMsg(`Location updated · ${new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}`);
+      } else if (res.status === 401) {
+        setGpsMsg("Session expired — please log in again");
+        doStopTracking();
+      } else {
+        const d = await res.json().catch(() => ({}));
+        setGpsMsg(d.error ?? "Location update failed");
+      }
+    } catch {
+      setGpsMsg("Network error — retrying next update");
     }
-    setGpsActive(true);
-    setGpsMsg("Acquiring GPS…");
-    pushLocation();
-    watchIdRef.current = setInterval(pushLocation, GPS_INTERVAL_MS);
   }
 
-  function stopTracking() {
-    if (watchIdRef.current) {
-      clearInterval(watchIdRef.current);
+  function onGpsError(err: GeolocationPositionError) {
+    if (err.code === err.PERMISSION_DENIED) {
+      setGpsMsg("Location permission denied — enable it in browser settings");
+    } else if (err.code === err.POSITION_UNAVAILABLE) {
+      setGpsMsg("GPS signal unavailable — retrying…");
+    } else {
+      setGpsMsg("GPS timeout — retrying…");
+    }
+  }
+
+  function doStopTracking() {
+    if (watchIdRef.current !== null) {
+      navigator.geolocation.clearWatch(watchIdRef.current);
       watchIdRef.current = null;
     }
     setGpsActive(false);
     setGpsMsg(null);
   }
 
-  // Clean up on unmount
+  function startTracking() {
+    if (!navigator.geolocation) {
+      setGpsMsg("Geolocation is not supported on this device.");
+      return;
+    }
+    setGpsActive(true);
+    setGpsMsg("Acquiring GPS…");
+    // watchPosition continuously monitors position — no manual interval needed
+    watchIdRef.current = navigator.geolocation.watchPosition(
+      pushPosition,
+      onGpsError,
+      { enableHighAccuracy: true, maximumAge: 15_000, timeout: 15_000 }
+    );
+  }
+
+  // Clean up watch on unmount
   useEffect(() => {
     return () => {
-      if (watchIdRef.current) clearInterval(watchIdRef.current);
+      if (watchIdRef.current !== null) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
     };
   }, []);
 
@@ -98,7 +113,7 @@ export function StatusButtons({ bookingId, currentStatus }: StatusButtonsProps) 
         setError(d.error ?? "Failed to update status");
         return;
       }
-      stopTracking();
+      doStopTracking();
       setNotes("");
       router.refresh();
     } finally {
@@ -134,7 +149,7 @@ export function StatusButtons({ bookingId, currentStatus }: StatusButtonsProps) 
       {/* GPS auto-tracking toggle */}
       {supportsGps && (
         <button
-          onClick={gpsActive ? stopTracking : startTracking}
+          onClick={gpsActive ? doStopTracking : startTracking}
           className={`w-full flex items-center justify-center gap-2 rounded-xl border py-3 text-sm font-medium transition-colors ${
             gpsActive
               ? "border-green-500/30 bg-green-500/10 text-green-400 hover:bg-green-500/15"
