@@ -19,7 +19,7 @@ export default function StickyCtaBar() {
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 text-white text-center py-3 rounded-full font-bold text-sm transition-colors duration-200"
-          style={{ backgroundColor: "#25D366" }}
+          style={{ backgroundColor: "#075E54" }}
         >
           {siteSettings.secondaryCtaLabel}
         </a>

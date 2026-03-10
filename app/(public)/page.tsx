@@ -398,20 +398,7 @@ export default async function HomePage() {
         className="relative py-24 sm:py-32 overflow-hidden"
         style={{ backgroundColor: '#f8f8f7' }}
       >
-        {/* Ghost map texture — grayscale watermark, not a focal point */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            backgroundImage: "url('/images/homepage/areas-bg.webp')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            opacity: 0.07,
-            filter: 'grayscale(1) contrast(0.8)',
-          }}
-        />
-        {/* Vignette — fades map texture at edges for a clean, contained look */}
+        {/* Vignette — fades section edges for a clean, contained look */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
