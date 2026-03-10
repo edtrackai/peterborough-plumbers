@@ -132,9 +132,12 @@ export default async function ServicePage({
 }) {
   const { slug } = await params;
 
-  const [service, settings] = await Promise.all([
+  const [service, settings, boilerPricing] = await Promise.all([
     prisma.service.findUnique({ where: { slug } }),
     getSiteSettings(),
+    slug === "boiler-service"
+      ? prisma.pricing.findUnique({ where: { serviceSlug: "annual-boiler-service" } })
+      : Promise.resolve(null),
   ]);
 
   if (!service) notFound();
@@ -167,7 +170,7 @@ export default async function ServicePage({
               image: heroImage ?? undefined,
               ...(slug === "boiler-service" && {
                 offers: {
-                  price: "79",
+                  price: boilerPricing?.price.replace(/[^0-9,.]/g, "") ?? "79",
                   description: "Annual boiler service by qualified engineers — clear upfront quote provided before work begins.",
                 },
               }),

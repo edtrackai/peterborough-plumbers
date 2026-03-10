@@ -315,6 +315,23 @@ model Review {
   @@map("pb_reviews")
 }
 
+// ── Pricing ───────────────────────────────────────────────────────────────────
+
+model Pricing {
+  id           String   @id @default(cuid())
+  serviceSlug  String   @unique
+  serviceName  String
+  price        String   // e.g. "£79", "From £99", "POA"
+  priceLabel   String   @default("From") // e.g. "From", "Fixed", "Starting at"
+  priceNote    String?  // optional short note shown alongside the price
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([serviceSlug])
+  @@map("pb_pricing")
+}
+
 // ── SiteSettings ──────────────────────────────────────────────────────────────
 
 model SiteSettings {

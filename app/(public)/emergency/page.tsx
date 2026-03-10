@@ -7,6 +7,9 @@ import { breadcrumbSchema, faqSchema, serviceSchema, howToSchema } from "@/lib/s
 import { siteSettings } from "@/content/settings";
 import ImageCTASection from "@/components/blocks/ImageCTASection";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { prisma } from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildMetadata({
   title: "Emergency Plumber Peterborough | Fast 24/7 Response",
@@ -152,7 +155,25 @@ const coverageAreas = [
   { area: "Stamford", postcodes: "PE9" },
 ];
 
-export default function EmergencyPage() {
+export default async function EmergencyPage() {
+  // Fetch emergency call-out pricing from DB
+  const emergencySlugs = [
+    "emergency-daytime",
+    "emergency-evening",
+    "emergency-weekend",
+    "emergency-labour-hourly",
+    "emergency-parts",
+  ] as const;
+  const emergencyPricing = await prisma.pricing.findMany({
+    where: { serviceSlug: { in: [...emergencySlugs] }, isActive: true },
+  });
+  const emergencyMap = Object.fromEntries(emergencyPricing.map((p) => [p.serviceSlug, p]));
+
+  function formatPrice(slug: string, fallback: string): string {
+    const row = emergencyMap[slug];
+    if (!row) return fallback;
+    return [row.priceLabel, row.price].filter(Boolean).join(" ");
+  }
   const breadcrumb = breadcrumbSchema([
     { name: "Home", href: "/" },
     { name: "Emergency Plumber", href: "/emergency" },
@@ -391,15 +412,15 @@ export default function EmergencyPage() {
               </thead>
               <tbody className="divide-y divide-[var(--border)] bg-white">
                 {[
-                  { when: "Daytime (Mon–Fri 8am–6pm)", price: "From £99", inc: "Call-out + first 30 min labour" },
-                  { when: "Evening (Mon–Fri after 6pm)", price: "From £149", inc: "Call-out + first 30 min labour" },
-                  { when: "Weekend & Bank Holidays", price: "From £149", inc: "Call-out + first 30 min labour" },
-                  { when: "Additional labour (per hour)", price: "£60–£90", inc: "After first hour" },
-                  { when: "Parts & materials", price: "Cost + fitting", inc: "Quoted separately, approved before fitting" },
+                  { slug: "emergency-daytime",       when: "Daytime (Mon–Fri 8am–6pm)",    fallbackPrice: "From £99",      inc: "Call-out + first 30 min labour" },
+                  { slug: "emergency-evening",       when: "Evening (Mon–Fri after 6pm)",   fallbackPrice: "From £149",     inc: "Call-out + first 30 min labour" },
+                  { slug: "emergency-weekend",       when: "Weekend & Bank Holidays",       fallbackPrice: "From £149",     inc: "Call-out + first 30 min labour" },
+                  { slug: "emergency-labour-hourly", when: "Additional labour (per hour)",  fallbackPrice: "£60–£90",       inc: "After first hour" },
+                  { slug: "emergency-parts",         when: "Parts & materials",             fallbackPrice: "Cost + fitting", inc: "Quoted separately, approved before fitting" },
                 ].map((row) => (
                   <tr key={row.when} className="hover:bg-[var(--surface-alt)] transition-colors">
                     <td className="px-6 py-4 text-pp-heading font-medium">{row.when}</td>
-                    <td className="px-6 py-4 text-[var(--brand)] font-bold whitespace-nowrap">{row.price}</td>
+                    <td className="px-6 py-4 text-[var(--brand)] font-bold whitespace-nowrap">{formatPrice(row.slug, row.fallbackPrice)}</td>
                     <td className="px-6 py-4 text-[var(--muted)] hidden sm:table-cell">{row.inc}</td>
                   </tr>
                 ))}

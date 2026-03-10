@@ -1,8 +1,8 @@
 export const siteSettings = {
   companyName: "Peterborough Plumbers",
-  phone: "02039514510",
-  phoneHref: "+442039514510",
-  whatsappNumber: "442039514510",
+  phone: "01733797074",
+  phoneHref: "+441733797074",
+  whatsappNumber: "441733797074",
   email: "info@peterboroughplumbers.com",
   address: "3 Saville Road, Peterborough PE3 7PR",
   gasSafeNumber: "",

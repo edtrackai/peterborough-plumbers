@@ -7,6 +7,9 @@ import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import { siteSettings } from "@/content/settings";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ImageCTASection from "@/components/blocks/ImageCTASection";
+import { prisma } from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildMetadata({
   title: "Plumbing & Heating Pricing Peterborough | Peterborough Plumbers",
@@ -138,6 +141,27 @@ const priceGroups = [
   },
 ];
 
+// Slug mapping — parallel to priceGroups[groupIndex].items[itemIndex]
+// Connects each line item to its pb_pricing record by serviceSlug
+const PRICE_SLUGS: readonly (readonly string[])[] = [
+  // Boiler Services
+  ["annual-boiler-service", "boiler-repair-standard", "boiler-repair-complex", "new-combi-boiler", "new-system-boiler", "new-regular-boiler", "boiler-replacement", "boiler-flue-extension"],
+  // Heating & Radiators
+  ["power-flush-small", "power-flush-medium", "power-flush-large", "radiator-replacement", "radiator-addition", "trv-replacement", "magnetic-filter", "underfloor-heating-electric", "zone-valve-replacement"],
+  // Plumbing Repairs & Installations
+  ["tap-repair", "drain-blocked-internal", "leak-detection", "stopcock-replacement", "cistern-repair", "pipe-repair", "outside-tap", "water-softener", "hot-water-cylinder"],
+  // Bathroom Installations
+  ["bathroom-refit-basic", "bathroom-renovation-full", "ensuite-installation", "wet-room-conversion", "shower-electric", "shower-mixer", "toilet-installation", "basin-installation", "bath-installation"],
+  // Gas Safety & Certification
+  ["gas-safety-cp12-1", "gas-safety-cp12-extra", "co-alarm", "gas-pressure-test", "gas-appliance-service"],
+  // Drain Blockages & CCTV
+  ["drain-clearance-internal", "drain-clearance-external", "drain-cctv-survey", "drain-repair-patch", "drain-unblocking-emergency"],
+  // Emergency Call-Out
+  ["emergency-daytime", "emergency-evening", "emergency-weekend", "emergency-labour-hourly", "emergency-parts"],
+  // Landlord Services
+  ["landlord-gas-boiler-combined", "landlord-gas-safety-only", "landlord-maintenance-package", "landlord-emergency-callout"],
+] as const;
+
 const faqs = [
   {
     q: "Do your prices include VAT?",
@@ -181,7 +205,11 @@ const faqs = [
   },
 ];
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  // Fetch all pricing records — build a slug → record lookup map
+  const pricingRecords = await prisma.pricing.findMany();
+  const pricingMap = Object.fromEntries(pricingRecords.map((p) => [p.serviceSlug, p]));
+
   const breadcrumb = breadcrumbSchema([
     { name: "Home", href: "/" },
     { name: "Pricing", href: "/pricing" },
@@ -281,7 +309,7 @@ export default function PricingPage() {
       {/* Price groups */}
       <section className="bg-white py-8 pb-16">
         <div className="mx-auto max-w-7xl px-4 space-y-14">
-          {priceGroups.map((group) => (
+          {priceGroups.map((group, groupIndex) => (
             <div key={group.heading} id={group.slug}>
               <div className="mb-4">
                 <h2 className="text-2xl font-bold text-pp-heading flex items-center gap-3">
@@ -300,15 +328,25 @@ export default function PricingPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[var(--border)]">
-                    {group.items.map((item, i) => (
-                      <tr key={i} className="bg-white hover:bg-[var(--surface-alt)] transition-colors">
-                        <td className="px-6 py-4 text-pp-heading font-medium">{item.service}</td>
-                        <td className="px-6 py-4 text-[var(--brand)] font-bold whitespace-nowrap">
-                          {item.price}
-                        </td>
-                        <td className="px-6 py-4 text-[var(--muted)] hidden sm:table-cell">{item.note}</td>
-                      </tr>
-                    ))}
+                    {group.items.map((item, i) => {
+                      const slug = PRICE_SLUGS[groupIndex]?.[i];
+                      const dbRow = slug ? pricingMap[slug] : undefined;
+                      // Hide items explicitly set inactive in admin
+                      if (dbRow && !dbRow.isActive) return null;
+                      const displayPrice = dbRow
+                        ? [dbRow.priceLabel, dbRow.price].filter(Boolean).join(" ")
+                        : item.price;
+                      const displayNote = dbRow?.priceNote ?? item.note;
+                      return (
+                        <tr key={i} className="bg-white hover:bg-[var(--surface-alt)] transition-colors">
+                          <td className="px-6 py-4 text-pp-heading font-medium">{item.service}</td>
+                          <td className="px-6 py-4 text-[var(--brand)] font-bold whitespace-nowrap">
+                            {displayPrice}
+                          </td>
+                          <td className="px-6 py-4 text-[var(--muted)] hidden sm:table-cell">{displayNote}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

@@ -320,6 +320,11 @@ export default function Header() {
                       {s.name}
                     </Link>
                   ))}
+                  <div className="border-t border-gray-100 mt-1 pt-1">
+                    <Link href="/landlords" onClick={() => setMobileOpen(false)} className="block py-2 text-[#C8102E] hover:text-[#a50d26] text-sm font-semibold">
+                      🏠 Landlord Services Hub
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
