@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { confirmBookingSchema } from "@/lib/validations/booking-system";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
+import { notifyPlumbersNewOffer } from "@/lib/notifications/plumber";
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
     // Find on-duty plumbers to create offers for
     const onDutyPlumbers = await prisma.plumber.findMany({
       where: { isOnDuty: true, isActive: true },
-      select: { id: true },
+      select: { id: true, name: true, email: true },
     });
 
     // Atomic: update booking + create images + create offers + create event
@@ -92,6 +93,21 @@ export async function POST(req: NextRequest) {
         data: { bookingId: booking.id, eventType: "pending_assignment" },
       }),
     ]);
+
+    // Fire-and-forget: notify all on-duty plumbers of the new offer
+    if (onDutyPlumbers.length > 0) {
+      notifyPlumbersNewOffer({
+        bookingId:   booking.id,
+        bookingRef:  updated.bookingRef,
+        serviceType: updated.serviceType,
+        postcode:    updated.postcode,
+        slotDate:    updated.slot.date.toISOString().split("T")[0],
+        slotStart:   updated.slot.startTime,
+        slotEnd:     updated.slot.endTime,
+        description: updated.description,
+        plumbers:    onDutyPlumbers,
+      }).catch((e) => console.error("[confirm] plumber notification error:", e));
+    }
 
     return NextResponse.json({
       bookingRef: updated.bookingRef,

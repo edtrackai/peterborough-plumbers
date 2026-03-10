@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminAuth } from "@/lib/security/adminAuth";
+import { notifyPlumbersNewOffer } from "@/lib/notifications/plumber";
 
 // ── GET /api/admin/bookings/[id]/offers ──────────────────────────────────────
 // Returns all active plumbers + their offer status for this booking
@@ -123,7 +124,7 @@ export async function POST(
   // Verify all plumber IDs exist and are active
   const plumbers = await prisma.plumber.findMany({
     where: { id: { in: ids }, isActive: true },
-    select: { id: true },
+    select: { id: true, name: true, email: true },
   });
 
   if (plumbers.length !== ids.length) {
@@ -157,6 +158,34 @@ export async function POST(
       })
     ),
   ]);
+
+  // Fire-and-forget: email the newly-offered plumbers
+  const notifyPlumbers = plumbers.filter((p) => newIds.includes(p.id));
+  if (notifyPlumbers.length > 0) {
+    prisma.booking.findUnique({
+      where: { id },
+      select: {
+        bookingRef:  true,
+        serviceType: true,
+        postcode:    true,
+        description: true,
+        slot: { select: { date: true, startTime: true, endTime: true } },
+      },
+    }).then((b) => {
+      if (!b) return;
+      return notifyPlumbersNewOffer({
+        bookingId:   id,
+        bookingRef:  b.bookingRef,
+        serviceType: b.serviceType,
+        postcode:    b.postcode,
+        slotDate:    b.slot.date.toISOString().split("T")[0],
+        slotStart:   b.slot.startTime,
+        slotEnd:     b.slot.endTime,
+        description: b.description,
+        plumbers:    notifyPlumbers,
+      });
+    }).catch((e) => console.error("[admin/offers] plumber notification error:", e));
+  }
 
   return NextResponse.json({ ok: true, dispatched: newIds.length });
 }

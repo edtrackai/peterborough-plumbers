@@ -84,6 +84,68 @@ export function bookingNotificationHtml(data: {
 </html>`;
 }
 
+// ── New offer (sent to plumber when a job is dispatched to them) ─────────────
+
+export function newOfferHtml(data: {
+  plumberName: string;
+  bookingRef:  string;
+  serviceType: string | null;
+  postcode:    string;
+  slotDate:    string;   // "YYYY-MM-DD"
+  slotStart:   string;
+  slotEnd:     string;
+  description: string | null;
+  portalUrl:   string;
+}): string {
+  const formattedDate = new Date(data.slotDate + "T00:00:00").toLocaleDateString("en-GB", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric",
+  });
+  const serviceLabel = data.serviceType
+    ? data.serviceType.charAt(0).toUpperCase() + data.serviceType.slice(1).replace(/_/g, " ")
+    : "General Plumbing";
+
+  return `
+<!DOCTYPE html>
+<html lang="en-GB">
+<head><meta charset="UTF-8"><title>New Job Offer</title></head>
+<body style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: #242424; padding: 24px; text-align: center; border-radius: 8px 8px 0 0;">
+    <h1 style="color: #fff; margin: 0; font-size: 20px;">${siteSettings.companyName}</h1>
+    <p style="color: rgba(255,255,255,0.5); margin: 6px 0 0; font-size: 13px;">New Job Offer</p>
+  </div>
+  <div style="background: #f9f9f9; padding: 32px; border-radius: 0 0 8px 8px; border: 1px solid #e0e0e0;">
+    <h2 style="color: #242424; margin-top: 0; font-size: 18px;">Hi ${data.plumberName}, you have a new job offer</h2>
+    <p style="color: #555; margin-bottom: 24px;">A customer needs a plumber. Log in to accept or decline before another plumber takes it.</p>
+
+    <div style="background: #fff; border: 1px solid #e0e0e0; border-left: 4px solid #C8102E; border-radius: 6px; padding: 20px; margin-bottom: 24px;">
+      <p style="margin: 0 0 10px; font-size: 15px;"><strong>Service:</strong> ${serviceLabel}</p>
+      <p style="margin: 0 0 10px;"><strong>Postcode:</strong> ${data.postcode}</p>
+      <p style="margin: 0 0 10px;"><strong>Date:</strong> ${formattedDate}</p>
+      <p style="margin: 0 0 10px;"><strong>Time window:</strong> ${data.slotStart} – ${data.slotEnd}</p>
+      <p style="margin: 0;"><strong>Reference:</strong> ${data.bookingRef}</p>
+      ${data.description ? `<p style="margin: 10px 0 0; color: #666; font-size: 13px; border-top: 1px solid #eee; padding-top: 10px;">${data.description}</p>` : ""}
+    </div>
+
+    <div style="text-align: center; margin-bottom: 24px;">
+      <a href="${data.portalUrl}"
+         style="display: inline-block; background: #C8102E; color: #fff; padding: 14px 36px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">
+        View &amp; Accept Job
+      </a>
+    </div>
+
+    <p style="font-size: 13px; color: #888; text-align: center; margin: 0;">
+      Offers expire. Log in quickly to secure this job.
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 24px 0;">
+    <p style="font-size: 12px; color: #999; margin: 0;">
+      ${siteSettings.companyName} · Peterborough, Cambridgeshire
+    </p>
+  </div>
+</body>
+</html>`;
+}
+
 // ── Plumber assigned (sent to customer when booking is accepted) ─────────────
 
 export function plumberAssignedHtml(data: {
