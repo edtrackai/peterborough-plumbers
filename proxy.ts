@@ -26,13 +26,21 @@ async function computeAdminToken(user: string, pass: string): Promise<string> {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/plumber/:path*"],
+  matcher: ["/admin/:path*", "/plumber/:path*", "/admin-login"],
 };
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // ── Admin routes: HTTP Basic Auth + session cookie ─────────────────────────
+  // ── Admin-login page: always allow ────────────────────────────────────────
+  if (pathname === "/admin-login") return NextResponse.next();
+
+  // ── Admin API login/logout: always allow ───────────────────────────────────
+  if (pathname.startsWith("/api/admin/login") || pathname.startsWith("/api/admin/logout")) {
+    return NextResponse.next();
+  }
+
+  // ── Admin routes: session cookie gate → redirect to login page ────────────
   if (pathname.startsWith("/admin")) {
     const adminUser = process.env.ADMIN_USER;
     const adminPass = process.env.ADMIN_PASSWORD;
@@ -45,61 +53,14 @@ export async function proxy(req: NextRequest) {
     }
 
     const expectedToken = await computeAdminToken(adminUser, adminPass);
-
-    // Valid session cookie → allow without re-prompting Basic Auth
     const sessionCookie = req.cookies.get(ADMIN_COOKIE)?.value ?? "";
+
     if (sessionCookie && safeCompare(sessionCookie, expectedToken)) {
       return NextResponse.next();
     }
 
-    // No cookie → require Basic Auth
-    const authHeader = req.headers.get("authorization");
-    if (!authHeader?.startsWith("Basic ")) {
-      return new NextResponse("Unauthorised", {
-        status: 401,
-        headers: {
-          "WWW-Authenticate": 'Basic realm="Peterborough Plumbers Admin", charset="UTF-8"',
-        },
-      });
-    }
-
-    let authenticated = false;
-    try {
-      const decoded = atob(authHeader.slice(6));
-      const colonIdx = decoded.indexOf(":");
-      if (colonIdx > 0) {
-        const providedUser = decoded.slice(0, colonIdx);
-        const providedPass = decoded.slice(colonIdx + 1);
-        authenticated =
-          safeCompare(providedUser, adminUser) &&
-          safeCompare(providedPass, adminPass);
-      }
-    } catch {
-      return new NextResponse("Unauthorised", {
-        status: 401,
-        headers: { "WWW-Authenticate": 'Basic realm="Peterborough Plumbers Admin"' },
-      });
-    }
-
-    if (!authenticated) {
-      return new NextResponse("Unauthorised", {
-        status: 401,
-        headers: {
-          "WWW-Authenticate": 'Basic realm="Peterborough Plumbers Admin", charset="UTF-8"',
-        },
-      });
-    }
-
-    // Successful auth — set session cookie so subsequent requests skip Basic Auth prompt
-    const res = NextResponse.next();
-    res.cookies.set(ADMIN_COOKIE, expectedToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 60 * 60 * 8, // 8 hours
-      path: "/",
-    });
-    return res;
+    // Not authenticated → redirect to login page
+    return NextResponse.redirect(new URL("/admin-login", req.url));
   }
 
   // ── Plumber routes: session cookie gate (except login page) ───────────────
