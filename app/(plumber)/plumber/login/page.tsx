@@ -293,25 +293,6 @@ export default function PlumberLoginPage() {
 
           </form>
 
-          {/* ── Test credentials ──────────────────────────────────────── */}
-          <div className="mt-6 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-            <p className="text-[10px] text-center font-semibold text-zinc-700 uppercase tracking-[0.14em] mb-3">
-              Test login
-            </p>
-            <div
-              className="rounded-xl px-4 py-3 flex flex-col gap-1.5"
-              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[10.5px] text-zinc-700">Email</span>
-                <span className="text-[10.5px] font-mono text-zinc-500 select-all">plumber1@local.test</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[10.5px] text-zinc-700">Password</span>
-                <span className="text-[10.5px] font-mono text-zinc-500 select-all">Plumber123!</span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* ── Footer ─────────────────────────────────────────────────── */}
