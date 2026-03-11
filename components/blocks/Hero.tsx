@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { siteSettings } from "@/content/settings";
+import { getSiteSettings } from "@/lib/db/content";
 
-export default function Hero() {
+export default async function Hero() {
+  const s = await getSiteSettings();
   return (
     <section className="relative min-h-[620px] lg:min-h-[720px] flex items-center">
       {/* Background image */}
@@ -35,16 +36,16 @@ export default function Hero() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-start gap-4 mb-10">
             <Link
-              href={siteSettings.primaryCtaHref}
+              href={s.primaryCtaHref}
               className="btn-book-now inline-flex items-center bg-pp-teal text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-pp-teal-dark transition-colors duration-200 shadow-lg"
             >
-              {siteSettings.primaryCtaLabel}
+              {s.primaryCtaLabel}
             </Link>
             <a
-              href={`tel:${siteSettings.phoneHref}`}
+              href={`tel:${s.phoneHref}`}
               className="inline-flex items-center bg-transparent text-white px-8 py-4 rounded-full font-bold text-lg border-2 border-white hover:bg-white hover:text-pp-navy transition-colors duration-200"
             >
-              Call {siteSettings.phone}
+              Call {s.phone}
             </a>
           </div>
 

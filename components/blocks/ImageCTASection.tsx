@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { siteSettings, getWhatsAppUrl } from "@/content/settings";
+import { getSiteSettings } from "@/lib/db/content";
 
 interface Props {
   heading: string;
@@ -26,7 +26,9 @@ interface Props {
  * Bottom edge: gentle arc dipping slightly below centre → convex outward curve
  * Sides stay straight; effective corner rounding is baked into the path.
  */
-export default function ImageCTASection({ heading, subheading, imageSrc, imageAlt }: Props) {
+export default async function ImageCTASection({ heading, subheading, imageSrc, imageAlt }: Props) {
+  const s = await getSiteSettings();
+  const whatsappUrl = `https://wa.me/${s.whatsappNumber}?text=${encodeURIComponent(s.whatsappPrefillMessage)}`;
   return (
     <div
       className="mb-8 md:mb-14"
@@ -116,18 +118,18 @@ export default function ImageCTASection({ heading, subheading, imageSrc, imageAl
             {/* Buttons */}
             <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
               <Link
-                href={siteSettings.primaryCtaHref}
+                href={s.primaryCtaHref}
                 className="btn-book-now inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[var(--brand)] text-white font-bold text-sm hover:bg-[var(--brand-hover)] transition-colors duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2 focus:ring-offset-black"
               >
-                {siteSettings.primaryCtaLabel}
+                {s.primaryCtaLabel}
               </Link>
               <a
-                href={getWhatsAppUrl()}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-white font-bold text-sm border border-white/30 bg-transparent hover:bg-green-600 hover:border-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
               >
-                {siteSettings.secondaryCtaLabel}
+                {s.secondaryCtaLabel}
               </a>
             </div>
 
@@ -135,10 +137,10 @@ export default function ImageCTASection({ heading, subheading, imageSrc, imageAl
             <p className="mt-6 text-white/50 text-xs">
               Or call us directly:{" "}
               <a
-                href={`tel:${siteSettings.phoneHref}`}
+                href={`tel:${s.phoneHref}`}
                 className="text-white/80 font-semibold hover:text-white hover:underline transition-colors"
               >
-                {siteSettings.phone}
+                {s.phone}
               </a>
             </p>
           </div>

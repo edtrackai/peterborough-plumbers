@@ -1,12 +1,14 @@
-import { getWhatsAppUrl } from "@/content/settings";
+import { getSiteSettings } from "@/lib/db/content";
 
-export default function WhatsAppFloat() {
+export default async function WhatsAppFloat() {
+  const s = await getSiteSettings();
+  const whatsappUrl = `https://wa.me/${s.whatsappNumber}?text=${encodeURIComponent(s.whatsappPrefillMessage)}`;
   return (
     <div className="hidden lg:block fixed bottom-[100px] right-4 z-[60]">
       {/* Pulse ring */}
       <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-40" aria-hidden="true" />
       <a
-        href={getWhatsAppUrl()}
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"

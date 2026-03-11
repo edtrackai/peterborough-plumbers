@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { siteSettings, getWhatsAppUrl } from "@/content/settings";
+import { useSettings } from "@/components/providers/SettingsProvider";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils/cn";
 
@@ -21,6 +21,7 @@ const NAV_LINK =
 
 export default function Header() {
   const pathname = usePathname();
+  const s = useSettings();
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen]     = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -113,7 +114,7 @@ export default function Header() {
           {isHome ? (
             <div className="hidden lg:flex items-center gap-4 shrink-0">
               {/* Phone with icon */}
-              <a href={`tel:${siteSettings.phoneHref}`} className="flex items-center gap-2.5 group">
+              <a href={`tel:${s.phoneHref}`} className="flex items-center gap-2.5 group">
                 <span className="h-10 w-10 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200" style={{ background: "#FEE2E2" }}>
                   <svg className="h-5 w-5" style={{ color: "#C8102E" }} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z" />
@@ -122,7 +123,7 @@ export default function Header() {
                 <div>
                   <p className="text-[0.65rem] font-semibold text-[#9CA3AF] uppercase tracking-wider leading-none mb-0.5">Call Us Now</p>
                   <p className="font-black text-[1.1rem] leading-none whitespace-nowrap transition-colors duration-200 group-hover:text-[#C8102E]" style={{ color: "#242424" }}>
-                    {siteSettings.phone}
+                    {s.phone}
                   </p>
                 </div>
               </a>
@@ -144,9 +145,9 @@ export default function Header() {
             </div>
           ) : (
             <div className="hidden lg:flex items-center gap-3 shrink-0">
-              <a href={`tel:${siteSettings.phoneHref}`}
+              <a href={`tel:${s.phoneHref}`}
                 className="font-bold text-[0.95rem] text-[#242424] hover:text-[#C8102E] transition-colors duration-150 whitespace-nowrap">
-                {siteSettings.phone}
+                {s.phone}
               </a>
               <div className="h-6 w-px bg-gray-200 shrink-0" />
               <Link href="/emergency" className="inline-flex items-center justify-center gap-1.5 bg-gradient-to-br from-[#C8102E] to-[#9a0c22] text-white px-5 h-[42px] rounded-full font-bold text-[0.85rem] hover:from-[#a50d26] hover:to-[#7d0919] transition-all duration-150 whitespace-nowrap"
@@ -341,16 +342,16 @@ export default function Header() {
 
             <div className="pt-3 flex flex-col gap-3">
               <a
-                href={`tel:${siteSettings.phoneHref}`}
+                href={`tel:${s.phoneHref}`}
                 className="flex items-center justify-center gap-2 bg-[#C8102E] text-white py-3 rounded-full font-bold text-sm"
               >
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z" />
                 </svg>
-                Call {siteSettings.phone}
+                Call {s.phone}
               </a>
               <a
-                href={getWhatsAppUrl()}
+                href={`https://wa.me/${s.whatsappNumber}?text=${encodeURIComponent(s.whatsappPrefillMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}

@@ -21,11 +21,16 @@ export default async function PlumbersPage() {
       isOnDuty: true,
       lastSeenAt: true,
       createdAt: true,
+      approvalStatus: true,
+      plumberId: true,
+      adminNote: true,
+      gasSafeNumber: true,
+      verifiedGeneral: true,
+      boilerGasApproved: true,
       _count: { select: { bookings: true } },
     },
   });
 
-  // Serialize Dates → strings before passing to client component
   const serialized = plumbers.map((p) => ({
     ...p,
     lastSeenAt: p.lastSeenAt?.toISOString() ?? null,

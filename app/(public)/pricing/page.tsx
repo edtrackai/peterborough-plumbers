@@ -12,9 +12,9 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Pricing Peterborough | Peterborough Plumbers",
+  title: "Plumbing & Heating Pricing Peterborough | Upfront Quotes",
   description:
-    "Plumbing & heating pricing in Peterborough 2026. Written quote before every job — no hidden fees. Boiler servicing, emergency call-outs & installations covered.",
+    "Plumbing & heating pricing in Peterborough 2026. Written quote before every job — no hidden fees. Boiler servicing, emergency call-outs & installations.",
   path: "/pricing",
   image: "/images/pricing/hero.webp",
   absoluteTitle: true,

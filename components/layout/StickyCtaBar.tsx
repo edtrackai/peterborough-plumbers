@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { siteSettings, getWhatsAppUrl } from "@/content/settings";
+import { getSiteSettings } from "@/lib/db/content";
 
-export default function StickyCtaBar() {
+export default async function StickyCtaBar() {
+  const s = await getSiteSettings();
+  const whatsappUrl = `https://wa.me/${s.whatsappNumber}?text=${encodeURIComponent(s.whatsappPrefillMessage)}`;
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-50 lg:hidden backdrop-blur-md border-t border-white/10 px-4 pt-3"
@@ -9,19 +11,19 @@ export default function StickyCtaBar() {
     >
       <div className="flex gap-3">
         <Link
-          href={siteSettings.primaryCtaHref}
+          href={s.primaryCtaHref}
           className="btn-book-now flex-1 bg-pp-teal text-white text-center py-3 rounded-full font-bold text-sm hover:bg-pp-teal-dark transition-colors duration-200"
         >
-          {siteSettings.primaryCtaLabel}
+          {s.primaryCtaLabel}
         </Link>
         <a
-          href={getWhatsAppUrl()}
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 text-white text-center py-3 rounded-full font-bold text-sm transition-colors duration-200"
           style={{ backgroundColor: "#075E54" }}
         >
-          {siteSettings.secondaryCtaLabel}
+          {s.secondaryCtaLabel}
         </a>
       </div>
     </div>
