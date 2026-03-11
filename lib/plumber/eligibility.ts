@@ -17,6 +17,7 @@ import { prisma } from "@/lib/prisma";
 const BOILER_GAS_KEYWORDS = [
   "boiler",
   "gas",
+  "heating",
 ];
 
 export function requiresBoilerGasApproval(serviceType: string | null | undefined): boolean {

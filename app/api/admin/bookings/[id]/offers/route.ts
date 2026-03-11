@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminAuth } from "@/lib/security/adminAuth";
 import { notifyPlumbersNewOffer } from "@/lib/notifications/plumber";
+import { requiresBoilerGasApproval } from "@/lib/plumber/eligibility";
 
 // ── GET /api/admin/bookings/[id]/offers ──────────────────────────────────────
 // Returns all active plumbers + their offer status for this booking
@@ -22,6 +23,7 @@ export async function GET(
         id: true,
         status: true,
         bookingRef: true,
+        serviceType: true,
         offers: {
           select: {
             id: true,
@@ -35,7 +37,7 @@ export async function GET(
     }),
     prisma.plumber.findMany({
       where: { isActive: true },
-      select: { id: true, name: true, phone: true, isOnDuty: true, lastSeenAt: true },
+      select: { id: true, name: true, phone: true, isOnDuty: true, lastSeenAt: true, boilerGasApproved: true, plumberType: true },
       orderBy: [{ isOnDuty: "desc" }, { name: "asc" }],
     }),
   ]);
@@ -49,12 +51,18 @@ export async function GET(
     booking.offers.map((o) => [o.plumberId, o])
   );
 
+  const needsBoilerGas = requiresBoilerGasApproval(booking.serviceType);
+
   const plumbersWithStatus = plumbers.map((p) => ({
-    id:         p.id,
-    name:       p.name,
-    phone:      p.phone,
-    isOnDuty:   p.isOnDuty,
-    lastSeenAt: p.lastSeenAt?.toISOString() ?? null,
+    id:               p.id,
+    name:             p.name,
+    phone:            p.phone,
+    isOnDuty:         p.isOnDuty,
+    lastSeenAt:       p.lastSeenAt?.toISOString() ?? null,
+    plumberType:      p.plumberType,
+    boilerGasApproved: p.boilerGasApproved,
+    // Ineligible if this job needs Gas Safe approval and plumber doesn't have it
+    ineligible:       needsBoilerGas && !p.boilerGasApproved,
     offer: offersByPlumber[p.id]
       ? {
           id:          offersByPlumber[p.id].id,
@@ -108,7 +116,7 @@ export async function POST(
 
   const booking = await prisma.booking.findUnique({
     where: { id },
-    select: { id: true, status: true, bookingRef: true },
+    select: { id: true, status: true, bookingRef: true, serviceType: true },
   });
 
   if (!booking) {
@@ -124,7 +132,7 @@ export async function POST(
   // Verify all plumber IDs exist and are active
   const plumbers = await prisma.plumber.findMany({
     where: { id: { in: ids }, isActive: true },
-    select: { id: true, name: true, email: true },
+    select: { id: true, name: true, email: true, boilerGasApproved: true, plumberType: true },
   });
 
   if (plumbers.length !== ids.length) {
@@ -132,6 +140,18 @@ export async function POST(
       { error: "One or more plumber IDs are invalid or inactive." },
       { status: 400 }
     );
+  }
+
+  // Enforce Gas Safe eligibility — general plumbers must never receive boiler/gas/heating jobs
+  if (requiresBoilerGasApproval(booking.serviceType)) {
+    const ineligible = plumbers.filter((p) => !p.boilerGasApproved);
+    if (ineligible.length > 0) {
+      const names = ineligible.map((p) => p.name).join(", ");
+      return NextResponse.json(
+        { error: `This job requires a Gas Safe approved engineer. The following plumbers are not approved: ${names}.` },
+        { status: 422 }
+      );
+    }
   }
 
   // Get existing offers to avoid duplicating pending ones
