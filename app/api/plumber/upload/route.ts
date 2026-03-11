@@ -93,15 +93,13 @@ export async function POST(req: NextRequest) {
     const filename = `plumbers/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
     const blob = await put(filename, Buffer.from(buf), {
-      access: "public",
+      access: "private",
       contentType: file.type,
     });
 
     return NextResponse.json({ url: blob.url, publicId: blob.pathname });
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("[plumber/upload]", msg);
-    // Temporary: expose error detail to diagnose production issue
-    return NextResponse.json({ error: "Upload failed.", detail: msg }, { status: 500 });
+    console.error("[plumber/upload]", err instanceof Error ? err.message : err);
+    return NextResponse.json({ error: "Upload failed. Please try again." }, { status: 500 });
   }
 }
