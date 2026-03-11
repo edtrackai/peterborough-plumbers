@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cloudinary } from "@/lib/cloudinary";
+import { put } from "@vercel/blob";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
-// Images for photos/selfies, PDFs for certificates and insurance docs
 const ALLOWED_TYPES = [
   "image/jpeg",
   "image/png",
@@ -36,11 +35,9 @@ function verifyMagicBytes(buf: Uint8Array, mimeType: string): boolean {
       );
 
     case "image/heic":
-      // HEIC/HEIF container — magic bytes vary. Trust Apple-origin declaration.
       return true;
 
     case "application/pdf":
-      // %PDF = 0x25 0x50 0x44 0x46
       return buf[0] === 0x25 && buf[1] === 0x50 && buf[2] === 0x44 && buf[3] === 0x46;
 
     default:
@@ -49,6 +46,10 @@ function verifyMagicBytes(buf: Uint8Array, mimeType: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    return NextResponse.json({ error: "Upload service not configured." }, { status: 503 });
+  }
+
   const ip = getClientIp(req);
   const { limited, retryAfterSec } = checkRateLimit(ip, RATE_LIMIT);
   if (limited) {
@@ -88,17 +89,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const b64 = Buffer.from(buf).toString("base64");
-    const dataUri = `data:${file.type};base64,${b64}`;
+    const ext = file.name.split(".").pop() ?? "bin";
+    const filename = `plumbers/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    // resource_type "auto" handles both images and PDFs
-    const result = await cloudinary.uploader.upload(dataUri, {
-      folder: "peterborough-plumbers/plumbers",
-      resource_type: "auto",
-      quality: "auto",
+    const blob = await put(filename, Buffer.from(buf), {
+      access: "public",
+      contentType: file.type,
     });
 
-    return NextResponse.json({ url: result.secure_url, publicId: result.public_id });
+    return NextResponse.json({ url: blob.url, publicId: blob.pathname });
   } catch (err) {
     console.error("[plumber/upload]", err instanceof Error ? err.message : err);
     return NextResponse.json({ error: "Upload failed. Please try again." }, { status: 500 });
