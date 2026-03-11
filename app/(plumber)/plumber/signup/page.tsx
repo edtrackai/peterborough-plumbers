@@ -8,6 +8,7 @@ export default function PlumberSignupPage() {
     name: "",
     email: "",
     phone: "",
+    gasSafeNumber: "",
     password: "",
     confirm: "",
   });
@@ -41,6 +42,7 @@ export default function PlumberSignupPage() {
           name: form.name,
           email: form.email,
           phone: form.phone,
+          gasSafeNumber: form.gasSafeNumber || undefined,
           password: form.password,
         }),
       });
@@ -228,6 +230,32 @@ export default function PlumberSignupPage() {
                   />
                 </div>
                 {fieldErrors.phone && <p className="text-[11px] text-red-400">{fieldErrors.phone[0]}</p>}
+              </div>
+
+              {/* Gas Safe Number */}
+              <div className="flex flex-col gap-2">
+                <label className="text-[10.5px] font-semibold text-zinc-500 uppercase tracking-[0.12em]">
+                  Gas Safe Registration No. <span className="text-zinc-600 normal-case tracking-normal font-normal">(if applicable)</span>
+                </label>
+                <div className="relative">
+                  <svg className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-[15px] w-[15px] text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  <input
+                    type="text"
+                    value={form.gasSafeNumber}
+                    onChange={set("gasSafeNumber")}
+                    placeholder="e.g. 123456"
+                    autoComplete="off"
+                    className={inputBase}
+                    style={inputStyle}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                  />
+                </div>
+                <p className="text-[10.5px] text-zinc-600 leading-snug">
+                  We'll verify this with the Gas Safe Register before approving gas &amp; boiler work.
+                </p>
               </div>
 
               {/* Password */}

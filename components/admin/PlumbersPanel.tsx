@@ -15,6 +15,7 @@ type Plumber = {
   approvalStatus: string;
   plumberId: string | null;
   adminNote: string | null;
+  gasSafeNumber: string | null;
   verifiedGeneral: boolean;
   boilerGasApproved: boolean;
   _count: { bookings: number };
@@ -100,6 +101,11 @@ function PendingRow({
           <p className="text-sm font-semibold text-slate-800">{p.name}</p>
           <p className="text-xs text-slate-400 truncate">{p.email}</p>
           {p.phone && <p className="text-xs text-slate-400">{p.phone}</p>}
+          {p.gasSafeNumber && (
+            <p className="text-xs text-slate-500 mt-0.5">
+              Gas Safe: <span className="font-mono font-semibold text-slate-700">{p.gasSafeNumber}</span>
+            </p>
+          )}
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <ApprovalBadge status={p.approvalStatus} />

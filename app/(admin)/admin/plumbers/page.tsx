@@ -24,6 +24,7 @@ export default async function PlumbersPage() {
       approvalStatus: true,
       plumberId: true,
       adminNote: true,
+      gasSafeNumber: true,
       verifiedGeneral: true,
       boilerGasApproved: true,
       _count: { select: { bookings: true } },

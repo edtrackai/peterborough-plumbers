@@ -3,6 +3,7 @@ import { hash } from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
+import { sendNewSignupNotification } from "@/lib/email/plumberApproval";
 
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100).transform((v) => v.trim()),
@@ -21,6 +22,11 @@ const signupSchema = z.object({
     .string()
     .min(12, "Password must be at least 12 characters")
     .max(128, "Password too long"),
+  gasSafeNumber: z
+    .string()
+    .max(20)
+    .optional()
+    .transform((v) => v?.trim() || undefined),
   // Optional: doc uploads provided as Cloudinary URLs after upload
   docs: z
     .array(
@@ -69,7 +75,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { name, email, phone, password, docs } = parsed.data;
+  const { name, email, phone, password, gasSafeNumber, docs } = parsed.data;
 
   try {
     const existing = await prisma.plumber.findUnique({ where: { email } });
@@ -91,6 +97,7 @@ export async function POST(req: NextRequest) {
         isActive: false,              // cannot login until approved
         isOnDuty: false,
         approvalStatus: "pending_verification",
+        gasSafeNumber: gasSafeNumber ?? null,
         verifiedGeneral: false,
         boilerGasApproved: false,
         ...(docs && docs.length > 0
@@ -107,6 +114,14 @@ export async function POST(req: NextRequest) {
       },
       select: { id: true, name: true, email: true, approvalStatus: true },
     });
+
+    // Fire-and-forget admin notification
+    sendNewSignupNotification({
+      name,
+      email,
+      phone: phone ?? undefined,
+      gasSafeNumber: gasSafeNumber ?? undefined,
+    }).catch((e) => console.error("[signup notification]", e));
 
     return NextResponse.json({ ok: true, plumber }, { status: 201 });
   } catch (err) {
