@@ -38,7 +38,12 @@ export async function POST(req: NextRequest) {
       where: { email: email.trim().toLowerCase() },
     });
 
-    if (!plumber || !plumber.isActive) {
+    // Rejected / suspended plumbers cannot log in at all
+    if (
+      !plumber ||
+      plumber.approvalStatus === "rejected" ||
+      plumber.approvalStatus === "suspended"
+    ) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
 
@@ -47,6 +52,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
     }
 
+    // Pending / needs_more_info plumbers can log in but only see /plumber/pending
     const session = await getPlumberSession();
     session.plumberId = plumber.id;
     session.name = plumber.name;
@@ -58,7 +64,11 @@ export async function POST(req: NextRequest) {
       data: { lastSeenAt: new Date() },
     });
 
-    return NextResponse.json({ ok: true, name: plumber.name });
+    return NextResponse.json({
+      ok: true,
+      name: plumber.name,
+      approvalStatus: plumber.approvalStatus,
+    });
   } catch (err) {
     console.error("[plumber/login]", err instanceof Error ? err.message : "error");
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

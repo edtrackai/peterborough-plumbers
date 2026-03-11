@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { confirmBookingSchema } from "@/lib/validations/booking-system";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
 import { notifyPlumbersNewOffer } from "@/lib/notifications/plumber";
+import { getEligiblePlumbersForRequest } from "@/lib/plumber/eligibility";
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
@@ -49,11 +50,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Reservation has expired" }, { status: 410 });
     }
 
-    // Find on-duty plumbers to create offers for
-    const onDutyPlumbers = await prisma.plumber.findMany({
-      where: { isOnDuty: true, isActive: true },
-      select: { id: true, name: true, email: true },
-    });
+    // Find eligible plumbers (approved + on duty + not busy + correct service permissions)
+    const onDutyPlumbers = await getEligiblePlumbersForRequest({ serviceType });
 
     // Atomic: update booking + create images + create offers + create event
     const [updated] = await prisma.$transaction([

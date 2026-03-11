@@ -81,7 +81,12 @@ export async function POST(req: NextRequest) {
 
     const passwordHash = await hash(password, 12);
     const plumber = await prisma.plumber.create({
-      data: { name, email, phone, passwordHash, isActive: true, isOnDuty: false },
+      data: {
+        name, email, phone, passwordHash,
+        isActive: true, isOnDuty: false,
+        approvalStatus: "approved",
+        verifiedGeneral: true,
+      },
       select: {
         id: true,
         name: true,

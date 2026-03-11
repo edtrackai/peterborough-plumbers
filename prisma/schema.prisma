@@ -58,12 +58,40 @@ model Plumber {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
+  // Approval flow
+  // pending_verification | needs_more_info | approved | rejected | suspended
+  approvalStatus    String  @default("pending_verification")
+  plumberId         String? @unique  // PLM-000001 — generated only on admin approval
+  adminNote         String? @db.Text // visible to plumber (rejection/info reason)
+
+  // Service permissions / badges
+  verifiedGeneral   Boolean @default(false) // approved for all general plumbing jobs
+  boilerGasApproved Boolean @default(false) // approved for boiler & gas work
+
   bookings  Booking[]        @relation("AssignedPlumber")
   offers    BookingOffer[]
   events    BookingEvent[]
   locations BookingLocation[]
+  docs      PlumberDoc[]
 
   @@map("pb_plumbers")
+}
+
+// ── PlumberDoc ────────────────────────────────────────────────────────────────
+// docType: photo_id | selfie | proof_of_address | public_liability_insurance
+//          | dbs_certificate | gas_safe_certificate
+
+model PlumberDoc {
+  id         String   @id @default(cuid())
+  plumberId  String
+  plumber    Plumber  @relation(fields: [plumberId], references: [id], onDelete: Cascade)
+  docType    String
+  url        String
+  publicId   String?
+  uploadedAt DateTime @default(now())
+
+  @@index([plumberId])
+  @@map("pb_plumber_docs")
 }
 
 // ── Booking ───────────────────────────────────────────────────────────────────
