@@ -6,7 +6,6 @@
 import { Resend } from "resend";
 import { siteSettings } from "@/content/settings";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = `${siteSettings.companyName} <website@peterboroughplumbers.com>`;
 
 // ── Approval ─────────────────────────────────────────────────────────────────
@@ -18,6 +17,7 @@ export async function sendApprovalEmail(data: {
   boilerGasApproved: boolean;
 }): Promise<void> {
   if (!process.env.RESEND_API_KEY) return;
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const html = `
 <!DOCTYPE html>
@@ -70,6 +70,7 @@ export async function sendRejectionEmail(data: {
   adminNote?: string;
 }): Promise<void> {
   if (!process.env.RESEND_API_KEY) return;
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const html = `
 <!DOCTYPE html>
