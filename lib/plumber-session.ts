@@ -3,10 +3,15 @@ import { cookies } from "next/headers";
 
 const DEFAULT_SECRET = "dev-only-secret-change-in-prod-must-be-32chars!!";
 
-if (process.env.NODE_ENV === "production" && !process.env.SESSION_SECRET) {
+// iron-session requires password >= 32 chars. Fall back to DEFAULT_SECRET if
+// SESSION_SECRET is missing, empty, or too short (< 32 chars).
+const _raw = process.env.SESSION_SECRET;
+const SESSION_PASSWORD = _raw && _raw.length >= 32 ? _raw : DEFAULT_SECRET;
+
+if (process.env.NODE_ENV === "production" && SESSION_PASSWORD === DEFAULT_SECRET) {
   console.warn(
-    "[security] SESSION_SECRET is not set — using insecure default. " +
-    "Set SESSION_SECRET in your environment variables immediately."
+    "[security] SESSION_SECRET is not set or is too short (< 32 chars) — " +
+    "using insecure default. Set a 32+ character SESSION_SECRET in Vercel env vars."
   );
 }
 
@@ -17,8 +22,7 @@ export interface PlumberSessionData {
 }
 
 export const sessionOptions = {
-  // Must be at least 32 chars. Set SESSION_SECRET in .env.local for production.
-  password: process.env.SESSION_SECRET ?? DEFAULT_SECRET,
+  password: SESSION_PASSWORD,
   cookieName: "pp_plumber",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
