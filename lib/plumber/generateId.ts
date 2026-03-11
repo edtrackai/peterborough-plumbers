@@ -27,16 +27,15 @@ export async function assignPlumberId(id: string): Promise<string> {
 
     try {
       await prisma.plumber.update({
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        where: { id, plumberId: null } as any, // guard: only assign if not already set
+        where: { id },
         data: { plumberId: nextId },
       });
       return nextId;
     } catch (err) {
-      // P2002 = unique constraint; P2025 = record not found (already assigned)
+      // P2002 = unique constraint violation (race condition — retry with next number)
       if (
         err instanceof Prisma.PrismaClientKnownRequestError &&
-        (err.code === "P2002" || err.code === "P2025")
+        err.code === "P2002"
       ) {
         if (attempt === 5) throw new Error("Failed to assign unique Plumber ID after 5 attempts");
         continue;
