@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { siteSettings } from "@/content/settings";
+import { useSettings } from "@/components/providers/SettingsProvider";
 
 const STORAGE_KEY = "pp_exit_intent_seen";
 
 export default function ExitIntentModal() {
+  const s = useSettings();
   const [open, setOpen] = useState(false);
   const triggered = useRef(false);
 
@@ -90,11 +91,11 @@ export default function ExitIntentModal() {
         {/* Star rating */}
         <div className="flex items-center gap-1.5 mb-5">
           {[1,2,3,4,5].map((i) => (
-            <svg key={i} className={`h-4 w-4 ${i <= Math.round(Number(siteSettings.googleRating)) ? "text-yellow-400" : "text-gray-200"}`} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg key={i} className={`h-4 w-4 ${i <= Math.round(Number(s.googleRating)) ? "text-yellow-400" : "text-gray-200"}`} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z" />
             </svg>
           ))}
-          <span className="text-sm text-gray-500 font-medium">{siteSettings.googleRating}/5 · {siteSettings.reviewCount} Google reviews</span>
+          <span className="text-sm text-gray-500 font-medium">{s.googleRating}/5 · {s.reviewCount} Google reviews</span>
         </div>
 
         {/* CTAs */}
@@ -107,14 +108,14 @@ export default function ExitIntentModal() {
             Book a Plumber — Free Quote
           </Link>
           <a
-            href={`tel:${siteSettings.phoneHref}`}
+            href={`tel:${s.phoneHref}`}
             onClick={() => setOpen(false)}
             className="w-full flex items-center justify-center gap-2 h-12 rounded-full border-2 border-pp-navy text-pp-navy font-bold text-sm hover:bg-pp-navy hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pp-navy focus-visible:ring-offset-2"
           >
             <svg className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z" />
             </svg>
-            Call {siteSettings.phone}
+            Call {s.phone}
           </a>
         </div>
 

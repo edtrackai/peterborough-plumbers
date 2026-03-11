@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
@@ -31,6 +32,9 @@ export async function PATCH(req: Request) {
     where: { id: "singleton" },
     data,
   });
+
+  // Purge the full-route cache so every page picks up the new settings immediately.
+  revalidatePath("/", "layout");
 
   return NextResponse.json(settings);
 }

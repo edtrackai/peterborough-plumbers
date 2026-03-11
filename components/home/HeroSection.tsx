@@ -10,7 +10,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { siteSettings } from "@/content/settings";
+import { getSiteSettings } from "@/lib/db/content";
 
 // ── SVG Icons ─────────────────────────────────────────────────────────────────
 
@@ -59,7 +59,8 @@ const cardGuarantees = [
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function HeroSection() {
+export default async function HeroSection() {
+  const s = await getSiteSettings();
   return (
     <section
       aria-label="Hero"
@@ -171,12 +172,12 @@ export default function HeroSection() {
 
             {/* Secondary: Call */}
             <a
-              href={`tel:${siteSettings.phoneHref}`}
-              aria-label={`Call us on ${siteSettings.phone}`}
+              href={`tel:${s.phoneHref}`}
+              aria-label={`Call us on ${s.phone}`}
               className="inline-flex items-center justify-center gap-2.5 h-[44px] sm:h-[52px] px-5 sm:px-7 rounded-full text-white font-bold text-[0.85rem] sm:text-[0.9rem] border border-white/20 bg-white/[0.07] hover:bg-white/[0.14] hover:border-white/35 transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
             >
               <PhoneIcon className="h-4 w-4 shrink-0" />
-              {siteSettings.phone}
+              {s.phone}
             </a>
           </div>
 
@@ -190,12 +191,12 @@ export default function HeroSection() {
             ))}
             {/* Google rating */}
             <li className="flex items-center gap-1.5 text-white/55 text-sm">
-              <span className="flex items-center gap-0.5" aria-label={`Rated ${siteSettings.googleRating} out of 5 on Google`}>
+              <span className="flex items-center gap-0.5" aria-label={`Rated ${s.googleRating} out of 5 on Google`}>
                 {[1,2,3,4,5].map((i) => (
-                  <StarIcon key={i} className={`h-3 w-3 ${i <= Math.round(Number(siteSettings.googleRating)) ? "text-yellow-400" : "text-white/20"}`} />
+                  <StarIcon key={i} className={`h-3 w-3 ${i <= Math.round(Number(s.googleRating)) ? "text-yellow-400" : "text-white/20"}`} />
                 ))}
               </span>
-              {siteSettings.googleRating} · {siteSettings.reviewCount} Google reviews
+              {s.googleRating} · {s.reviewCount} Google reviews
             </li>
           </ul>
 
@@ -214,12 +215,12 @@ export default function HeroSection() {
             </span>
 
             {/* Experience */}
-            {siteSettings.yearsExperience && (
+            {s.yearsExperience && (
               <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
                 <svg className="h-3 w-3 text-brand shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
                 </svg>
-                {siteSettings.yearsExperience} Years Experience
+                {s.yearsExperience} Years Experience
               </span>
             )}
 
@@ -250,7 +251,7 @@ export default function HeroSection() {
             {/* Google rating — mobile */}
             <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-yellow-400/30 bg-yellow-400/[0.08] backdrop-blur-md px-3 py-1.5 text-white/85 text-[0.7rem] font-semibold leading-none">
               <StarIcon className="h-3 w-3 text-yellow-400 shrink-0" />
-              {siteSettings.googleRating}/5 · {siteSettings.reviewCount} reviews
+              {s.googleRating}/5 · {s.reviewCount} reviews
             </span>
           </div>
         </div>
@@ -271,11 +272,11 @@ export default function HeroSection() {
           <div className="flex flex-wrap items-center justify-center gap-x-10">
 
             {/* Experience */}
-            {siteSettings.yearsExperience && (
+            {s.yearsExperience && (
               <>
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 text-brand shrink-0" />
-                  <span className="text-white text-xs sm:text-sm font-semibold">{siteSettings.yearsExperience} Years Experience</span>
+                  <span className="text-white text-xs sm:text-sm font-semibold">{s.yearsExperience} Years Experience</span>
                 </div>
                 <div className="h-5 w-px bg-white/20" aria-hidden />
               </>
@@ -310,12 +311,12 @@ export default function HeroSection() {
 
             {/* Google rating */}
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="flex items-center gap-0.5" aria-label={`Rated ${siteSettings.googleRating} out of 5 on Google`}>
+              <span className="flex items-center gap-0.5" aria-label={`Rated ${s.googleRating} out of 5 on Google`}>
                 {[1,2,3,4,5].map((i) => (
-                  <StarIcon key={i} className={`h-3.5 w-3.5 ${i <= Math.round(Number(siteSettings.googleRating)) ? "text-yellow-400" : "text-white/20"}`} />
+                  <StarIcon key={i} className={`h-3.5 w-3.5 ${i <= Math.round(Number(s.googleRating)) ? "text-yellow-400" : "text-white/20"}`} />
                 ))}
               </span>
-              <span className="text-white text-xs sm:text-sm font-semibold">{siteSettings.googleRating}/5 · {siteSettings.reviewCount} reviews</span>
+              <span className="text-white text-xs sm:text-sm font-semibold">{s.googleRating}/5 · {s.reviewCount} reviews</span>
             </div>
 
           </div>

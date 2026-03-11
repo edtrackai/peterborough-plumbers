@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { getWhatsAppUrl } from "@/content/settings";
+import { getSiteSettings } from "@/lib/db/content";
 
-export default function CleanPricingCTA() {
-  const whatsappUrl = getWhatsAppUrl();
+export default async function CleanPricingCTA() {
+  const s = await getSiteSettings();
+  const whatsappUrl = `https://wa.me/${s.whatsappNumber}?text=${encodeURIComponent(s.whatsappPrefillMessage)}`;
 
   return (
     <section className="bg-white py-14 px-4">

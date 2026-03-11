@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { siteSettings } from "@/content/settings";
+import { useSettings } from "@/components/providers/SettingsProvider";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -66,6 +66,7 @@ function BotAvatar({ size = 6 }: { size?: number }) {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function ChatWidget() {
+  const siteSettings = useSettings();
   const pathname = usePathname();
   const [open, setOpen]                     = useState(false);
   const [mounted, setMounted]               = useState(false); // keep DOM alive for exit animation
