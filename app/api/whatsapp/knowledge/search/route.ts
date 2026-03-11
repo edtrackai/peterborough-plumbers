@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-
 function cosineSimilarity(a: number[], b: number[]): number {
   let dot = 0, normA = 0, normB = 0
   for (let i = 0; i < a.length; i++) {
@@ -24,6 +22,11 @@ export async function GET(req: NextRequest) {
   if (!query || query.trim().length < 2) {
     return NextResponse.json({ error: 'q parameter required' }, { status: 400 })
   }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return NextResponse.json({ error: 'Search unavailable' }, { status: 503 })
+  }
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
   try {
     // Embed the query

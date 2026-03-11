@@ -3,6 +3,13 @@
 import { useState } from "react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
+type PlumberDoc = {
+  docType: string;
+  url: string;
+  publicId: string | null;
+  uploadedAt: string;
+};
+
 type Plumber = {
   id: string;
   name: string;
@@ -15,9 +22,12 @@ type Plumber = {
   approvalStatus: string;
   plumberId: string | null;
   adminNote: string | null;
+  plumberType: string;
   gasSafeNumber: string | null;
+  gasSafeCertExpiry: string | null;
   verifiedGeneral: boolean;
   boilerGasApproved: boolean;
+  docs: PlumberDoc[];
   _count: { bookings: number };
 };
 
@@ -76,7 +86,8 @@ function PendingRow({
 }) {
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState(p.adminNote ?? "");
-  const [boilerGas, setBoilerGas] = useState(false);
+  // Pre-check boiler/gas for gas_safe applicants — admin can override
+  const [boilerGas, setBoilerGas] = useState(p.plumberType === "gas_safe");
   const [expanded, setExpanded] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -98,12 +109,28 @@ function PendingRow({
       <div className="flex items-center gap-3 px-4 py-3 bg-white">
         <Avatar name={p.name} />
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-slate-800">{p.name}</p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="text-sm font-semibold text-slate-800">{p.name}</p>
+            {p.plumberType === "gas_safe" ? (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-50 text-orange-600">
+                🔥 Gas Safe
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-500">
+                General
+              </span>
+            )}
+          </div>
           <p className="text-xs text-slate-400 truncate">{p.email}</p>
           {p.phone && <p className="text-xs text-slate-400">{p.phone}</p>}
           {p.gasSafeNumber && (
             <p className="text-xs text-slate-500 mt-0.5">
-              Gas Safe: <span className="font-mono font-semibold text-slate-700">{p.gasSafeNumber}</span>
+              Gas Safe No: <span className="font-mono font-semibold text-slate-700">{p.gasSafeNumber}</span>
+              {p.gasSafeCertExpiry && (
+                <span className="ml-2 text-slate-400">
+                  (exp: {new Date(p.gasSafeCertExpiry).toLocaleDateString("en-GB", { month: "short", year: "numeric" })})
+                </span>
+              )}
             </p>
           )}
         </div>
@@ -125,6 +152,30 @@ function PendingRow({
       {/* Expanded action panel */}
       {expanded && (
         <div className="px-4 pb-4 pt-1 bg-slate-50 border-t border-slate-100 space-y-3">
+
+          {/* Uploaded documents */}
+          {p.docs.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold text-slate-500 mb-1.5">Submitted Documents</p>
+              <div className="flex flex-wrap gap-2">
+                {p.docs.map((doc) => (
+                  <a
+                    key={doc.docType}
+                    href={doc.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-xs text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-colors"
+                  >
+                    <svg className="h-3 w-3 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                    </svg>
+                    {doc.docType.replace(/_/g, " ")}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Admin note */}
           <div>
             <label className="block text-xs font-semibold text-slate-500 mb-1">Admin Note (optional — sent to plumber)</label>
@@ -555,6 +606,9 @@ export default function PlumbersPanel({ initial }: Props) {
                                 <div className="flex gap-1 flex-wrap">
                                   <span className="text-[0.65rem] font-medium px-1.5 py-0.5 rounded bg-green-50 text-green-700">General</span>
                                   {p.boilerGasApproved && <span className="text-[0.65rem] font-medium px-1.5 py-0.5 rounded bg-orange-50 text-orange-700">Gas</span>}
+                                  {p.plumberType === "gas_safe" && !p.boilerGasApproved && (
+                                    <span className="text-[0.65rem] font-medium px-1.5 py-0.5 rounded bg-slate-50 text-slate-400">GS</span>
+                                  )}
                                 </div>
                               </td>
                               <td className="px-5 py-3 text-sm font-medium text-slate-600">{p._count.bookings}</td>

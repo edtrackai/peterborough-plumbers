@@ -24,9 +24,15 @@ export default async function PlumbersPage() {
       approvalStatus: true,
       plumberId: true,
       adminNote: true,
+      plumberType: true,
       gasSafeNumber: true,
+      gasSafeCertExpiry: true,
       verifiedGeneral: true,
       boilerGasApproved: true,
+      docs: {
+        select: { docType: true, url: true, publicId: true, uploadedAt: true },
+        orderBy: { uploadedAt: "asc" as const },
+      },
       _count: { select: { bookings: true } },
     },
   });
@@ -35,6 +41,8 @@ export default async function PlumbersPage() {
     ...p,
     lastSeenAt: p.lastSeenAt?.toISOString() ?? null,
     createdAt: p.createdAt.toISOString(),
+    gasSafeCertExpiry: p.gasSafeCertExpiry?.toISOString() ?? null,
+    docs: p.docs.map((d) => ({ ...d, uploadedAt: d.uploadedAt.toISOString() })),
   }));
 
   return <PlumbersPanel initial={serialized} />;
