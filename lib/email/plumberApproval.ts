@@ -15,6 +15,7 @@ export async function sendNewSignupNotification(data: {
   email: string;
   phone?: string;
   gasSafeNumber?: string;
+  plumberType?: string;
 }): Promise<void> {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.ADMIN_USER;
   if (!process.env.RESEND_API_KEY || !adminEmail) return;
@@ -39,6 +40,10 @@ export async function sendNewSignupNotification(data: {
       <tr style="border-bottom:1px solid #f0f0f0;">
         <td style="padding:10px 16px;font-size:12px;color:#888;">Email</td>
         <td style="padding:10px 16px;font-size:14px;"><a href="mailto:${data.email}" style="color:#C8102E;">${data.email}</a></td>
+      </tr>
+      <tr style="border-bottom:1px solid #f0f0f0;">
+        <td style="padding:10px 16px;font-size:12px;color:#888;">Type</td>
+        <td style="padding:10px 16px;font-size:14px;font-weight:600;">${data.plumberType === "gas_safe" ? "🔥 Gas Safe Engineer" : "General Plumber"}</td>
       </tr>
       ${data.phone ? `<tr style="border-bottom:1px solid #f0f0f0;">
         <td style="padding:10px 16px;font-size:12px;color:#888;">Phone</td>

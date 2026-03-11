@@ -5,53 +5,94 @@ import { prisma } from "@/lib/prisma";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
 import { sendNewSignupNotification } from "@/lib/email/plumberApproval";
 
-const signupSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(100).transform((v) => v.trim()),
-  email: z
-    .string()
-    .email("Enter a valid email address")
-    .max(254)
-    .transform((v) => v.trim().toLowerCase()),
-  phone: z
-    .string()
-    .min(9, "Enter a valid UK phone number")
-    .max(20)
-    .transform((v) => v.trim())
-    .refine((v) => /^[\d\s+()-]+$/.test(v), "Invalid phone number"),
-  password: z
-    .string()
-    .min(12, "Password must be at least 12 characters")
-    .max(128, "Password too long"),
-  gasSafeNumber: z
-    .string()
-    .max(20)
-    .optional()
-    .transform((v) => v?.trim() || undefined),
-  // Optional: doc uploads provided as Cloudinary URLs after upload
-  docs: z
-    .array(
-      z.object({
-        docType: z.enum([
-          "photo_id",
-          "selfie",
-          "proof_of_address",
-          "public_liability_insurance",
-          "dbs_certificate",
-          "gas_safe_certificate",
-        ]),
-        url: z.string().url(),
-        publicId: z.string().optional(),
-      })
-    )
-    .optional(),
-});
+const DOC_TYPES = [
+  "photo_id",
+  "selfie",
+  "proof_of_address",
+  "public_liability_insurance",
+  "dbs_certificate",
+  "gas_safe_certificate",
+] as const;
+
+const signupSchema = z
+  .object({
+    plumberType: z.enum(["general", "gas_safe"]),
+    name: z
+      .string()
+      .min(2, "Name must be at least 2 characters")
+      .max(100)
+      .transform((v) => v.trim()),
+    email: z
+      .string()
+      .email("Enter a valid email address")
+      .max(254)
+      .transform((v) => v.trim().toLowerCase()),
+    phone: z
+      .string()
+      .min(9, "Enter a valid UK phone number")
+      .max(20)
+      .transform((v) => v.trim())
+      .refine((v) => /^[\d\s+()-]+$/.test(v), "Invalid phone number"),
+    password: z
+      .string()
+      .min(12, "Password must be at least 12 characters")
+      .max(128, "Password too long"),
+    gasSafeNumber: z
+      .string()
+      .max(20)
+      .optional()
+      .transform((v) => v?.trim() || undefined),
+    gasSafeCertExpiry: z.string().optional(),
+    docs: z
+      .array(
+        z.object({
+          docType: z.enum(DOC_TYPES),
+          url: z.string().url(),
+          publicId: z.string().optional(),
+        })
+      )
+      .optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.plumberType === "gas_safe") {
+      if (!data.gasSafeNumber?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Gas Safe registration number is required",
+          path: ["gasSafeNumber"],
+        });
+      }
+      if (!data.gasSafeCertExpiry) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Gas Safe certificate expiry date is required",
+          path: ["gasSafeCertExpiry"],
+        });
+      } else {
+        const expiry = new Date(data.gasSafeCertExpiry);
+        if (isNaN(expiry.getTime())) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid expiry date",
+            path: ["gasSafeCertExpiry"],
+          });
+        } else if (expiry < new Date()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Gas Safe certificate has expired — please renew before applying",
+            path: ["gasSafeCertExpiry"],
+          });
+        }
+      }
+    }
+  });
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
   const { limited, retryAfterSec } = checkRateLimit(ip, {
     name: "plumber-signup",
     max: 5,
-    windowMs: 60 * 60 * 1000, // 5 signups per IP per hour
+    windowMs: 60 * 60 * 1000,
   });
   if (limited) {
     return NextResponse.json(
@@ -75,7 +116,16 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { name, email, phone, password, gasSafeNumber, docs } = parsed.data;
+  const {
+    plumberType,
+    name,
+    email,
+    phone,
+    password,
+    gasSafeNumber,
+    gasSafeCertExpiry,
+    docs,
+  } = parsed.data;
 
   try {
     const existing = await prisma.plumber.findUnique({ where: { email } });
@@ -90,14 +140,16 @@ export async function POST(req: NextRequest) {
 
     const plumber = await prisma.plumber.create({
       data: {
+        plumberType,
         name,
         email,
         phone,
         passwordHash,
-        isActive: false,              // cannot login until approved
+        isActive: false,
         isOnDuty: false,
         approvalStatus: "pending_verification",
         gasSafeNumber: gasSafeNumber ?? null,
+        gasSafeCertExpiry: gasSafeCertExpiry ? new Date(gasSafeCertExpiry) : null,
         verifiedGeneral: false,
         boilerGasApproved: false,
         ...(docs && docs.length > 0
@@ -121,6 +173,7 @@ export async function POST(req: NextRequest) {
       email,
       phone: phone ?? undefined,
       gasSafeNumber: gasSafeNumber ?? undefined,
+      plumberType,
     }).catch((e) => console.error("[signup notification]", e));
 
     return NextResponse.json({ ok: true, plumber }, { status: 201 });

@@ -63,6 +63,9 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL("/admin-login", req.url));
   }
 
+  // ── Plumber upload — called pre-signup, no session required ─────────────────
+  if (pathname === "/api/plumber/upload") return NextResponse.next();
+
   // ── Plumber routes: session cookie gate (except login/signup pages) ────────
   const isPublicPlumberPage = pathname === "/plumber/login" || pathname === "/plumber/signup";
   if (pathname.startsWith("/plumber") && !isPublicPlumberPage) {

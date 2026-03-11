@@ -68,8 +68,13 @@ model Plumber {
   plumberId         String? @unique  // PLM-000001 — generated only on admin approval
   adminNote         String? @db.Text // visible to plumber (rejection/info reason)
 
+  // Plumber type — set at signup, determines eligible job categories
+  // "general" | "gas_safe"
+  plumberType       String    @default("general")
+
   // Verification
   gasSafeNumber     String? // self-reported at signup, admin verifies manually
+  gasSafeCertExpiry DateTime? // expiry date of Gas Safe certificate (gas_safe only)
 
   // Service permissions / badges
   verifiedGeneral   Boolean @default(false) // approved for all general plumbing jobs
