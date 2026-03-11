@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = buildMetadata({
   title: "Emergency Plumber Peterborough | Fast 24/7 Response",
   description:
-    "24/7 emergency plumber in Peterborough — burst pipes, flooding, no heating & drain blockages. Gas Safe engineers, fast response. Call now.",
+    "24/7 emergency plumber in Peterborough — burst pipes, flooding, no heating & drain blockages. Gas Safe engineers, fast response. Call us now.",
   path: "/emergency",
   image: "/images/emergency/hero.webp",
   absoluteTitle: true,
