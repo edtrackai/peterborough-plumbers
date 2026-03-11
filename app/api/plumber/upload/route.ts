@@ -99,7 +99,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: blob.url, publicId: blob.pathname });
   } catch (err) {
-    console.error("[plumber/upload]", err instanceof Error ? err.message : err);
-    return NextResponse.json({ error: "Upload failed. Please try again." }, { status: 500 });
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[plumber/upload]", msg);
+    // Temporary: expose error detail to diagnose production issue
+    return NextResponse.json({ error: "Upload failed.", detail: msg }, { status: 500 });
   }
 }
