@@ -63,8 +63,9 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL("/admin-login", req.url));
   }
 
-  // ── Plumber routes: session cookie gate (except login page) ───────────────
-  if (pathname.startsWith("/plumber") && !pathname.startsWith("/plumber/login")) {
+  // ── Plumber routes: session cookie gate (except login/signup pages) ────────
+  const isPublicPlumberPage = pathname === "/plumber/login" || pathname === "/plumber/signup";
+  if (pathname.startsWith("/plumber") && !isPublicPlumberPage) {
     const sessionCookie = req.cookies.get("pp_plumber");
     if (!sessionCookie?.value) {
       return NextResponse.redirect(new URL("/plumber/login", req.url));
