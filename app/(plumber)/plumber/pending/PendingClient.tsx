@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { siteSettings } from "@/content/settings";
 
 type Props = {
   name: string;
@@ -159,8 +160,8 @@ export default function PendingClient({ name, email, approvalStatus, adminNote }
           {/* Contact note */}
           <p className="text-[12px] text-zinc-600 text-center leading-relaxed">
             Questions? Call us on{" "}
-            <a href="tel:+441733000000" className="text-zinc-400 hover:text-white transition-colors">
-              01733 000000
+            <a href={`tel:${siteSettings.phoneHref}`} className="text-zinc-400 hover:text-white transition-colors">
+              {siteSettings.phone}
             </a>
           </p>
 
