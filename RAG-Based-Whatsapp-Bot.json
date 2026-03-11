@@ -282,16 +282,16 @@
           ]
         },
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "{\n  \"waId\": \"{waId}\",\n  \"name\": \"{name}\",\n  \"phone\": \"{waId}\",\n  \"postcode\": \"{postcode}\",\n  \"serviceType\": \"{serviceType}\",\n  \"notes\": \"{notes}\",\n  \"preferredTime\": \"{preferredTime}\"\n}",
-        "placeholderDefinitions": {
+        "specifyBody": "keypair",
+        "parametersBody": {
           "values": [
-            { "name": "waId", "description": "The customer's WhatsApp number — copy it exactly from the 'WhatsApp number' shown at the top of the conversation context" },
-            { "name": "name", "description": "Customer full name" },
-            { "name": "postcode", "description": "Property postcode e.g. PE1 2AB" },
-            { "name": "serviceType", "description": "Service type e.g. boiler repair, blocked drain, boiler service, CP12" },
-            { "name": "notes", "description": "Brief summary of the issue the customer described" },
-            { "name": "preferredTime", "description": "Customer's preferred time e.g. 'morning', 'afternoon', 'anytime this week', 'Tuesday morning'" }
+            { "name": "waId", "valueProvider": "modelRequired", "description": "The customer's WhatsApp number — copy it exactly from the 'WhatsApp number' shown at the top of the conversation context" },
+            { "name": "name", "valueProvider": "modelRequired", "description": "Customer full name" },
+            { "name": "phone", "valueProvider": "modelRequired", "description": "Same as waId — the customer's WhatsApp number" },
+            { "name": "postcode", "valueProvider": "modelRequired", "description": "Property postcode e.g. PE1 2AB" },
+            { "name": "serviceType", "valueProvider": "modelRequired", "description": "Service type e.g. boiler repair, blocked drain, boiler service, CP12" },
+            { "name": "notes", "valueProvider": "modelRequired", "description": "Brief summary of the issue the customer described" },
+            { "name": "preferredTime", "valueProvider": "modelRequired", "description": "Customer preferred time e.g. morning, afternoon, anytime this week, Tuesday morning" }
           ]
         }
       },
