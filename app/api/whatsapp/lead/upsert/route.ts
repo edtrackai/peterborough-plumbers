@@ -9,6 +9,8 @@ const schema = z.object({
   phone: z.string().min(1),
   postcode: z.string().min(2).transform((v) => v.trim().toUpperCase()),
   serviceType: z.string().optional(),
+  notes: z.string().optional(),
+  preferredTime: z.string().optional(),
 });
 
 /**
@@ -30,7 +32,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { waId, name, phone, postcode, serviceType } = parsed.data;
+    const { waId, name, phone, postcode, serviceType, notes, preferredTime } = parsed.data;
 
     // Check for existing lead with same phone
     const existing = await prisma.lead.findFirst({
@@ -57,6 +59,8 @@ export async function POST(req: NextRequest) {
           phone,
           postcode,
           serviceType: serviceType ?? null,
+          notes: notes ?? null,
+          preferredTime: preferredTime ?? null,
           source: "whatsapp",
           status: "new",
         },

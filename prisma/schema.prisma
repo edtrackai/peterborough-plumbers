@@ -257,7 +257,9 @@ model Lead {
   phone       String
   email       String?
   postcode    String
-  serviceType String?
+  serviceType   String?
+  notes         String?  // issue summary + any extra details from WhatsApp
+  preferredTime String?  // e.g. "morning", "afternoon", "anytime this week"
   // status: new | contacted | converted | closed
   status      String   @default("new")
   source      String   @default("contact_form")
