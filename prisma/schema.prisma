@@ -3,8 +3,12 @@
 // Seed: npx prisma db seed
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
+
+// Note: pgvector extension must be enabled in Neon before pushing
+// Run in Neon SQL Editor: CREATE EXTENSION IF NOT EXISTS vector;
 
 datasource db {
   provider = "postgresql"
@@ -539,6 +543,145 @@ model CallSummary {
   createdAt       DateTime @default(now())
 
   @@map("pb_call_summaries")
+}
+
+// ── KnowledgeChunk (RAG — WhatsApp bot knowledge base) ───────────────────────
+
+model KnowledgeChunk {
+  id        String   @id @default(cuid())
+  section   String   // e.g. "7.10", "10.1", "17"
+  title     String   // e.g. "Boilers", "Gas Emergency", "Pricing"
+  content   String   @db.Text
+  // embedding stored as raw float array JSON — pgvector via $queryRaw
+  embedding String?  @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([section])
+  @@map("pb_knowledge_chunks")
+}
+
+// ── Views (read-only — created via prisma/create-views.sql) ──────────────────
+// Run: npx tsx prisma/run-views.ts  then  npx prisma generate
+
+view VBookingFull {
+  id               String   @unique
+  bookingRef       String
+  status           String
+  postcode         String
+  zonePrefix       String
+  serviceType      String?
+  description      String?
+  customerName     String?
+  phone            String?
+  email            String?
+  address          String?
+  accessNotes      String?
+  reservedAt       DateTime
+  confirmedAt      DateTime?
+  completedAt      DateTime?
+  estimatedArrival DateTime?
+  expiresAt        DateTime?
+  createdAt        DateTime
+  updatedAt        DateTime
+  slotDate         DateTime?
+  slotStart        String?
+  slotEnd          String?
+  plumberId        String?
+  plumberName      String?
+  plumberEmail     String?
+  plumberPhone     String?
+  plumberOnDuty    Boolean?
+  ratingStars      Int?
+  ratingComment    String?
+  offerCount       BigInt?
+  imageCount       BigInt?
+
+  @@map("v_booking_full")
+}
+
+view VCallFull {
+  id                  String   @unique
+  direction           String
+  status              String
+  source              String
+  outcome             String?
+  waId                String?
+  phone               String?
+  leadId              String?
+  durationSeconds     Int?
+  startedAt           DateTime
+  endedAt             DateTime?
+  createdAt           DateTime
+  callSummary         String?
+  urgency             String?
+  summaryServiceType  String?
+  issueSummary        String?
+  preferredTime       String?
+  needsHuman          Boolean?
+  endState            String?
+  transcriptText      String?
+  transcriptTurns     BigInt?
+  eventCount          BigInt?
+
+  @@map("v_call_full")
+}
+
+view VWhatsappOverview {
+  id              String   @unique
+  waId            String
+  customerName    String?
+  customerPhone   String?
+  postcode        String?
+  serviceType     String?
+  botActive       Boolean
+  isEmergency     Boolean
+  leadCaptured    Boolean
+  lastMessageAt   DateTime
+  createdAt       DateTime
+  totalMessages   BigInt?
+  userMessages    BigInt?
+  botMessages     BigInt?
+  lastMessage     String?
+  lastMessageRole String?
+
+  @@map("v_whatsapp_overview")
+}
+
+view VPlumberStats {
+  id               String   @unique
+  name             String
+  email            String
+  phone            String?
+  isActive         Boolean
+  isOnDuty         Boolean
+  lastSeenAt       DateTime?
+  createdAt        DateTime
+  totalBookings    BigInt?
+  completedBookings BigInt?
+  activeBookings   BigInt?
+  cancelledBookings BigInt?
+  avgRating        Decimal?
+  totalRatings     BigInt?
+  pendingOffers    BigInt?
+  rejectedOffers   BigInt?
+
+  @@map("v_plumber_stats")
+}
+
+view VLeadPipeline {
+  id          String   @unique
+  name        String
+  phone       String
+  email       String?
+  postcode    String
+  serviceType String?
+  status      String
+  source      String
+  createdAt   DateTime
+  updatedAt   DateTime
+  ageHours    Float?
+
+  @@map("v_lead_pipeline")
 }
 
 // ── CallEvent (lifecycle events for a call) ───────────────────────────────────
