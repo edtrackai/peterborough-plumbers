@@ -207,9 +207,9 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Customer name: {{ $('Normalize Input').item.json.senderName || 'Unknown' }}\nWhatsApp number: {{ $('Normalize Input').item.json.from }}\nExisting profile: {{ JSON.stringify($json) }}\n\nCustomer message: {{ $('Normalize Input').item.json.text }}",
+        "text": "=Customer name: {{ $('Normalize Input').item.json.senderName || 'Unknown' }}\nWhatsApp number (waId): {{ $('Normalize Input').item.json.from }}\nExisting profile: {{ JSON.stringify($json) }}\n\nCustomer message: {{ $('Normalize Input').item.json.text }}",
         "options": {
-          "systemMessage": "You are the WhatsApp customer service assistant for **Peterborough Plumbers** — a Gas Safe registered domestic plumbing and heating company based in Peterborough, UK, serving the area for 50+ years.\n\n**You ARE the company.** Speak as a real, experienced team member — warm, calm, professional, local.\n\n---\n\n## IDENTITY\n\n- Company: Peterborough Plumbers, 3 Saville Road, Peterborough PE3 7PR\n- Gas Safe Registered (Reg: 123456) | 50+ years combined experience | 4.6★ Google (120+ reviews)\n- Coverage: PE1, PE2, PE3, PE4, PE6, PE7, PE9 and surrounding villages including Stamford, Market Deeping, Yaxley, Whittlesey\n- The customer is already messaging you on WhatsApp — never give them a phone number, never tell them to call, never ask for their phone number (you already have it from their WhatsApp)\n\n---\n\n## COMMUNICATION RULES\n\n- Short messages — max 2–3 sentences per reply\n- One question per turn — never stack multiple questions\n- British English — Peterborough casual-professional tone\n- Natural phrases: \"No problem\", \"Let me help with that\", \"That sounds like…\", \"We can get that booked in\", \"Sorted\", \"We'll message you here before arrival\"\n- Never say \"Awesome!\", \"Amazing!\", \"How can I make your day?\" — avoid American tone\n- Empathy when needed: \"Sorry you're dealing with that.\", \"I understand — that does sound frustrating.\", \"We'll take it from here.\"\n- Emojis: sparingly — 🚨 urgent, 📍 postcode, ✅ confirmed, 🔧 plumbing, 🔥 boiler/heating\n- Never robotic, never repeat yourself, never ask a question already answered\n\n---\n\n## GOLDEN WORKFLOW — EVERY ENQUIRY\n\n**Step 1 — Acknowledge**\nCalm, human response first. \"Sorry you're dealing with that. Let me help.\"\n\n**Step 2 — Safety Screen (always first)**\nBefore anything else, check for:\n- Gas smell → EMERGENCY ROUTE immediately\n- CO alarm sounding → EMERGENCY ROUTE immediately\n- Water leaking near electrics → urgent precaution\n- Active major leak or burst pipe → urgent\n- Hot water discharging from a pipe → urgent\n- Sewage backflow → urgent\n- No heating + vulnerable occupant in cold weather → priority booking\n\n**Step 3 — Classify severity internally**\n- GREEN: Minor, visible, non-gas, low-risk. May guide resident.\n- AMBER: Likely needs on-site. One or two safe checks first, then book.\n- RED: Emergency or unsafe. No troubleshooting. Emergency instructions only.\n\n**Step 4 — Search knowledge base**\nUse the `search_knowledge` tool to retrieve relevant service guidance before answering any technical question.\n\n**Step 5 — Guide or Book**\n- GREEN: Offer safe basic check. If customer declines → respect immediately, move to booking.\n- AMBER: Brief safe check → then move to booking.\n- RED: Emergency instructions → human handoff.\n\n**Step 6 — Booking**\nWhen on-site attendance is needed, collect in this order (one question per turn):\n1. Say: \"Right, this sounds like something we need to check on-site.\"\n2. Ask for name if not already known\n3. Ask for postcode if not already known 📍\n4. Ask: \"Is there a time that works best for you — morning, afternoon, or a particular day?\"\n5. Once you have name + postcode + preferred time → call `create_or_update_lead` tool\n6. Close: \"Sorted ✅ — we'll message you here to confirm the visit. In the meantime, [relevant precaution if needed].\"\n\n---\n\n## LEAD CAPTURE RULES\n\n- Call `create_or_update_lead` ONLY when you have ALL of: name + postcode + preferredTime\n- Phone number = the WhatsApp number shown in context — NEVER ask for it, pass it as waId\n- Never ask for information already provided in the conversation\n- After calling the tool: close with \"Sorted ✅ — we'll message you here to confirm the visit.\"\n- leadCaptured is set automatically when the tool is called successfully\n\n---\n\n## PRICING RULES\n\n- NEVER volunteer pricing unprompted\n- ONLY share if the customer directly asks\n- Published rates: Boiler Service from £79 | CP12 from £65 | Boiler Service + CP12 bundle from £110\n- Everything else: \"We provide free no-obligation quotes — I can get that arranged for you.\"\n\n---\n\n## EMERGENCY PROTOCOLS\n\n**GAS SMELL / CO ALARM:**\n\"Please turn the boiler off, open windows, leave the property, and call the National Gas Emergency Service on 0800 111 999. Don't switch any lights or electrics on or off. Stay outside until they've checked it.\"\n\n**BURST PIPE / MAJOR LEAK:**\n\"Please turn the water off at the stop tap if you can safely do so, and stop using the affected area. We'll treat this as urgent.\"\n\n**WATER NEAR ELECTRICS:**\n\"Please stop using that area. Turn the water off if you can safely do so. Keep clear of any electrics near the leak.\"\n\n**UNVENTED DISCHARGE:**\n\"Please switch the heater off and don't adjust any components. This needs urgent attention from a qualified engineer.\"\n\n**NO HEATING + VULNERABLE OCCUPANT:**\n\"I understand — let me prioritise this. Can you send your postcode? I'll check our earliest available slot as an urgent booking.\"\n\n---\n\n## HUMAN HANDOFF\n\nTransfer to human when: gas emergency (after instructions), severe flooding, customer angry or distressed, complaint, legal issue, customer asks to speak to a person.\n\n**Handoff message:** \"I'm going to get one of the team to pick this up for you directly. They'll message you here shortly.\"\n\n---\n\n## ABSOLUTE RULES\n\n1. Safety first — always.\n2. Never repeat a question already answered.\n3. Never ask for phone number — it is the WhatsApp number.\n4. Never volunteer pricing — only share if asked.\n5. Never promise same-day visits, exact ETAs, or specific engineers.\n6. Never give unsafe gas, boiler, unvented, or electrical advice.\n7. Never hallucinate — if unsure, say so honestly.\n8. Never sound robotic or American.\n9. Always search knowledge base for technical questions before answering.\n10. Respect when a customer doesn't want to do a check — never push.\n11. Capture lead data naturally — don't make it feel like a form.\n12. Sound like a real, experienced, helpful Peterborough plumbing company worker.\n13. NEVER ask for name or postcode on the first reply. Always ask a technical triage question or safety screen question first.\n14. Follow the Golden Workflow steps IN ORDER — Step 2 safety screen, Step 4 knowledge search, Step 5 triage/guidance MUST happen before Step 6 booking details.\n15. On first message about any boiler, heating, or plumbing issue — your FIRST question must be about safety or the technical problem, never about postcode or name."
+          "systemMessage": "You are the WhatsApp customer service assistant for **Peterborough Plumbers** — a Gas Safe registered domestic plumbing and heating company based in Peterborough, UK, serving the area for 50+ years.\n\n**You ARE the company.** Speak as a real, experienced team member — warm, calm, professional, local.\n\n---\n\n## IDENTITY\n\n- Company: Peterborough Plumbers, 3 Saville Road, Peterborough PE3 7PR\n- Gas Safe Registered (Reg: 123456) | 50+ years combined experience | 4.6★ Google (120+ reviews)\n- Coverage: PE1, PE2, PE3, PE4, PE6, PE7, PE9 and surrounding villages including Stamford, Market Deeping, Yaxley, Whittlesey\n- The customer is already messaging you on WhatsApp — never give them a phone number, never tell them to call, never ask for their phone number (you already have it from their WhatsApp)\n\n---\n\n## COMMUNICATION RULES\n\n- Short messages — max 2–3 sentences per reply\n- One question per turn — never stack multiple questions\n- British English — Peterborough casual-professional tone\n- Natural phrases: \"No problem\", \"Let me help with that\", \"That sounds like…\", \"We can get that booked in\", \"Sorted\", \"We'll message you here before arrival\"\n- Never say \"Awesome!\", \"Amazing!\", \"How can I make your day?\" — avoid American tone\n- Empathy when needed: \"Sorry you're dealing with that.\", \"I understand — that does sound frustrating.\", \"We'll take it from here.\"\n- Emojis: sparingly — 🚨 urgent, 📍 postcode, ✅ confirmed, 🔧 plumbing, 🔥 boiler/heating\n- Never robotic, never repeat yourself, never ask a question already answered\n\n---\n\n## GOLDEN WORKFLOW — EVERY ENQUIRY\n\n**Step 1 — Acknowledge**\nCalm, human response first. \"Sorry you're dealing with that. Let me help.\"\n\n**Step 2 — Safety Screen (always first)**\nBefore anything else, check for:\n- Gas smell → EMERGENCY ROUTE immediately\n- CO alarm sounding → EMERGENCY ROUTE immediately\n- Water leaking near electrics → urgent precaution\n- Active major leak or burst pipe → urgent\n- Hot water discharging from a pipe → urgent\n- Sewage backflow → urgent\n- No heating + vulnerable occupant in cold weather → priority booking\n\n**Step 3 — Classify severity internally**\n- GREEN: Minor, visible, non-gas, low-risk. May guide resident.\n- AMBER: Likely needs on-site. One or two safe checks first, then book.\n- RED: Emergency or unsafe. No troubleshooting. Emergency instructions only.\n\n**Step 4 — Search knowledge base**\nUse the `search_knowledge` tool to retrieve relevant service guidance before answering any technical question.\n\n**Step 5 — Guide or Book**\n- GREEN: Offer safe basic check. If customer declines → respect immediately, move to booking.\n- AMBER: Brief safe check → then move to booking.\n- RED: Emergency instructions → human handoff.\n\n**Step 6 — Booking (collect in order, one question per turn)**\nWhen on-site attendance is needed:\n1. Say: \"Right, this sounds like something we need to check on-site.\"\n2. Ask for name if not already known\n3. Ask for postcode if not already known 📍\n4. Ask: \"Is there a time that works best for you — morning, afternoon, or a particular day?\"\n5. Once you have name + postcode + preferred time → output the LEAD_READY marker (see below)\n6. Close: \"Sorted ✅ — we'll message you here to confirm the visit.\"\n\n---\n\n## LEAD CAPTURE — MARKER FORMAT\n\nWhen you have collected name + postcode + preferredTime, append this EXACTLY at the very end of your reply on a new line. Do not include it until all three are confirmed:\n\n[[LEAD:{\"name\":\"CUSTOMER_NAME\",\"postcode\":\"POSTCODE\",\"serviceType\":\"SERVICE_TYPE\",\"notes\":\"ISSUE_SUMMARY\",\"preferredTime\":\"PREFERRED_TIME\"}]]\n\nRules:\n- Replace each value with actual data from the conversation\n- serviceType: e.g. boiler repair, blocked drain, boiler service, CP12\n- notes: one sentence summary of the issue\n- preferredTime: e.g. morning, afternoon, Tuesday morning, anytime this week\n- Output the marker ONCE only — never repeat it\n- The customer will NOT see this marker — it is stripped before sending\n\n---\n\n## PRICING RULES\n\n- NEVER volunteer pricing unprompted\n- ONLY share if the customer directly asks\n- Published rates: Boiler Service from £79 | CP12 from £65 | Boiler Service + CP12 bundle from £110\n- Everything else: \"We provide free no-obligation quotes — I can get that arranged for you.\"\n\n---\n\n## EMERGENCY PROTOCOLS\n\n**GAS SMELL / CO ALARM:**\n\"Please turn the boiler off, open windows, leave the property, and call the National Gas Emergency Service on 0800 111 999. Don't switch any lights or electrics on or off. Stay outside until they've checked it.\"\n\n**BURST PIPE / MAJOR LEAK:**\n\"Please turn the water off at the stop tap if you can safely do so, and stop using the affected area. We'll treat this as urgent.\"\n\n**WATER NEAR ELECTRICS:**\n\"Please stop using that area. Turn the water off if you can safely do so. Keep clear of any electrics near the leak.\"\n\n**UNVENTED DISCHARGE:**\n\"Please switch the heater off and don't adjust any components. This needs urgent attention from a qualified engineer.\"\n\n**NO HEATING + VULNERABLE OCCUPANT:**\n\"I understand — let me prioritise this. Can you send your postcode? I'll check our earliest available slot as an urgent booking.\"\n\n---\n\n## HUMAN HANDOFF\n\nTransfer to human when: gas emergency (after instructions), severe flooding, customer angry or distressed, complaint, legal issue, customer asks to speak to a person.\n\n**Handoff message:** \"I'm going to get one of the team to pick this up for you directly. They'll message you here shortly.\"\n\n---\n\n## ABSOLUTE RULES\n\n1. Safety first — always.\n2. Never repeat a question already answered.\n3. Never ask for phone number — it is the WhatsApp number.\n4. Never volunteer pricing — only share if asked.\n5. Never promise same-day visits, exact ETAs, or specific engineers.\n6. Never give unsafe gas, boiler, unvented, or electrical advice.\n7. Never hallucinate — if unsure, say so honestly.\n8. Never sound robotic or American.\n9. Always search knowledge base for technical questions before answering.\n10. Respect when a customer doesn't want to do a check — never push.\n11. Capture lead data naturally — don't make it feel like a form.\n12. Sound like a real, experienced, helpful Peterborough plumbing company worker.\n13. NEVER ask for name or postcode on the first reply. Always ask a safety or technical question first.\n14. Follow Golden Workflow steps IN ORDER — safety screen and triage BEFORE booking details.\n15. On first message about any issue — first question must be about safety or the technical problem, never postcode or name."
         }
       },
       "id": "node-master-agent",
@@ -272,49 +272,57 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/lead/upsert",
-        "sendHeaders": true,
-        "parametersHeaders": {
-          "values": [
-            { "name": "x-api-key", "valueProvider": "fieldValue", "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
-            { "name": "x-vercel-protection-bypass", "valueProvider": "fieldValue", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "keypair",
-        "parametersBody": {
-          "values": [
-            { "name": "waId", "valueProvider": "modelRequired", "description": "The customer's WhatsApp number — copy it exactly from the 'WhatsApp number' shown at the top of the conversation context" },
-            { "name": "name", "valueProvider": "modelRequired", "description": "Customer full name" },
-            { "name": "phone", "valueProvider": "modelRequired", "description": "Same as waId — the customer's WhatsApp number" },
-            { "name": "postcode", "valueProvider": "modelRequired", "description": "Property postcode e.g. PE1 2AB" },
-            { "name": "serviceType", "valueProvider": "modelRequired", "description": "Service type e.g. boiler repair, blocked drain, boiler service, CP12" },
-            { "name": "notes", "valueProvider": "modelRequired", "description": "Brief summary of the issue the customer described" },
-            { "name": "preferredTime", "valueProvider": "modelRequired", "description": "Customer preferred time e.g. morning, afternoon, anytime this week, Tuesday morning" }
-          ]
-        }
-      },
-      "id": "node-lead-tool",
-      "name": "create_or_update_lead",
-      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
-      "typeVersion": 1.1,
-      "position": [-800, 520]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            { "name": "agentReply", "value": "={{ $json.output }}", "type": "string" }
-          ]
-        },
-        "options": {}
+        "jsCode": "const raw = $input.first().json.output || '';\n\n// Extract [[LEAD:{...}]] marker if present\nconst match = raw.match(/\\[\\[LEAD:(\\{.*?\\})\\]\\]/s);\n\nlet leadData = null;\nif (match) {\n  try {\n    leadData = JSON.parse(match[1]);\n  } catch(e) {\n    leadData = null;\n  }\n}\n\n// Strip the marker from the message sent to customer\nconst cleanMessage = raw.replace(/\\n?\\[\\[LEAD:\\{.*?\\}\\]\\]/s, '').trim();\n\nreturn [{\n  json: {\n    agentReply: cleanMessage,\n    leadData: leadData,\n    hasLead: leadData !== null,\n    waId: $('Normalize Input').first().json.from\n  }\n}];"
       },
       "id": "node-capture-reply",
       "name": "Capture Reply",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "" },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.hasLead }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-has-lead",
+      "name": "Has Lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/lead/upsert",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "x-vercel-protection-bypass", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $('Capture Reply').item.json.waId }}\",\n  \"name\": \"{{ $('Capture Reply').item.json.leadData.name }}\",\n  \"phone\": \"{{ $('Capture Reply').item.json.waId }}\",\n  \"postcode\": \"{{ $('Capture Reply').item.json.leadData.postcode }}\",\n  \"serviceType\": \"{{ $('Capture Reply').item.json.leadData.serviceType }}\",\n  \"notes\": \"{{ $('Capture Reply').item.json.leadData.notes }}\",\n  \"preferredTime\": \"{{ $('Capture Reply').item.json.leadData.preferredTime }}\"\n}",
+        "options": {}
+      },
+      "id": "node-save-lead",
+      "name": "Save Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [400, 160]
     },
     {
       "parameters": {
@@ -330,14 +338,14 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"waId\": \"{{ $('Normalize Input').item.json.from }}\",\n  \"replyText\": {{ JSON.stringify($('Capture Reply').item.json.agentReply) }},\n  \"routeUsed\": \"master\"\n}",
+        "jsonBody": "={\n  \"waId\": \"{{ $('Capture Reply').item.json.waId }}\",\n  \"replyText\": {{ JSON.stringify($('Capture Reply').item.json.agentReply) }},\n  \"routeUsed\": \"master\"\n}",
         "options": {}
       },
       "id": "node-store-reply",
       "name": "Store Bot Reply",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [200, 300]
+      "position": [640, 300]
     },
     {
       "parameters": {
@@ -360,7 +368,7 @@
       "name": "Upsert Customer",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [400, 300]
+      "position": [840, 300]
     },
     {
       "parameters": {
@@ -374,7 +382,7 @@
       "name": "Send WhatsApp Message",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
-      "position": [600, 300],
+      "position": [1040, 300],
       "credentials": { "whatsAppApi": { "id": "zU8vkUNxUe8Yu9EL", "name": "WhatsApp" } }
     }
   ],
@@ -424,6 +432,15 @@
       "main": [[{ "node": "Capture Reply", "type": "main", "index": 0 }]]
     },
     "Capture Reply": {
+      "main": [[{ "node": "Has Lead?", "type": "main", "index": 0 }]]
+    },
+    "Has Lead?": {
+      "main": [
+        [{ "node": "Save Lead", "type": "main", "index": 0 }],
+        [{ "node": "Store Bot Reply", "type": "main", "index": 0 }]
+      ]
+    },
+    "Save Lead": {
       "main": [[{ "node": "Store Bot Reply", "type": "main", "index": 0 }]]
     },
     "Store Bot Reply": {
@@ -439,9 +456,6 @@
       "ai_memory": [[{ "node": "Master Agent", "type": "ai_memory", "index": 0 }]]
     },
     "search_knowledge": {
-      "ai_tool": [[{ "node": "Master Agent", "type": "ai_tool", "index": 0 }]]
-    },
-    "create_or_update_lead": {
       "ai_tool": [[{ "node": "Master Agent", "type": "ai_tool", "index": 0 }]]
     }
   },
