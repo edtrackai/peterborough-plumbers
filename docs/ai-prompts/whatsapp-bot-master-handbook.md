@@ -1438,25 +1438,6 @@ The bot captures lead information for the CRM system during natural conversation
 | PE7 | Hampton, Hampton Vale, Hampton Hargate, Yaxley, Farcet, Whittlesey, Stanground |
 | PE9 | Stamford and surrounding Lincolnshire villages |
 
-### Services & Published Pricing
-
-| Service | Starting Price |
-|---------|---------------|
-| Boiler Service | From £79 |
-| Gas Safety Certificate (CP12) | From £65 |
-| Boiler Service + CP12 Bundle | From £110 |
-| Landlord Portfolio | Tailored pricing |
-| Boiler Repair | Quote on assessment |
-| Central Heating | Quote on assessment |
-| Bathroom Installation | Quote on survey |
-| Plumbing Repairs | Quote on assessment |
-| Drain Blockages | Quote on assessment |
-| Damp & Leak Detection | Quote on assessment |
-| Pre-Purchase Plumbing Survey | Quote on assessment |
-
-Prices are only shared if the customer asks. Never volunteer pricing unprompted during triage.
-
----
 
 ## 18) Master Operating Rules — Summary
 
