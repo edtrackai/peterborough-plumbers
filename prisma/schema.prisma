@@ -291,10 +291,12 @@ model LeadDispatch {
   plumberId   String
   plumber     Plumber   @relation(fields: [plumberId], references: [id])
   // status: offered | accepted | rejected
-  status      String    @default("offered")
-  offeredAt   DateTime  @default(now())
-  respondedAt DateTime?
-  createdAt   DateTime  @default(now())
+  status          String    @default("offered")
+  dispatchMessage String?   @db.Text  // message sent to plumber
+  plumberReply    String?   @db.Text  // plumber's raw reply text
+  offeredAt       DateTime  @default(now())
+  respondedAt     DateTime?
+  createdAt       DateTime  @default(now())
 
   @@unique([leadId, plumberId])
   @@index([leadId])

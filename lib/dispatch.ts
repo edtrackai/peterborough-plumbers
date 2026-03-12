@@ -51,19 +51,21 @@ export async function triggerLeadDispatch(leadId: string): Promise<void> {
 
     if (plumbers.length === 0) return;
 
+    const message = buildDispatchMessage(lead);
+
     // Create dispatch records (skip if already exists for this lead+plumber)
     await prisma.leadDispatch.createMany({
       data: plumbers.map((p) => ({
         leadId: lead.id,
         plumberId: p.id,
         status: "offered",
+        dispatchMessage: message,
       })),
       skipDuplicates: true,
     });
 
-    const message = buildDispatchMessage(lead);
-
     // Send WhatsApp to all plumbers concurrently — failures are silent
+    // Note: message already stored in createMany above
     await Promise.allSettled(
       plumbers
         .filter((p): p is typeof p & { phone: string } => p.phone !== null)

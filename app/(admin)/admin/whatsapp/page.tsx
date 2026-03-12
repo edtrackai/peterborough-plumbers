@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import WhatsAppChats from "@/components/admin/WhatsAppChats";
+import WhatsAppTabs from "@/components/admin/WhatsAppTabs";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function WhatsAppPage() {
-  const [chats, calls] = await Promise.all([
+  const [chats, calls, dispatchLeads] = await Promise.all([
     prisma.waChat.findMany({
       orderBy: { lastMessageAt: "desc" },
       take: 50,
@@ -23,6 +23,20 @@ export default async function WhatsAppPage() {
       take: 200,
       include: { summary: true },
     }),
+    prisma.lead.findMany({
+      where: { dispatches: { some: {} } },
+      orderBy: { createdAt: "desc" },
+      take: 100,
+      include: {
+        assignedPlumber: { select: { id: true, name: true, phone: true } },
+        dispatches: {
+          orderBy: { offeredAt: "asc" },
+          include: {
+            plumber: { select: { id: true, name: true, phone: true } },
+          },
+        },
+      },
+    }),
   ]);
 
   // Group calls by waId
@@ -34,7 +48,7 @@ export default async function WhatsAppPage() {
     callsByWaId[key].push(call);
   }
 
-  const serialized = chats.map((c) => ({
+  const serializedChats = chats.map((c) => ({
     ...c,
     lastMessageAt: c.lastMessageAt.toISOString(),
     createdAt: c.createdAt.toISOString(),
@@ -60,5 +74,33 @@ export default async function WhatsAppPage() {
     })),
   }));
 
-  return <WhatsAppChats initialChats={serialized} />;
+  const serializedLeads = dispatchLeads.map((l) => ({
+    id: l.id,
+    name: l.name,
+    phone: l.phone,
+    postcode: l.postcode,
+    serviceType: l.serviceType,
+    notes: l.notes,
+    preferredTime: l.preferredTime,
+    status: l.status,
+    source: l.source,
+    createdAt: l.createdAt.toISOString(),
+    assignedPlumber: l.assignedPlumber,
+    dispatches: l.dispatches.map((d) => ({
+      id: d.id,
+      status: d.status,
+      dispatchMessage: d.dispatchMessage,
+      plumberReply: d.plumberReply,
+      offeredAt: d.offeredAt.toISOString(),
+      respondedAt: d.respondedAt?.toISOString() ?? null,
+      plumber: d.plumber,
+    })),
+  }));
+
+  return (
+    <WhatsAppTabs
+      initialChats={serializedChats}
+      initialLeads={serializedLeads}
+    />
+  );
 }
