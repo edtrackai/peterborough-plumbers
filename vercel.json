@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/cleanup",
       "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/dispatch/trigger-pending",
+      "schedule": "*/5 * * * *"
     }
   ]
 }

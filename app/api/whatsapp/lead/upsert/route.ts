@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { checkApiKey } from "@/lib/whatsappAuth";
+import { triggerLeadDispatch } from "@/lib/dispatch";
 import { z } from "zod";
 
 const schema = z.object({
@@ -79,6 +80,11 @@ export async function POST(req: NextRequest) {
         leadCaptured: true,
       },
     });
+
+    // Dispatch to plumbers when a brand-new lead is created (fire-and-forget)
+    if (created) {
+      triggerLeadDispatch(lead.id).catch(() => {});
+    }
 
     return NextResponse.json({ success: true, leadId: lead.id, created }, { status: created ? 201 : 200 });
   } catch (err) {

@@ -3,14 +3,23 @@
   "nodes": [
     {
       "parameters": {
-        "updates": ["messages"],
-        "options": { "messageStatusUpdates": ["all"] }
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": [
+            "all"
+          ]
+        }
       },
-      "id": "node-trigger",
+      "id": "9f692875-cc96-4205-ad89-37cc6f7c629b",
       "name": "Receive Message",
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
-      "position": [-2800, 300],
+      "position": [
+        6768,
+        176
+      ],
       "webhookId": "cd6a871f-d5f8-41b1-bd98-7b03a2be56a3",
       "credentials": {
         "whatsAppTriggerApi": {
@@ -23,43 +32,83 @@
       "parameters": {
         "assignments": {
           "assignments": [
-            { "name": "messageType", "value": "={{ $json.messages[0].type }}", "type": "string" },
-            { "name": "from",        "value": "={{ $json.messages[0].from }}", "type": "string" },
-            { "name": "messageId",   "value": "={{ $json.messages[0].id }}",   "type": "string" },
-            { "name": "senderName",  "value": "={{ $json.contacts ? $json.contacts[0].profile.name : '' }}", "type": "string" },
-            { "name": "timestamp",   "value": "={{ $json.messages[0].timestamp }}", "type": "string" },
-            { "name": "text",        "value": "={{ $json.messages[0].type === 'text' ? $json.messages[0].text.body : '' }}", "type": "string" },
-            { "name": "audioId",     "value": "={{ $json.messages[0].type === 'audio' ? $json.messages[0].audio.id : '' }}", "type": "string" }
+            {
+              "name": "messageType",
+              "value": "={{ $json.messages[0].type }}",
+              "type": "string"
+            },
+            {
+              "name": "from",
+              "value": "={{ $json.messages[0].from }}",
+              "type": "string"
+            },
+            {
+              "name": "messageId",
+              "value": "={{ $json.messages[0].id }}",
+              "type": "string"
+            },
+            {
+              "name": "senderName",
+              "value": "={{ $json.contacts ? $json.contacts[0].profile.name : '' }}",
+              "type": "string"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $json.messages[0].timestamp }}",
+              "type": "string"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.messages[0].type === 'text' ? $json.messages[0].text.body : '' }}",
+              "type": "string"
+            },
+            {
+              "name": "audioId",
+              "value": "={{ $json.messages[0].type === 'audio' ? $json.messages[0].audio.id : '' }}",
+              "type": "string"
+            }
           ]
         },
         "options": {}
       },
-      "id": "node-normalize",
+      "id": "40a20a8e-9af4-4e99-a33a-f4e982a3c013",
       "name": "Normalize Input",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-2560, 300]
+      "position": [
+        6976,
+        176
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "leftValue": "" },
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
           "conditions": [
             {
               "leftValue": "={{ $json.messageType }}",
               "rightValue": "audio",
-              "operator": { "type": "string", "operation": "equals" }
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
             }
           ],
           "combinator": "and"
         },
         "options": {}
       },
-      "id": "node-is-audio",
+      "id": "67f5d3ad-23c3-4614-9d16-08b0a8f9041c",
       "name": "Is Audio?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [-2320, 200]
+      "position": [
+        7168,
+        176
+      ]
     },
     {
       "parameters": {
@@ -67,13 +116,20 @@
         "phoneNumberId": "=1061141027076395",
         "recipientPhoneNumber": "={{ $json.audioId }}"
       },
-      "id": "node-get-audio-url",
+      "id": "05c9e8a0-6af0-488e-88cf-2141692dcc15",
       "name": "Get Audio URL",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
-      "position": [-2080, 60],
+      "position": [
+        7424,
+        -48
+      ],
+      "webhookId": "8e07d54a-2962-4829-84c7-5fce3be82da5",
       "credentials": {
-        "whatsAppApi": { "id": "zU8vkUNxUe8Yu9EL", "name": "WhatsApp" }
+        "whatsAppApi": {
+          "id": "zU8vkUNxUe8Yu9EL",
+          "name": "WhatsApp"
+        }
       }
     },
     {
@@ -82,16 +138,26 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "Authorization", "value": "=Bearer EAF2wxDLD5MMBQwaRAptSG2kyn4wMZAJ9ILdEbXRZCVQDX3vpZCYmoCHBs4RHNm3EMwB2UuT7iDWkq4BLrBiCrFS1rHepuZAYVvW4g79dW8JKJyULESvqpmmc0X2whRfqNvfTP5gZANHS2Ua68bwCr9LawYcCzDHCQA4FHZBHxW39X0MMKSyonE9kV9u1HPgXuiowZDZD" }
+            {
+              "name": "Authorization",
+              "value": "=Bearer EAF2wxDLD5MMBQwaRAptSG2kyn4wMZAJ9ILdEbXRZCVQDX3vpZCYmoCHBs4RHNm3EMwB2UuT7iDWkq4BLrBiCrFS1rHepuZAYVvW4g79dW8JKJyULESvqpmmc0X2whRfqNvfTP5gZANHS2Ua68bwCr9LawYcCzDHCQA4FHZBHxW39X0MMKSyonE9kV9u1HPgXuiowZDZD"
+            }
           ]
         },
-        "options": { "response": { "response": {} } }
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
       },
-      "id": "node-download-audio",
+      "id": "25f69a86-51f9-4294-8bc9-a050793d1869",
       "name": "Download Audio",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [-1900, 60]
+      "position": [
+        7616,
+        -48
+      ]
     },
     {
       "parameters": {
@@ -99,27 +165,42 @@
         "operation": "transcribe",
         "options": {}
       },
-      "id": "node-transcribe",
+      "id": "d227dcb8-dd3b-41b6-8cdd-e80489ed7f20",
       "name": "Transcribe Audio",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1,
-      "position": [-1720, 60],
-      "credentials": { "openAiApi": { "id": "VQVCMgBfyEgCrw5b", "name": "OpenAi" } }
+      "position": [
+        7792,
+        -48
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
-            { "name": "text", "value": "={{ $json.text || $json.transcript || $json.output || '' }}", "type": "string" }
+            {
+              "name": "text",
+              "value": "={{ $json.text || $json.transcript || $json.output || '' }}",
+              "type": "string"
+            }
           ]
         },
         "options": {}
       },
-      "id": "node-use-transcript",
+      "id": "822a550a-97e6-437b-8e48-a39fa9b61f65",
       "name": "Use Transcript",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-1540, 60]
+      "position": [
+        7968,
+        -48
+      ]
     },
     {
       "parameters": {
@@ -128,9 +209,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "x-api-key", "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
-            { "name": "Content-Type", "value": "application/json" },
-            { "name": "x-vercel-protection-bypass", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
           ]
         },
         "sendBody": true,
@@ -138,53 +228,74 @@
         "jsonBody": "={\n  \"waId\": \"{{ $('Normalize Input').item.json.from }}\",\n  \"messageText\": {{ JSON.stringify($('Normalize Input').item.json.text) }},\n  \"waMessageId\": \"{{ $('Normalize Input').item.json.messageId }}\",\n  \"senderName\": \"{{ $('Normalize Input').item.json.senderName }}\",\n  \"messageType\": \"{{ $('Normalize Input').item.json.messageType }}\"\n}",
         "options": {}
       },
-      "id": "node-store-inbound",
+      "id": "fa3710ec-1ef1-4404-ab64-ae0a927cb289",
       "name": "Store Inbound Message",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [-1360, 300]
+      "position": [
+        8144,
+        192
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "leftValue": "" },
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
           "conditions": [
             {
               "leftValue": "={{ $json.isDuplicate }}",
               "rightValue": false,
-              "operator": { "type": "boolean", "operation": "equals" }
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
             }
           ],
           "combinator": "and"
         },
         "options": {}
       },
-      "id": "node-is-duplicate",
+      "id": "4d633b70-9ae8-46d9-a13c-ced07a7bc704",
       "name": "Is Duplicate?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [-1160, 300]
+      "position": [
+        8352,
+        192
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "leftValue": "" },
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
           "conditions": [
             {
               "leftValue": "={{ $json.botActive }}",
               "rightValue": true,
-              "operator": { "type": "boolean", "operation": "equals" }
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
             }
           ],
           "combinator": "and"
         },
         "options": {}
       },
-      "id": "node-bot-active",
+      "id": "e26c1616-451b-4b1c-b01c-13764c56d2ea",
       "name": "Bot Active?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [-960, 300]
+      "position": [
+        8576,
+        176
+      ]
     },
     {
       "parameters": {
@@ -192,31 +303,43 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "x-api-key", "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
-            { "name": "x-vercel-protection-bypass", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
           ]
         },
         "options": {}
       },
-      "id": "node-load-profile",
+      "id": "f3742cce-1b1f-47b6-8a39-91f82a222eac",
       "name": "Load Customer Profile",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [-760, 300]
+      "position": [
+        8832,
+        160
+      ]
     },
     {
       "parameters": {
         "promptType": "define",
         "text": "=Customer name: {{ $('Normalize Input').item.json.senderName || 'Unknown' }}\nWhatsApp number (waId): {{ $('Normalize Input').item.json.from }}\nExisting profile: {{ JSON.stringify($json) }}\n\nCustomer message: {{ $('Normalize Input').item.json.text }}",
         "options": {
-          "systemMessage": "You are the WhatsApp customer service assistant for **Peterborough Plumbers** — a Gas Safe registered domestic plumbing and heating company based in Peterborough, UK, serving the area for 50+ years.\n\n**You ARE the company.** Speak as a real, experienced team member — warm, calm, professional, local.\n\n---\n\n## IDENTITY\n\n- Company: Peterborough Plumbers, 3 Saville Road, Peterborough PE3 7PR\n- Gas Safe Registered (Reg: 123456) | 50+ years combined experience | 4.6★ Google (120+ reviews)\n- Coverage: PE1, PE2, PE3, PE4, PE6, PE7, PE9 and surrounding villages including Stamford, Market Deeping, Yaxley, Whittlesey\n- The customer is already messaging you on WhatsApp — never give them a phone number, never tell them to call, never ask for their phone number (you already have it from their WhatsApp)\n\n---\n\n## COMMUNICATION RULES\n\n- Short messages — max 2–3 sentences per reply\n- One question per turn — never stack multiple questions\n- British English — Peterborough casual-professional tone\n- Natural phrases: \"No problem\", \"Let me help with that\", \"That sounds like…\", \"We can get that booked in\", \"Sorted\", \"We'll message you here before arrival\"\n- Never say \"Awesome!\", \"Amazing!\", \"How can I make your day?\" — avoid American tone\n- Empathy when needed: \"Sorry you're dealing with that.\", \"I understand — that does sound frustrating.\", \"We'll take it from here.\"\n- Emojis: sparingly — 🚨 urgent, 📍 postcode, ✅ confirmed, 🔧 plumbing, 🔥 boiler/heating\n- Never robotic, never repeat yourself, never ask a question already answered\n\n---\n\n## GOLDEN WORKFLOW — EVERY ENQUIRY\n\n**Step 1 — Acknowledge**\nCalm, human response first. \"Sorry you're dealing with that. Let me help.\"\n\n**Step 2 — Safety Screen (always first)**\nBefore anything else, check for:\n- Gas smell → EMERGENCY ROUTE immediately\n- CO alarm sounding → EMERGENCY ROUTE immediately\n- Water leaking near electrics → urgent precaution\n- Active major leak or burst pipe → urgent\n- Hot water discharging from a pipe → urgent\n- Sewage backflow → urgent\n- No heating + vulnerable occupant in cold weather → priority booking\n\n**Step 3 — Classify severity internally**\n- GREEN: Minor, visible, non-gas, low-risk. May guide resident.\n- AMBER: Likely needs on-site. One or two safe checks first, then book.\n- RED: Emergency or unsafe. No troubleshooting. Emergency instructions only.\n\n**Step 4 — Search knowledge base**\nUse the `search_knowledge` tool to retrieve relevant service guidance before answering any technical question.\n\n**Step 5 — Guide or Book**\n- GREEN: Offer safe basic check. If customer declines → respect immediately, move to booking.\n- AMBER: Brief safe check → then move to booking.\n- RED: Emergency instructions → human handoff.\n\n**Step 6 — Booking (collect in order, one question per turn)**\nWhen on-site attendance is needed:\n1. Say: \"Right, this sounds like something we need to check on-site.\"\n2. Ask for name if not already known\n3. Ask for postcode if not already known 📍\n4. Ask: \"Is there a time that works best for you — morning, afternoon, or a particular day?\"\n5. Once you have name + postcode + preferred time → output the LEAD_READY marker (see below)\n6. Close: \"Sorted ✅ — we'll message you here to confirm the visit.\"\n\n---\n\n## LEAD CAPTURE — MARKER FORMAT\n\nWhen you have collected name + postcode + preferredTime, append this EXACTLY at the very end of your reply on a new line. Do not include it until all three are confirmed:\n\n[[LEAD:{\"name\":\"CUSTOMER_NAME\",\"postcode\":\"POSTCODE\",\"serviceType\":\"SERVICE_TYPE\",\"notes\":\"ISSUE_SUMMARY\",\"preferredTime\":\"PREFERRED_TIME\"}]]\n\nRules:\n- Replace each value with actual data from the conversation\n- serviceType: e.g. boiler repair, blocked drain, boiler service, CP12\n- notes: one sentence summary of the issue\n- preferredTime: e.g. morning, afternoon, Tuesday morning, anytime this week\n- Output the marker ONCE only — never repeat it\n- The customer will NOT see this marker — it is stripped before sending\n\n---\n\n## PRICING RULES\n\n- NEVER volunteer pricing unprompted\n- ONLY share if the customer directly asks\n- Published rates: Boiler Service from £79 | CP12 from £65 | Boiler Service + CP12 bundle from £110\n- Everything else: \"We provide free no-obligation quotes — I can get that arranged for you.\"\n\n---\n\n## EMERGENCY PROTOCOLS\n\n**GAS SMELL / CO ALARM:**\n\"Please turn the boiler off, open windows, leave the property, and call the National Gas Emergency Service on 0800 111 999. Don't switch any lights or electrics on or off. Stay outside until they've checked it.\"\n\n**BURST PIPE / MAJOR LEAK:**\n\"Please turn the water off at the stop tap if you can safely do so, and stop using the affected area. We'll treat this as urgent.\"\n\n**WATER NEAR ELECTRICS:**\n\"Please stop using that area. Turn the water off if you can safely do so. Keep clear of any electrics near the leak.\"\n\n**UNVENTED DISCHARGE:**\n\"Please switch the heater off and don't adjust any components. This needs urgent attention from a qualified engineer.\"\n\n**NO HEATING + VULNERABLE OCCUPANT:**\n\"I understand — let me prioritise this. Can you send your postcode? I'll check our earliest available slot as an urgent booking.\"\n\n---\n\n## HUMAN HANDOFF\n\nTransfer to human when: gas emergency (after instructions), severe flooding, customer angry or distressed, complaint, legal issue, customer asks to speak to a person.\n\n**Handoff message:** \"I'm going to get one of the team to pick this up for you directly. They'll message you here shortly.\"\n\n---\n\n## ABSOLUTE RULES\n\n1. Safety first — always.\n2. Never repeat a question already answered.\n3. Never ask for phone number — it is the WhatsApp number.\n4. Never volunteer pricing — only share if asked.\n5. Never promise same-day visits, exact ETAs, or specific engineers.\n6. Never give unsafe gas, boiler, unvented, or electrical advice.\n7. Never hallucinate — if unsure, say so honestly.\n8. Never sound robotic or American.\n9. Always search knowledge base for technical questions before answering.\n10. Respect when a customer doesn't want to do a check — never push.\n11. Capture lead data naturally — don't make it feel like a form.\n12. Sound like a real, experienced, helpful Peterborough plumbing company worker.\n13. NEVER ask for name or postcode on the first reply. Always ask a safety or technical question first.\n14. Follow Golden Workflow steps IN ORDER — safety screen and triage BEFORE booking details.\n15. On first message about any issue — first question must be about safety or the technical problem, never postcode or name."
+          "systemMessage": "You are the WhatsApp customer service assistant for Peterborough Plumbers, a Gas Safe registered domestic plumbing and heating company based in Peterborough, UK with more than 50 years of combined experience.\n\nYou are speaking directly to customers on WhatsApp as a real member of the company team.\n\nSpeak naturally like an experienced local plumbing company worker.\nYour tone must be warm, calm, practical and professional.\n\nNever sound like an AI assistant.\n\nIDENTITY\n\nCompany\nPeterborough Plumbers\n3 Saville Road\nPeterborough PE3 7PR\n\nCredentials\nGas Safe Registered (Reg 123456)\n50+ years combined experience\n4.6 Google rating with 120+ reviews\n\nCoverage Area\nPE1, PE2, PE3, PE4, PE6, PE7, PE9\nIncluding Stamford, Market Deeping, Yaxley and Whittlesey.\n\nImportant\nThe customer is already messaging on WhatsApp.\nNever tell them to call the company.\nNever display the company phone number.\nNever ask for the customer's phone number.\n\nMESSAGE STYLE\n\nMessages must feel like a normal WhatsApp conversation.\n\nRules\n\nKeep replies short.\nMaximum 2 to 3 sentences.\n\nAsk only one question at a time.\n\nUse British English.\n\nUse natural phrases such as\nNo problem.\nLet me help with that.\nThat sounds like.\nWe can get that booked in.\nWe'll message you here before arrival.\n\nAvoid American style phrases such as\nAwesome\nAmazing\nHow can I make your day\n\nNever use emojis.\n\nNever use stars or markdown formatting.\n\nNever write headings, bullet points or structured lists in replies.\n\nMessages must look like normal chat written by a human.\n\nExample tone\n\nSorry you're dealing with that.\nThat sounds like it could be a pressure issue with the boiler.\nIs the pressure gauge showing below 1 bar?\n\nGOLDEN WORKFLOW\n\nFollow this order for every enquiry.\n\nStep 1 — Acknowledge\n\nStart with a calm human response.\n\nExample\nSorry you're dealing with that. Let me help.\n\nStep 2 — Safety Screen\n\nAlways check for safety risks first.\n\nGas smell\nCarbon monoxide alarm\nWater leaking near electrics\nMajor burst pipe\nHot water discharging from a pipe\nSewage backflow\nNo heating with vulnerable occupants during cold weather\n\nIf any of these exist treat as urgent.\n\nStep 3 — Classify Severity (internal reasoning)\n\nGreen\nMinor issue that may allow a basic safe check.\n\nAmber\nLikely needs engineer visit.\n\nRed\nEmergency or unsafe situation.\n\nDo not explain these categories to the customer.\n\nStep 4 — Knowledge Search\n\nBefore answering technical questions use the tool called search_knowledge to retrieve guidance from the plumbing knowledge base.\n\nNever guess technical advice.\n\nStep 5 — Guide or Book\n\nGreen\nOffer simple safe checks.\n\nIf the customer does not want to perform checks, move directly to booking.\n\nAmber\nAsk one quick safe check then move to booking.\n\nRed\nGive safety instructions and transfer to human assistance.\n\nStep 6 — Booking Flow\n\nWhen an on site visit is required follow this order.\n\nFirst say\n\nThis sounds like something we need to check on site.\n\nThen collect details one at a time.\n\nFirst ask for the customer's name.\n\nThen ask for the postcode.\n\nThen ask what time works best for them.\n\nOnce you have name, postcode and preferred time you must output the lead marker.\n\nClose naturally with a message such as\n\nWe'll confirm the visit here on WhatsApp shortly.\n\nLEAD CAPTURE MARKER\n\nWhen name, postcode and preferred time are confirmed append this marker exactly once.\n\n[[LEAD:{\"name\":\"CUSTOMER_NAME\",\"postcode\":\"POSTCODE\",\"serviceType\":\"SERVICE_TYPE\",\"notes\":\"ISSUE_SUMMARY\",\"preferredTime\":\"PREFERRED_TIME\"}]]\n\nRules\n\nReplace values with real conversation data.\nserviceType example: boiler repair, blocked drain, boiler service, CP12.\nnotes must be a one sentence summary of the issue.\npreferredTime example: morning, afternoon, Tuesday morning, anytime this week.\n\nThe marker must appear on a new line at the end of the message.\n\nThe marker is removed before sending to the customer.\n\nNever repeat the marker.\n\nPRICING RULES\n\nNever mention pricing unless the customer directly asks.\n\nMost plumbing and heating work cannot be priced accurately without seeing the issue on site. The final cost is confirmed by the engineer after inspecting the problem.\n\nIf a customer asks about price, explain that pricing can vary depending on the fault, parts required and time needed.\n\nExample response style\n\nThe engineer will need to see the issue first to give an accurate price. Costs can vary depending on what’s causing the problem and what parts are needed.\n\nPricing is always kept in line with current local market rates.\n\nFor servicing or landlord gas safety checks you may mention typical starting prices if asked, but always clarify that the final price can vary depending on the system and property.\n\nExample\n\nBoiler servicing and CP12 checks are usually priced in line with local market rates, but the engineer will confirm the exact cost once the system has been checked.\n\nNever promise a fixed price unless it has been confirmed by the system.\n\nLEGAL AND SAFETY RULES\n\nAll gas and boiler related work must only be handled by Gas Safe registered engineers.\n\nNever guide customers to open or repair a boiler.\n\nNever give instructions involving gas components.\n\nNever provide unsafe repair instructions.\n\nEMERGENCY RESPONSES\n\nGas smell or carbon monoxide alarm\n\nTell the customer to turn the boiler off, open windows, leave the property and call the National Gas Emergency Service on 0800 111 999.\n\nBurst pipe or major leak\n\nAdvise turning off the stop tap if possible and avoiding the affected area.\n\nWater near electrics\n\nAdvise stopping water use and keeping clear of electrics.\n\nUnvented hot water discharge\n\nAdvise switching the heater off and not adjusting any components.\n\nHUMAN HANDOFF\n\nTransfer the conversation to a human team member when\n\nGas emergency\nSevere flooding\nCustomer angry or distressed\nComplaint or legal issue\nCustomer explicitly asks to speak to a person\n\nMessage\n\nI'll get one of the team to pick this up for you directly. They'll message you here shortly.\n\nABSOLUTE RULES\n\nSafety always comes first.\n\nNever ask a question the customer already answered.\n\nNever ask for a phone number.\n\nNever promise arrival times or specific engineers.\n\nNever invent information.\n\nNever sound robotic.\n\nAlways keep the conversation natural, helpful and brief."
         }
       },
-      "id": "node-master-agent",
+      "id": "d62676bd-2f14-4d3b-b35b-30cba7132e27",
       "name": "Master Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
-      "position": [-400, 300]
+      "position": [
+        9104,
+        160
+      ]
     },
     {
       "parameters": {
@@ -226,14 +349,23 @@
           "mode": "list",
           "cachedResultName": "gpt-4-turbo"
         },
+        "builtInTools": {},
         "options": {}
       },
-      "id": "node-llm",
+      "id": "489c3c29-d43f-48b6-9347-ec167c505282",
       "name": "GPT-4 Turbo",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
-      "position": [-400, 520],
-      "credentials": { "openAiApi": { "id": "VQVCMgBfyEgCrw5b", "name": "OpenAi" } }
+      "position": [
+        9104,
+        464
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
     },
     {
       "parameters": {
@@ -241,65 +373,93 @@
         "sessionKey": "={{ $('Normalize Input').item.json.from }}",
         "contextWindowLength": 10
       },
-      "id": "node-memory",
+      "id": "1149ee34-26c2-433d-941e-d5be5e7aa015",
       "name": "Conversation Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
-      "position": [-200, 520]
+      "position": [
+        9200,
+        672
+      ]
     },
     {
       "parameters": {
         "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/knowledge/search",
-        "sendHeaders": true,
         "sendQuery": true,
         "parametersQuery": {
           "values": [
-            { "name": "q", "valueProvider": "modelRequired", "description": "The plumbing or heating topic to search — e.g. 'boiler error code', 'radiator cold', 'no hot water', 'blocked drain', 'gas smell', 'CP12', 'pricing'" }
+            {
+              "name": "q"
+            }
           ]
         },
+        "sendHeaders": true,
         "parametersHeaders": {
           "values": [
-            { "name": "x-api-key", "valueProvider": "fieldValue", "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
-            { "name": "x-vercel-protection-bypass", "valueProvider": "fieldValue", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
+            {
+              "name": "x-api-key",
+              "valueProvider": "fieldValue",
+              "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "valueProvider": "fieldValue",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
           ]
         }
       },
-      "id": "node-knowledge-tool",
+      "id": "b1457d2a-3758-4002-83de-527bfb75890e",
       "name": "search_knowledge",
       "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
       "typeVersion": 1.1,
-      "position": [-600, 520]
+      "position": [
+        9360,
+        464
+      ]
     },
     {
       "parameters": {
         "jsCode": "const raw = $input.first().json.output || '';\n\n// Extract [[LEAD:{...}]] marker if present\nconst match = raw.match(/\\[\\[LEAD:(\\{.*?\\})\\]\\]/s);\n\nlet leadData = null;\nif (match) {\n  try {\n    leadData = JSON.parse(match[1]);\n  } catch(e) {\n    leadData = null;\n  }\n}\n\n// Strip the marker from the message sent to customer\nconst cleanMessage = raw.replace(/\\n?\\[\\[LEAD:\\{.*?\\}\\]\\]/s, '').trim();\n\nreturn [{\n  json: {\n    agentReply: cleanMessage,\n    leadData: leadData,\n    hasLead: leadData !== null,\n    waId: $('Normalize Input').first().json.from\n  }\n}];"
       },
-      "id": "node-capture-reply",
+      "id": "b728706c-9eed-4751-8a82-54ad2c8392f5",
       "name": "Capture Reply",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [0, 300]
+      "position": [
+        9504,
+        192
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "leftValue": "" },
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
           "conditions": [
             {
               "leftValue": "={{ $json.hasLead }}",
               "rightValue": true,
-              "operator": { "type": "boolean", "operation": "equals" }
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
             }
           ],
           "combinator": "and"
         },
         "options": {}
       },
-      "id": "node-has-lead",
+      "id": "b8604a31-f417-44e8-a6bc-e27f12667140",
       "name": "Has Lead?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [200, 300]
+      "position": [
+        9712,
+        192
+      ]
     },
     {
       "parameters": {
@@ -308,9 +468,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "x-api-key", "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
-            { "name": "Content-Type", "value": "application/json" },
-            { "name": "x-vercel-protection-bypass", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
           ]
         },
         "sendBody": true,
@@ -318,11 +487,14 @@
         "jsonBody": "={\n  \"waId\": \"{{ $('Capture Reply').item.json.waId }}\",\n  \"name\": \"{{ $('Capture Reply').item.json.leadData.name }}\",\n  \"phone\": \"{{ $('Capture Reply').item.json.waId }}\",\n  \"postcode\": \"{{ $('Capture Reply').item.json.leadData.postcode }}\",\n  \"serviceType\": \"{{ $('Capture Reply').item.json.leadData.serviceType }}\",\n  \"notes\": \"{{ $('Capture Reply').item.json.leadData.notes }}\",\n  \"preferredTime\": \"{{ $('Capture Reply').item.json.leadData.preferredTime }}\"\n}",
         "options": {}
       },
-      "id": "node-save-lead",
+      "id": "9cdc7ea6-e71c-4606-b2c2-c1c049c2f7f5",
       "name": "Save Lead",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [400, 160]
+      "position": [
+        9936,
+        16
+      ]
     },
     {
       "parameters": {
@@ -331,9 +503,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "x-api-key", "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
-            { "name": "Content-Type", "value": "application/json" },
-            { "name": "x-vercel-protection-bypass", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
           ]
         },
         "sendBody": true,
@@ -341,11 +522,14 @@
         "jsonBody": "={\n  \"waId\": \"{{ $('Capture Reply').item.json.waId }}\",\n  \"replyText\": {{ JSON.stringify($('Capture Reply').item.json.agentReply) }},\n  \"routeUsed\": \"master\"\n}",
         "options": {}
       },
-      "id": "node-store-reply",
+      "id": "032bcf61-2bff-4da2-944c-1415014ddc13",
       "name": "Store Bot Reply",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [640, 300]
+      "position": [
+        10144,
+        208
+      ]
     },
     {
       "parameters": {
@@ -354,9 +538,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "x-api-key", "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
-            { "name": "Content-Type", "value": "application/json" },
-            { "name": "x-vercel-protection-bypass", "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei" }
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
           ]
         },
         "sendBody": true,
@@ -364,11 +557,14 @@
         "jsonBody": "={\n  \"waId\": \"{{ $('Normalize Input').item.json.from }}\",\n  \"senderName\": \"{{ $('Normalize Input').item.json.senderName }}\"\n}",
         "options": {}
       },
-      "id": "node-upsert-customer",
+      "id": "26948069-e8b7-4858-ae69-60390188a871",
       "name": "Upsert Customer",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [840, 300]
+      "position": [
+        10368,
+        208
+      ]
     },
     {
       "parameters": {
@@ -378,96 +574,529 @@
         "textBody": "={{ $('Capture Reply').item.json.agentReply }}",
         "additionalFields": {}
       },
-      "id": "node-send-message",
+      "id": "38364f0b-abf7-461d-abda-ad1d8fd8814a",
       "name": "Send WhatsApp Message",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
-      "position": [1040, 300],
-      "credentials": { "whatsAppApi": { "id": "zU8vkUNxUe8Yu9EL", "name": "WhatsApp" } }
+      "position": [
+        10560,
+        208
+      ],
+      "webhookId": "920f309c-6ebe-4018-ba2c-e454c210e776",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "zU8vkUNxUe8Yu9EL",
+          "name": "WhatsApp"
+        }
+      }
+    }
+    ,
+    {
+      "parameters": {
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/dispatch/is-plumber?waId={{ $json.from }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "continueOnFail": true,
+      "id": "aa000001-0000-0000-0000-000000000001",
+      "name": "Check Is Plumber",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [7168, 600]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.isPlumber }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "aa000001-0000-0000-0000-000000000002",
+      "name": "Is Plumber?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [7400, 600]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/dispatch/respond",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"plumberWaId\": \"{{ $('Normalize Input').item.json.from }}\",\n  \"text\": {{ JSON.stringify($('Normalize Input').item.json.text || '') }}\n}",
+        "options": {}
+      },
+      "id": "aa000001-0000-0000-0000-000000000003",
+      "name": "Handle Plumber Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [7650, 600]
+    },
+    {
+      "parameters": {
+        "jsCode": "const resp = $input.first().json;\nconst from = $('Normalize Input').first().json.from;\n\nreturn [{\n  json: {\n    reply: resp.reply || 'Thank you for your response.',\n    accepted: resp.accepted === true,\n    from: from,\n    otherPlumbers: resp.otherPlumbers || []\n  }\n}];"
+      },
+      "id": "aa000001-0000-0000-0000-000000000004",
+      "name": "Parse Plumber Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [7900, 600]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=1061141027076395",
+        "recipientPhoneNumber": "={{ $json.from }}",
+        "textBody": "={{ $json.reply }}",
+        "additionalFields": {}
+      },
+      "id": "aa000001-0000-0000-0000-000000000005",
+      "name": "Send Plumber Reply",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [8150, 600],
+      "webhookId": "aa000001-0000-0000-0000-000000000005",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "zU8vkUNxUe8Yu9EL",
+          "name": "WhatsApp"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $('Parse Plumber Response').item.json.accepted }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "aa000001-0000-0000-0000-000000000006",
+      "name": "Has Accepted?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [8400, 600]
+    },
+    {
+      "parameters": {
+        "jsCode": "const otherPlumbers = $('Parse Plumber Response').first().json.otherPlumbers || [];\nif (otherPlumbers.length === 0) return [];\nreturn otherPlumbers.map(p => ({\n  json: {\n    waId: p.waId,\n    rejectionMessage: p.rejectionMessage || 'This job has been assigned to another plumber. Thanks for responding — we will send you the next available job!'\n  }\n}));"
+      },
+      "id": "aa000001-0000-0000-0000-000000000007",
+      "name": "Split Rejections",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [8650, 500]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=1061141027076395",
+        "recipientPhoneNumber": "={{ $json.waId }}",
+        "textBody": "={{ $json.rejectionMessage }}",
+        "additionalFields": {}
+      },
+      "id": "aa000001-0000-0000-0000-000000000008",
+      "name": "Send Rejection",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [8900, 500],
+      "webhookId": "aa000001-0000-0000-0000-000000000008",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "zU8vkUNxUe8Yu9EL",
+          "name": "WhatsApp"
+        }
+      }
     }
   ],
   "pinData": {},
   "connections": {
     "Receive Message": {
-      "main": [[{ "node": "Normalize Input", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Normalize Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Normalize Input": {
-      "main": [[{ "node": "Is Audio?", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Check Is Plumber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Is Plumber": {
+      "main": [
+        [
+          {
+            "node": "Is Plumber?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Plumber?": {
+      "main": [
+        [
+          {
+            "node": "Handle Plumber Reply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Audio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Plumber Reply": {
+      "main": [
+        [
+          {
+            "node": "Parse Plumber Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Plumber Response": {
+      "main": [
+        [
+          {
+            "node": "Send Plumber Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Plumber Reply": {
+      "main": [
+        [
+          {
+            "node": "Has Accepted?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Accepted?": {
+      "main": [
+        [
+          {
+            "node": "Split Rejections",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Split Rejections": {
+      "main": [
+        [
+          {
+            "node": "Send Rejection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Is Audio?": {
       "main": [
-        [{ "node": "Get Audio URL", "type": "main", "index": 0 }],
-        [{ "node": "Store Inbound Message", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Get Audio URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Store Inbound Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Get Audio URL": {
-      "main": [[{ "node": "Download Audio", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Download Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Download Audio": {
-      "main": [[{ "node": "Transcribe Audio", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Transcribe Audio": {
-      "main": [[{ "node": "Use Transcript", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Use Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Use Transcript": {
-      "main": [[{ "node": "Store Inbound Message", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Store Inbound Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Store Inbound Message": {
-      "main": [[{ "node": "Is Duplicate?", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Is Duplicate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Is Duplicate?": {
       "main": [
-        [{ "node": "Bot Active?", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Bot Active?",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Bot Active?": {
       "main": [
-        [{ "node": "Load Customer Profile", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Load Customer Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Load Customer Profile": {
-      "main": [[{ "node": "Master Agent", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Master Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Master Agent": {
-      "main": [[{ "node": "Capture Reply", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Capture Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Capture Reply": {
-      "main": [[{ "node": "Has Lead?", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Has Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Has Lead?": {
       "main": [
-        [{ "node": "Save Lead", "type": "main", "index": 0 }],
-        [{ "node": "Store Bot Reply", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Save Lead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Store Bot Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Save Lead": {
-      "main": [[{ "node": "Store Bot Reply", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Store Bot Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Store Bot Reply": {
-      "main": [[{ "node": "Upsert Customer", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Upsert Customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Upsert Customer": {
-      "main": [[{ "node": "Send WhatsApp Message", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "GPT-4 Turbo": {
-      "ai_languageModel": [[{ "node": "Master Agent", "type": "ai_languageModel", "index": 0 }]]
+      "ai_languageModel": [
+        [
+          {
+            "node": "Master Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Conversation Memory": {
-      "ai_memory": [[{ "node": "Master Agent", "type": "ai_memory", "index": 0 }]]
+      "ai_memory": [
+        [
+          {
+            "node": "Master Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
     },
     "search_knowledge": {
-      "ai_tool": [[{ "node": "Master Agent", "type": "ai_tool", "index": 0 }]]
+      "ai_tool": [
+        [
+          {
+            "node": "Master Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
+  "versionId": "78f1708e-a8ae-4e3e-abd0-09752cb282c9",
   "meta": {
     "instanceId": "ff3304c66ca0869e5b25e541efa316a768fdb73d58c4b8dc0277ac5caa92c13b"
   },
-  "id": "RAGWhatsAppBot001",
+  "id": "Clhkq6glNcLhADEB",
   "tags": []
 }

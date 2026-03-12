@@ -80,11 +80,13 @@ model Plumber {
   verifiedGeneral   Boolean @default(false) // approved for all general plumbing jobs
   boilerGasApproved Boolean @default(false) // approved for boiler & gas work
 
-  bookings  Booking[]        @relation("AssignedPlumber")
-  offers    BookingOffer[]
-  events    BookingEvent[]
-  locations BookingLocation[]
-  docs      PlumberDoc[]
+  bookings       Booking[]        @relation("AssignedPlumber")
+  offers         BookingOffer[]
+  events         BookingEvent[]
+  locations      BookingLocation[]
+  docs           PlumberDoc[]
+  leadDispatches LeadDispatch[]
+  assignedLeads  Lead[]           @relation("AssignedLeads")
 
   @@map("pb_plumbers")
 }
@@ -266,14 +268,39 @@ model Lead {
   notes         String?  // issue summary + any extra details from WhatsApp
   preferredTime String?  // e.g. "morning", "afternoon", "anytime this week"
   // status: new | contacted | converted | closed
-  status      String   @default("new")
-  source      String   @default("contact_form")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status            String   @default("new")
+  source            String   @default("contact_form")
+  assignedPlumberId String?
+  assignedPlumber   Plumber? @relation("AssignedLeads", fields: [assignedPlumberId], references: [id])
+  dispatches        LeadDispatch[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@index([status])
+  @@index([assignedPlumberId])
   @@index([createdAt(sort: Desc)])
   @@map("pb_leads")
+}
+
+// ── LeadDispatch (tracks which plumber was offered a lead) ────────────────────
+
+model LeadDispatch {
+  id          String    @id @default(cuid())
+  leadId      String
+  lead        Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  plumberId   String
+  plumber     Plumber   @relation(fields: [plumberId], references: [id])
+  // status: offered | accepted | rejected
+  status      String    @default("offered")
+  offeredAt   DateTime  @default(now())
+  respondedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([leadId, plumberId])
+  @@index([leadId])
+  @@index([plumberId])
+  @@index([status])
+  @@map("pb_lead_dispatches")
 }
 
 // ── Service ───────────────────────────────────────────────────────────────────
