@@ -680,22 +680,6 @@ view VLeadPipeline {
   @@map("v_lead_pipeline")
 }
 
-// ── CallEvent (lifecycle events for a call) ───────────────────────────────────
-
-model CallEvent {
-  id        String   @id @default(cuid())
-  callId    String
-  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
-  // eventType: started | agent_greeted | intent_classified | lead_updated | escalated | ended | error
-  eventType String
-  notes     String?
-  meta      Json?
-  createdAt DateTime @default(now())
-
-  @@index([callId])
-  @@map("pb_call_events")
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // QUOTE, VARIATION & REVISIT SYSTEM
 // ═══════════════════════════════════════════════════════════════════════════════
