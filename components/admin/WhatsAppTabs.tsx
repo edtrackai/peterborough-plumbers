@@ -10,7 +10,7 @@ export default function WhatsAppTabs({ initialChats, initialLeads }: { initialCh
   const [tab, setTab] = useState<"customers" | "plumbers">("customers");
 
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)] overflow-hidden">
+    <div className="absolute inset-0 flex flex-col overflow-hidden">
       {/* Tab bar */}
       <div
         className="flex items-center gap-1 px-4 py-2 bg-white border-b shrink-0"
@@ -40,8 +40,8 @@ export default function WhatsAppTabs({ initialChats, initialLeads }: { initialCh
         </button>
       </div>
 
-      {/* Tab content — fill remaining height, children use h-full */}
-      <div className="flex-1 overflow-hidden [&>div]:h-full">
+      {/* Tab content */}
+      <div className="flex-1 overflow-hidden">
         {tab === "customers" ? (
           <WhatsAppChats initialChats={initialChats} />
         ) : (

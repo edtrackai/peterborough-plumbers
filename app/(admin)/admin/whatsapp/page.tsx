@@ -96,9 +96,11 @@ export default async function WhatsAppPage() {
   }));
 
   return (
-    <WhatsAppTabs
-      initialChats={serializedChats}
-      initialLeads={serializedLeads}
-    />
+    <div className="relative flex-1 overflow-hidden">
+      <WhatsAppTabs
+        initialChats={serializedChats}
+        initialLeads={serializedLeads}
+      />
+    </div>
   );
 }
