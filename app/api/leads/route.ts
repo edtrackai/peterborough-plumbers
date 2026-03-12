@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
+import { triggerLeadDispatch } from "@/lib/dispatch";
 
 const RATE_LIMIT = { name: "leads", max: 5, windowMs: 10 * 60 * 1000 }; // 5 per 10 min
 
@@ -72,6 +73,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const lead = await prisma.lead.create({ data: leadData });
+    triggerLeadDispatch(lead.id).catch(() => {});
     return NextResponse.json({ success: true, id: lead.id }, { status: 201 });
   } catch (err) {
     console.error("[leads POST]", err instanceof Error ? err.message : "DB error");
