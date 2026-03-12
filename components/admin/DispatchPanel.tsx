@@ -82,6 +82,7 @@ function plumberInitials(name: string) {
 export default function DispatchPanel({ initialLeads }: { initialLeads: DispatchLead[] }) {
   const [leads, setLeads] = useState<DispatchLead[]>(initialLeads);
   const [selectedId, setSelectedId] = useState<string | null>(initialLeads[0]?.id ?? null);
+  const [dispatching, setDispatching] = useState(false);
 
   const selected = leads.find((l) => l.id === selectedId) ?? null;
 
@@ -105,6 +106,23 @@ export default function DispatchPanel({ initialLeads }: { initialLeads: Dispatch
     return () => clearInterval(interval);
   }, [refresh]);
 
+  const dispatchPending = useCallback(async () => {
+    setDispatching(true);
+    try {
+      const res = await fetch("/api/dispatch/trigger-pending", {
+        method: "POST",
+        headers: { "x-api-key": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83" },
+      });
+      const data = await res.json();
+      alert(`Dispatched: ${data.dispatched ?? 0} leads`);
+      await refresh();
+    } catch {
+      alert("Dispatch failed");
+    } finally {
+      setDispatching(false);
+    }
+  }, [refresh]);
+
   return (
     <div className="flex h-[calc(100vh-64px)] overflow-hidden">
       {/* ── Left panel: lead list ── */}
@@ -112,8 +130,18 @@ export default function DispatchPanel({ initialLeads }: { initialLeads: Dispatch
         className="w-80 shrink-0 flex flex-col border-r overflow-hidden"
         style={{ borderColor: "rgba(0,0,0,0.06)" }}
       >
-        <div className="px-4 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-          <h1 className="text-lg font-bold text-slate-900">Plumber Dispatch</h1>
+        <div className="px-4 py-3 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg font-bold text-slate-900">Plumber Dispatch</h1>
+            <button
+              onClick={dispatchPending}
+              disabled={dispatching}
+              className="text-[0.65rem] font-bold px-2.5 py-1 rounded-lg transition-colors"
+              style={{ background: "rgba(200,16,46,0.08)", color: "#C8102E" }}
+            >
+              {dispatching ? "Sending..." : "⚡ Dispatch Pending"}
+            </button>
+          </div>
           <p className="text-xs text-slate-400 mt-0.5">
             {leads.length} lead{leads.length !== 1 ? "s" : ""} dispatched · auto-refreshing
           </p>

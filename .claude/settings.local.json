@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill:*)",
+      "Bash(npm run:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(npx next:*)",
+      "Bash(curl:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx tsc:*)",
+      "mcp__claude_ai_Vercel__get_project",
+      "mcp__claude_ai_Vercel__deploy_to_vercel",
+      "Bash(npx vercel:*)",
+      "Bash(gh auth:*)",
+      "Bash(where gh:*)",
+      "Bash(where vercel:*)",
+      "mcp__claude_ai_Vercel__get_deployment_build_logs",
+      "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); events=json.loads\\(data[0][''text'']\\)[''events'']; [print\\(e[''text'']\\) for e in events[-30:]]\")",
+      "mcp__claude_ai_Vercel__search_vercel_documentation",
+      "mcp__claude_ai_Vercel__get_runtime_logs",
+      "Bash(printf 3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83:*)",
+      "Bash(printf:*)",
+      "Bash(echo:*)",
+      "Bash(npx tsx:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "mcp__claude_ai_Vercel__list_deployments",
+      "Bash(npm install:*)",
+      "mcp__claude_ai_Vercel__list_teams",
+      "mcp__claude_ai_Vercel__list_projects",
+      "Bash(git clone:*)",
+      "WebFetch(domain:api.github.com)",
+      "mcp__claude_ai_Vercel__web_fetch_vercel_url",
+      "Bash(git push:*)",
+      "Bash(git:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}
