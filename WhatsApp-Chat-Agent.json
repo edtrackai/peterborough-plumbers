@@ -1,0 +1,1140 @@
+{
+  "name": "WhatsApp-Chat-Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": [
+            "all"
+          ]
+        }
+      },
+      "id": "094b0204-7c8e-4dd9-9dc0-eed06d62bb51",
+      "name": "Receive Msg",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2832,
+        240
+      ],
+      "webhookId": "cd6a871f-d5f8-41b1-bd98-7b03a2be56a3",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "rugiPb9XjpNfmDce",
+          "name": "WhatsApp OAuth Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "name": "messageType",
+              "value": "={{ $json.messages[0].type }}",
+              "type": "string"
+            },
+            {
+              "name": "from",
+              "value": "={{ $json.messages[0].from }}",
+              "type": "string"
+            },
+            {
+              "name": "messageId",
+              "value": "={{ $json.messages[0].id }}",
+              "type": "string"
+            },
+            {
+              "name": "senderName",
+              "value": "={{ $json.contacts ? $json.contacts[0].profile.name : '' }}",
+              "type": "string"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $json.messages[0].timestamp }}",
+              "type": "string"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.messages[0].type === 'text' ? $json.messages[0].text.body : '' }}",
+              "type": "string"
+            },
+            {
+              "name": "audioId",
+              "value": "={{ $json.messages[0].type === 'audio' ? $json.messages[0].audio.id : '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "88360796-99f4-4554-a559-d337f8ca1cd5",
+      "name": "Normalize Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.messageType }}",
+              "rightValue": "audio",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "197e1b33-c51c-4aa1-bbf6-287633b29311",
+      "name": "Is Audio?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -2400,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "mediaUrl",
+        "phoneNumberId": "=1061141027076395",
+        "recipientPhoneNumber": "={{ $json.audioId }}"
+      },
+      "id": "92c5f08c-0f54-4520-92f6-5b3c4941fe06",
+      "name": "Get Audio Media URL",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        -2128,
+        -16
+      ],
+      "webhookId": "54e6b735-903a-476a-b700-295928c4e8cf",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "zU8vkUNxUe8Yu9EL",
+          "name": "WhatsApp"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer EAF2wxDLD5MMBQwaRAptSG2kyn4wMZAJ9ILdEbXRZCVQDX3vpZCYmoCHBs4RHNm3EMwB2UuT7iDWkq4BLrBiCrFS1rHepuZAYVvW4g79dW8JKJyULESvqpmmc0X2whRfqNvfTP5gZANHS2Ua68bwCr9LawYcCzDHCQA4FHZBHxW39X0MMKSyonE9kV9u1HPgXuiowZDZD"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "id": "4365b143-0fbd-4431-9d1f-ab351032cf1d",
+      "name": "Download Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1952,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "14823830-033a-41c3-89d9-4bccf6bd7c27",
+      "name": "Transcribe Audio",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        -1776,
+        -16
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "name": "text",
+              "value": "={{ $json.text || $json.transcript || $json.output || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f8c77157-fd40-4c6c-8c0f-64fe8206e011",
+      "name": "Use Transcript",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1600,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/customer?waId={{ $json.from }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b6ccbde2-953b-45e3-9a31-a84101d02cdb",
+      "name": "Load Customer Profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2400,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $json.from }}\",\n  \"messageText\": {{ JSON.stringify($json.text) }},\n  \"waMessageId\": \"{{ $json.messageId }}\",\n  \"senderName\": \"{{ $json.senderName }}\",\n  \"messageType\": \"{{ $json.messageType }}\"\n}",
+        "options": {}
+      },
+      "id": "d480ecce-ba91-4788-a236-46d720ea4937",
+      "name": "Store Inbound Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1424,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.isDuplicate }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7b7a9712-321b-4483-b073-7606b95d1f2a",
+      "name": "Is Duplicate?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1248,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.botActive }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "dd4da752-f092-488b-b7bc-ad29718733a0",
+      "name": "Bot Active?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1024,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Classify this WhatsApp message and return strict JSON only — no markdown, no code block, no explanation.\n\nCustomer name: {{ $('Normalize Input').item.json.senderName }}\nWhatsApp number: {{ $('Normalize Input').item.json.from }}\nMessage: {{ $('Normalize Input').item.json.text }}",
+        "options": {
+          "systemMessage": "You are the intent classifier for Peterborough Plumbers' WhatsApp assistant. Return valid JSON ONLY — no markdown, no code blocks, no extra text.\n\nROUTE RULES:\n- \"business\": booking, quote request, pricing, service availability, areas covered, company policy, follow-up on a job, any company-specific question. When in doubt between business and general — use business.\n- \"general\": pure knowledge questions about how plumbing/heating systems work (e.g. why is my radiator cold, how does a combi boiler work). NON-PLUMBING questions (geography, sport, news, food, jokes etc.) also route to general — the general agent will politely refuse them.\n- \"emergency\": gas smell, active flooding, water through ceiling, burst pipe, cannot stop water, no heating/hot water with vulnerable occupants (elderly, young children, medical conditions), sewage overflow, carbon monoxide alarm.\n- \"human\": customer explicitly asks for a human, is angry, upset, making a complaint, or has been waiting a long time.\n\nReturn exactly this JSON structure:\n{\"intent\":\"string\",\"route\":\"business|general|emergency|human\",\"risk\":\"low|medium|high\",\"needsHuman\":true/false,\"confidence\":0.0,\"serviceType\":\"string\",\"issueSummary\":\"string\"}"
+        }
+      },
+      "id": "fc904b81-5572-4faf-b931-2300e52d364a",
+      "name": "Intent Router",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -800,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ JSON.parse($json.output).route }}",
+              "rightValue": "business",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "id": "82afb28e-e066-4cc9-ab9d-1692f97e7df5"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "452228fd-dbc3-4a84-9e0b-c74557c286e5",
+      "name": "Route Business?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": ""
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ JSON.parse($('Intent Router').item.json.output).route }}",
+              "rightValue": "general",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f3f7e56c-1f29-404c-a59a-6aa741cd1bff",
+      "name": "Route General?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer ({{ $('Normalize Input').item.json.senderName || $('Normalize Input').item.json.from }}): {{ $('Normalize Input').item.json.text }}",
+        "options": {
+          "systemMessage": "You are the WhatsApp booking and customer service agent for Peterborough Plumbers — a Gas Safe registered plumbing and heating company based in Peterborough, UK, serving the area for over 30 years.\n\nIDENTITY: You ARE Peterborough Plumbers. Speak in first person as the company. Be warm, professional, and helpful.\n\nCOVERAGE AREA: Peterborough and surrounding areas within ~30 miles — including Stamford, Huntingdon, Ely, March, Whittlesey, Wisbech, Spalding, and Oundle.\n\nSERVICES: Boiler repair, boiler service, central heating installation and repair, Gas Safety Certificates (CP12), bathroom installation, leak detection, drain unblocking, emergency plumbing, landlord services.\n\nYOUR GOALS:\n1. Answer booking requests, quote requests, pricing questions, and service enquiries confidently\n2. Collect lead information: customer name, postcode, service needed, preferred time\n3. When you have name + phone + postcode + serviceType — use the Create Or Update Lead Tool immediately\n4. If urgent, tell them calling is fastest: 01733 XXXXXX\n\nSTRICT SCOPE RULES:\n- ONLY discuss plumbing, heating, gas, boilers, drainage, bathrooms, and related home maintenance\n- If the customer asks ANYTHING completely unrelated to plumbing/heating (e.g. football scores, geography, recipes, general chat): respond EXACTLY: \"Hi, I'm the Peterborough Plumbers assistant — I can only help with plumbing and heating enquiries. Is there a plumbing issue I can help you with today?\"\n- Never discuss competitors or make negative comparisons\n- Never invent prices — say \"we provide free no-obligation quotes\"\n- Never guarantee same-day availability — say \"we aim to respond as quickly as possible\"\n- Never give unsafe DIY advice for gas work — always recommend a Gas Safe engineer\n\nRESPONSE STYLE:\n- WhatsApp-style: short, warm, British English\n- Maximum 3 short sentences normally\n- Ask one useful follow-up question when needed to collect lead info\n- No jargon. Plain English."
+        }
+      },
+      "id": "62a05177-9153-4dfd-b3e0-0c849795711b",
+      "name": "Business Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -48,
+        -112
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer message: {{ $('Normalize Input').item.json.text }}",
+        "options": {
+          "systemMessage": "You are the general knowledge assistant for Peterborough Plumbers — a Gas Safe registered plumbing and heating company in Peterborough, UK.\n\nIDENTITY: You represent Peterborough Plumbers. Always identify yourself as such if asked who you are.\n\nYOUR JOB:\n- Answer general plumbing and heating knowledge questions using safe, accurate information\n- Explain how systems work, common causes of problems, general maintenance tips\n- Always recommend professional inspection for diagnosis or repair\n\nSTRICT SCOPE — ZERO TOLERANCE:\n- You ONLY answer questions about: plumbing, heating, boilers, gas systems, drainage, bathrooms, pipes, radiators, hot water, central heating, and directly related home maintenance topics\n- If the customer asks ANYTHING outside this scope — including but not limited to: geography (\"capital of Pakistan\"), sport, news, politics, entertainment, food, jokes, coding, general knowledge, weather — respond with EXACTLY this message and nothing else:\n  \"Hi, I'm the Peterborough Plumbers assistant — I can only help with plumbing and heating questions. Is there a plumbing issue I can help you with today? 😊\"\n- Do not answer, do not explain why, do not engage with the off-topic message — just give that exact response.\n\nSAFETY RULES:\n- Never advise DIY gas work — always say \"you'll need a Gas Safe registered engineer for that\"\n- Never give exact diagnosis — describe possibilities and recommend professional inspection\n- Never give prices — say \"contact us for a free no-obligation quote\"\n- If symptoms sound urgent (water damage, no heating in winter, gas smell), escalate urgency and recommend calling immediately\n\nRESPONSE STYLE:\n- WhatsApp-style: short, friendly, British English\n- Maximum 2-3 sentences\n- End with a soft CTA: \"Would you like us to take a look?\" or \"Feel free to get in touch for a free quote.\""
+        }
+      },
+      "id": "d97667ac-ca53-4659-8d13-20913c46aa13",
+      "name": "General Fallback Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Customer message: {{ $('Normalize Input').item.json.text }}\nCustomer name: {{ $('Normalize Input').item.json.senderName }}",
+        "options": {
+          "systemMessage": "You are the emergency response and human handoff agent for Peterborough Plumbers — a Gas Safe registered plumbing and heating company in Peterborough, UK.\n\nIDENTITY: You represent Peterborough Plumbers. Speak calmly, clearly, and authoritatively.\n\nEMERGENCY PROTOCOLS — follow these EXACTLY:\n\nGAS SMELL:\n1. \"Please leave the property immediately — do not touch any light switches or electrical items.\"\n2. \"Turn off the gas meter if it is safe to do so (usually outside the property).\"\n3. \"Call the National Gas Emergency line NOW: 0800 111 999\"\n4. \"Once you are safe, call us: 01733 XXXXXX — our Gas Safe engineers are available.\"\n\nFLOODING / BURST PIPE:\n1. \"Turn off your water at the stopcock immediately — usually under the kitchen sink or where the water supply enters the property.\"\n2. \"Switch off your boiler and move any electrical items away from the water.\"\n3. \"Call us right away: 01733 XXXXXX — we provide emergency plumbing response across Peterborough.\"\n\nNO HEATING / HOT WATER (vulnerable person — elderly, young children, or medical need mentioned):\n1. Acknowledge urgency with empathy\n2. \"We treat no-heating situations involving vulnerable occupants as a priority call-out.\"\n3. \"Please call us directly for the fastest response: 01733 XXXXXX\"\n\nCARBON MONOXIDE ALARM:\n1. \"Leave the property immediately and do not re-enter.\"\n2. \"Call 999 if anyone feels unwell.\"\n3. \"Call the National Gas Emergency line: 0800 111 999\"\n4. \"Then call us: 01733 XXXXXX\"\n\nHUMAN HANDOFF (angry, distressed, or complaint):\n1. Acknowledge calmly and without defensiveness: \"I'm sorry to hear you've had a frustrating experience.\"\n2. \"A member of our team will personally review your case and be in touch shortly.\"\n3. \"For the fastest response, please call us directly: 01733 XXXXXX\"\n\nRESPONSE STYLE:\n- Calm, direct, reassuring\n- British English\n- Short — maximum 4 sentences\n- Always include the phone number 01733 XXXXXX when directing to human action\n- Never minimise an emergency — take every report seriously"
+        }
+      },
+      "id": "3081bcff-5637-4765-9aad-d8800c18e344",
+      "name": "Emergency Or Human Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "name": "agentReply",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "name": "routeUsed",
+              "value": "={{ JSON.parse($('Intent Router').item.json.output).route }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "417148a4-6671-4fdf-9b83-ddf46ec2673a",
+      "name": "Capture Agent Reply",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Extract structured data from this conversation turn and return JSON only.\n\nCustomer number: {{ $('Normalize Input').item.json.from }}\nCustomer name: {{ $('Normalize Input').item.json.senderName }}\nIncoming message: {{ $('Normalize Input').item.json.text }}\nAgent reply: {{ $('Capture Agent Reply').item.json.agentReply }}",
+        "options": {
+          "systemMessage": "Return strict JSON only — no markdown, no code block, no explanation.\n\nExtract these fields from the conversation turn. Use the WhatsApp number as phone unless a different number is clearly stated by the customer.\n\nReturn exactly:\n{\"name\":\"string\",\"phone\":\"string\",\"postcode\":\"string\",\"serviceType\":\"string\",\"issueSummary\":\"string\",\"urgency\":\"string\",\"preferredTime\":\"string\",\"propertyType\":\"string\",\"customerType\":\"string\",\"needsLeadUpdate\":false}\n\nFor unknown fields return empty string. needsLeadUpdate is true only when name + postcode + serviceType are all present."
+        }
+      },
+      "id": "735f2f33-86b9-43cf-8ee6-b6968a2bf952",
+      "name": "Extract Structured Data",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        896,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/customer/upsert",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $('Normalize Input').item.json.from }}\",\n  \"senderName\": \"{{ $('Normalize Input').item.json.senderName }}\",\n  \"fields\": {{ $('Extract Structured Data').item.json.output }}\n}",
+        "options": {}
+      },
+      "id": "d071c0f4-995a-41f2-bb65-07b9fb50c839",
+      "name": "Upsert Customer Profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1232,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/chat/bot-reply",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "=3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-vercel-protection-bypass",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $('Normalize Input').item.json.from }}\",\n  \"replyText\": {{ JSON.stringify($('Capture Agent Reply').item.json.agentReply) }},\n  \"routeUsed\": \"{{ $('Capture Agent Reply').item.json.routeUsed }}\"\n}",
+        "options": {}
+      },
+      "id": "0c035d91-3039-41a2-92d3-a585d05707e8",
+      "name": "Store Bot Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1472,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=1061141027076395",
+        "recipientPhoneNumber": "={{ $('Normalize Input').item.json.from }}",
+        "textBody": "={{ $('Capture Agent Reply').item.json.agentReply }}",
+        "additionalFields": {}
+      },
+      "id": "4bed15a2-5b1d-4b7e-9048-c25a18a7da43",
+      "name": "Send Message",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1664,
+        272
+      ],
+      "webhookId": "bce163e1-2e3d-4027-aac6-f14a84ce680d",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "zU8vkUNxUe8Yu9EL",
+          "name": "WhatsApp"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Normalize Input').item.json.from }}"
+      },
+      "id": "71cd9026-7dc0-4132-8ca0-424c6d1a29d4",
+      "name": "Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://peterborough-plumbers-git-master-shahlals-projects.vercel.app/api/whatsapp/lead/upsert",
+        "sendHeaders": true,
+        "parametersHeaders": {
+          "values": [
+            {
+              "name": "x-api-key",
+              "valueProvider": "fieldValue",
+              "value": "3fc83ffbaea7cf2f7b517d7a82edaae0ec262d79e1ec428c039ebc6f4cb08c83"
+            },
+            {},
+            {
+              "name": "x-vercel-protection-bypass",
+              "valueProvider": "fieldValue",
+              "value": "NjWNnUuVRCwDuLf1yu8w7T1XQnnWz5ei"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"waId\": \"{{ $('Normalize Input').item.json.from }}\",\n  \"name\": \"{name}\",\n  \"phone\": \"{phone}\",\n  \"postcode\": \"{postcode}\",\n  \"serviceType\": \"{serviceType}\",\n  \"issueSummary\": \"{issueSummary}\",\n  \"urgency\": \"{urgency}\"\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "name",
+              "description": "Customer full name"
+            },
+            {
+              "name": "phone",
+              "description": "Customer phone number"
+            },
+            {
+              "name": "postcode",
+              "description": "Property postcode e.g. PE1 2AB"
+            },
+            {
+              "name": "serviceType",
+              "description": "Service needed e.g. boiler repair"
+            },
+            {
+              "name": "issueSummary",
+              "description": "Short problem summary"
+            },
+            {
+              "name": "urgency",
+              "description": "low / medium / high"
+            }
+          ]
+        }
+      },
+      "id": "2873de8e-52c5-486f-99dc-913e2d1105df",
+      "name": "Create Or Update Lead Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-4-turbo"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "c97b8a87-b154-4157-a338-a386ceab3b14",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -800,
+        320
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-4-turbo"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        112
+      ],
+      "id": "fa046c94-773a-4f7d-8c03-1cb25585f1b2",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-4-turbo"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        512
+      ],
+      "id": "fe075d08-8076-446e-a52d-0e53e94647b2",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-4-turbo"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        928
+      ],
+      "id": "a3858c77-8d26-4f37-ae77-bcb5c0a557d8",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-4-turbo"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        592
+      ],
+      "id": "3b283034-f4e6-4e45-866f-178c3c4c6853",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "VQVCMgBfyEgCrw5b",
+          "name": "OpenAi"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Receive Msg": {
+      "main": [
+        [
+          {
+            "node": "Normalize Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Input": {
+      "main": [
+        [
+          {
+            "node": "Is Audio?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Load Customer Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Audio?": {
+      "main": [
+        [
+          {
+            "node": "Get Audio Media URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Store Inbound Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Audio Media URL": {
+      "main": [
+        [
+          {
+            "node": "Download Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Audio": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Audio": {
+      "main": [
+        [
+          {
+            "node": "Use Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Transcript": {
+      "main": [
+        [
+          {
+            "node": "Store Inbound Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Inbound Message": {
+      "main": [
+        [
+          {
+            "node": "Is Duplicate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Duplicate?": {
+      "main": [
+        [
+          {
+            "node": "Bot Active?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bot Active?": {
+      "main": [
+        [
+          {
+            "node": "Intent Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intent Router": {
+      "main": [
+        [
+          {
+            "node": "Route Business?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Business?": {
+      "main": [
+        [
+          {
+            "node": "Business Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route General?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route General?": {
+      "main": [
+        [
+          {
+            "node": "General Fallback Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Emergency Or Human Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Business Agent": {
+      "main": [
+        [
+          {
+            "node": "Capture Agent Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "General Fallback Agent": {
+      "main": [
+        [
+          {
+            "node": "Capture Agent Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Emergency Or Human Agent": {
+      "main": [
+        [
+          {
+            "node": "Capture Agent Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capture Agent Reply": {
+      "main": [
+        [
+          {
+            "node": "Extract Structured Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Structured Data": {
+      "main": [
+        [
+          {
+            "node": "Upsert Customer Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert Customer Profile": {
+      "main": [
+        [
+          {
+            "node": "Store Bot Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Bot Reply": {
+      "main": [
+        [
+          {
+            "node": "Send Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Business Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Or Update Lead Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Business Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Intent Router",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Business Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "General Fallback Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Emergency Or Human Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Extract Structured Data",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "d38fa50b-2758-450b-b2eb-9e31c6b15f31",
+  "meta": {
+    "instanceId": "ff3304c66ca0869e5b25e541efa316a768fdb73d58c4b8dc0277ac5caa92c13b"
+  },
+  "id": "FAWb27z5rKSDO2eC",
+  "tags": []
+}
