@@ -124,7 +124,7 @@ export default function DispatchPanel({ initialLeads }: { initialLeads: Dispatch
   }, [refresh]);
 
   return (
-    <div className="flex h-[calc(100vh-64px)] overflow-hidden">
+    <div className="flex h-full overflow-hidden">
       {/* ── Left panel: lead list ── */}
       <div
         className="w-80 shrink-0 flex flex-col border-r overflow-hidden"

@@ -40,8 +40,8 @@ export default function WhatsAppTabs({ initialChats, initialLeads }: { initialCh
         </button>
       </div>
 
-      {/* Tab content */}
-      <div className="flex-1 overflow-hidden">
+      {/* Tab content — fill remaining height, children use h-full */}
+      <div className="flex-1 overflow-hidden [&>div]:h-full">
         {tab === "customers" ? (
           <WhatsAppChats initialChats={initialChats} />
         ) : (
