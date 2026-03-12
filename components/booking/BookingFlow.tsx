@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PostcodeGate } from "./PostcodeGate";
 import { SlotPicker } from "./SlotPicker";
 import { BookingDetailsForm } from "./BookingDetailsForm";
+import { JobDetailForm, type JobDetailData } from "./JobDetailForm";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -24,6 +25,7 @@ type Step =
   | { name: "postcode" }
   | { name: "slots"; slots: Slot[]; zone: Zone; postcode: string }
   | { name: "details"; slot: Slot; bookingRef: string; expiresAt: string; postcode: string; zone: Zone }
+  | { name: "job-detail"; slot: Slot; bookingRef: string; expiresAt: string; postcode: string; zone: Zone }
   | { name: "done"; bookingRef: string };
 
 // ── BookingFlow ───────────────────────────────────────────────────────────
@@ -81,9 +83,28 @@ export function BookingFlow() {
     }
   }
 
-  // Step 3 → 4: booking confirmed
+  // Step 3 → 4 (job detail): basic details confirmed
   function handleConfirmed(ref: string) {
-    setStep({ name: "done", bookingRef: ref });
+    if (step.name === "details") {
+      setStep({
+        name: "job-detail",
+        slot: step.slot,
+        bookingRef: ref,
+        expiresAt: step.expiresAt,
+        postcode: step.postcode,
+        zone: step.zone,
+      });
+    } else {
+      setStep({ name: "done", bookingRef: ref });
+    }
+  }
+
+  // Step 4 → done: job detail submitted
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function handleJobDetailComplete(_data: JobDetailData) {
+    if (step.name === "job-detail") {
+      setStep({ name: "done", bookingRef: step.bookingRef });
+    }
   }
 
   // Expired timer: back to start
@@ -91,12 +112,13 @@ export function BookingFlow() {
     setStep({ name: "postcode" });
   }
 
-  // Step back to slot picker (re-use cached data)
   function handleBack() {
     if (step.name === "slots") {
       setStep({ name: "postcode" });
     } else if (step.name === "details") {
-      // Re-fetch availability for the same postcode
+      setStep({ name: "postcode" });
+    } else if (step.name === "job-detail") {
+      // Can't go back to details (slot reserved) — just go to postcode
       setStep({ name: "postcode" });
     }
   }
@@ -104,7 +126,7 @@ export function BookingFlow() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
       {/* Step back button */}
-      {(step.name === "slots" || step.name === "details") && (
+      {(step.name === "slots" || step.name === "details" || step.name === "job-detail") && (
         <button
           onClick={handleBack}
           className="mb-6 flex items-center gap-1 text-sm text-pp-teal font-medium hover:underline"
@@ -149,6 +171,14 @@ export function BookingFlow() {
         />
       )}
 
+      {step.name === "job-detail" && (
+        <JobDetailForm
+          bookingRef={step.bookingRef}
+          onComplete={handleJobDetailComplete}
+          onBack={handleBack}
+        />
+      )}
+
       {step.name === "done" && (
         <ConfirmationBanner bookingRef={step.bookingRef} />
       )}
@@ -183,7 +213,7 @@ function ConfirmationBanner({ bookingRef }: { bookingRef: string }) {
           <span className="font-mono font-bold text-pp-teal">{bookingRef}</span>.
         </p>
         <p className="text-sm text-gray-500 mt-2">
-          We&apos;ll call you to confirm the appointment. Keep your reference handy.
+          Your quote has been sent to your WhatsApp. Reply <strong>YES</strong> to approve or <strong>NO</strong> to decline.
         </p>
       </div>
       <a

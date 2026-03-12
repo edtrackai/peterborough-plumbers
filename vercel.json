@@ -7,6 +7,14 @@
     {
       "path": "/api/dispatch/trigger-pending",
       "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/quote-expiry",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/quote-reminder",
+      "schedule": "*/30 * * * *"
     }
   ]
 }

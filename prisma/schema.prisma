@@ -38,31 +38,43 @@ model TimeSlot {
 }
 
 model Plumber {
-  id                String            @id @default(cuid())
-  name              String
-  email             String            @unique
-  phone             String?
-  passwordHash      String
-  isActive          Boolean           @default(true)
-  isOnDuty          Boolean           @default(false)
-  lastSeenAt        DateTime?
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  adminNote         String?
-  approvalStatus    String            @default("pending_verification")
-  boilerGasApproved Boolean           @default(false)
-  gasSafeNumber     String?
-  plumberId         String?           @unique
-  verifiedGeneral   Boolean           @default(false)
-  gasSafeCertExpiry DateTime?
-  plumberType       String            @default("general")
-  events            BookingEvent[]
-  locations         BookingLocation[]
-  offers            BookingOffer[]
-  bookings          Booking[]         @relation("AssignedPlumber")
-  leadDispatches    LeadDispatch[]
-  assignedLeads     Lead[]            @relation("AssignedLeads")
-  docs              PlumberDoc[]
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  phone        String?
+  passwordHash String
+  isActive     Boolean   @default(true)
+  isOnDuty     Boolean   @default(false)
+  lastSeenAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Approval flow
+  // pending_verification | needs_more_info | approved | rejected | suspended
+  approvalStatus    String  @default("pending_verification")
+  plumberId         String? @unique  // PLM-000001 — generated only on admin approval
+  adminNote         String? @db.Text // visible to plumber (rejection/info reason)
+
+  // Plumber type — set at signup, determines eligible job categories
+  // "general" | "gas_safe"
+  plumberType       String    @default("general")
+
+  // Verification
+  gasSafeNumber     String? // self-reported at signup, admin verifies manually
+  gasSafeCertExpiry DateTime? // expiry date of Gas Safe certificate (gas_safe only)
+
+  // Service permissions / badges
+  verifiedGeneral   Boolean @default(false) // approved for all general plumbing jobs
+  boilerGasApproved Boolean @default(false) // approved for boiler & gas work
+
+  bookings       Booking[]        @relation("AssignedPlumber")
+  offers         BookingOffer[]
+  events         BookingEvent[]
+  locations      BookingLocation[]
+  docs           PlumberDoc[]
+  leadDispatches LeadDispatch[]
+  assignedLeads  Lead[]           @relation("AssignedLeads")
+  variations     Variation[]
 
   @@map("pb_plumbers")
 }
@@ -102,14 +114,18 @@ model Booking {
   assignedPlumberId String?
   completedAt       DateTime?
   estimatedArrival  DateTime?
-  events            BookingEvent[]
-  images            BookingImage[]
-  locations         BookingLocation[]
-  notifications     BookingNotification[]
-  offers            BookingOffer[]
-  rating            BookingRating?
   assignedPlumber   Plumber?              @relation("AssignedPlumber", fields: [assignedPlumberId], references: [id])
   slot              TimeSlot              @relation(fields: [slotId], references: [id])
+
+  images        BookingImage[]
+  offers        BookingOffer[]
+  events        BookingEvent[]
+  locations     BookingLocation[]
+  rating        BookingRating?
+  notifications BookingNotification[]
+  quotes        Quote[]
+  variations    Variation[]
+  revisits      Revisit[]           @relation("OriginalBookingRevisits")
 
   @@index([bookingRef])
   @@index([status])
@@ -224,6 +240,7 @@ model Lead {
   assignedPlumberId String?
   dispatches        LeadDispatch[]
   assignedPlumber   Plumber?       @relation("AssignedLeads", fields: [assignedPlumberId], references: [id])
+  quotes            Quote[]
 
   @@index([status])
   @@index([assignedPlumberId])
@@ -661,4 +678,401 @@ view VLeadPipeline {
   ageHours    Decimal? @db.Decimal
 
   @@map("v_lead_pipeline")
+}
+
+// ── CallEvent (lifecycle events for a call) ───────────────────────────────────
+
+model CallEvent {
+  id        String   @id @default(cuid())
+  callId    String
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  // eventType: started | agent_greeted | intent_classified | lead_updated | escalated | ended | error
+  eventType String
+  notes     String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([callId])
+  @@map("pb_call_events")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// QUOTE, VARIATION & REVISIT SYSTEM
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── ServiceCategory ───────────────────────────────────────────────────────────
+
+model ServiceCategory {
+  id              String              @id @default(cuid())
+  name            String              // "Boiler & Heating", "Plumbing Repairs"
+  slug            String              @unique
+  icon            String?             // emoji or icon key
+  requiresGasSafe Boolean             @default(false)
+  sortOrder       Int                 @default(0)
+  isActive        Boolean             @default(true)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  serviceItems    ServiceItem[]
+  formFields      FormFieldDefinition[]
+
+  @@map("pb_service_categories")
+}
+
+// ── ServiceItem ───────────────────────────────────────────────────────────────
+
+model ServiceItem {
+  id                String          @id @default(cuid())
+  categoryId        String
+  category          ServiceCategory @relation(fields: [categoryId], references: [id])
+  name              String          // "Boiler service", "Burst pipe repair"
+  slug              String          @unique
+  description       String?
+  defaultQuoteType  String          @default("fixed") // fixed|estimate|inspection_first
+  defaultLabourMins Int?
+  requiresGasSafe   Boolean         @default(false)
+  hasQuantity       Boolean         @default(false)
+  isActive          Boolean         @default(true)
+  sortOrder         Int             @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  pricingRules      PricingRule[]
+  quotes            Quote[]
+
+  @@index([categoryId])
+  @@map("pb_service_items")
+}
+
+// ── PricingRule ───────────────────────────────────────────────────────────────
+
+model PricingRule {
+  id            String       @id @default(cuid())
+  serviceItemId String?      // null = applies globally
+  serviceItem   ServiceItem? @relation(fields: [serviceItemId], references: [id])
+  // ruleType: base_labour|base_materials|callout_fee|urgency_multiplier
+  //           evening_surcharge|weekend_surcharge|min_job_value
+  //           customer_supplied_discount|inspection_fee
+  ruleType      String
+  label         String       // "Standard callout fee"
+  // valueType: fixed_amount|percentage|multiplier
+  valueType     String
+  value         Decimal      @db.Decimal(10, 2)
+  conditions    Json?        // {"dayOfWeek":[6,0],"afterHour":18}
+  isActive      Boolean      @default(true)
+  sortOrder     Int          @default(0)
+  updatedAt     DateTime     @updatedAt
+  createdAt     DateTime     @default(now())
+
+  @@index([serviceItemId])
+  @@index([ruleType])
+  @@map("pb_pricing_rules")
+}
+
+// ── FormFieldDefinition ───────────────────────────────────────────────────────
+
+model FormFieldDefinition {
+  id           String           @id @default(cuid())
+  categoryId   String?          // null = applies to all categories
+  category     ServiceCategory? @relation(fields: [categoryId], references: [id])
+  fieldKey     String           // "quantity", "repair_or_replace", "urgency"
+  // fieldType: text|number|select|radio|boolean|upload|textarea
+  fieldType    String
+  label        String
+  placeholder  String?
+  helpText     String?
+  options      Json?            // [{"value":"repair","label":"Repair"},...]
+  isMandatory  Boolean          @default(false)
+  isConditional Boolean         @default(false)
+  condition    Json?            // {"field":"service_type","operator":"eq","value":"boiler"}
+  sortOrder    Int              @default(0)
+  isActive     Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([categoryId])
+  @@map("pb_form_field_definitions")
+}
+
+// ── Quote ─────────────────────────────────────────────────────────────────────
+
+model Quote {
+  id               String       @id @default(cuid())
+  quoteRef         String       @unique // Q-260312-XXXX
+  bookingId        String?
+  booking          Booking?     @relation(fields: [bookingId], references: [id])
+  leadId           String?
+  lead             Lead?        @relation(fields: [leadId], references: [id])
+  serviceItemId    String?
+  serviceItem      ServiceItem? @relation(fields: [serviceItemId], references: [id])
+  // quoteType: fixed|estimate|inspection_first
+  quoteType        String       @default("fixed")
+  // status: draft|sent|approved|declined|expired|superseded
+  status           String       @default("draft")
+  subtotal         Decimal      @default(0) @db.Decimal(10, 2)
+  calloutFee       Decimal      @default(0) @db.Decimal(10, 2)
+  urgencySurcharge Decimal      @default(0) @db.Decimal(10, 2)
+  vatAmount        Decimal      @default(0) @db.Decimal(10, 2)
+  total            Decimal      @default(0) @db.Decimal(10, 2)
+  validUntil       DateTime?
+  sentAt           DateTime?
+  approvedAt       DateTime?
+  declinedAt       DateTime?
+  approvedByWaId   String?
+  approvedByText   String?      // exact customer reply text — audit evidence
+  notes            String?      @db.Text
+  internalNotes    String?      @db.Text
+  jobSummary       String?      // plain-English summary for WhatsApp template
+  createdBy        String?      // "admin"|"system"|plumber id
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  lineItems        QuoteLineItem[]
+  messages         QuoteMessage[]
+  variations       Variation[]
+
+  @@index([bookingId])
+  @@index([leadId])
+  @@index([status])
+  @@index([quoteRef])
+  @@map("pb_quotes")
+}
+
+// ── QuoteLineItem ─────────────────────────────────────────────────────────────
+
+model QuoteLineItem {
+  id          String   @id @default(cuid())
+  quoteId     String
+  quote       Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Decimal  @default(1) @db.Decimal(10, 2)
+  unitPrice   Decimal  @db.Decimal(10, 2)
+  lineTotal   Decimal  @db.Decimal(10, 2)
+  // lineType: labour|materials|callout|surcharge|discount|inspection
+  lineType    String
+  isOptional  Boolean  @default(false)
+  sortOrder   Int      @default(0)
+
+  @@index([quoteId])
+  @@map("pb_quote_line_items")
+}
+
+// ── QuoteMessage ──────────────────────────────────────────────────────────────
+
+model QuoteMessage {
+  id          String   @id @default(cuid())
+  quoteId     String
+  quote       Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  // direction: outbound|inbound
+  direction   String
+  // channel: whatsapp|email
+  channel     String
+  recipient   String
+  body        String   @db.Text
+  waMessageId String?  @unique
+  // status: sent|delivered|read|failed
+  status      String   @default("sent")
+  sentAt      DateTime @default(now())
+
+  @@index([quoteId])
+  @@map("pb_quote_messages")
+}
+
+// ── VariationReason ───────────────────────────────────────────────────────────
+
+model VariationReason {
+  id                   String      @id @default(cuid())
+  key                  String      @unique // "fitting_incompatible", "hidden_issue"
+  label                String
+  description          String?
+  isChargeable         Boolean     @default(true)
+  requiresManagerReview Boolean    @default(false)
+  autoApproveBelow     Decimal?    @db.Decimal(10, 2)
+  isActive             Boolean     @default(true)
+  sortOrder            Int         @default(0)
+
+  variations           Variation[]
+
+  @@map("pb_variation_reasons")
+}
+
+// ── Variation ─────────────────────────────────────────────────────────────────
+
+model Variation {
+  id                     String          @id @default(cuid())
+  variationRef           String          @unique // V-260312-XXXX
+  bookingId              String
+  booking                Booking         @relation(fields: [bookingId], references: [id])
+  originalQuoteId        String
+  originalQuote          Quote           @relation(fields: [originalQuoteId], references: [id])
+  raisedByPlumberId      String
+  raisedByPlumber        Plumber         @relation(fields: [raisedByPlumberId], references: [id])
+  extraLabourCost        Decimal         @default(0) @db.Decimal(10, 2)
+  extraMaterialCost      Decimal         @default(0) @db.Decimal(10, 2)
+  extraTotal             Decimal         @default(0) @db.Decimal(10, 2)
+  notes                  String?         @db.Text
+  // status: draft|pending_office|approved_for_send|sent|approved|declined|discussion|cancelled
+  status                 String          @default("draft")
+  officeApprovalRequired Boolean         @default(false)
+  officeApprovedBy       String?
+  officeApprovedAt       DateTime?
+  revisedQuoteId         String?
+  customerReplyText      String?
+  customerRepliedAt      DateTime?
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+
+  reasons                VariationReason[]
+  images                 VariationImage[]
+
+  @@index([bookingId])
+  @@index([status])
+  @@map("pb_variations")
+}
+
+// ── VariationImage ────────────────────────────────────────────────────────────
+
+model VariationImage {
+  id          String    @id @default(cuid())
+  variationId String
+  variation   Variation @relation(fields: [variationId], references: [id], onDelete: Cascade)
+  url         String
+  createdAt   DateTime  @default(now())
+
+  @@index([variationId])
+  @@map("pb_variation_images")
+}
+
+// ── RevisitReason ─────────────────────────────────────────────────────────────
+
+model RevisitReason {
+  id                 String    @id @default(cuid())
+  key                String    @unique
+  label              String
+  description        String?
+  isChargeable       Boolean   @default(false)
+  chargeAmount       Decimal?  @db.Decimal(10, 2)
+  requiresManager    Boolean   @default(false)
+  // defaultBlameParty: customer|business|circumstance
+  defaultBlameParty  String?
+  isActive           Boolean   @default(true)
+  sortOrder          Int       @default(0)
+
+  revisits           Revisit[]
+
+  @@map("pb_revisit_reasons")
+}
+
+// ── Revisit ───────────────────────────────────────────────────────────────────
+
+model Revisit {
+  id                  String        @id @default(cuid())
+  revisitRef          String        @unique // R-260312-XXXX
+  originalBookingId   String
+  originalBooking     Booking       @relation("OriginalBookingRevisits", fields: [originalBookingId], references: [id])
+  newBookingId        String?       @unique
+  reasonId            String
+  reason              RevisitReason @relation(fields: [reasonId], references: [id])
+  isChargeable        Boolean       @default(false)
+  chargeAmount        Decimal?      @db.Decimal(10, 2)
+  notes               String?       @db.Text
+  partsNeeded         String?
+  // status: pending|pending_manager|scheduled|completed|cancelled
+  status              String        @default("pending")
+  requiresManager     Boolean       @default(false)
+  managerId           String?
+  customerApprovedAt  DateTime?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  images              RevisitImage[]
+
+  @@index([originalBookingId])
+  @@index([status])
+  @@map("pb_revisits")
+}
+
+// ── RevisitImage ──────────────────────────────────────────────────────────────
+
+model RevisitImage {
+  id        String   @id @default(cuid())
+  revisitId String
+  revisit   Revisit  @relation(fields: [revisitId], references: [id], onDelete: Cascade)
+  url       String
+  createdAt DateTime @default(now())
+
+  @@index([revisitId])
+  @@map("pb_revisit_images")
+}
+
+// ── MessageTemplate ───────────────────────────────────────────────────────────
+
+model MessageTemplate {
+  id        String   @id @default(cuid())
+  key       String   @unique // "initial_quote", "revised_quote", "booking_confirmation"
+  // channel: whatsapp|email|sms
+  channel   String   @default("whatsapp")
+  subject   String?
+  body      String   @db.Text
+  variables Json     // ["customer_name","quote_reference","total"]
+  isActive  Boolean  @default(true)
+  version   Int      @default(1)
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@map("pb_message_templates")
+}
+
+// ── ApprovalKeyword ───────────────────────────────────────────────────────────
+
+model ApprovalKeyword {
+  id       String  @id @default(cuid())
+  word     String
+  // intent: approve|decline|discuss|unclear
+  intent   String
+  language String  @default("en")
+  isActive Boolean @default(true)
+
+  @@unique([word, language])
+  @@index([intent])
+  @@map("pb_approval_keywords")
+}
+
+// ── ConfigSetting ─────────────────────────────────────────────────────────────
+
+model ConfigSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  // valueType: string|number|boolean|json
+  valueType   String   @default("string")
+  // group: pricing|quotes|variations|notifications|general
+  group       String   @default("general")
+  label       String
+  description String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@index([group])
+  @@map("pb_config_settings")
+}
+
+// ── ActivityLog ───────────────────────────────────────────────────────────────
+
+model ActivityLog {
+  id         String   @id @default(cuid())
+  entityType String   // quote|booking|variation|revisit
+  entityId   String
+  eventType  String   // quote_created|quote_sent|customer_approved|...
+  // actorType: system|admin|plumber|customer
+  actorType  String
+  actorId    String?
+  metadata   Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([createdAt(sort: Desc)])
+  @@map("pb_activity_logs")
 }
