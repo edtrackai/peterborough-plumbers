@@ -64,6 +64,26 @@ export function AdminBookingTable({ bookings: initial }: AdminBookingTableProps)
   const [bookings, setBookings] = useState<BookingRow[]>(initial);
   const [selected, setSelected] = useState<BookingRow | null>(null);
   const [updating, setUpdating] = useState<string | null>(null);
+  const [renotifying, setRenotifying] = useState(false);
+  const [renotifyMsg, setRenotifyMsg] = useState<string | null>(null);
+
+  async function handleRenotify(booking: BookingRow) {
+    setRenotifying(true);
+    setRenotifyMsg(null);
+    try {
+      const res = await fetch(`/api/admin/bookings/${booking.id}/renotify`, { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        setRenotifyMsg(`Notified ${data.notified} plumber${data.notified !== 1 ? "s" : ""}`);
+      } else {
+        setRenotifyMsg(data.error ?? "Failed to re-notify");
+      }
+    } catch {
+      setRenotifyMsg("Network error");
+    } finally {
+      setRenotifying(false);
+    }
+  }
 
   async function handleStatusChange(booking: BookingRow, newStatus: string) {
     setUpdating(booking.id);
@@ -110,7 +130,7 @@ export function AdminBookingTable({ bookings: initial }: AdminBookingTableProps)
             {bookings.map((b) => (
               <tr
                 key={b.id}
-                onClick={() => setSelected(b)}
+                onClick={() => { setSelected(b); setRenotifyMsg(null); }}
                 className="hover:bg-pp-teal/5 cursor-pointer transition-colors"
               >
                 <td className="px-4 py-3 font-mono text-xs text-pp-navy font-semibold">
@@ -305,6 +325,25 @@ export function AdminBookingTable({ bookings: initial }: AdminBookingTableProps)
                   >
                     💬 WhatsApp
                   </a>
+                </div>
+              )}
+
+              {/* Re-notify plumbers */}
+              {["pending_assignment", "reserved", "new"].includes(selected.status) && (
+                <div className="flex flex-col gap-1.5">
+                  <button
+                    disabled={renotifying}
+                    onClick={() => {
+                      setRenotifyMsg(null);
+                      handleRenotify(selected);
+                    }}
+                    className="w-full rounded-lg border border-amber-500 py-2.5 text-sm font-medium text-amber-700 hover:bg-amber-500 hover:text-white transition-colors disabled:opacity-50"
+                  >
+                    {renotifying ? "Sending…" : "Re-notify plumbers"}
+                  </button>
+                  {renotifyMsg && (
+                    <p className="text-center text-xs text-gray-500">{renotifyMsg}</p>
+                  )}
                 </div>
               )}
 
