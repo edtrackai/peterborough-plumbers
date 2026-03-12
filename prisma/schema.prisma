@@ -1,26 +1,17 @@
-// Prisma schema — Peterborough Plumbers
-// Run: npx prisma db push
-// Seed: npx prisma db seed
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["views"]
 }
-
-// Note: pgvector extension must be enabled in Neon before pushing
-// Run in Neon SQL Editor: CREATE EXTENSION IF NOT EXISTS vector;
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// ── ServiceZone ───────────────────────────────────────────────────────────────
-
 model ServiceZone {
   id               String   @id @default(cuid())
-  prefix           String   @unique // "PE1", "PE2", etc.
-  zoneName         String           // "City Centre", "Werrington"
+  prefix           String   @unique
+  zoneName         String
   isActive         Boolean  @default(true)
   travelBufferMins Int      @default(15)
   createdAt        DateTime @default(now())
@@ -29,13 +20,11 @@ model ServiceZone {
   @@map("pb_service_zones")
 }
 
-// ── TimeSlot ──────────────────────────────────────────────────────────────────
-
 model TimeSlot {
   id          String    @id @default(cuid())
-  date        DateTime  @db.Date // 2026-02-24
-  startTime   String              // "09:00"
-  endTime     String              // "11:00"
+  date        DateTime  @db.Date
+  startTime   String
+  endTime     String
   capacity    Int       @default(2)
   bookedCount Int       @default(0)
   isActive    Boolean   @default(true)
@@ -48,77 +37,56 @@ model TimeSlot {
   @@map("pb_time_slots")
 }
 
-// ── Plumber ───────────────────────────────────────────────────────────────────
-
 model Plumber {
-  id           String    @id @default(cuid())
-  name         String
-  email        String    @unique
-  phone        String?
-  passwordHash String
-  isActive     Boolean   @default(true)
-  isOnDuty     Boolean   @default(false)
-  lastSeenAt   DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
-  // Approval flow
-  // pending_verification | needs_more_info | approved | rejected | suspended
-  approvalStatus    String  @default("pending_verification")
-  plumberId         String? @unique  // PLM-000001 — generated only on admin approval
-  adminNote         String? @db.Text // visible to plumber (rejection/info reason)
-
-  // Plumber type — set at signup, determines eligible job categories
-  // "general" | "gas_safe"
-  plumberType       String    @default("general")
-
-  // Verification
-  gasSafeNumber     String? // self-reported at signup, admin verifies manually
-  gasSafeCertExpiry DateTime? // expiry date of Gas Safe certificate (gas_safe only)
-
-  // Service permissions / badges
-  verifiedGeneral   Boolean @default(false) // approved for all general plumbing jobs
-  boilerGasApproved Boolean @default(false) // approved for boiler & gas work
-
-  bookings       Booking[]        @relation("AssignedPlumber")
-  offers         BookingOffer[]
-  events         BookingEvent[]
-  locations      BookingLocation[]
-  docs           PlumberDoc[]
-  leadDispatches LeadDispatch[]
-  assignedLeads  Lead[]           @relation("AssignedLeads")
+  id                String            @id @default(cuid())
+  name              String
+  email             String            @unique
+  phone             String?
+  passwordHash      String
+  isActive          Boolean           @default(true)
+  isOnDuty          Boolean           @default(false)
+  lastSeenAt        DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  adminNote         String?
+  approvalStatus    String            @default("pending_verification")
+  boilerGasApproved Boolean           @default(false)
+  gasSafeNumber     String?
+  plumberId         String?           @unique
+  verifiedGeneral   Boolean           @default(false)
+  gasSafeCertExpiry DateTime?
+  plumberType       String            @default("general")
+  events            BookingEvent[]
+  locations         BookingLocation[]
+  offers            BookingOffer[]
+  bookings          Booking[]         @relation("AssignedPlumber")
+  leadDispatches    LeadDispatch[]
+  assignedLeads     Lead[]            @relation("AssignedLeads")
+  docs              PlumberDoc[]
 
   @@map("pb_plumbers")
 }
 
-// ── PlumberDoc ────────────────────────────────────────────────────────────────
-// docType: photo_id | selfie | proof_of_address | public_liability_insurance
-//          | dbs_certificate | gas_safe_certificate
-
 model PlumberDoc {
   id         String   @id @default(cuid())
   plumberId  String
-  plumber    Plumber  @relation(fields: [plumberId], references: [id], onDelete: Cascade)
   docType    String
   url        String
   publicId   String?
   uploadedAt DateTime @default(now())
+  plumber    Plumber  @relation(fields: [plumberId], references: [id], onDelete: Cascade)
 
   @@index([plumberId])
   @@map("pb_plumber_docs")
 }
 
-// ── Booking ───────────────────────────────────────────────────────────────────
-
 model Booking {
-  id                String    @id @default(cuid())
-  bookingRef        String    @unique // "PB-260224-0042"
-  // status: reserved | pending_assignment | accepted | en_route | arrived | in_progress | completed | cancelled | expired | new | confirmed
-  status            String    @default("reserved")
+  id                String                @id @default(cuid())
+  bookingRef        String                @unique
+  status            String                @default("reserved")
   postcode          String
   zonePrefix        String
   slotId            String
-  slot              TimeSlot  @relation(fields: [slotId], references: [id])
   serviceType       String?
   description       String?
   customerName      String?
@@ -126,61 +94,56 @@ model Booking {
   email             String?
   address           String?
   accessNotes       String?
-  assignedPlumberId String?
-  assignedPlumber   Plumber?  @relation("AssignedPlumber", fields: [assignedPlumberId], references: [id])
-  estimatedArrival  DateTime? // ETA set when plumber accepts or goes en_route
-  reservedAt        DateTime  @default(now())
+  reservedAt        DateTime              @default(now())
   expiresAt         DateTime?
   confirmedAt       DateTime?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  assignedPlumberId String?
   completedAt       DateTime?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  images        BookingImage[]
-  offers        BookingOffer[]
-  events        BookingEvent[]
-  locations     BookingLocation[]
-  rating        BookingRating?
-  notifications BookingNotification[]
+  estimatedArrival  DateTime?
+  events            BookingEvent[]
+  images            BookingImage[]
+  locations         BookingLocation[]
+  notifications     BookingNotification[]
+  offers            BookingOffer[]
+  rating            BookingRating?
+  assignedPlumber   Plumber?              @relation("AssignedPlumber", fields: [assignedPlumberId], references: [id])
+  slot              TimeSlot              @relation(fields: [slotId], references: [id])
 
   @@index([bookingRef])
   @@index([status])
-  @@index([status, expiresAt]) // cleanupExpired: where status="reserved" AND expiresAt < now
+  @@index([status, expiresAt])
   @@index([createdAt(sort: Desc)])
   @@index([zonePrefix])
   @@index([assignedPlumberId])
   @@map("pb_bookings")
 }
 
-// ── BookingImage ──────────────────────────────────────────────────────────────
-
 model BookingImage {
   id        String   @id @default(cuid())
   bookingId String
-  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   url       String
   publicId  String?
   createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
   @@index([bookingId])
   @@map("pb_booking_images")
 }
 
-// ── BookingOffer ──────────────────────────────────────────────────────────────
-
 model BookingOffer {
   id           String    @id @default(cuid())
   bookingId    String
-  booking      Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   plumberId    String
-  plumber      Plumber   @relation(fields: [plumberId], references: [id])
-  // status: offered | accepted | rejected | expired
   status       String    @default("offered")
   rejectReason String?
   rejectNote   String?
   offeredAt    DateTime  @default(now())
   respondedAt  DateTime?
   createdAt    DateTime  @default(now())
+  booking      Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  plumber      Plumber   @relation(fields: [plumberId], references: [id])
 
   @@index([bookingId])
   @@index([plumberId])
@@ -188,115 +151,99 @@ model BookingOffer {
   @@map("pb_booking_offers")
 }
 
-// ── BookingEvent ──────────────────────────────────────────────────────────────
-
 model BookingEvent {
   id        String   @id @default(cuid())
   bookingId String
-  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   plumberId String?
-  plumber   Plumber? @relation(fields: [plumberId], references: [id])
-  // eventType: offered | accepted | rejected | en_route | arrived | in_progress | completed | note | cancelled | pending_assignment
   eventType String
   notes     String?
   createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  plumber   Plumber? @relation(fields: [plumberId], references: [id])
 
   @@index([bookingId])
   @@map("pb_booking_events")
 }
 
-// ── BookingLocation ───────────────────────────────────────────────────────────
-
 model BookingLocation {
   id        String   @id @default(cuid())
   bookingId String
-  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   plumberId String
-  plumber   Plumber  @relation(fields: [plumberId], references: [id])
   lat       Float
   lng       Float
   accuracy  Float?
   createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  plumber   Plumber  @relation(fields: [plumberId], references: [id])
 
   @@index([bookingId])
   @@map("pb_booking_locations")
 }
 
-// ── BookingNotification ───────────────────────────────────────────────────────
-
 model BookingNotification {
   id        String   @id @default(cuid())
   bookingId String
-  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  // type: accepted | en_route | arrived | completed | cancelled | rescheduled
   type      String
-  // channel: email | sms | whatsapp
   channel   String
-  recipient String   // email address or phone number notified
-  message   String   @db.Text
+  recipient String
+  message   String
   success   Boolean  @default(true)
   errorMsg  String?
   sentAt    DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
   @@index([bookingId])
   @@index([type])
   @@map("pb_booking_notifications")
 }
 
-// ── BookingRating ─────────────────────────────────────────────────────────────
-
 model BookingRating {
   id        String   @id @default(cuid())
   bookingId String   @unique
-  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   stars     Int
   comment   String?
   createdAt DateTime @default(now())
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
   @@map("pb_booking_ratings")
 }
 
-// ── Lead ──────────────────────────────────────────────────────────────────
-
 model Lead {
-  id          String   @id @default(cuid())
-  name        String
-  phone       String
-  email       String?
-  postcode    String
-  serviceType   String?
-  notes         String?  // issue summary + any extra details from WhatsApp
-  preferredTime String?  // e.g. "morning", "afternoon", "anytime this week"
-  // status: new | contacted | converted | closed
-  status            String   @default("new")
-  source            String   @default("contact_form")
+  id                String         @id @default(cuid())
+  name              String
+  phone             String
+  email             String?
+  postcode          String
+  serviceType       String?
+  status            String         @default("new")
+  source            String         @default("contact_form")
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  notes             String?
+  preferredTime     String?
   assignedPlumberId String?
-  assignedPlumber   Plumber? @relation("AssignedLeads", fields: [assignedPlumberId], references: [id])
   dispatches        LeadDispatch[]
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  assignedPlumber   Plumber?       @relation("AssignedLeads", fields: [assignedPlumberId], references: [id])
 
   @@index([status])
   @@index([assignedPlumberId])
   @@index([createdAt(sort: Desc)])
+  @@index([createdAt(sort: Desc)], map: "pb_leads_createdat_idx")
   @@map("pb_leads")
 }
 
-// ── LeadDispatch (tracks which plumber was offered a lead) ────────────────────
-
 model LeadDispatch {
-  id          String    @id @default(cuid())
-  leadId      String
-  lead        Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  plumberId   String
-  plumber     Plumber   @relation(fields: [plumberId], references: [id])
-  // status: offered | accepted | rejected
+  id              String    @id @default(cuid())
+  leadId          String
+  plumberId       String
   status          String    @default("offered")
-  dispatchMessage String?   @db.Text  // message sent to plumber
-  plumberReply    String?   @db.Text  // plumber's raw reply text
+  dispatchMessage String?   @db.Text
+  plumberReply    String?   @db.Text
   offeredAt       DateTime  @default(now())
   respondedAt     DateTime?
   createdAt       DateTime  @default(now())
+  lead            Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  plumber         Plumber   @relation(fields: [plumberId], references: [id])
 
   @@unique([leadId, plumberId])
   @@index([leadId])
@@ -305,8 +252,6 @@ model LeadDispatch {
   @@map("pb_lead_dispatches")
 }
 
-// ── Service ───────────────────────────────────────────────────────────────────
-
 model Service {
   id               String   @id @default(cuid())
   name             String
@@ -314,7 +259,7 @@ model Service {
   shortDescription String
   heroHeading      String
   heroSubheading   String
-  content          String   @db.Text
+  content          String
   faqs             Json
   seoTitle         String
   seoDescription   String
@@ -330,103 +275,91 @@ model Service {
   @@map("pb_services")
 }
 
-// ── BlogPost ──────────────────────────────────────────────────────────────────
-
 model BlogPost {
   id             String    @id @default(cuid())
   title          String
   slug           String    @unique
   category       String
-  excerpt        String    @db.Text
-  content        String    @db.Text
+  excerpt        String
+  content        String
   seoTitle       String
   seoDescription String
-  image          String?
   status         String    @default("Draft")
   publishedAt    DateTime?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  image          String?
 
   @@index([slug])
   @@index([status, publishedAt])
   @@map("pb_blog_posts")
 }
 
-// ── Guide ─────────────────────────────────────────────────────────────────────
-
 model Guide {
-  id             String   @id @default(cuid())
-  name           String
-  slug           String   @unique
-  excerpt        String   @db.Text
-  category       String
-  readTime       Int
-  publishedAt    DateTime
-  content        String   @db.Text
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  excerpt     String
+  category    String
+  readTime    Int
+  publishedAt DateTime
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([slug])
   @@index([category])
   @@map("pb_guides")
 }
 
-// ── Area ──────────────────────────────────────────────────────────────────────
-
 model Area {
   id             String   @id @default(cuid())
   name           String
   slug           String   @unique
-  intro          String   @db.Text
-  content        String   @db.Text @default("")
-  faqs           Json     @default("[]")
+  intro          String
   landmarks      Json
   postcodes      Json
   seoTitle       String
   seoDescription String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  content        String   @default("")
+  faqs           Json     @default("[]")
 
   @@index([slug])
   @@map("pb_areas")
 }
-
-// ── Review ────────────────────────────────────────────────────────────────────
 
 model Review {
   id           String   @id @default(cuid())
   customerName String
   areaName     String
   rating       Int
-  body         String   @db.Text
+  body         String
   source       String   @default("Google")
   featured     Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   @@index([featured])
-  @@index([areaName]) // area pages: where areaName = area.name (insensitive)
+  @@index([areaName])
   @@map("pb_reviews")
 }
 
-// ── Pricing ───────────────────────────────────────────────────────────────────
-
 model Pricing {
-  id           String   @id @default(cuid())
-  serviceSlug  String   @unique
-  serviceName  String
-  price        String   // e.g. "£79", "From £99", "POA"
-  priceLabel   String   @default("From") // e.g. "From", "Fixed", "Starting at"
-  priceNote    String?  // optional short note shown alongside the price
-  isActive     Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          String   @id @default(cuid())
+  serviceSlug String   @unique
+  serviceName String
+  price       String
+  priceLabel  String   @default("From")
+  priceNote   String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([serviceSlug])
   @@map("pb_pricing")
 }
-
-// ── SiteSettings ──────────────────────────────────────────────────────────────
 
 model SiteSettings {
   id                     String @id @default("singleton")
@@ -452,69 +385,59 @@ model SiteSettings {
   @@map("pb_site_settings")
 }
 
-// ── ChatSession ───────────────────────────────────────────────────────────────
-
 model ChatSession {
   id         String        @id @default(cuid())
   createdAt  DateTime      @default(now())
   lastSeenAt DateTime      @default(now())
   sourcePage String?
-
-  messages   ChatMessage[]
   leads      ChatLead[]
+  messages   ChatMessage[]
 
   @@index([createdAt(sort: Desc)])
   @@map("pb_chat_sessions")
 }
 
-// ── ChatMessage ───────────────────────────────────────────────────────────────
-
 model ChatMessage {
   id        String      @id @default(cuid())
   sessionId String
-  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  role      String      // 'user' | 'assistant'
-  content   String      @db.Text
+  role      String
+  content   String
   category  String?
   isBlocked Boolean     @default(false)
   createdAt DateTime    @default(now())
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   @@index([sessionId])
   @@index([createdAt(sort: Desc)])
   @@map("pb_chat_messages")
 }
 
-// ── ChatLead ──────────────────────────────────────────────────────────────────
-
 model ChatLead {
   id        String      @id @default(cuid())
   sessionId String
-  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   name      String?
   phone     String?
   postcode  String?
   createdAt DateTime    @default(now())
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   @@index([sessionId])
   @@map("pb_chat_leads")
 }
 
-// ── WaChat (WhatsApp conversation per phone number) ──────────────────────────
-
 model WaChat {
   id            String      @id @default(cuid())
-  waId          String      @unique // WhatsApp phone number (e.g. "447700900000")
+  waId          String      @unique
   customerName  String?
   customerPhone String?
   postcode      String?
   serviceType   String?
   botActive     Boolean     @default(true)
   isEmergency   Boolean     @default(false)
-  leadCaptured  Boolean     @default(false)
   lastMessageAt DateTime    @default(now())
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-
+  leadCaptured  Boolean     @default(false)
   messages      WaMessage[]
 
   @@index([lastMessageAt(sort: Desc)])
@@ -522,49 +445,38 @@ model WaChat {
   @@map("pb_wa_chats")
 }
 
-// ── WaMessage (individual WhatsApp messages) ─────────────────────────────────
-
 model WaMessage {
   id          String   @id @default(cuid())
   chatId      String
-  chat        WaChat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  role        String   // "user" | "assistant"
-  content     String   @db.Text
-  waMessageId String?  @unique // Meta message ID for dedup
+  role        String
+  content     String
+  waMessageId String?  @unique
   category    String?
   createdAt   DateTime @default(now())
+  chat        WaChat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   @@index([chatId])
   @@index([createdAt(sort: Desc)])
   @@map("pb_wa_messages")
 }
 
-// ── Call (voice call session) ─────────────────────────────────────────────────
-// Prepared for future Meta Calling API + OpenAI Realtime integration.
-// leadId is nullable — linked after lead is captured during or after the call.
-
 model Call {
-  id              String    @id @default(cuid())
-  // direction: inbound | outbound
-  direction       String    @default("inbound")
-  // status: initiated | active | on_hold | ended | failed | missed
-  status          String    @default("initiated")
-  // source: whatsapp_call | phone | test
-  source          String    @default("whatsapp_call")
-  // outcome: emergency_escalated | human_handoff | qualified_lead_captured | general_advice_given | follow_up_requested | no_action
+  id              String           @id @default(cuid())
+  direction       String           @default("inbound")
+  status          String           @default("initiated")
+  source          String           @default("whatsapp_call")
   outcome         String?
-  waId            String?   // WhatsApp phone number if applicable
-  phone           String?   // raw caller number
-  leadId          String?   // linked Lead if captured
+  waId            String?
+  phone           String?
+  leadId          String?
   durationSeconds Int?
-  startedAt       DateTime  @default(now())
+  startedAt       DateTime         @default(now())
   endedAt         DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  transcripts     CallTranscript[]
-  summary         CallSummary?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
   events          CallEvent[]
+  summary         CallSummary?
+  transcripts     CallTranscript[]
 
   @@index([status])
   @@index([waId])
@@ -572,66 +484,66 @@ model Call {
   @@map("pb_calls")
 }
 
-// ── CallTranscript (per-turn transcript during a call) ────────────────────────
-
 model CallTranscript {
   id        String   @id @default(cuid())
   callId    String
-  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
-  // speaker: user | agent | system
   speaker   String
-  text      String   @db.Text
-  // intent logged per turn when classified
+  text      String
   intent    String?
   turnIndex Int      @default(0)
   spokenAt  DateTime @default(now())
   createdAt DateTime @default(now())
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
 
   @@index([callId])
   @@index([callId, turnIndex])
   @@map("pb_call_transcripts")
 }
 
-// ── CallSummary (post-call structured summary) ────────────────────────────────
-
 model CallSummary {
-  id            String   @id @default(cuid())
-  callId        String   @unique
-  call          Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
-  summary       String   @db.Text
-  // urgency: low | medium | high
-  urgency       String?
-  serviceType   String?
-  issueSummary  String?
-  preferredTime String?
-  needsHuman      Boolean  @default(false)
-  endState        String?  // matches outcome values from Call
-  transcriptText  String?  @db.Text
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  callId         String   @unique
+  summary        String
+  urgency        String?
+  serviceType    String?
+  issueSummary   String?
+  preferredTime  String?
+  needsHuman     Boolean  @default(false)
+  endState       String?
+  createdAt      DateTime @default(now())
+  transcriptText String?
+  call           Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
 
   @@map("pb_call_summaries")
 }
 
-// ── KnowledgeChunk (RAG — WhatsApp bot knowledge base) ───────────────────────
-
 model KnowledgeChunk {
   id        String   @id @default(cuid())
-  section   String   // e.g. "7.10", "10.1", "17"
-  title     String   // e.g. "Boilers", "Gas Emergency", "Pricing"
-  content   String   @db.Text
-  // embedding stored as raw float array JSON — pgvector via $queryRaw
-  embedding String?  @db.Text
+  section   String
+  title     String
+  content   String
+  embedding String?
   createdAt DateTime @default(now())
 
   @@index([section])
   @@map("pb_knowledge_chunks")
 }
 
-// ── Views (read-only — created via prisma/create-views.sql) ──────────────────
-// Run: npx tsx prisma/run-views.ts  then  npx prisma generate
+model CallEvent {
+  id        String   @id @default(cuid())
+  callId    String
+  eventType String
+  notes     String?
+  meta      Json?
+  createdAt DateTime @default(now())
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  @@index([callId])
+  @@map("pb_call_events")
+}
 
 view VBookingFull {
-  id               String   @unique
+  id               String    @unique
   bookingRef       String
   status           String
   postcode         String
@@ -650,7 +562,7 @@ view VBookingFull {
   expiresAt        DateTime?
   createdAt        DateTime
   updatedAt        DateTime
-  slotDate         DateTime?
+  slotDate         DateTime? @db.Date
   slotStart        String?
   slotEnd          String?
   plumberId        String?
@@ -667,28 +579,28 @@ view VBookingFull {
 }
 
 view VCallFull {
-  id                  String   @unique
-  direction           String
-  status              String
-  source              String
-  outcome             String?
-  waId                String?
-  phone               String?
-  leadId              String?
-  durationSeconds     Int?
-  startedAt           DateTime
-  endedAt             DateTime?
-  createdAt           DateTime
-  callSummary         String?
-  urgency             String?
-  summaryServiceType  String?
-  issueSummary        String?
-  preferredTime       String?
-  needsHuman          Boolean?
-  endState            String?
-  transcriptText      String?
-  transcriptTurns     BigInt?
-  eventCount          BigInt?
+  id                 String    @unique
+  direction          String
+  status             String
+  source             String
+  outcome            String?
+  waId               String?
+  phone              String?
+  leadId             String?
+  durationSeconds    Int?
+  startedAt          DateTime
+  endedAt            DateTime?
+  createdAt          DateTime
+  callSummary        String?
+  urgency            String?
+  summaryServiceType String?
+  issueSummary       String?
+  preferredTime      String?
+  needsHuman         Boolean?
+  endState           String?
+  transcriptText     String?
+  transcriptTurns    BigInt?
+  eventCount         BigInt?
 
   @@map("v_call_full")
 }
@@ -715,22 +627,22 @@ view VWhatsappOverview {
 }
 
 view VPlumberStats {
-  id               String   @unique
-  name             String
-  email            String
-  phone            String?
-  isActive         Boolean
-  isOnDuty         Boolean
-  lastSeenAt       DateTime?
-  createdAt        DateTime
-  totalBookings    BigInt?
+  id                String    @unique
+  name              String
+  email             String
+  phone             String?
+  isActive          Boolean
+  isOnDuty          Boolean
+  lastSeenAt        DateTime?
+  createdAt         DateTime
+  totalBookings     BigInt?
   completedBookings BigInt?
-  activeBookings   BigInt?
+  activeBookings    BigInt?
   cancelledBookings BigInt?
-  avgRating        Decimal?
-  totalRatings     BigInt?
-  pendingOffers    BigInt?
-  rejectedOffers   BigInt?
+  avgRating         Decimal?  @db.Decimal
+  totalRatings      BigInt?
+  pendingOffers     BigInt?
+  rejectedOffers    BigInt?
 
   @@map("v_plumber_stats")
 }
@@ -746,23 +658,7 @@ view VLeadPipeline {
   source      String
   createdAt   DateTime
   updatedAt   DateTime
-  ageHours    Float?
+  ageHours    Decimal? @db.Decimal
 
   @@map("v_lead_pipeline")
-}
-
-// ── CallEvent (lifecycle events for a call) ───────────────────────────────────
-
-model CallEvent {
-  id        String   @id @default(cuid())
-  callId    String
-  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
-  // eventType: started | agent_greeted | intent_classified | lead_updated | escalated | ended | error
-  eventType String
-  notes     String?
-  meta      Json?
-  createdAt DateTime @default(now())
-
-  @@index([callId])
-  @@map("pb_call_events")
 }
