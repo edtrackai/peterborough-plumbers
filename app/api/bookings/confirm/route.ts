@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     // Find eligible plumbers (approved + on duty + not busy + correct service permissions)
     const onDutyPlumbers = await getEligiblePlumbersForRequest({ serviceType });
 
-    // Atomic: update booking + create images + create offers + create event
+    // Atomic: update booking + create images + create offers + create event + create lead
     const [updated] = await prisma.$transaction([
       prisma.booking.update({
         where: { bookingRef },
@@ -89,6 +89,19 @@ export async function POST(req: NextRequest) {
       // Timeline event
       prisma.bookingEvent.create({
         data: { bookingId: booking.id, eventType: "pending_assignment" },
+      }),
+      // Create Lead so it appears in /admin/leads pipeline
+      prisma.lead.create({
+        data: {
+          name:        customerName,
+          phone,
+          email,
+          postcode:    booking.postcode,
+          serviceType,
+          notes:       description ?? null,
+          source:      "website",
+          status:      "new",
+        },
       }),
     ]);
 

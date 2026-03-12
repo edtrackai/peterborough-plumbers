@@ -166,8 +166,17 @@ function LeadCard({
           <p className="text-[0.65rem] text-slate-400 mt-0.5">{ago}</p>
         </div>
         {lead.source && (
-          <span className="text-[0.6rem] px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 font-semibold uppercase tracking-wide shrink-0">
-            {lead.source.replace(/_/g, " ")}
+          <span
+            className="text-[0.6rem] px-1.5 py-0.5 rounded-full font-semibold uppercase tracking-wide shrink-0"
+            style={
+              lead.source === "website"
+                ? { background: "#EFF6FF", color: "#2563EB" }
+                : lead.source === "whatsapp"
+                ? { background: "#F0FDF4", color: "#16A34A" }
+                : { background: "#F1F5F9", color: "#64748B" }
+            }
+          >
+            {lead.source === "website" ? "Website" : lead.source === "whatsapp" ? "WhatsApp" : lead.source.replace(/_/g, " ")}
           </span>
         )}
       </div>
