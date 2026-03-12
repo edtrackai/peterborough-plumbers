@@ -42,8 +42,6 @@ export async function GET(req: NextRequest) {
     dispatches: l.dispatches.map((d) => ({
       id: d.id,
       status: d.status,
-      dispatchMessage: d.dispatchMessage,
-      plumberReply: d.plumberReply,
       offeredAt: d.offeredAt.toISOString(),
       respondedAt: d.respondedAt?.toISOString() ?? null,
       plumber: d.plumber,

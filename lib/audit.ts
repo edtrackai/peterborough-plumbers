@@ -25,7 +25,7 @@ export async function logEvent(params: AuditParams): Promise<void> {
         eventType:  params.eventType,
         actorType:  params.actorType,
         actorId:    params.actorId ?? null,
-        metadata:   params.metadata ?? {},
+        metadata:   (params.metadata ?? {}) as object,
         ipAddress:  params.ipAddress ?? null,
       },
     });

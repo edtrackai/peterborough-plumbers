@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
     if (intent === "no") {
       await prisma.leadDispatch.update({
         where: { id: dispatch.id },
-        data: { status: "rejected", respondedAt: new Date(), plumberReply: text },
+        data: { status: "rejected", respondedAt: new Date() },
       });
       return NextResponse.json({
         reply: "No problem, noted! We'll keep you in mind for future jobs.",
@@ -196,7 +196,7 @@ export async function POST(req: NextRequest) {
       }),
       prisma.leadDispatch.update({
         where: { id: dispatch.id },
-        data: { status: "accepted", respondedAt: new Date(), plumberReply: text },
+        data: { status: "accepted", respondedAt: new Date() },
       }),
       prisma.leadDispatch.updateMany({
         where: {
