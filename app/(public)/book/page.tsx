@@ -120,20 +120,21 @@ export default function BookPage() {
       </PageHeroShell>
 
       {/* How it works strip */}
-      <div className="bg-pp-navy border-b border-white/10">
-        <div className="mx-auto max-w-4xl px-4 py-5 sm:py-8">
-          <div className="flex flex-col divide-y divide-white/[0.07] sm:divide-y-0 sm:grid sm:grid-cols-3 sm:gap-4">
+      <div className="bg-[#111111] sm:bg-pp-navy border-b border-white/[0.08]">
+        <div className="mx-auto max-w-4xl px-2 py-4 sm:px-4 sm:py-8">
+          {/* Mobile: 3-up centred columns | Desktop: unchanged left-aligned grid */}
+          <div className="grid grid-cols-3 divide-x divide-white/[0.09] sm:divide-x-0 sm:gap-4">
             {steps.map((s) => (
-              <div key={s.num} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0 sm:py-0 sm:items-start sm:gap-4">
+              <div key={s.num} className="flex flex-col items-center text-center gap-1.5 px-2 sm:flex-row sm:items-start sm:text-left sm:px-0 sm:gap-4">
                 <div
-                  className="shrink-0 h-7 w-7 sm:h-9 sm:w-9 rounded-full flex items-center justify-center font-bold text-white text-xs sm:text-sm"
+                  className="shrink-0 h-6 w-6 sm:h-9 sm:w-9 rounded-full flex items-center justify-center font-bold text-white text-[10px] sm:text-sm"
                   style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)" }}
                 >
                   {s.num}
                 </div>
                 <div className="min-w-0">
-                  <p className="font-semibold text-white text-sm leading-snug">{s.label}</p>
-                  <p className="text-white/50 text-xs mt-0.5 leading-relaxed">{s.desc}</p>
+                  <p className="font-semibold text-white text-[11px] leading-snug sm:text-sm">{s.label}</p>
+                  <p className="hidden sm:block text-white/50 text-xs mt-0.5 leading-relaxed">{s.desc}</p>
                 </div>
               </div>
             ))}
