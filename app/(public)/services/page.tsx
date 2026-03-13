@@ -13,9 +13,9 @@ import { siteSettings } from "@/content/settings";
 export const revalidate = 3600; // rebuild stale pages every hour
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating Services | Peterborough",
+  title: "Plumbing & Heating Services Peterborough | Local Engineers",
   description:
-    "Plumbing & heating services in Peterborough — boiler repairs, bathroom installs, drain clearance & emergency call-outs. Qualified engineers.",
+    "All plumbing & heating services in Peterborough — boiler service, bathroom installations, drain clearance, central heating & emergency call-outs. Qualified engineers.",
   path: "/services",
   absoluteTitle: true,
   image: "/images/services/hero.webp",

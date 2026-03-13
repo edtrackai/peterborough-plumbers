@@ -15,6 +15,7 @@ export interface JobDetailData {
   quoteTypePreference: "fixed" | "estimate" | "inspection_first";
   preferredContact:    "whatsapp" | "phone" | "either";
   accessDifficulty:    "easy" | "moderate" | "difficult";
+  quoteRef?:           string;
 }
 
 interface ServiceCategory {
@@ -131,6 +132,9 @@ export function JobDetailForm({ bookingRef, onComplete, onBack }: JobDetailFormP
   const [preferredContact,    setPreferredContact]    = useState<JobDetailData["preferredContact"]>("either");
   const [accessDifficulty,    setAccessDifficulty]    = useState<JobDetailData["accessDifficulty"]>("easy");
 
+  // ── Disclaimer
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
+
   // ── Validation errors
   const [errors, setErrors]       = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -191,6 +195,8 @@ export function JobDetailForm({ bookingRef, onComplete, onBack }: JobDetailFormP
     if (description.trim().length > 500)
       errs.description = "Description must be 500 characters or fewer";
     if (!urgency) errs.urgency = "Please select an urgency level";
+    if (!disclaimerAccepted)
+      errs.disclaimer = "Please confirm you have read and accept the quotation notice";
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -240,7 +246,7 @@ export function JobDetailForm({ bookingRef, onComplete, onBack }: JobDetailFormP
         return;
       }
 
-      onComplete(data);
+      onComplete({ ...data, quoteRef: json.quoteRef ?? undefined });
     } catch {
       setSubmitError("Network error. Please check your connection and try again.");
     } finally {
@@ -449,6 +455,39 @@ export function JobDetailForm({ bookingRef, onComplete, onBack }: JobDetailFormP
             <option value="difficult">Difficult (limited access)</option>
           </select>
         </Field>
+
+        {/* ── Disclaimer ──────────────────────────────────────────────── */}
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-xs text-amber-800 leading-relaxed">
+          <p className="font-bold mb-1">⚠️ Important Notice — Please Read</p>
+          <p>
+            This quotation is an estimate based on the information, photos, or description you have provided.
+            It is <strong>not a fixed final price</strong>. Final charges may change after on-site inspection
+            if the actual issue, fittings, quantity, access, or materials required differ from what was described.
+          </p>
+        </div>
+
+        <div>
+          <label className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition-colors ${
+            errors.disclaimer ? "border-red-300 bg-red-50" : "border-gray-200 hover:border-pp-teal/50"
+          }`}>
+            <input
+              type="checkbox"
+              checked={disclaimerAccepted}
+              onChange={(e) => {
+                setDisclaimerAccepted(e.target.checked);
+                if (e.target.checked) setErrors((prev) => ({ ...prev, disclaimer: "" }));
+              }}
+              className="mt-0.5 accent-pp-teal"
+            />
+            <span className="text-sm text-pp-body">
+              I understand this is an estimate and the final price may change following on-site inspection.
+            </span>
+          </label>
+          {errors.disclaimer && (
+            <p className="mt-1 text-xs text-red-600">{errors.disclaimer}</p>
+          )}
+        </div>
+        {/* ── End disclaimer ──────────────────────────────────────────── */}
 
         {/* Submit error */}
         {submitError && (

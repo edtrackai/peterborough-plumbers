@@ -18,9 +18,9 @@ export const siteSettings = {
   youtubeUrl: "https://www.youtube.com/@Peterboroughplumbers",
   instagramUrl: "https://www.instagram.com/peterboroughplumbers",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",
-  seoTitle: "Peterborough Plumbing & Heating | Emergency Call-Outs",
+  seoTitle: "Plumbers in Peterborough | Boiler, Heating & Repairs",
   seoDescription:
-    "50+ years experience in Peterborough. Boiler servicing, repairs, central heating & emergency call-outs. Qualified engineers, clear upfront quotes.",
+    "Trusted plumbers in Peterborough for boiler servicing, plumbing repairs & central heating. Qualified engineers, clear upfront quotes, fast response.",
 } as const;
 
 export function getWhatsAppUrl() {

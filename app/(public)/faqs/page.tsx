@@ -10,7 +10,7 @@ import { siteSettings } from "@/content/settings";
 import ImageCTASection from "@/components/blocks/ImageCTASection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Plumbing & Heating FAQs Peterborough | Peterborough Plumbers",
+  title: "Plumbing & Heating FAQs Peterborough | Expert Answers",
   description:
     "Answers to the most common questions about plumbing, boiler servicing, gas safety, emergency call-outs, and heating in Peterborough and surrounding areas.",
   path: "/faqs",
