@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { siteSettings, getWhatsAppUrl } from "@/content/settings";
 import LeadForm from "@/components/forms/LeadForm";
 import ImageCTASection from "@/components/blocks/ImageCTASection";
+import { BookNowButton } from "@/components/booking/BookNowButton";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact Peterborough Plumbers | Plumbing & Heating Enquiries",
@@ -55,9 +56,9 @@ export default function ContactPage() {
             Plumbing &amp; heating support across Peterborough and surrounding areas. Call for emergencies, or use the form below for standard enquiries and quotes.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/book" className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
+            <BookNowButton className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]" style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)", boxShadow: "0 4px 24px rgba(200,16,46,0.45), 0 1px 3px rgba(0,0,0,0.30)" }}>
               Book Online
-            </Link>
+            </BookNowButton>
             <a href={`tel:${siteSettings.phoneHref}`} className="inline-flex items-center justify-center gap-2.5 h-[52px] px-7 rounded-full text-white font-bold text-[0.9rem] border border-white/20 bg-white/[0.07] hover:bg-white/[0.14] hover:border-white/35 transition-all duration-200 backdrop-blur-sm">
               <svg className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z" /></svg>
               {siteSettings.phone}

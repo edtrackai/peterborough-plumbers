@@ -57,6 +57,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/admin", destination: "/admin/bookings", permanent: true },
+      { source: "/book", destination: "/", permanent: false },
       { source: "/plumber", destination: "/plumber/login", permanent: true },
       // Area slug was "peterborough-city-centre" in old content — DB uses "city-centre"
       {

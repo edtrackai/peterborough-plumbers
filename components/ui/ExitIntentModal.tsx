@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { useSettings } from "@/components/providers/SettingsProvider";
 
 const STORAGE_KEY = "pp_exit_intent_seen";
@@ -100,13 +99,15 @@ export default function ExitIntentModal() {
 
         {/* CTAs */}
         <div className="flex flex-col gap-3">
-          <Link
-            href="/book"
-            onClick={() => setOpen(false)}
+          <button
+            onClick={() => {
+              setOpen(false);
+              window.dispatchEvent(new CustomEvent("open-booking-modal"));
+            }}
             className="w-full flex items-center justify-center h-12 rounded-full bg-brand text-white font-bold text-sm hover:bg-brand-hover transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
           >
             Book a Plumber — Free Quote
-          </Link>
+          </button>
           <a
             href={`tel:${s.phoneHref}`}
             onClick={() => setOpen(false)}

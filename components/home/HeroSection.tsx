@@ -11,6 +11,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getSiteSettings } from "@/lib/db/content";
+import { BookNowButton } from "@/components/booking/BookNowButton";
 
 // ── SVG Icons ─────────────────────────────────────────────────────────────────
 
@@ -158,9 +159,8 @@ export default async function HeroSection() {
 
           {/* ── CTA buttons ──────────────────────────────────────────────────── */}
           <div className="mt-3 sm:mt-5 flex flex-wrap gap-2.5 sm:gap-3">
-            {/* Primary: Book */}
-            <Link
-              href="/book"
+            {/* Primary: Book — opens SimpleBookingModal */}
+            <BookNowButton
               className="inline-flex items-center justify-center h-[44px] sm:h-[52px] px-6 sm:px-8 rounded-full text-white font-bold text-[0.85rem] sm:text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               style={{
                 background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)",
@@ -168,7 +168,7 @@ export default async function HeroSection() {
               }}
             >
               Book a Plumber
-            </Link>
+            </BookNowButton>
 
             {/* Secondary: Call */}
             <a
