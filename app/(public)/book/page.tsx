@@ -121,18 +121,18 @@ export default function BookPage() {
 
       {/* How it works strip */}
       <div className="bg-pp-navy border-b border-white/10">
-        <div className="mx-auto max-w-4xl px-4 py-8">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
+        <div className="mx-auto max-w-4xl px-4 py-5 sm:py-8">
+          <div className="flex flex-col divide-y divide-white/[0.07] sm:divide-y-0 sm:grid sm:grid-cols-3 sm:gap-4">
             {steps.map((s) => (
-              <div key={s.num} className="flex items-start gap-4">
+              <div key={s.num} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0 sm:py-0 sm:items-start sm:gap-4">
                 <div
-                  className="shrink-0 h-9 w-9 rounded-full flex items-center justify-center font-bold text-white text-sm"
+                  className="shrink-0 h-7 w-7 sm:h-9 sm:w-9 rounded-full flex items-center justify-center font-bold text-white text-xs sm:text-sm"
                   style={{ background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)" }}
                 >
                   {s.num}
                 </div>
-                <div>
-                  <p className="font-semibold text-white text-sm">{s.label}</p>
+                <div className="min-w-0">
+                  <p className="font-semibold text-white text-sm leading-snug">{s.label}</p>
                   <p className="text-white/50 text-xs mt-0.5 leading-relaxed">{s.desc}</p>
                 </div>
               </div>
