@@ -17,6 +17,7 @@ export const siteSettings = {
   facebookUrl: "https://www.facebook.com/profile.php?id=61587839547753",
   youtubeUrl: "https://www.youtube.com/@Peterboroughplumbers",
   instagramUrl: "https://www.instagram.com/peterboroughplumbers",
+  xUrl: "https://x.com/PboroPlumbers",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://peterboroughplumbers.com",
   seoTitle: "Plumbers in Peterborough | Boiler, Heating & Repairs",
   seoDescription:
