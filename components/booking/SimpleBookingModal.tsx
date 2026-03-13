@@ -77,48 +77,51 @@ export function SimpleBookingModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[9000] flex items-end sm:items-center justify-center"
+      className="fixed inset-0 z-[9000] flex items-end sm:items-center justify-center sm:px-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="booking-modal-title"
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/55 backdrop-blur-[3px]"
+        className="absolute inset-0 bg-black/60 backdrop-blur-[4px]"
         onClick={close}
         aria-hidden="true"
       />
 
-      {/* Sheet — bottom on mobile, centred on desktop */}
-      <div className="relative w-full sm:max-w-[440px] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden">
+      {/* Card — bottom sheet on mobile, centred dialog on desktop */}
+      <div className="relative w-full sm:w-[460px] sm:max-w-full bg-white rounded-t-2xl sm:rounded-2xl overflow-hidden"
+        style={{ boxShadow: "0 8px 48px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.10)" }}
+      >
 
-        {/* Drag handle (mobile only) */}
-        <div className="flex justify-center pt-3 pb-0 sm:hidden" aria-hidden="true">
+        {/* Drag handle — mobile only */}
+        <div className="flex justify-center pt-3 sm:hidden" aria-hidden="true">
           <div className="h-1 w-10 rounded-full bg-gray-200" />
         </div>
 
         {/* Header */}
-        <div className="flex items-start justify-between px-5 pt-4 pb-3 sm:pt-5">
+        <div className="flex items-center justify-between px-5 pt-4 pb-0 sm:pt-6 sm:px-6">
           <div>
-            <h2 id="booking-modal-title" className="text-[1.05rem] font-black text-[#242424] leading-tight">
+            <h2 id="booking-modal-title" className="text-base font-black text-[#242424] leading-tight">
               Book a Plumber
             </h2>
-            <p className="text-[0.8rem] text-gray-500 mt-0.5">
+            <p className="text-[0.78rem] text-gray-500 mt-0.5 leading-snug">
               What do you need help with?
             </p>
           </div>
           <button
             onClick={close}
-            className="shrink-0 h-8 w-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E]"
+            className="shrink-0 ml-3 h-8 w-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C8102E]"
             aria-label="Close"
           >
-            <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <div className="px-5 pb-6 space-y-4">
+        {/* Body */}
+        <div className="px-5 sm:px-6 pt-4 pb-7 sm:pb-7 flex flex-col gap-4">
 
           {/* Quick option chips */}
           <div className="flex flex-wrap gap-2">
@@ -130,10 +133,10 @@ export function SimpleBookingModal() {
                   setCustomText(""); // clear free text when chip selected
                 }}
                 className={[
-                  "px-3.5 py-1.5 rounded-full text-[0.8rem] font-semibold border transition-all duration-150",
+                  "px-3.5 py-1.5 rounded-full text-[0.78rem] font-semibold border transition-all duration-150 leading-none",
                   selected === opt.label
                     ? "bg-[#C8102E] border-[#C8102E] text-white"
-                    : "bg-white border-gray-200 text-gray-700 hover:border-[#C8102E] hover:text-[#C8102E]",
+                    : "bg-gray-50 border-gray-200 text-gray-700 hover:border-[#C8102E] hover:text-[#C8102E] hover:bg-white",
                 ].join(" ")}
               >
                 {opt.label}
@@ -142,9 +145,9 @@ export function SimpleBookingModal() {
           </div>
 
           {/* Divider */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <div className="flex-1 h-px bg-gray-100" />
-            <span className="text-[0.7rem] text-gray-400 font-medium tracking-wide uppercase">
+            <span className="text-[0.68rem] text-gray-400 font-medium tracking-wider uppercase whitespace-nowrap">
               or describe your issue
             </span>
             <div className="flex-1 h-px bg-gray-100" />
@@ -160,34 +163,32 @@ export function SimpleBookingModal() {
             }}
             placeholder="e.g. My boiler keeps switching off and there's a drip under the sink…"
             rows={3}
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#C8102E]/20 focus:border-[#C8102E] transition-colors"
+            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#C8102E]/20 focus:border-[#C8102E] focus:bg-white transition-colors"
           />
 
-          {/* CTA — WhatsApp green when active */}
+          {/* CTA — WhatsApp green when active, grey disabled */}
           <button
             onClick={handleContinue}
             disabled={!canContinue}
-            className="w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2.5 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            className="w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             style={
               canContinue
                 ? {
                     background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)",
                     color: "#fff",
-                    boxShadow: "0 4px 16px rgba(37,211,102,0.32)",
-                    ["--tw-ring-color" as string]: "#25D366",
+                    boxShadow: "0 4px 16px rgba(37,211,102,0.30)",
                   }
                 : { background: "#E5E7EB", color: "#9CA3AF" }
             }
           >
-            {/* WhatsApp logo */}
-            <svg className="h-[18px] w-[18px] shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg className="h-[17px] w-[17px] shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
               <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.555 4.122 1.528 5.857L0 24l6.341-1.505A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.017-1.374l-.36-.213-3.727.885.917-3.626-.235-.373A9.818 9.818 0 1112 21.818z" />
             </svg>
             Continue on WhatsApp
           </button>
 
-          <p className="text-center text-[0.72rem] text-gray-400 leading-relaxed">
+          <p className="text-center text-[0.7rem] text-gray-400 leading-relaxed -mt-1">
             We typically reply within a few minutes during business hours.
           </p>
 
