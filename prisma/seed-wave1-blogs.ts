@@ -88,7 +88,7 @@ const wave1Posts = [
 <li>A CO alarm is sounding alongside the boiler fault</li>
 <li>The boiler is making unusual noises in addition to the error code</li>
 </ul>
-<p>If your boiler is over 10 years old and generating repeated fault codes, it's worth asking your engineer whether <a href="/guides/boiler-replacement-vs-repair">repair or replacement</a> is the more economical path. Our engineers will always give you an honest assessment — no pressure either way. <a href="/book">Book a boiler repair</a> or call 01733797074.</p>
+<p>If your boiler is over 10 years old and generating repeated fault codes, it's worth asking your engineer whether <a href="/guides/boiler-replacement-vs-repair">repair or replacement</a> is the more economical path. Our engineers will always give you an honest assessment — no pressure either way. <a href="/contact">Book a boiler repair</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I reset my boiler myself?</h3>
@@ -161,7 +161,7 @@ const wave1Posts = [
 </ul>
 
 <h2>Solutions: What a Plumber Will Do</h2>
-<p>Once the cause is identified, typical fixes include: replacing a failed PRV, opening or replacing a seized isolation valve, fitting a booster pump for persistently low mains pressure, clearing or replacing a corroded supply pipe, or locating and repairing a hidden leak. In most cases, a single visit by our <a href="/services/plumbing-repairs">plumbing repairs</a> team is enough to diagnose and resolve the problem. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>Once the cause is identified, typical fixes include: replacing a failed PRV, opening or replacing a seized isolation valve, fitting a booster pump for persistently low mains pressure, clearing or replacing a corroded supply pipe, or locating and repairing a hidden leak. In most cases, a single visit by our <a href="/services/plumbing-repairs">plumbing repairs</a> team is enough to diagnose and resolve the problem. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>What is normal water pressure in a UK home?</h3>
@@ -221,7 +221,7 @@ const wave1Posts = [
 
 <h2>Step 6: Call an Emergency Plumber</h2>
 <p>Once the water supply is off and immediate risks are contained, call an <a href="/services/emergency-plumber">emergency plumber</a>. Be ready to describe: where the water is coming through, what's above that ceiling, whether the water has stopped since you turned off the supply, and whether there's any discolouration (clean water vs brown/dirty water, which may indicate drainage involvement).</p>
-<p>Our emergency team covers Peterborough, Stamford, Market Deeping, Whittlesey, and surrounding areas — call 01733797074 or <a href="/book">book online</a> and we'll get to you as quickly as possible.</p>
+<p>Our emergency team covers Peterborough, Stamford, Market Deeping, Whittlesey, and surrounding areas — call 01733797074 or <a href="/contact">book online</a> and we'll get to you as quickly as possible.</p>
 
 <h2>After the Emergency: Don't Ignore Hidden Damp</h2>
 <p>Once the leak is repaired, visible damage is not necessarily the whole story. Water tracks sideways through floor structures, soaks into wall cavities, and can cause mould weeks later in areas that looked dry at the time. After any significant ceiling leak, a professional <a href="/services/damp-leak-detection">damp and moisture survey</a> will confirm whether any residual moisture remains before you replaster and redecorate. It's far cheaper to check than to redecorate twice.</p>
@@ -299,7 +299,7 @@ const wave1Posts = [
 <h2>After the Survey: What Happens Next</h2>
 <p>If the survey reveals a problem, your engineer will explain the options clearly — whether that's a patch repair, a section relining (no-dig repair), or in more severe cases, a targeted excavation and replacement. Not every defect needs immediate remediation; the report will indicate severity and whether the issue is likely to worsen.</p>
 <p>If the survey finds no significant issues, you have a documented clean bill of health for the drains — useful for property sales, insurance records, and peace of mind.</p>
-<p>To book a CCTV drain survey across Peterborough, Stamford, Market Deeping, Yaxley, Whittlesey, and surrounding areas, <a href="/book">book online</a> or call 01733797074.</p>
+<p>To book a CCTV drain survey across Peterborough, Stamford, Market Deeping, Yaxley, Whittlesey, and surrounding areas, <a href="/contact">book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How long does a CCTV drain survey take?</h3>
@@ -368,7 +368,7 @@ const wave1Posts = [
 <li>You've had an insurance claim for escape of water and need an engineer's report</li>
 <li>Your water bills have increased with no change in usage</li>
 </ul>
-<p><a href="/book">Book a detection survey online</a> or call 01733797074. Our engineers cover Peterborough, Stamford, Market Deeping, Yaxley, and Whittlesey.</p>
+<p><a href="/contact">Book a detection survey online</a> or call 01733797074. Our engineers cover Peterborough, Stamford, Market Deeping, Yaxley, and Whittlesey.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Will the engineer need to open my walls or floor?</h3>
@@ -443,7 +443,7 @@ const wave1Posts = [
 </ul>
 
 <h2>Booking a Survey</h2>
-<p>Surveys are typically carried out within 5–7 days of booking and take between 2 and 4 hours depending on property size. <a href="/book">Book a pre-purchase survey online</a> or call 01733797074 to discuss what's included and whether a combined drain survey is advisable for the specific property.</p>
+<p>Surveys are typically carried out within 5–7 days of booking and take between 2 and 4 hours depending on property size. <a href="/contact">Book a pre-purchase survey online</a> or call 01733797074 to discuss what's included and whether a combined drain survey is advisable for the specific property.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Is a pre-purchase plumbing survey the same as a homebuyer survey?</h3>
@@ -508,7 +508,7 @@ const wave1Posts = [
 <p>Check your policy schedule before you book a leak detection survey. If trace and access cover applies, report the suspected leak to your insurer first — they may have preferred contractors, or may require pre-authorisation before specialist work begins.</p>
 
 <h2>When to Call Us</h2>
-<p>Our <a href="/services/damp-leak-detection">damp and leak detection</a> team serves Peterborough, Stamford, Market Deeping, Yaxley, and surrounding areas. When you call, we'll discuss the symptoms, recommend the most appropriate detection method, and give you a fixed price for the survey before we start — no open-ended hourly rates. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>Our <a href="/services/damp-leak-detection">damp and leak detection</a> team serves Peterborough, Stamford, Market Deeping, Yaxley, and surrounding areas. When you call, we'll discuss the symptoms, recommend the most appropriate detection method, and give you a fixed price for the survey before we start — no open-ended hourly rates. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can a plumber find a hidden leak without specialist equipment?</h3>
@@ -590,7 +590,7 @@ const wave1Posts = [
 <li>Heating unavailable in habitable rooms</li>
 <li>No written Legionella risk assessment</li>
 </ul>
-<p>Our <a href="/services/landlord-services">landlord services</a> team can carry out a pre-application plumbing assessment, identify any compliance gaps, and complete all required work under a single contract — giving you documented evidence of compliance before the inspector visits. <a href="/book">Book an assessment online</a> or call 01733797074.</p>
+<p>Our <a href="/services/landlord-services">landlord services</a> team can carry out a pre-application plumbing assessment, identify any compliance gaps, and complete all required work under a single contract — giving you documented evidence of compliance before the inspector visits. <a href="/contact">Book an assessment online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Does an HMO need a separate boiler from the rest of the house?</h3>
@@ -665,7 +665,7 @@ const wave1Posts = [
 </ul>
 
 <h2>Budget: Where the Money Goes</h2>
-<p>A full bathroom renovation in Peterborough — new sanitaryware, tiling, and all labour — typically runs from £3,500 to £8,000 depending on room size, specification, and whether any layout changes are involved. The biggest variables are: whether the toilet moves, whether a wet room waterproofing system is required, and the specification of fittings. Budget breakdowns by type are in our <a href="/guides/bathroom-installation-cost-peterborough">cost guide</a>. <a href="/book">Book a survey and quote</a> or call 01733797074.</p>
+<p>A full bathroom renovation in Peterborough — new sanitaryware, tiling, and all labour — typically runs from £3,500 to £8,000 depending on room size, specification, and whether any layout changes are involved. The biggest variables are: whether the toilet moves, whether a wet room waterproofing system is required, and the specification of fittings. Budget breakdowns by type are in our <a href="/guides/bathroom-installation-cost-peterborough">cost guide</a>. <a href="/contact">Book a survey and quote</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How long does a bathroom renovation take in Peterborough?</h3>
@@ -753,7 +753,7 @@ const wave1Posts = [
 <li>Verify adequate ventilation to the appliance</li>
 <li>Follow the Gas Industry Unsafe Situations Procedure (GIUSP) if any unsafe condition is found — including immediately advising on making the appliance safe before leaving the property</li>
 </ul>
-<p>Don't wait for a fault code or a symptom. <a href="/book">Book your annual boiler service</a> now — it takes around an hour and is the single most important thing you can do for your household's safety. Call 01733797074 or book online.</p>
+<p>Don't wait for a fault code or a symptom. <a href="/contact">Book your annual boiler service</a> now — it takes around an hour and is the single most important thing you can do for your household's safety. Call 01733797074 or book online.</p>
 
 <h2>Landlord Obligations</h2>
 <p>Landlords in England are legally required under the Smoke and Carbon Monoxide Alarm (England) Regulations 2022 to install a working CO alarm in every room with a fixed combustion appliance, and to repair or replace any alarm that is reported as faulty. This applies to both private rentals and HMOs. Read our <a href="/blog/landlord-gas-safety-guide">landlord gas safety guide</a> for the full picture on annual gas safety obligations and CP12 requirements alongside CO alarm duties.</p>

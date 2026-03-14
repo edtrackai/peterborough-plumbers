@@ -280,7 +280,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Combine with a Boiler Service and Save</h3>
-<p>Many of our Peterborough landlords book a <a href="/services/boiler-service">boiler service</a> at the same time as their CP12 inspection. It makes sense — the engineer is already on site, so you save on call-out time and get both jobs done in a single visit. Ask about our combined rates when you <a href="/book">book online</a> or call us on 01733797074.</p>`,
+<p>Many of our Peterborough landlords book a <a href="/services/boiler-service">boiler service</a> at the same time as their CP12 inspection. It makes sense — the engineer is already on site, so you save on call-out time and get both jobs done in a single visit. Ask about our combined rates when you <a href="/contact">book online</a> or call us on 01733797074.</p>`,
     faqs: [
       {
         q: "How often do I need a gas safety certificate?",
@@ -384,7 +384,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Keep Your Heating Running Efficiently</h3>
-<p>Regular maintenance prevents costly breakdowns and keeps your energy bills low. If your heating hasn't been serviced recently, or you've noticed any changes in performance, <a href="/book">book a heating check</a> or call us on 01733797074. We'll make sure your system is ready for the cold weather.</p>`,
+<p>Regular maintenance prevents costly breakdowns and keeps your energy bills low. If your heating hasn't been serviced recently, or you've noticed any changes in performance, <a href="/contact">book a heating check</a> or call us on 01733797074. We'll make sure your system is ready for the cold weather.</p>`,
     faqs: [
       {
         q: "How long does a new central heating installation take?",
@@ -468,7 +468,7 @@ export const services: Service[] = [
 
 <h3>Bathroom Installation Pricing</h3>
 <p>Every bathroom is different, so we provide tailored quotes based on your specific requirements. A straightforward suite replacement typically starts from around £2,500 including labour and materials, while a full renovation with tiling and new layout can range from £4,000 to £8,000+. We'll give you a fully itemised quote with no hidden fees — what we quote is what you pay.</p>
-<p>We also offer flexible payment options for larger projects. Ask us about spreading the cost when you <a href="/book">book your free consultation</a>.</p>
+<p>We also offer flexible payment options for larger projects. Ask us about spreading the cost when you <a href="/contact">book your free consultation</a>.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out bathroom installations across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford. As a local business, we're never far away — and we always protect your home during the work.</p>
@@ -486,7 +486,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Ready to Transform Your Bathroom?</h3>
-<p>Whether you have a clear vision or need help with ideas, we're here to help. <a href="/book">Book a free consultation</a> or call us on 01733797074 to discuss your project. We'll visit your home, talk through your options, and provide a no-obligation quote.</p>`,
+<p>Whether you have a clear vision or need help with ideas, we're here to help. <a href="/contact">Book a free consultation</a> or call us on 01733797074 to discuss your project. We'll visit your home, talk through your options, and provide a no-obligation quote.</p>`,
     faqs: [
       {
         q: "How long does a bathroom installation take?",
@@ -583,7 +583,7 @@ export const services: Service[] = [
 
 <h3>Landlord Pricing</h3>
 <p>We offer competitive, transparent pricing for landlords. CP12 certificates start from £60, boiler services from £79, and we provide multi-property discounts for portfolios of 3 or more properties. All pricing is confirmed upfront with no hidden call-out charges.</p>
-<p>For maintenance contracts, we'll put together a tailored package based on your properties and requirements. <a href="/book">Get in touch</a> for a no-obligation quote.</p>
+<p>For maintenance contracts, we'll put together a tailored package based on your properties and requirements. <a href="/contact">Get in touch</a> for a no-obligation quote.</p>
 
 <h3>Areas We Cover</h3>
 <p>We serve landlords across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford. Wherever your rental properties are in the Peterborough area, we can help.</p>
@@ -701,7 +701,7 @@ export const services: Service[] = [
 </ul>
 
 <h3>Don't Wait — Call Now</h3>
-<p>If you have a plumbing emergency in Peterborough, call us now on <strong>01733797074</strong>. We're ready to help 24 hours a day, 7 days a week. You can also <a href="/book">book online</a> for non-urgent repairs, or message us on WhatsApp for a quick response.</p>`,
+<p>If you have a plumbing emergency in Peterborough, call us now on <strong>01733797074</strong>. We're ready to help 24 hours a day, 7 days a week. You can also <a href="/contact">book online</a> for non-urgent repairs, or message us on WhatsApp for a quick response.</p>`,
     faqs: [
       {
         q: "How quickly can you respond to an emergency?",
@@ -785,7 +785,7 @@ export const services: Service[] = [
 
 <h3>Plumbing Installation Pricing</h3>
 <p>Costs depend on the type of installation and the amount of pipework involved. Simple appliance connections start from around £80, while larger projects like full bathroom plumbing or extension pipework are quoted individually after we assess the job. We provide clear, written quotes with no hidden fees — and we'll never start work until you've approved the price.</p>
-<p>Need a quote? <a href="/book">Book a free assessment</a> or call us on 01733797074.</p>
+<p>Need a quote? <a href="/contact">Book a free assessment</a> or call us on 01733797074.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out plumbing installations across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford.</p>
@@ -865,7 +865,7 @@ export const services: Service[] = [
 <h3>How We Work</h3>
 <p>We keep things simple and transparent:</p>
 <ul>
-<li><strong>1. Book a convenient time</strong> — <a href="/book">online</a> or by calling 01733797074</li>
+<li><strong>1. Book a convenient time</strong> — <a href="/contact">online</a> or by calling 01733797074</li>
 <li><strong>2. We diagnose the problem</strong> — our plumber will inspect the issue and explain what needs fixing in plain English</li>
 <li><strong>3. Price confirmed before we start</strong> — you'll know exactly what it costs before we pick up a tool. No surprises</li>
 <li><strong>4. Repair completed</strong> — most repairs take 30 minutes to 2 hours. We test everything and clean up before we leave</li>
@@ -997,7 +997,7 @@ export const services: Service[] = [
 
 <h3>Leak Detection Pricing</h3>
 <p>Our standard leak detection survey covers a thorough investigation using multiple detection methods, and includes a detailed report with our findings. If we locate the leak and can repair it on the same visit, we'll quote the repair cost separately and only proceed with your approval.</p>
-<p>Pricing depends on the complexity and size of the property, but we'll always confirm costs before we start. <a href="/book">Book a leak detection survey</a> or call us on 01733797074.</p>
+<p>Pricing depends on the complexity and size of the property, but we'll always confirm costs before we start. <a href="/contact">Book a leak detection survey</a> or call us on 01733797074.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out leak detection across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford.</p>
@@ -1117,7 +1117,7 @@ export const services: Service[] = [
 
 <h3>Drain Unblocking Pricing</h3>
 <p>Most domestic drain blockages are cleared at a fixed price that we confirm before starting work. High-pressure jetting and CCTV surveys are priced separately depending on the extent of the drainage system. We don't charge by the hour for standard unblocking — you'll know the cost upfront.</p>
-<p>For <a href="/services/landlord-services">landlords</a> with multiple properties, we offer discounted rates for regular drain maintenance. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>For <a href="/services/landlord-services">landlords</a> with multiple properties, we offer discounted rates for regular drain maintenance. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h3>Areas We Cover</h3>
 <p>We clear blocked drains across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford. Available 7 days a week, with <a href="/services/emergency-plumber">emergency response</a> for sewage backflow and flooding.</p>
@@ -1219,7 +1219,7 @@ export const services: Service[] = [
 
 <h3>Plumbing Survey Pricing</h3>
 <p>Our standard pre-purchase plumbing survey covers a typical 2–4 bedroom property and includes a detailed written report. Larger properties or those with complex systems are quoted individually. We can usually carry out the survey within a few days of booking — important when you're working to exchange deadlines.</p>
-<p><a href="/book">Book your plumbing survey</a> or call us on 01733797074 for pricing and availability.</p>
+<p><a href="/contact">Book your plumbing survey</a> or call us on 01733797074 for pricing and availability.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out pre-purchase plumbing surveys across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford. If you're buying a property in the Peterborough area, we can help.</p>

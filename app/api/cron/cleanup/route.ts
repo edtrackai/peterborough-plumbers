@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cleanupExpired } from "@/lib/booking/cleanupExpired";
 
 /**
- * Cron job: expire stale "reserved" bookings and free their time-slot counts.
- *
- * Invoked by Vercel Cron on the schedule in vercel.json.
- * Vercel sends `Authorization: Bearer {CRON_SECRET}` automatically.
- * Set CRON_SECRET in your Vercel project environment variables.
+ * Cron endpoint — decommissioned with the website booking flow.
+ * Slot reservations no longer originate from the website (WhatsApp-first flow).
+ * Kept as a no-op so any existing Vercel cron schedule does not 500.
  */
 export async function GET(req: NextRequest) {
   const auth = req.headers.get("authorization");
@@ -14,7 +11,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  await cleanupExpired();
-
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, note: "booking-cleanup decommissioned" });
 }

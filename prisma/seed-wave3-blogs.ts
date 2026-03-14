@@ -54,7 +54,7 @@ const wave3Posts = [
 <li>A gurgling sound accompanies the smell (possible vent or blockage issue)</li>
 <li>The smell returns quickly after cleaning (possible blockage further down the run)</li>
 </ul>
-<p><a href="/book">Book online</a> or call 01733797074.</p>
+<p><a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Is a drain smell dangerous?</h3>
@@ -121,7 +121,7 @@ const wave3Posts = [
 <li>The gully appears structurally damaged — cracked, subsiding, or with visible ground movement nearby</li>
 <li>A soakaway that previously worked is failing (standing water in the garden that doesn't drain within 24 hours of dry weather)</li>
 </ul>
-<p>High-pressure water jetting clears outdoor drain blockages effectively and in one visit for most domestic cases. A CCTV inspection is recommended where rodding hasn't worked or where structural problems are suspected. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>High-pressure water jetting clears outdoor drain blockages effectively and in one visit for most domestic cases. A CCTV inspection is recommended where rodding hasn't worked or where structural problems are suspected. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I use chemical drain cleaner on an outdoor drain?</h3>
@@ -185,7 +185,7 @@ const wave3Posts = [
 <li><strong>Patch lining</strong> — a short-section reline over a specific point of failure. Used where the rest of the run is sound and only one section needs attention.</li>
 <li><strong>Targeted excavation and replacement</strong> — where a section is too badly collapsed for relining, precise excavation based on the CCTV survey location removes and replaces just the failed section. Far less disruptive than it sounds when the location is accurately known.</li>
 </ul>
-<p>Our <a href="/services/drain-blockages">drainage team</a> carries out CCTV surveys, jetting, relining, and excavation repairs across Peterborough. <a href="/book">Book a drain survey</a> or call 01733797074.</p>
+<p>Our <a href="/services/drain-blockages">drainage team</a> carries out CCTV surveys, jetting, relining, and excavation repairs across Peterborough. <a href="/contact">Book a drain survey</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How much does collapsed drain repair cost?</h3>
@@ -249,7 +249,7 @@ const wave3Posts = [
 
 <h2>What Detection Involves</h2>
 <p>A supply pipe hidden leak is located using acoustic listening equipment, thermal imaging, or tracer gas depending on the pipe location and construction type. In most cases, our <a href="/services/damp-leak-detection">leak detection team</a> can identify the precise location of a supply pipe leak without any excavation — allowing targeted, minimal-disruption repair rather than digging up the entire supply run.</p>
-<p>Read our detailed guide on <a href="/blog/how-plumbers-find-hidden-leaks">how plumbers find hidden leaks</a> for a full explanation of each method. To book a detection survey, <a href="/book">book online</a> or call 01733797074.</p>
+<p>Read our detailed guide on <a href="/blog/how-plumbers-find-hidden-leaks">how plumbers find hidden leaks</a> for a full explanation of each method. To book a detection survey, <a href="/contact">book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Could limescale in the pipes cause gradual pressure decline?</h3>
@@ -323,7 +323,7 @@ const wave3Posts = [
 
 <h2>Reporting Promptly and Acting to Minimise Damage</h2>
 <p>Insurers have a duty of care requirement: once aware of a loss, you must take reasonable steps to prevent further damage. Failing to turn off the water supply after a burst pipe, or delaying emergency repair by days, can give an insurer grounds to argue that subsequent damage was avoidable. Report the incident the same day, arrange emergency repair promptly, and keep all invoices.</p>
-<p>For emergency plumbing that's needed quickly to stop ongoing damage, call 01733797074 or <a href="/book">book our emergency service</a>. For post-emergency leak detection surveys and insurance report preparation, contact our <a href="/services/damp-leak-detection">leak detection team</a>.</p>
+<p>For emergency plumbing that's needed quickly to stop ongoing damage, call 01733797074 or <a href="/contact">book our emergency service</a>. For post-emergency leak detection surveys and insurance report preparation, contact our <a href="/services/damp-leak-detection">leak detection team</a>.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Will my premium increase after a water damage claim?</h3>
@@ -387,7 +387,7 @@ const wave3Posts = [
 <p>Once the shower type is decided, head configuration is a secondary choice. A fixed head at ceiling or high wall height gives an immersive "rainfall" experience but requires higher flow rates to feel effective. A wall-mounted adjustable head is more practical for everyday use and easier to clean. A handheld attachment on a riser rail is the most versatile choice — useful for cleaning the enclosure and for bathing children or pets as well as showering. Most quality thermostatic valves support both a fixed head and a handheld outlet simultaneously.</p>
 
 <h2>What to Tell Your Plumber</h2>
-<p>When booking a shower installation with our <a href="/services/bathroom-installations">bathroom installations team</a>, tell us: your boiler type (combi, system, or gravity-fed), the location of the hot water cylinder if you have one, current shower type if replacing like-for-like, and your preferred shower type and head configuration. We'll confirm compatibility before ordering anything. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>When booking a shower installation with our <a href="/services/bathroom-installations">bathroom installations team</a>, tell us: your boiler type (combi, system, or gravity-fed), the location of the hot water cylinder if you have one, current shower type if replacing like-for-like, and your preferred shower type and head configuration. We'll confirm compatibility before ordering anything. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>What is the minimum water pressure for a thermostatic mixer shower?</h3>
@@ -447,7 +447,7 @@ const wave3Posts = [
 <p>The process: referral to or self-referral to adult social care for an OT assessment → OT produces recommendations → DFG application submitted through the council → council approves and appoints contractor or approves client's chosen contractor. Timelines vary — currently 6–18 months from referral to completion is typical in Peterborough. Starting the OT referral early is important.</p>
 
 <h2>Booking Accessible Adaptations Without Grant Funding</h2>
-<p>For simpler adaptations (grab rails, raised toilet, shower seat) or where waiting for DFG funding is not practical, our <a href="/services/bathroom-installations">bathroom installations team</a> can carry out accessible adaptations directly. We work from OT recommendations where provided or can advise on appropriate solutions based on the specific need. <a href="/book">Book a home assessment</a> or call 01733797074.</p>
+<p>For simpler adaptations (grab rails, raised toilet, shower seat) or where waiting for DFG funding is not practical, our <a href="/services/bathroom-installations">bathroom installations team</a> can carry out accessible adaptations directly. We work from OT recommendations where provided or can advise on appropriate solutions based on the specific need. <a href="/contact">Book a home assessment</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Do I need an OT assessment before getting adaptations done?</h3>
@@ -508,7 +508,7 @@ const wave3Posts = [
 
 <h2>Water Regulations</h2>
 <p>Toilet cisterns must comply with the Water Supply (Water Fittings) Regulations 1999 — which means using a dual-flush or other approved flush mechanism, correct isolation valve, and a backflow-prevention device on the fill valve (required to prevent cistern water siphoning back into the mains supply). Modern WC suites come with compliant fittings as standard; using old or non-compliant fittings is a regulations breach even in a DIY installation.</p>
-<p>For any toilet work beyond a straightforward like-for-like replacement, our <a href="/services/plumbing-repairs">plumbing repairs</a> and <a href="/services/plumbing-installation">plumbing installation</a> teams cover all scenarios across Peterborough. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>For any toilet work beyond a straightforward like-for-like replacement, our <a href="/services/plumbing-repairs">plumbing repairs</a> and <a href="/services/plumbing-installation">plumbing installation</a> teams cover all scenarios across Peterborough. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Do I need to notify Building Control for toilet installation?</h3>
@@ -561,7 +561,7 @@ const wave3Posts = [
 
 <h2>What Happens on Installation Day</h2>
 <p>A professional installation follows a clear sequence: system drain-down, removal of old boiler and associated components, pipework modifications and connections, new boiler fitting and flue installation, system refill with inhibitor, commissioning (pressure testing, combustion analysis, controls setup), documentation completion, and a walkthrough with you covering controls operation and maintenance requirements. On completion you receive the commissioning certificate and warranty registration confirmation.</p>
-<p>For your <a href="/services/boiler-service">boiler service</a> schedule: most manufacturers require the first annual service within 12 months of installation to maintain the warranty. Book it before you need it — summer appointments are available without the autumn rush. <a href="/book">Book an installation quote</a> or call 01733797074.</p>
+<p>For your <a href="/services/boiler-service">boiler service</a> schedule: most manufacturers require the first annual service within 12 months of installation to maintain the warranty. Book it before you need it — summer appointments are available without the autumn rush. <a href="/contact">Book an installation quote</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Will I have hot water during the installation?</h3>
@@ -612,7 +612,7 @@ const wave3Posts = [
 
 <h2>Does Your System Need One?</h2>
 <p>Almost certainly yes, if you don't already have one. The only systems that may not require a magnetic filter are those with aluminium radiators throughout (aluminium doesn't produce magnetic sludge) or fully plastic pipework with no steel components. In practice, virtually every UK central heating system with steel panel radiators — which is the vast majority — benefits from a magnetic filter.</p>
-<p>Many boiler manufacturers now require a magnetic filter to be installed as a condition of the extended warranty. Worcester Bosch, Vaillant, and Baxi all specify this for their higher-tier warranty products. Our engineers fit magnetic filters as standard on all new boiler installations and can retrofit one during your annual <a href="/services/boiler-service">boiler service</a>. A <a href="/blog/what-is-power-flush">power flush</a> to clean the existing system is recommended before fitting a filter on an older, contaminated system. <a href="/book">Book a service or quote</a> or call 01733797074.</p>
+<p>Many boiler manufacturers now require a magnetic filter to be installed as a condition of the extended warranty. Worcester Bosch, Vaillant, and Baxi all specify this for their higher-tier warranty products. Our engineers fit magnetic filters as standard on all new boiler installations and can retrofit one during your annual <a href="/services/boiler-service">boiler service</a>. A <a href="/blog/what-is-power-flush">power flush</a> to clean the existing system is recommended before fitting a filter on an older, contaminated system. <a href="/contact">Book a service or quote</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I fit a magnetic filter myself?</h3>
@@ -678,7 +678,7 @@ const wave3Posts = [
 
 <h2>Landlord Obligations</h2>
 <p>If this is a rental property, the landlord is legally responsible for restoring heating as quickly as reasonably possible. In cold weather with vulnerable occupants, 24 hours is the widely accepted standard for urgency. Tenants are entitled to report an unresponsive landlord to the local council's housing team if reasonable timeframes are not met.</p>
-<p>Our <a href="/services/emergency-plumber">emergency plumbing service</a> prioritises heating failures in cold weather across Peterborough. Call 01733797074 or <a href="/book">book online</a> and we'll confirm the earliest available appointment.</p>
+<p>Our <a href="/services/emergency-plumber">emergency plumbing service</a> prioritises heating failures in cold weather across Peterborough. Call 01733797074 or <a href="/contact">book online</a> and we'll confirm the earliest available appointment.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How do I thaw a frozen condensate pipe?</h3>
@@ -733,7 +733,7 @@ const wave3Posts = [
 <p>If plunging doesn't clear it, or if other drains in the house are slow simultaneously, the blockage is in the underground drain rather than the toilet itself — and needs a drainage engineer with jetting equipment. Our <a href="/services/drain-blockages">drainage team</a> clears blockages on the same day in most cases.</p>
 
 <h2>Emergency: Sewage Backing Up</h2>
-<p>If flushing the toilet causes water to back up into the bath or shower at the same time, or if sewage appears in any other fixture, you have a downstream drain blockage that has surcharging effects. Stop using all fixtures, call an emergency plumber immediately, and read our guide on <a href="/blog/blocked-drain-vs-blocked-sewer">blocked drain vs blocked sewer</a> to understand whether this is your responsibility or Anglian Water's. Call 01733797074 or <a href="/book">book emergency drainage</a>.</p>
+<p>If flushing the toilet causes water to back up into the bath or shower at the same time, or if sewage appears in any other fixture, you have a downstream drain blockage that has surcharging effects. Stop using all fixtures, call an emergency plumber immediately, and read our guide on <a href="/blog/blocked-drain-vs-blocked-sewer">blocked drain vs blocked sewer</a> to understand whether this is your responsibility or Anglian Water's. Call 01733797074 or <a href="/contact">book emergency drainage</a>.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I use a drain unblocker in a toilet?</h3>
@@ -790,7 +790,7 @@ const wave3Posts = [
 <li><strong>Weeping compression joint</strong> — monitor closely. If the leak is worsening, arrange repair within 2–3 days.</li>
 <li><strong>Pinhole in radiator body</strong> — replace the radiator. The pinhole will enlarge over time as system pressure continues to exploit the weak point. Don't leave it for more than a week or two.</li>
 </ul>
-<p><a href="/book">Book a radiator repair or replacement</a> online or call 01733797074. Our <a href="/services/plumbing-repairs">plumbing repairs</a> team covers all radiator faults across Peterborough.</p>
+<p><a href="/contact">Book a radiator repair or replacement</a> online or call 01733797074. Our <a href="/services/plumbing-repairs">plumbing repairs</a> team covers all radiator faults across Peterborough.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I isolate a leaking radiator without draining the whole system?</h3>
@@ -926,7 +926,7 @@ const wave3Posts = [
 
 <h2>The Tenant Relationship Benefit</h2>
 <p>Proactive maintenance reduces the number of urgent fault reports during a tenancy — because problems are caught in the inspection before they reach breakdown. Tenants who experience well-maintained properties with fast responses to reported issues are more likely to renew, take better care of the property themselves, and less likely to lodge formal complaints. The cost of annual inspections is substantially less than the cost of the tenant disputes, void periods, and emergency call-outs they help prevent.</p>
-<p><a href="/book">Book your annual landlord plumbing and gas safety inspection</a> online or call 01733797074. Portfolio pricing is available for landlords with multiple Peterborough properties.</p>
+<p><a href="/contact">Book your annual landlord plumbing and gas safety inspection</a> online or call 01733797074. Portfolio pricing is available for landlords with multiple Peterborough properties.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I carry out the inspection myself?</h3>

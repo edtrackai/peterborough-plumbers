@@ -55,7 +55,7 @@ const wave2Posts = [
 
 <h2>Inspection Chambers: A Quick Check</h2>
 <p>The fastest way to get information is to lift the nearest external inspection chamber (manhole) on your property. If it's full of standing water or sewage, the blockage is likely downstream of that point — either in a shared sewer section or further along your private drain. If it's empty and clear, the blockage is between the chamber and the house, squarely on your private pipework.</p>
-<p>Not sure where your inspection chambers are? Our <a href="/services/drain-blockages">drainage team</a> can locate, lift, and assess external chambers as part of any call-out. If the blockage appears to involve the shared network, we'll document the findings so you can report to Anglian Water with evidence. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>Not sure where your inspection chambers are? Our <a href="/services/drain-blockages">drainage team</a> can locate, lift, and assess external chambers as part of any call-out. If the blockage appears to involve the shared network, we'll document the findings so you can report to Anglian Water with evidence. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Who is responsible for a drain under my driveway?</h3>
@@ -125,7 +125,7 @@ const wave2Posts = [
 
 <h2>Prevention: Can You Stop Roots Reaching Your Drains?</h2>
 <p>Once a mature tree is established near a drain run, there's little practical way to prevent root spread without removing the tree. The more sustainable approach is to monitor drains in properties with mature trees — a CCTV survey every 5–10 years on at-risk drains catches problems early, when jetting or relining is sufficient, rather than discovering them when a collapse has already occurred.</p>
-<p><a href="/book">Book a drain survey</a> or call 01733797074 to discuss whether your property is at risk.</p>
+<p><a href="/contact">Book a drain survey</a> or call 01733797074 to discuss whether your property is at risk.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I claim on my home insurance for root damage to drains?</h3>
@@ -198,7 +198,7 @@ const wave2Posts = [
 <li>Video footage on request</li>
 </ul>
 <p>This report is a formal technical document — acceptable to solicitors for property transactions, to insurers for claims, and to local authorities when drainage questions arise during planning applications.</p>
-<p>To book a CCTV drain survey across Peterborough and surrounding areas, <a href="/book">book online</a> or call 01733797074. For more on when a survey is the right tool, read our overview of <a href="/blog/cctv-drain-survey-peterborough">CCTV drain surveys in Peterborough</a>.</p>
+<p>To book a CCTV drain survey across Peterborough and surrounding areas, <a href="/contact">book online</a> or call 01733797074. For more on when a survey is the right tool, read our overview of <a href="/blog/cctv-drain-survey-peterborough">CCTV drain surveys in Peterborough</a>.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How long does a CCTV drain survey take?</h3>
@@ -261,7 +261,7 @@ const wave2Posts = [
 <p>Our <a href="/services/damp-leak-detection">damp and leak detection service</a> uses moisture mapping, thermal imaging, and acoustic equipment to determine the moisture source before any treatment is recommended. Read our guide on <a href="/blog/how-plumbers-find-hidden-leaks">how plumbers find hidden leaks</a> for more on the detection process.</p>
 
 <h2>When to Call a Plumber vs a Damp Specialist</h2>
-<p>If a water meter test confirms a live leak, call a plumber first — the leak needs to be found and repaired before any damp assessment makes sense. If the meter is static and the damp pattern is consistent with rising damp (low level, tide mark, no appliance correlation), a specialist damp surveyor is the appropriate first step. If you're unsure, a combined moisture survey — using a plumber with leak detection equipment — will give you a definitive answer without guessing. <a href="/book">Book a survey</a> or call 01733797074.</p>
+<p>If a water meter test confirms a live leak, call a plumber first — the leak needs to be found and repaired before any damp assessment makes sense. If the meter is static and the damp pattern is consistent with rising damp (low level, tide mark, no appliance correlation), a specialist damp surveyor is the appropriate first step. If you're unsure, a combined moisture survey — using a plumber with leak detection equipment — will give you a definitive answer without guessing. <a href="/contact">Book a survey</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can rising damp and a plumbing leak exist at the same time?</h3>
@@ -335,7 +335,7 @@ const wave2Posts = [
 <li><strong>Water on windows, mould on frames, musty smell in winter</strong> → condensation. Fix: ventilation improvement, extractor fans, reducing indoor humidity sources.</li>
 <li><strong>Tide mark on ground-floor wall, consistent year-round</strong> → likely rising damp. Fix: investigate DPC condition, rule out plumbing sources first.</li>
 <li><strong>Damp patch on wall worsening in rain or wet weather</strong> → penetrating damp. Fix: building envelope — gutters, render, pointing, flashings.</li>
-<li><strong>Damp patch near bathroom, kitchen, or radiator pipework, possibly correlating with appliance use</strong> → rule out a plumbing leak first. Fix: <a href="/book">book a leak detection survey</a>.</li>
+<li><strong>Damp patch near bathroom, kitchen, or radiator pipework, possibly correlating with appliance use</strong> → rule out a plumbing leak first. Fix: <a href="/contact">book a leak detection survey</a>.</li>
 </ul>
 
 <h2>Frequently Asked Questions</h2>
@@ -392,7 +392,7 @@ const wave2Posts = [
 <h2>What Matters More Than Bath vs Shower</h2>
 <p>In practice, buyers respond most strongly to the overall condition and quality of a bathroom, not to whether it has a bath or shower. A clean, well-tiled, well-lit bathroom with quality fittings will sell faster and for more than a dated bathroom with original 1980s suite — regardless of what sanitaryware it contains.</p>
 <p>If you're renovating primarily for resale, focus on condition, finish, and functionality over the bath/shower decision. If you're renovating for your own enjoyment and plan to stay 5+ years, install what suits your household and don't overthink the resale angle.</p>
-<p>For cost guidance on bathroom renovations, see our <a href="/guides/bathroom-installation-cost-peterborough">bathroom installation cost guide</a>. Ready to plan? Read our full guide to <a href="/blog/plan-bathroom-renovation-peterborough">planning a bathroom renovation in Peterborough</a>. Our <a href="/services/bathroom-installations">bathroom installations team</a> can advise on the best layout for your specific property. <a href="/book">Book a survey and quote</a> or call 01733797074.</p>
+<p>For cost guidance on bathroom renovations, see our <a href="/guides/bathroom-installation-cost-peterborough">bathroom installation cost guide</a>. Ready to plan? Read our full guide to <a href="/blog/plan-bathroom-renovation-peterborough">planning a bathroom renovation in Peterborough</a>. Our <a href="/services/bathroom-installations">bathroom installations team</a> can advise on the best layout for your specific property. <a href="/contact">Book a survey and quote</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How much value does a walk-in shower add?</h3>
@@ -455,7 +455,7 @@ const wave2Posts = [
 <h2>Does an En-Suite Add Property Value?</h2>
 <p>Generally yes — particularly in properties with 3+ bedrooms where only one bathroom currently exists. Adding an en-suite to the master bedroom adds a sought-after feature for buyers and can return 50–70% of its cost in added value in the right market. In Peterborough's competitive family home market, a master bedroom with en-suite commands a clear premium over an equivalent property without one.</p>
 <p>The return is lower in properties that already have two bathrooms, or in areas where buyer demographics are less family-oriented.</p>
-<p>To plan your en-suite project, read our guide on <a href="/blog/plan-bathroom-renovation-peterborough">planning a bathroom renovation in Peterborough</a>, or <a href="/book">book a survey and quote</a> with our <a href="/services/bathroom-installations">bathroom installations team</a>. Call 01733797074.</p>
+<p>To plan your en-suite project, read our guide on <a href="/blog/plan-bathroom-renovation-peterborough">planning a bathroom renovation in Peterborough</a>, or <a href="/contact">book a survey and quote</a> with our <a href="/services/bathroom-installations">bathroom installations team</a>. Call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Can I add an en-suite without planning permission?</h3>
@@ -507,7 +507,7 @@ const wave2Posts = [
 <p>If the circulating pump fails, water doesn't flow through the radiator circuit — even though the boiler may fire and produce heat for the hot water cylinder. If your hot water comes from a cylinder that relies on the boiler's heat exchanger rather than the pump circuit, you'll have hot water but cold radiators. Listen near the boiler when heating is called for — a completely silent pump (when you'd normally hear a low hum) may indicate pump failure.</p>
 
 <h2>When to Call</h2>
-<p>If checking the timer, programmer, and room thermostat settings doesn't resolve the issue, the fault requires an engineer — whether it's a diverter valve, zone valve, or pump. These are all parts inside a sealed system and are not DIY repairs. Our <a href="/services/central-heating-services">central heating team</a> diagnoses and repairs all these faults across Peterborough. <a href="/book">Book online</a> or call 01733797074. See also our guide to <a href="/guides/central-heating-not-working">diagnosing central heating problems</a> for a broader fault-finding framework.</p>
+<p>If checking the timer, programmer, and room thermostat settings doesn't resolve the issue, the fault requires an engineer — whether it's a diverter valve, zone valve, or pump. These are all parts inside a sealed system and are not DIY repairs. Our <a href="/services/central-heating-services">central heating team</a> diagnoses and repairs all these faults across Peterborough. <a href="/contact">Book online</a> or call 01733797074. See also our guide to <a href="/guides/central-heating-not-working">diagnosing central heating problems</a> for a broader fault-finding framework.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Could my thermostat be the reason heating isn't working?</h3>
@@ -568,7 +568,7 @@ const wave2Posts = [
 
 <h2>After Thawing: Preventing a Repeat</h2>
 <p>Once the pipe is thawed and confirmed intact, the work isn't finished. The conditions that caused it to freeze will cause it to freeze again in the next cold snap. Our guide to <a href="/blog/prepare-plumbing-for-winter">preparing your plumbing for winter</a> covers insulation, frost protection settings, and the other steps that make frozen pipes unlikely to recur. Our <a href="/guides/how-to-prevent-frozen-pipes">guide on preventing frozen pipes</a> has more detail on lagging and frost protection measures.</p>
-<p>If the frozen pipe is in a loft, garage, or other unheated space and isn't easily insulated, our <a href="/services/plumbing-repairs">plumbing repairs</a> team can re-route the pipe through a more protected route or install appropriate lagging. <a href="/book">Book online</a> or call 01733797074.</p>
+<p>If the frozen pipe is in a loft, garage, or other unheated space and isn't easily insulated, our <a href="/services/plumbing-repairs">plumbing repairs</a> team can re-route the pipe through a more protected route or install appropriate lagging. <a href="/contact">Book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How long does it take to thaw a frozen pipe?</h3>
@@ -632,7 +632,7 @@ const wave2Posts = [
 </ul>
 
 <h2>Our Emergency Heating Service in Peterborough</h2>
-<p>Our <a href="/services/emergency-plumber">emergency call-out team</a> covers all Peterborough postcodes (PE1–PE7) and surrounding areas including Stamford, Market Deeping, Yaxley, and Whittlesey. We carry common replacement parts — diverter valves, pressure sensors, motorised valves, condensate trap components — on every van, meaning most winter heating faults are resolved in a single visit. Call 01733797074 or <a href="/book">book online</a>.</p>
+<p>Our <a href="/services/emergency-plumber">emergency call-out team</a> covers all Peterborough postcodes (PE1–PE7) and surrounding areas including Stamford, Market Deeping, Yaxley, and Whittlesey. We carry common replacement parts — diverter valves, pressure sensors, motorised valves, condensate trap components — on every van, meaning most winter heating faults are resolved in a single visit. Call 01733797074 or <a href="/contact">book online</a>.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>How quickly must a landlord fix a heating failure?</h3>
@@ -728,7 +728,7 @@ const wave2Posts = [
 <p>All of these are fixable — but fixing them takes time. A gas safety check can be arranged quickly; a new hot water system may take several weeks. Start the audit as early as possible before your intended application date.</p>
 
 <h2>Booking a Pre-Application Assessment</h2>
-<p>Our <a href="/services/landlord-services">landlord services team</a> carries out pre-HMO-licence plumbing assessments across Peterborough — visiting the property, working through the relevant compliance requirements, and providing a written report of any gaps alongside a remediation plan. This gives you time to complete any required work before the council inspector visits. <a href="/book">Book an assessment online</a> or call 01733797074.</p>
+<p>Our <a href="/services/landlord-services">landlord services team</a> carries out pre-HMO-licence plumbing assessments across Peterborough — visiting the property, working through the relevant compliance requirements, and providing a written report of any gaps alongside a remediation plan. This gives you time to complete any required work before the council inspector visits. <a href="/contact">Book an assessment online</a> or call 01733797074.</p>
 <p>For a full overview of what HMOs require, read our guide to <a href="/blog/hmo-plumbing-requirements-landlords">HMO plumbing requirements</a>. For gas safety certificate requirements, see our <a href="/blog/landlord-gas-safety-guide">landlord gas safety guide</a>.</p>
 
 <h2>Frequently Asked Questions</h2>
@@ -792,7 +792,7 @@ const wave2Posts = [
 </ul>
 
 <h2>The Cost of Getting It Wrong</h2>
-<p>A pre-purchase plumbing survey typically costs £300–£500 for a medium-sized property. The cost of buying a house with undetected lead pipework, a collapsed drain, or an imminent boiler failure runs into thousands — and is entirely on you once contracts have exchanged. The survey cost is one of the best-value investments available in the buying process. <a href="/book">Book a survey</a> or call 01733797074.</p>
+<p>A pre-purchase plumbing survey typically costs £300–£500 for a medium-sized property. The cost of buying a house with undetected lead pipework, a collapsed drain, or an imminent boiler failure runs into thousands — and is entirely on you once contracts have exchanged. The survey cost is one of the best-value investments available in the buying process. <a href="/contact">Book a survey</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Will my mortgage lender flag plumbing problems?</h3>
@@ -857,7 +857,7 @@ const wave2Posts = [
 <h2>Is It Worth the Cost?</h2>
 <p>Consider what you're protecting. The cost of lead pipework replacement: £600–£1,500. A boiler replacement: £2,500–£4,000. A collapsed drain repair: £1,500–£5,000. A section of re-laid drainage after root damage: £1,000–£3,000. Any one of these hidden defects, undisclosed because no one looked, leaves you paying from your own pocket after exchange.</p>
 <p>A pre-purchase survey typically costs less than 0.1% of a property's purchase price. It gives you documented evidence of any defects before you commit, the ability to negotiate, and the confidence to proceed — or the information to walk away. For older Peterborough properties, it's rarely a purchase where the survey doesn't earn its fee several times over.</p>
-<p>To discuss the right survey type for a specific property, <a href="/book">book online</a> or call 01733797074. Our <a href="/services/pre-purchase-plumbing-survey">pre-purchase survey service</a> covers Peterborough, Stamford, Market Deeping, Yaxley, and Whittlesey.</p>
+<p>To discuss the right survey type for a specific property, <a href="/contact">book online</a> or call 01733797074. Our <a href="/services/pre-purchase-plumbing-survey">pre-purchase survey service</a> covers Peterborough, Stamford, Market Deeping, Yaxley, and Whittlesey.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>When in the buying process should I book the survey?</h3>
@@ -919,7 +919,7 @@ const wave2Posts = [
 
 <h2>Thermal Imaging as Part of a Combined Survey</h2>
 <p>On complex leak detection cases, thermal imaging is typically used alongside acoustic detection — each method providing information the other can't. Acoustic pinpoints the sound of water escaping under pressure; thermal imaging maps the moisture spread from that point. Together they provide a comprehensive picture: confirmed leak location, confirmed moisture extent, and the data needed to direct any targeted opening-up accurately.</p>
-<p>Our <a href="/services/damp-leak-detection">damp and leak detection surveys</a> use both methods where the case calls for it — combined with moisture meter mapping and tracer gas where depth accuracy is critical. <a href="/book">Book a detection survey</a> or call 01733797074.</p>
+<p>Our <a href="/services/damp-leak-detection">damp and leak detection surveys</a> use both methods where the case calls for it — combined with moisture meter mapping and tracer gas where depth accuracy is critical. <a href="/contact">Book a detection survey</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Does thermal imaging work through tiles?</h3>
@@ -975,7 +975,7 @@ const wave2Posts = [
 
 <h2>All Radiators Noisy: System-Wide Problem</h2>
 <p>If the noise is coming from multiple radiators throughout the house rather than one specific unit, the problem is systemic rather than localised. The most common causes of system-wide noise are sludge and magnetite accumulation in the circuit (the primary driver for recommending a <a href="/blog/what-is-power-flush">power flush</a>), or air throughout the system from a leak or recent re-pressurisation. See our guide on <a href="/guides/radiators-not-heating-up">radiators not heating up properly</a> for related symptoms.</p>
-<p>For a central heating assessment or power flush across Peterborough, <a href="/book">book online</a> or call 01733797074.</p>
+<p>For a central heating assessment or power flush across Peterborough, <a href="/contact">book online</a> or call 01733797074.</p>
 
 <h2>Frequently Asked Questions</h2>
 <h3>Is a noisy radiator dangerous?</h3>

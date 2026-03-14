@@ -39,7 +39,7 @@ const refined = [
 <p>In older properties, clay or pitch fibre pipes can collapse or sag due to ground movement or age. Water pools in the low point and collects debris. If your drain keeps blocking despite being cleared, a structural problem is likely — clearing alone won't fix it. A <a href="/guides/signs-drain-blocked">check for the signs of a deeper blockage</a> will tell you whether you're dealing with a pipe problem.</p>
 
 <h3>When to Call a Drain Specialist</h3>
-<p>Try a plunger and boiling water for a simple sink blockage. If it doesn't clear after two attempts, or if multiple drains in the house are slow at the same time, call a professional. Multiple slow drains together indicate a blockage in the shared main drain — not something you can clear with a plunger. Call us on <a href="tel:01733797074">01733797074</a> or <a href="/book">book online</a> and we'll clear it the same day where possible.`,
+<p>Try a plunger and boiling water for a simple sink blockage. If it doesn't clear after two attempts, or if multiple drains in the house are slow at the same time, call a professional. Multiple slow drains together indicate a blockage in the shared main drain — not something you can clear with a plunger. Call us on <a href="tel:01733797074">01733797074</a> or <a href="/contact">book online</a> and we'll clear it the same day where possible.`,
   },
 
   {
@@ -162,7 +162,7 @@ const refined = [
 <p>The most common causes of bathroom projects running over are: hidden damage found on strip-out (rotted floorboards, failed waterproofing, corroded pipework), materials not on site when work begins, and trades not properly co-ordinated. Having all tiles, sanitaryware, and fittings delivered before day one is the single most effective way to keep a project on track.</p>
 
 <h3>Ready to Plan Your Bathroom?</h3>
-<p>Our bathroom team covers Peterborough and all PE postcodes — including <a href="/areas/hampton">Hampton</a>, <a href="/areas/bretton">Bretton</a>, and <a href="/areas/orton">Orton</a>. We provide a written schedule with milestone dates before any work starts. Call <a href="tel:01733797074">01733797074</a> or <a href="/book">book a free site visit</a> and we'll give you a realistic quote and timeline for your specific project.`,
+<p>Our bathroom team covers Peterborough and all PE postcodes — including <a href="/areas/hampton">Hampton</a>, <a href="/areas/bretton">Bretton</a>, and <a href="/areas/orton">Orton</a>. We provide a written schedule with milestone dates before any work starts. Call <a href="tel:01733797074">01733797074</a> or <a href="/contact">book a free site visit</a> and we'll give you a realistic quote and timeline for your specific project.`,
   },
 
   {

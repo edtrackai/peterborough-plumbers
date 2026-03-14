@@ -284,7 +284,7 @@ export default function AdminSidebar({
               Emergency Line
             </a>
             <Link
-              href="/book"
+              href="/contact"
               onClick={isMobile ? onClose : undefined}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[0.82rem] font-medium transition-all"
               style={{ color: "rgba(255,255,255,0.4)" }}

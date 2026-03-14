@@ -26,7 +26,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Save Money on Energy Bills</h3>
 <p>A well-maintained boiler runs more efficiently, using less gas to heat your home. Even a small drop in efficiency can add up to hundreds of pounds in wasted energy over the year.</p>
 <h3>When to Book</h3>
-<p>The best time to <a href="/book">book a boiler service</a> is during the summer months when demand is low and you won't miss your heating if a repair is needed. Don't wait until the first cold snap — by then, plumbers are at their busiest. Our <a href="/services/central-heating-services">central heating engineers</a> serve the whole of Peterborough and surrounding areas.</p>`,
+<p>The best time to <a href="/contact">book a boiler service</a> is during the summer months when demand is low and you won't miss your heating if a repair is needed. Don't wait until the first cold snap — by then, plumbers are at their busiest. Our <a href="/services/central-heating-services">central heating engineers</a> serve the whole of Peterborough and surrounding areas.</p>`,
     seoTitle: "How Often Should You Service Your Boiler? | Expert Advice",
     seoDescription:
       "Find out how often to service your boiler and why annual servicing is essential for safety, efficiency, and warranty. Expert advice from Gas Safe engineers.",
@@ -158,7 +158,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Can I Fix It Myself?</h3>
 <p>Simple washer replacements on traditional taps are a straightforward DIY job. However, mixer taps, ceramic disc taps, and any work on mains-pressure systems is best left to a professional to avoid making the problem worse.</p>
 <h3>When to Call a Plumber</h3>
-<p>Call a professional if the tap continues dripping after washer replacement, if you have a mixer or ceramic tap, or if you're not confident working with plumbing. Our <a href="/services/plumbing-repairs">plumbing repairs</a> team handles dripping taps quickly and affordably — most fixed on the first visit. <a href="/book">Book a repair online</a> or give us a call.</p>`,
+<p>Call a professional if the tap continues dripping after washer replacement, if you have a mixer or ceramic tap, or if you're not confident working with plumbing. Our <a href="/services/plumbing-repairs">plumbing repairs</a> team handles dripping taps quickly and affordably — most fixed on the first visit. <a href="/contact">Book a repair online</a> or give us a call.</p>`,
     seoTitle: "How to Stop a Dripping Tap | Causes & Solutions",
     seoDescription:
       "Fix a dripping tap: common causes, DIY tips, and when to call a plumber. Save water and money with expert advice from Peterborough plumbers.",
@@ -178,7 +178,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Signs of Hard Water</h3>
 <p>Look for white chalky deposits on taps and showerheads, difficulty lathering soap, dry skin and hair, and kettle limescale. These are all indicators of hard water.</p>
 <h3>Solutions</h3>
-<p>Water softeners are the most effective solution. We install and maintain water softeners throughout Peterborough as part of our <a href="/services/plumbing-installation">plumbing installation</a> service. Alternatively, regular descaling of appliances and using limescale inhibitors can help manage the effects. <a href="/book">Get in touch</a> to discuss the right solution for your home.</p>`,
+<p>Water softeners are the most effective solution. We install and maintain water softeners throughout Peterborough as part of our <a href="/services/plumbing-installation">plumbing installation</a> service. Alternatively, regular descaling of appliances and using limescale inhibitors can help manage the effects. <a href="/contact">Get in touch</a> to discuss the right solution for your home.</p>`,
     seoTitle: "Is Peterborough Water Hard or Soft? | Local Water Guide",
     seoDescription:
       "Peterborough has hard water. Learn how it affects your plumbing and appliances, and what solutions are available. Local advice from Peterborough plumbers.",
@@ -219,10 +219,10 @@ export const blogPosts: BlogPost[] = [
 <p>A magnetic filter (such as a Magna Clean) is fitted to your system to capture iron oxide particles before they reach the boiler. It's an excellent preventative measure — but it won't clear a system that's already heavily contaminated. Think of it this way: a power flush clears the existing problem, and a magnetic filter prevents it coming back. We recommend fitting one after every power flush as standard.</p>
 
 <h3>How Much Does a Power Flush Cost in Peterborough?</h3>
-<p>Pricing depends on the number of radiators and the condition of the system. Most domestic properties in Peterborough fall within a predictable range. We'll always give you a clear, fixed price before we start — no hourly rates, no hidden charges. <a href="/book">Book a heating assessment</a> and we'll advise whether a power flush is the right solution for your system.</p>
+<p>Pricing depends on the number of radiators and the condition of the system. Most domestic properties in Peterborough fall within a predictable range. We'll always give you a clear, fixed price before we start — no hourly rates, no hidden charges. <a href="/contact">Book a heating assessment</a> and we'll advise whether a power flush is the right solution for your system.</p>
 
 <h3>Get Your Heating Working Properly Again</h3>
-<p>If your heating has felt sluggish or inefficient this winter, don't just put up with it. A power flush can restore performance you may not have had in years. Call us on 01733797074 or <a href="/book">book online</a> — our <a href="/services/central-heating-services">central heating team</a> covers the whole of Peterborough and surrounding areas.</p>`,
+<p>If your heating has felt sluggish or inefficient this winter, don't just put up with it. A power flush can restore performance you may not have had in years. Call us on 01733797074 or <a href="/contact">book online</a> — our <a href="/services/central-heating-services">central heating team</a> covers the whole of Peterborough and surrounding areas.</p>`,
     seoTitle: "What Is a Power Flush? | Peterborough Heating Guide",
     seoDescription:
       "Find out if your central heating needs a power flush. Signs, process, costs, and when it's essential. Expert advice from Peterborough heating engineers.",
@@ -264,7 +264,7 @@ export const blogPosts: BlogPost[] = [
 <p>If you find a frozen pipe, turn off the water at the stopcock immediately. Gently warm the pipe using a hairdryer or hot water bottle — never an open flame. Work from the tap end back towards the frozen section. If the pipe has already cracked, you'll need an <a href="/services/emergency-plumber">emergency plumber</a> to repair it before you restore the water supply.</p>
 
 <h3>Need Help Getting Ready for Winter?</h3>
-<p>Our engineers carry out winter plumbing checks across Peterborough, covering boiler servicing, pipe insulation advice, and system testing. <a href="/book">Book online</a> or call us on 01733797074 — and sort it before the cold weather catches you out.</p>`,
+<p>Our engineers carry out winter plumbing checks across Peterborough, covering boiler servicing, pipe insulation advice, and system testing. <a href="/contact">Book online</a> or call us on 01733797074 — and sort it before the cold weather catches you out.</p>`,
     seoTitle: "How to Prepare Your Plumbing for Winter | Peterborough Guide",
     seoDescription:
       "Prevent frozen pipes and winter plumbing emergencies in Peterborough. Practical steps to protect your home before temperatures drop.",
@@ -321,7 +321,7 @@ export const blogPosts: BlogPost[] = [
 <p>Many new build buyers want to add outdoor taps, appliance connections, or additional heating controls shortly after moving in. We carry out all types of <a href="/services/plumbing-installation">plumbing installations</a> in new build properties across Peterborough — and we know the common builders' configurations well, which makes the work faster and tidier.</p>
 
 <h3>Based in Peterborough — We Know the New Developments</h3>
-<p>We've worked on new build properties across Hampton, Cardea, Orton, and the newer Stanground developments. If you've recently moved in or you're about to complete, <a href="/book">book a plumbing check</a> or call us on 01733797074. It's the best way to start your time in a new home with complete confidence in your plumbing and heating.</p>`,
+<p>We've worked on new build properties across Hampton, Cardea, Orton, and the newer Stanground developments. If you've recently moved in or you're about to complete, <a href="/contact">book a plumbing check</a> or call us on 01733797074. It's the best way to start your time in a new home with complete confidence in your plumbing and heating.</p>`,
     seoTitle: "New Build Plumbing Peterborough | What to Check Before Completion",
     seoDescription:
       "Buying a new build in Peterborough? Here's what to check about plumbing and heating before completion. Snagging advice from local Gas Safe engineers.",

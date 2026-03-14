@@ -380,7 +380,7 @@ export default async function AreaServicePage({
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
-            href="/book"
+            href="/contact"
             className="inline-flex items-center justify-center h-[52px] px-8 rounded-full text-white font-bold text-[0.9rem] transition-all duration-200 hover:brightness-110 active:scale-[0.97]"
             style={{
               background: "linear-gradient(135deg, #E31530 0%, #C8102E 100%)",
