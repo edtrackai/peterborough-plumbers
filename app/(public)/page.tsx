@@ -12,7 +12,7 @@ export const revalidate = 3600; // rebuild stale pages every hour
 export const metadata: Metadata = buildMetadata({
   title: "Plumbers in Peterborough | Boiler, Heating & Plumbing Repairs",
   description:
-    "Trusted plumbers in Peterborough for boiler servicing, plumbing repairs & central heating. Qualified engineers, clear upfront quotes, fast response across Peterborough.",
+    "Trusted plumbers in Peterborough for boiler servicing, plumbing repairs & central heating. Qualified engineers, clear upfront quotes, fast response.",
   path: "/",
   absoluteTitle: true,
   image: "/images/homepage/hero.webp",
