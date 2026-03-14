@@ -131,7 +131,7 @@ export default async function HeroSection() {
             className="text-white font-black leading-[1.0] tracking-[-0.02em]"
             style={{ fontSize: "clamp(28px, 4vw, 46px)" }}
           >
-            Peterborough
+            Trusted Plumbers in
             <br />
             <span
               style={{
@@ -141,10 +141,8 @@ export default async function HeroSection() {
                 backgroundClip: "text",
               }}
             >
-              Plumbing &amp; Heating
+              Peterborough
             </span>
-            <br />
-            Engineers
           </h1>
 
           {/* Subtext */}
@@ -152,8 +150,8 @@ export default async function HeroSection() {
             className="mt-3 hidden sm:block text-white/65 leading-[1.65] max-w-[480px]"
             style={{ fontSize: "clamp(13px, 1vw, 15px)" }}
           >
-            Local plumbing and heating engineers for boiler repairs, central heating, bathroom
-            installations and emergency call-outs &mdash; clear upfront quotes, no hidden extras.
+            Boiler repairs, central heating, bathroom installations and emergency call-outs &mdash;
+            qualified local engineers, clear upfront quotes, no hidden extras.
           </p>
 
 

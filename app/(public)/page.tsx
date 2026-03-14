@@ -22,9 +22,9 @@ export const metadata: Metadata = buildMetadata({
 
 const onlineFeatures = [
   "Request a quote in minutes — no waiting on hold",
-  "Choose your preferred appointment date and time",
-  "Send photos or a short video of the issue",
-  "Receive confirmation and engineer updates by text",
+  "Describe the issue or send photos via WhatsApp",
+  "Get a clear written quote before any work begins",
+  "Qualified local engineer confirmed for your visit",
 ];
 
 // Exact ordered slugs for homepage linking blocks
@@ -94,11 +94,11 @@ export default async function HomePage() {
                 Quick &amp; Easy
               </p>
               <h2 className="text-3xl lg:text-4xl font-bold text-[#1A2744] leading-tight mb-5">
-                Book &amp; manage your visit online
+                Request a quote online — fast &amp; simple
               </h2>
               <p className="text-[#6b7280] mb-8 leading-relaxed">
-                No waiting on hold. Request a visit, choose your preferred time slot, and track
-                your engineer — all from your phone or laptop, any time of day.
+                No waiting on hold. Submit your enquiry online or via WhatsApp and we&apos;ll call
+                you back with a clear written quote before any work begins.
               </p>
               <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-10">
                 {onlineFeatures.map((feature) => (

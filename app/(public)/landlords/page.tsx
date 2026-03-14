@@ -33,7 +33,7 @@ const services = [
     icon: "⚡",
     title: "Emergency Tenant Call-Outs",
     body: "Burst pipes, no heating, blocked drains — we attend your property the same day. Priority response available for landlord account holders. We liaise directly with tenants to minimise your involvement.",
-    href: "/services/emergency-plumber",
+    href: "/emergency",
   },
   {
     icon: "🔧",
