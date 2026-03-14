@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { trackDbEvent, type AnalyticsEventName } from "@/lib/db/analytics";
+import { checkRateLimit, getClientIp } from "@/lib/security/rateLimiter";
+
+const RATE_LIMIT = { name: "analytics", max: 60, windowMs: 60 * 1000 }; // 60 per min per IP
 
 const analyticsSchema = z.object({
   eventName: z.union([
@@ -23,6 +26,9 @@ const analyticsSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const { limited } = checkRateLimit(getClientIp(request), RATE_LIMIT);
+  if (limited) return NextResponse.json({ ok: false }, { status: 429 });
+
   let body: unknown;
   try {
     body = await request.json();
