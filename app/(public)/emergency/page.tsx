@@ -80,7 +80,7 @@ const emergencies = [
 const faqs = [
   {
     q: "How quickly can you respond to an emergency in Peterborough?",
-    a: "We aim to respond within 1–2 hours for genuine emergencies across all Peterborough postcodes (PE1–PE7). For outlying areas such as Stamford, Market Deeping, and Whittlesey, response times may be slightly longer. Call us directly for an accurate ETA based on current demand.",
+    a: "Fast response across Peterborough — genuine emergencies are always prioritised. Call us directly for an accurate ETA based on current demand and your postcode. Outlying areas such as Stamford, Market Deeping, and Whittlesey may take slightly longer.",
   },
   {
     q: "Do you charge extra for emergency call-outs?",

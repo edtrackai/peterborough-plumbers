@@ -334,7 +334,7 @@ export default async function ServicePage({
       <section className="py-5 bg-[var(--surface-alt)] border-b border-[var(--border)]">
         <div className="mx-auto max-w-4xl px-4">
           <p className="text-sm text-[var(--muted)] leading-relaxed">
-            Our engineers provide <strong className="text-pp-heading">{service.name.toLowerCase()} services</strong> across{" "}
+            Our engineers provide <strong className="text-pp-heading">{service.name.toLowerCase().replace(/\s+services?$/i, '')} services</strong> across{" "}
             <Link href="/areas/city-centre" className="text-[var(--brand)] hover:underline">Peterborough</Link> and surrounding areas including{" "}
             <Link href="/areas/werrington" className="text-[var(--brand)] hover:underline">Werrington</Link>,{" "}
             <Link href="/areas/bretton" className="text-[var(--brand)] hover:underline">Bretton</Link>,{" "}

@@ -52,7 +52,7 @@ For the fastest response, call us directly:
 
 If you smell gas, call the National Gas Emergency line first: 0800 111 999
 
-We aim to respond to emergencies within 1 hour in the Peterborough area.`;
+Fast response across Peterborough. Genuine emergencies prioritised. ETA confirmed when you contact us.`;
 
 const AREAS_REPLY = `We cover Peterborough and surrounding areas:
 
