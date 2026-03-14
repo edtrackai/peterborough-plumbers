@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getPlumberSession } from "@/lib/plumber-session";
+import { buildInvoiceFromBooking } from "@/lib/invoices/build";
 
 const PLUMBER_TRANSITIONS: Record<string, string[]> = {
   accepted:    ["en_route", "cancelled"],
@@ -75,6 +76,13 @@ export async function POST(
       },
     }),
   ]);
+
+  // Fire-and-forget: auto-generate invoice when job is marked complete
+  if (newStatus === "completed") {
+    buildInvoiceFromBooking(bookingId, "system").catch((err) => {
+      console.error("[auto-invoice] Failed to generate invoice for booking", bookingId, err);
+    });
+  }
 
   return NextResponse.json({ ok: true, status: newStatus });
 }

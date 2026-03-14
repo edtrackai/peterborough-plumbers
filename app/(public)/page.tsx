@@ -60,6 +60,23 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* Preload the hero background image — React 19 hoists <link> to <head>.
+          Fires immediately on this page only (not on every route via layout).
+          imageSrcSet mirrors the widths Next.js Image generates for sizes="100vw". */}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/homepage/hero-team.webp"
+        imageSrcSet={[
+          `/_next/image?url=%2Fimages%2Fhomepage%2Fhero-team.webp&w=640&q=85 640w`,
+          `/_next/image?url=%2Fimages%2Fhomepage%2Fhero-team.webp&w=828&q=85 828w`,
+          `/_next/image?url=%2Fimages%2Fhomepage%2Fhero-team.webp&w=1080&q=85 1080w`,
+          `/_next/image?url=%2Fimages%2Fhomepage%2Fhero-team.webp&w=1920&q=85 1920w`,
+        ].join(", ")}
+        imageSizes="100vw"
+        fetchPriority="high"
+      />
+
       {/* ── A) HERO ──────────────────────────────────────────────────────────── */}
       <HeroSection />
 

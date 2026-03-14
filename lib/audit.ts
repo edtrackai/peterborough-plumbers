@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 export type AuditActor = "system" | "admin" | "plumber" | "customer";
 
 export interface AuditParams {
-  entityType: "quote" | "booking" | "variation" | "revisit";
+  entityType: "quote" | "booking" | "variation" | "revisit" | "invoice";
   entityId: string;
   eventType: string;
   actorType: AuditActor;

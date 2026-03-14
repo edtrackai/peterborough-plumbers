@@ -3,7 +3,7 @@ import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { siteSettings } from "@/content/settings";
 import { localBusinessSchema, webSiteSchema } from "@/lib/seo/schema";
-import { SimpleBookingModal } from "@/components/booking/SimpleBookingModal";
+import { SimpleBookingModalLoader } from "@/components/booking/SimpleBookingModalLoader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -81,7 +81,7 @@ export default function RootLayout({
           }}
         />
         {children}
-        <SimpleBookingModal />
+        <SimpleBookingModalLoader />
       </body>
     </html>
   );
