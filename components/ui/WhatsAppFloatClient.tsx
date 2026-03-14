@@ -4,13 +4,10 @@ import { useEffect, useState } from "react";
 import { getStoredConsent } from "@/components/ui/CookieBanner";
 
 export default function WhatsAppFloatClient({ href }: { href: string }) {
-  // If consent already stored (returning visitor), start at bottom-6 immediately
-  const [bottom, setBottom] = useState<string>(() =>
-    typeof window !== "undefined" && getStoredConsent() ? "bottom-6" : "bottom-[100px]"
-  );
+  // Always start at bottom-[100px] to match SSR; correct after mount if consent already given
+  const [bottom, setBottom] = useState<string>("bottom-[100px]");
 
   useEffect(() => {
-    // Already has consent — no need to listen
     if (getStoredConsent()) {
       setBottom("bottom-6");
       return;
