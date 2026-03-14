@@ -26,7 +26,7 @@ export const services: Service[] = [
     heroSubheading:
       "Fixed-price annual boiler service from £79 by Gas Safe registered engineers. All major brands covered. No hidden fees, no call-out charges. Same-week appointments across Peterborough PE1–PE7.",
     content: `<h2>Professional Boiler Servicing in Peterborough</h2>
-<p>Your boiler is the heart of your home's heating system — and a thorough annual service by a Gas Safe registered engineer is the single most effective step you can take to keep it safe, efficient, and under warranty. Our Gas Safe registered engineers (Reg: 123456) carry out comprehensive boiler services across Peterborough (PE1–PE7), Stamford, Market Deeping, Whittlesey, and the surrounding areas — with same-week appointments and fixed pricing from £79.</p>
+<p>Your boiler is the heart of your home's heating system — and a thorough annual service by a Gas Safe registered engineer is the single most effective step you can take to keep it safe, efficient, and under warranty. Our Gas Safe registered engineers carry out comprehensive boiler services across Peterborough (PE1–PE7), Stamford, Market Deeping, Whittlesey, and the surrounding areas — with same-week appointments and fixed pricing from £79.</p>
 <p>We service all major brands including Worcester Bosch, Vaillant, Baxi, Ideal, Viessmann, Glow-worm, and Potterton — covering combi, system, and conventional (heat-only) boilers of all ages. With over 30 years of experience serving Peterborough homes and landlords, our engineers have the training and tools to service virtually every domestic boiler you're likely to own.</p>
 
 <h2>What's Included in Our Annual Boiler Service — 21-Point Checklist</h2>
@@ -148,7 +148,7 @@ export const services: Service[] = [
 
 <h2>Why Choose Peterborough Plumbers for Your Boiler Service?</h2>
 <ul>
-<li><strong>Gas Safe registered engineers</strong> — Reg: 123456, fully qualified, ID-checked, and insured. You can verify our registration instantly at <strong>gassaferegister.co.uk</strong>.</li>
+<li><strong>Gas Safe registered engineers</strong> — fully qualified, ID-checked, and insured. You can verify our registration instantly at <strong>gassaferegister.co.uk</strong>.</li>
 <li><strong>30+ years' local experience</strong> — serving Peterborough homes and landlords since the 1990s. A genuinely local team — not a national call centre with subcontractors.</li>
 <li><strong>Fixed pricing from £79</strong> — confirmed before we start. No hidden extras, no call-out charges, no surprises on the invoice.</li>
 <li><strong>All major brands covered</strong> — Worcester Bosch, Vaillant, Baxi, Ideal, Viessmann, and more. Combi, system, and conventional boilers of all ages.</li>
@@ -218,7 +218,7 @@ export const services: Service[] = [
     heroSubheading:
       "Legal gas safety inspections for landlords and homeowners. CP12 certificates issued by Gas Safe registered engineers.",
     content: `<h2>Gas Safety Certificates &amp; CP12 Inspections in Peterborough</h2>
-<p>Whether you're a landlord with a portfolio of rental properties or a homeowner who wants peace of mind, a gas safety certificate confirms that every gas appliance in your property is operating safely. Our Gas Safe registered engineers (Reg: 123456) carry out thorough CP12 inspections across Peterborough — with certificates issued on the day of your inspection.</p>
+<p>Whether you're a landlord with a portfolio of rental properties or a homeowner who wants peace of mind, a gas safety certificate confirms that every gas appliance in your property is operating safely. Our Gas Safe registered engineers carry out thorough CP12 inspections across Peterborough — with certificates issued on the day of your inspection.</p>
 <p>We work with private landlords, letting agents, housing associations, and homeowners throughout Peterborough and the surrounding villages. If you need a reliable, qualified engineer who turns up on time and gets the job done properly, you're in the right place.</p>
 
 <h3>What We Inspect During a Gas Safety Check</h3>
@@ -269,7 +269,7 @@ export const services: Service[] = [
 
 <h3>Why Choose Peterborough Plumbers for Your Gas Safety Certificate?</h3>
 <ul>
-<li>Gas Safe registered engineers (Reg: 123456) — fully qualified and insured</li>
+<li>Gas Safe registered engineers — fully qualified and insured</li>
 <li>30+ years serving Peterborough landlords and homeowners</li>
 <li>Certificates issued on the day — no waiting around</li>
 <li>Digital and physical copies provided</li>
@@ -343,7 +343,7 @@ export const services: Service[] = [
 
 <h3>New Central Heating Installations</h3>
 <p>If your property doesn't have central heating, or your existing system is beyond economical repair, we can design and install a complete system tailored to your home. We'll assess the size and layout of your property, recommend the right boiler and radiator configuration, and carry out the installation with minimal disruption.</p>
-<p>We install systems from leading manufacturers including Worcester Bosch, Vaillant, Baxi, and Ideal. All installations are carried out by our Gas Safe registered engineers (Reg: 123456) and come with a full manufacturer's warranty plus our own 12-month workmanship guarantee.</p>
+<p>We install systems from leading manufacturers including Worcester Bosch, Vaillant, Baxi, and Ideal. All installations are carried out by our Gas Safe registered engineers and come with a full manufacturer's warranty plus our own 12-month workmanship guarantee.</p>
 
 <h3>Central Heating Repairs</h3>
 <p>Cold radiators, noisy pipes, uneven heating, and boiler pressure drops are all signs that something isn't right with your central heating. Our engineers diagnose and fix faults quickly, with most repairs completed on the first visit. Common issues we deal with include:</p>
@@ -373,7 +373,7 @@ export const services: Service[] = [
 
 <h3>Why Choose Peterborough Plumbers for Central Heating?</h3>
 <ul>
-<li>Gas Safe registered engineers (Reg: 123456)</li>
+<li>Gas Safe registered engineers — fully qualified and insured</li>
 <li>30+ years installing and maintaining heating systems in Peterborough</li>
 <li>All major boiler and radiator brands supplied and fitted</li>
 <li>Smart thermostat installation and setup included</li>
@@ -590,7 +590,7 @@ export const services: Service[] = [
 
 <h3>Why Peterborough Landlords Choose Us</h3>
 <ul>
-<li>Gas Safe registered engineers (Reg: 123456)</li>
+<li>Gas Safe registered engineers — fully qualified and insured</li>
 <li>30+ years supporting Peterborough landlords and letting agents</li>
 <li>Automatic CP12 renewal reminders — never miss a deadline</li>
 <li>Direct tenant liaison for hassle-free appointments</li>
@@ -618,7 +618,7 @@ export const services: Service[] = [
       },
       {
         q: "How quickly can you respond to tenant emergencies?",
-        a: "We aim to reach emergency call-outs within 1 hour across the Peterborough area. For non-urgent tenant issues, we typically book appointments within 2–3 working days.",
+        a: "We respond fast to emergency call-outs across the Peterborough area — ETA confirmed when you call. For non-urgent tenant issues, we typically book appointments within 2–3 working days.",
       },
       {
         q: "Can you handle void property preparation?",
@@ -642,7 +642,7 @@ export const services: Service[] = [
     heroSubheading:
       "Plumbing emergencies don't wait. Neither do we. Fast response times across Peterborough and surrounding areas.",
     content: `<h2>24/7 Emergency Plumber in Peterborough</h2>
-<p>A plumbing emergency won't wait until Monday morning — and neither will we. When you've got water pouring through your ceiling, a boiler that's given up in the middle of winter, or a drain backing up into your kitchen, you need someone you can rely on to pick up the phone and get to you fast. Peterborough Plumbers provides a genuine 24/7 emergency response across Peterborough and the surrounding areas, with an experienced engineer typically at your door within the hour.</p>
+<p>A plumbing emergency won't wait until Monday morning — and neither will we. When you've got water pouring through your ceiling, a boiler that's given up in the middle of winter, or a drain backing up into your kitchen, you need someone you can rely on to pick up the phone and get to you fast. Peterborough Plumbers provides a genuine 24/7 emergency response across Peterborough and the surrounding areas, with fast response across Peterborough — ETA confirmed when you contact us.</p>
 
 <h3>Emergencies We Handle</h3>
 <p>Our emergency team deals with urgent plumbing and heating problems every day. Common call-outs include:</p>
@@ -663,7 +663,7 @@ export const services: Service[] = [
 <ul>
 <li><strong>1. Call us any time</strong> — our emergency line is open 24 hours a day, 7 days a week, 365 days a year on 01733797074</li>
 <li><strong>2. Speak to a real person</strong> — no call centres or automated menus. You'll speak directly to our team who can assess the urgency and dispatch an engineer</li>
-<li><strong>3. Engineer dispatched</strong> — for genuine emergencies in Peterborough, we aim to reach you within 1 hour</li>
+<li><strong>3. Engineer dispatched</strong> — for genuine emergencies in Peterborough, we respond fast — ETA confirmed when you call</li>
 <li><strong>4. Pricing confirmed on arrival</strong> — we'll assess the situation and confirm the cost before starting any work. No surprises</li>
 <li><strong>5. First-visit fix</strong> — our vans carry a comprehensive range of parts and materials, so most emergencies are resolved on the first visit</li>
 </ul>
@@ -691,9 +691,9 @@ export const services: Service[] = [
 <h3>Why Choose Peterborough Plumbers for Emergencies?</h3>
 <ul>
 <li>Genuine 24/7 availability — call any time, day or night</li>
-<li>Aim to reach you within 1 hour across Peterborough</li>
+<li>Fast response across Peterborough — ETA confirmed when you call</li>
 <li>Speak to a real person, not a call centre</li>
-<li>Gas Safe registered engineers (Reg: 123456)</li>
+<li>Gas Safe registered engineers — fully qualified and insured</li>
 <li>Transparent pricing confirmed before work starts</li>
 <li>Fully stocked vans — most emergencies fixed on the first visit</li>
 <li>30+ years of emergency plumbing experience in Peterborough</li>
@@ -705,7 +705,7 @@ export const services: Service[] = [
     faqs: [
       {
         q: "How quickly can you respond to an emergency?",
-        a: "We aim to reach you within 1 hour for genuine emergencies across the Peterborough area. Response times may vary during periods of very high demand, but we always prioritise the most urgent situations first.",
+        a: "Fast response across Peterborough — genuine emergencies are always prioritised. ETA confirmed when you contact us. Response times may vary during periods of very high demand.",
       },
       {
         q: "Do you charge extra for emergency call-outs?",
@@ -890,7 +890,7 @@ export const services: Service[] = [
 <p>If a repair isn't worth doing — for example, if a tap is so old that a replacement would be more cost-effective — we'll tell you honestly and give you options rather than pushing unnecessary work.</p>
 
 <h3>Emergency Plumbing Repairs</h3>
-<p>Some repairs can't wait. If you have a burst pipe, a major leak, or no water supply, our <a href="/services/emergency-plumber">emergency plumbing service</a> is available 24/7 across Peterborough. We aim to reach you within the hour and make the situation safe on the first visit.</p>
+<p>Some repairs can't wait. If you have a burst pipe, a major leak, or no water supply, our <a href="/services/emergency-plumber">emergency plumbing service</a> is available 24/7 across Peterborough. We respond fast and make the situation safe on the first visit.</p>
 
 <h3>Areas We Cover</h3>
 <p>We carry out plumbing repairs across Peterborough and the surrounding areas, including the city centre (PE1), Orton, Werrington, Hampton, Bretton, Fletton, Stanground, Yaxley, Market Deeping, Whittlesey, and Stamford. We're a local business — not a national call centre — so you'll always speak to someone who knows the area.</p>
